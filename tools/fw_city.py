@@ -113,7 +113,7 @@ def _buyable(r: Reader, rec: dict) -> None:
 def _road(r: Reader, rec: dict) -> None:
     _block_core(r, rec)
     rec["road_frame"] = r.i16()       # +0x0C
-    rec["road_1"] = r.i16()           # +0x0E
+    rec["persons_here"] = r.i16()     # +0x0E, bit mask of PERSON_IDs standing here
 
 
 def read_block(r: Reader) -> dict:
@@ -134,10 +134,10 @@ def read_block(r: Reader) -> dict:
         rec["arrow_prefer"] = v >> 2          # nArrowPrefer
     elif cls == 6:                            # LAND
         _buyable(r, rec)
-        rec["land_flag"] = r.u8()             # +0x38, meaning not confirmed (mortgaged?)
+        rec["mortgaged"] = r.u8()             # +0x38, 1 = mortgaged
         rec["name"] = r.text(32).strip()      # +0x18, street name
-        rec["base_value_pct"] = r.i32()       # +0x40, not used by the price display; likely the original %
-        rec["value_pct"] = r.i32()            # +0x3C, price = pct*uPrice_BLANK_LAND/100, rent = pct*uRent_BLANK_LAND/100
+        rec["build_cost_pct"] = r.i32()       # +0x40, house cost = sum of pct over the lots x level cost / 100
+        rec["value_pct"] = r.i32()            # +0x3C, price = pct*uPrice_BLANK_LAND/100, rent = pct*uRent_*/100
     elif cls == 10:                           # SURFACE
         _block_core(r, rec)
         rec["surface_frame"] = r.i16()        # +0x0C
@@ -152,12 +152,12 @@ def read_block(r: Reader) -> dict:
 def read_building(r: Reader, cls: int) -> dict:
     rec: dict = {"class": BUILDING_CLASSES.get(cls, f"UNKNOWN_{cls}"), "class_id": cls}
     if cls == 10:                              # HOUSE: own field, then SingleLine
-        rec["house_level"] = r.i32()           # +0x5C
-        rec["line_value"] = r.i16()            # +0x58
+        rec["house_level"] = r.i32()           # +0x5C, 0 flat .. 5 villa (HOUSE_ID)
+        rec["lots"] = r.i16()                  # +0x58, number of lots the building covers
     elif cls in (8, 11, 12, 16, 17):           # single-line family
-        rec["line_value"] = r.i16()            # +0x58
+        rec["lots"] = r.i16()                  # +0x58, number of lots the building covers
     elif cls == 6:                             # COMPANY
-        rec["company_flag"] = r.u8()           # +0x60, meaning not confirmed
+        rec["mortgaged"] = r.u8()              # +0x60, 1 = mortgaged
         rec["company_group"] = r.i32()         # +0x64, COMPANY_GROUP (industry)
         n = r.i32()
         rec["describe"] = r.text(n) if n else ""
@@ -175,16 +175,16 @@ def read_building(r: Reader, cls: int) -> dict:
 def read_person(r: Reader) -> dict:
     rec: dict = {"ai": r.u8()}  # bAIPlayer
     n = r.i32()
-    rec["cards"] = [r.i32() for _ in range(n)]
-    rec["value_9c"] = r.i32()
+    rec["cards"] = [r.i32() for _ in range(n)]  # permit cards: 0 黑帮, 1 算命铺, 2 当铺
+    rec["direction"] = r.i32()                 # +0x9C, walking direction 0..3
     rec["person_id"] = r.i32()                 # PERSON_ID (who this is)
     rec["grid"] = [r.i32(), r.i32()]
     rec["name"] = r.text(32).strip()
-    rec["value_88"] = r.i32()
-    rec["money_98"] = r.i32()                  # 2000 at start: cash or deposit (uCash/uDepot)
-    rec["money_94"] = r.i32()
-    rec["value_84"] = r.i32()
-    rec["value_80"] = r.i32()
+    rec["state"] = r.i32()                     # +0x88, PERSON_STATE: 0 bankrupt, 1 normal, 8 jail ...
+    rec["cash"] = r.i32()                      # +0x98
+    rec["deposit"] = r.i32()                   # +0x94
+    rec["state_days"] = r.i32()                # +0x84, turns left in the current state
+    rec["bankrupted_by"] = r.i32()             # +0x80, PERSON_ID who caused bankruptcy (8 = government)
     return rec
 
 

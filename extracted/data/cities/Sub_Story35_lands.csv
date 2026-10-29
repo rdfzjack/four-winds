@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 南京西路1号,-12,22,160,160,128,24,0,0
 金陵西路1号,-12,30,120,120,96,18,8,0
 南京西路2号,-11,22,160,160,128,24,0,0

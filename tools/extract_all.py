@@ -636,8 +636,8 @@ def step_cities(src: Path, out: Path) -> None:
                 pr["person_name"] = PERSON_IDS.get(pr["person_id"])
             c["source"] = rel.as_posix()
             write_json(cdir / f"{stem}.json", c)
-            lands = [{k: b[k] for k in ("name", "x", "y", "value_pct", "base_value_pct",
-                                         "price", "rent_blank", "owner", "land_flag")}
+            lands = [{k: b[k] for k in ("name", "x", "y", "value_pct", "build_cost_pct",
+                                         "price", "rent_blank", "owner", "mortgaged")}
                      for b in c["blocks"] if b["class"] == "LAND"]
             write_csv(cdir / f"{stem}_lands.csv", lands)
             blds = [{k: bd.get(k, "") for k in ("slot", "class", "name", "sprite_kind_name",

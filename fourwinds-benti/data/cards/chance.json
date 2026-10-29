@@ -1,20 +1,20 @@
 {
- "_comment": "34 张机会卡。text 是游戏里显示的简体文字；original_text 是原版卡面（繁体）。effects 是程序执行的效果，可以组合多个。数值和效果按卡面文字理解，原版代码里的精确数值未核实。setting_specific 标出带 1940 年代中国背景、以后换皮时需要改写的卡。天数：先按一轮 = 一天。",
+ "_comment": "机会卡。效果和数值都是从原版程序里读出来的（见 docs/original_rules.md）。抽卡：随机选一张，若当前角色不在 allowed_for 里就重抽，再以 weight% 的概率保留，否则重抽。allowed_for 是 4 个新角色，暂时照抄借用的原版角色（斐斐=包德利，小九=冯全篾，孔雀=董莺雨，理理=发达而），作者可以按人设改；original_allowed 是原版 8 个角色。setting_specific 标出带 1940 年代中国背景、换皮时要改写的卡。",
  "ops": {
-  "money": "现金增减 amount 万圆（负数为支出）",
-  "money_from_each": "向其他每位玩家各收 amount 万圆",
-  "money_to_each": "付给其他每位玩家各 amount 万圆",
-  "jail": "坐牢 days 天",
-  "goto": "移动到最近的 tile_type 格子（不经过起点结算）",
-  "state": "获得状态 state，持续 days 天。thief 小偷 / arsonist 纵火犯 / robber 抢劫犯 / free_rent 免付租金 / double_rent 付租加倍 / half_rent 付租减半 / charity 自己的产业不收租",
-  "lose_most_expensive_property": "最贵的一块地产被收走",
-  "lose_mortgaged_properties": "所有已抵押的地产被收走",
-  "demolish_one_house": "随机一处房屋被拆掉（土地保留）",
-  "property_value_pct": "target（houses 房产 / lands 土地）的价值改变 pct%",
-  "upgrade_all_houses": "所有房屋升一级",
+  "money": "现金增减 amount 万圆；支出时先扣现金，不够再扣存款，还不够就破产",
+  "money_from_each": "向其他每位玩家各收 amount 万圆（对方付不起就破产）",
+  "money_to_each": "付给其他每位玩家各 amount 万圆（自己付不起就破产）",
+  "jail": "直接送到巡捕房，坐牢 days 回合（这期间跳过回合）",
+  "goto": "直接移动到 tile_type 格子；trigger_stop 为 true 时触发停在那里的效果",
+  "state": "进入状态 state，持续 days 回合（0 = 一直持续到触发一次）。thief 小偷 / arsonist 纵火犯 / robber 抢劫犯 / free_rent 免付租金 / double_rent 付租加倍 / half_rent 付租减半 / charity 自己的产业不收租。玩家同一时间只有一种状态，新状态会覆盖旧的",
+  "lose_most_expensive_land": "自己地价最高的一块空地被收走（地上的房子拆掉，变成无主）",
+  "lose_mortgaged_properties": "自己所有已抵押的地产和企业被收走（变成无主）",
+  "demolish_random_house": "随机拆掉自己的一栋房子",
+  "land_value_pct": "自己所有地块的地价系数改变 pct%（地价和租金都跟着变）",
+  "upgrade_houses": "自己所有旅社免费升成旅馆、小洋楼免费升成花园洋房",
   "lose_deposit": "银行存款清零",
-  "void_next_income": "下一笔收入作废（含义按卡面理解，未核实）",
-  "bank_seize_payment": "银行扣留应付款项（含义未核实）"
+  "demolish_new_house": "刚盖好的房子被拆掉",
+  "mortgage_without_payment": "这次抵押拿不到钱"
  },
  "cards": [
   {
@@ -24,8 +24,25 @@
     {
      "op": "state",
      "state": "thief",
-     "days": 7
+     "days": 0
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "成為小偷 盜竊所遇第一人的全部現款",
    "picture": "Sprite/Chance1.pic"
@@ -40,6 +57,23 @@
      "days": 7
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
+   ],
    "original_text": "成為縱火犯 一周內燒毀所到地點的房屋",
    "picture": "Sprite/Chance2.pic"
   },
@@ -53,6 +87,19 @@
      "days": 7
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "eric"
+   ],
+   "original_allowed": [
+    "四毛",
+    "包德利",
+    "赛珍珠",
+    "冯全篾",
+    "发达而"
+   ],
    "original_text": "成為搶劫犯 一周內把所到公司據為己有",
    "picture": "Sprite/Chance3.pic"
   },
@@ -64,6 +111,23 @@
      "op": "money",
      "amount": 300
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "被金磚絆倒 得300萬圓",
    "picture": "Sprite/Chance4.pic"
@@ -77,6 +141,19 @@
      "days": 5
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "包德利",
+    "陈玛丽",
+    "冯全篾",
+    "金如山"
+   ],
    "original_text": "走私軍火 拘留五天",
    "picture": "Sprite/Chance5.pic"
   },
@@ -89,6 +166,15 @@
      "amount": -100
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david"
+   ],
+   "original_allowed": [
+    "四毛",
+    "包德利",
+    "金如山"
+   ],
    "original_text": "逛夜總會 花費100萬圓",
    "picture": "Sprite/Chance6.pic"
   },
@@ -100,6 +186,22 @@
      "op": "money_from_each",
      "amount": 50
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而"
    ],
    "original_text": "抗日募捐 收每人50萬圓",
    "picture": "Sprite/Chance7.pic",
@@ -114,6 +216,23 @@
      "days": 3
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
+   ],
    "original_text": "貪污募捐款 坐牢三天",
    "picture": "Sprite/Chance8.pic"
   },
@@ -126,6 +245,18 @@
      "amount": 100
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "eric"
+   ],
+   "original_allowed": [
+    "包德利",
+    "冯全篾",
+    "发达而",
+    "金如山"
+   ],
    "original_text": "丑行敗露 付每人遮丑費100萬圓",
    "picture": "Sprite/Chance9.pic"
   },
@@ -135,8 +266,18 @@
    "effects": [
     {
      "op": "goto",
-     "tile_type": "church"
+     "tile_type": "church",
+     "trigger_stop": true
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "giorgio"
+   ],
+   "original_allowed": [
+    "四毛",
+    "冯全篾",
+    "金如山"
    ],
    "original_text": "舉止粗俗 送教堂感化",
    "picture": "Sprite/Chance10.pic"
@@ -150,6 +291,19 @@
      "amount": -30
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio"
+   ],
+   "original_allowed": [
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "金如山"
+   ],
    "original_text": "隨地吐痰 罰款30萬圓",
    "picture": "Sprite/Chance11.pic"
   },
@@ -161,6 +315,15 @@
      "op": "money",
      "amount": -100
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david"
+   ],
+   "original_allowed": [
+    "四毛",
+    "包德利",
+    "金如山"
    ],
    "original_text": "赤膊上街 强令買衣服花費100萬圓",
    "picture": "Sprite/Chance12.pic"
@@ -175,6 +338,19 @@
      "days": 7
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "giorgio",
+    "marcel"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "金如山"
+   ],
    "original_text": "出身貧賤 免費旅游一周",
    "picture": "Sprite/Chance13.pic"
   },
@@ -187,6 +363,23 @@
      "state": "double_rent",
      "days": 7
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "揮霍成性 加倍消費一周",
    "picture": "Sprite/Chance14.pic"
@@ -201,6 +394,23 @@
      "days": 7
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
+   ],
    "original_text": "生活拮据 半價旅行一周",
    "picture": "Sprite/Chance15.pic"
   },
@@ -209,8 +419,25 @@
    "text": "得罪市长，最贵地产被没收",
    "effects": [
     {
-     "op": "lose_most_expensive_property"
+     "op": "lose_most_expensive_land"
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "得罪市長 最貴地產被沒收",
    "picture": "Sprite/Chance16.pic"
@@ -222,6 +449,23 @@
     {
      "op": "lose_mortgaged_properties"
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "支援抗戰前綫 抵押物業被政府收回",
    "picture": "Sprite/Chance17.pic",
@@ -235,6 +479,21 @@
      "op": "lose_deposit"
     }
    ],
+   "weight": 30,
+   "allowed_for": [
+    "david",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "发达而",
+    "金如山"
+   ],
    "original_text": "銀行倒閉 所有存款丟失",
    "picture": "Sprite/Chance18.pic"
   },
@@ -246,6 +505,23 @@
      "op": "money",
      "amount": 100
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "意外拾到 100萬圓",
    "picture": "Sprite/Chance19.pic"
@@ -259,6 +535,12 @@
      "amount": 1
     }
    ],
+   "weight": 100,
+   "allowed_for": [],
+   "original_allowed": [
+    "赛珍珠",
+    "金如山"
+   ],
    "original_text": "擦皮鞋 得1萬圓",
    "picture": "Sprite/Chance20.pic"
   },
@@ -270,6 +552,17 @@
      "op": "money",
      "amount": 300
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio"
+   ],
+   "original_allowed": [
+    "四毛",
+    "包德利",
+    "冯全篾",
+    "金如山"
    ],
    "original_text": "被富婆相中 得300萬圓",
    "picture": "Sprite/Chance21.pic"
@@ -283,6 +576,23 @@
      "days": 3
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
+   ],
    "original_text": "見義勇為 反被巡捕房拘留3日",
    "picture": "Sprite/Chance22.pic"
   },
@@ -291,8 +601,23 @@
    "text": "得罪黑帮，一处房屋被砸",
    "effects": [
     {
-     "op": "demolish_one_house"
+     "op": "demolish_random_house"
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "发达而",
+    "金如山"
    ],
    "original_text": "得罪黑幫 一處房屋被砸",
    "picture": "Sprite/Chance23.pic"
@@ -302,10 +627,26 @@
    "text": "经营不善，所有房产贬值 10%",
    "effects": [
     {
-     "op": "property_value_pct",
-     "target": "houses",
+     "op": "land_value_pct",
      "pct": -10
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "經營不善 所有房產貶值10%",
    "picture": "Sprite/Chance24.pic"
@@ -315,10 +656,26 @@
    "text": "经营有方，所有土地增值 10%",
    "effects": [
     {
-     "op": "property_value_pct",
-     "target": "lands",
+     "op": "land_value_pct",
      "pct": 10
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "經營有方 所有土地增值10%",
    "picture": "Sprite/Chance25.pic"
@@ -328,8 +685,25 @@
    "text": "得到政府赏识，所有房产级别提升",
    "effects": [
     {
-     "op": "upgrade_all_houses"
+     "op": "upgrade_houses"
     }
+   ],
+   "weight": 30,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "得到政府賞識 所有房產級別提升",
    "picture": "Sprite/Chance26.pic"
@@ -344,6 +718,19 @@
      "days": 3
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "giorgio",
+    "marcel"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "金如山"
+   ],
    "original_text": "痛打洋鬼子 受國人擁戴，免費旅游三天",
    "picture": "Sprite/Chance27.pic",
    "setting_specific": true
@@ -357,6 +744,21 @@
      "days": 3
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "金如山"
+   ],
    "original_text": "得罪洋大人 坐牢三天",
    "picture": "Sprite/Chance28.pic",
    "setting_specific": true
@@ -369,6 +771,23 @@
      "op": "money",
      "amount": -100
     }
+   ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
    ],
    "original_text": "支援抗戰前綫 捐款100萬圓",
    "picture": "Sprite/Chance29.pic",
@@ -384,53 +803,68 @@
      "days": 7
     }
    ],
+   "weight": 100,
+   "allowed_for": [
+    "david",
+    "giorgio",
+    "marcel",
+    "eric"
+   ],
+   "original_allowed": [
+    "董莺雨",
+    "四毛",
+    "包德利",
+    "陈玛丽",
+    "赛珍珠",
+    "冯全篾",
+    "发达而",
+    "金如山"
+   ],
    "original_text": "發展慈善事業 所有產業免費開放一周",
    "picture": "Sprite/Chance30.pic"
-  },
+  }
+ ],
+ "special_events": [
   {
-   "id": 31,
+   "id": "antique",
+   "picture": "Sprite/Chance31.pic",
    "text": "发现古董，获利 1000 万圆",
+   "when": "建房后随机触发；概率按房子占地：1 块 1/61，2 块 1/41，3 块 1/31，4 块 1/16",
    "effects": [
     {
      "op": "money",
      "amount": 1000
     }
-   ],
-   "original_text": "發現古董 獲利1000萬圓",
-   "picture": "Sprite/Chance31.pic"
+   ]
   },
   {
-   "id": 32,
+   "id": "collapse",
+   "picture": "Sprite/Chance32.pic",
    "text": "发生事故，房屋倒塌",
+   "when": "建房后没挖到古董时，再有 1/31 的概率触发；刚盖的房子被拆掉，造价不退",
    "effects": [
     {
-     "op": "demolish_one_house"
+     "op": "demolish_new_house"
     }
-   ],
-   "original_text": "發生事故 房屋倒塌",
-   "picture": "Sprite/Chance32.pic"
+   ]
   },
   {
-   "id": 33,
+   "id": "fake_money",
+   "picture": "Sprite/Chance33.pic",
    "text": "收到假钞，收益作废",
-   "effects": [
-    {
-     "op": "void_next_income"
-    }
-   ],
-   "original_text": "收到假鈔 收益作廢",
-   "picture": "Sprite/Chance33.pic"
+   "when": "程序里没有调用，是没用上的图",
+   "effects": []
   },
   {
-   "id": 34,
+   "id": "mortgage_seized",
+   "picture": "Sprite/Chance34.pic",
    "text": "银行强行扣留应付款项",
+   "when": "抵押地产时有 1/21 的概率触发：地照样抵押，但拿不到钱",
    "effects": [
     {
-     "op": "bank_seize_payment"
+     "op": "mortgage_without_payment"
     }
-   ],
-   "original_text": "銀行强行扣留 應付款項",
-   "picture": "Sprite/Chance34.pic"
+   ]
   }
  ]
 }

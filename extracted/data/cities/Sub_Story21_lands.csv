@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 金家西院儿,-8,11,200,500,100,20,7,0
 西弯儿3号,-7,13,80,80,40,8,8,0
 里巷1号,-6,9,100,100,50,10,8,0

@@ -4,10 +4,11 @@
 Usage:
     python3 tools/build_game_data.py            # write files that do not exist yet
     python3 tools/build_game_data.py --force    # overwrite (loses hand edits!)
+    python3 tools/build_game_data.py --force --only chance.json,shanghai_loop.json
 
 Writes into fourwinds-benti/data/:
     maps/shanghai_loop.json        38-tile loop built from the original Shanghai data
-    cards/chance.json              34 chance cards with machine-readable effects
+    cards/chance.json              30 chance cards + 4 special events, effects from the game code
     ai/profiles.json               AI parameters for the 4 characters (from Ai/Standard.ai)
     lines/speech.json              speech lines per event (drafts) + original lines for reference
     reference/original_cities.json price tables of all 24 original maps (for designing new maps)
@@ -121,6 +122,7 @@ def build_loop_map(spec: dict) -> dict:
                                   "color": GROUP_COLORS[len(groups) % len(GROUP_COLORS)]}
             t.update({"name": f"{street}{k + 1}号", "group": street,
                       "price_pct": lot["value_pct"],
+                      "build_cost_pct": lot["build_cost_pct"],
                       "source": f"{spec['source_city']}.cit 地块 ({lot['x']},{lot['y']}) {lot['name']}"})
         elif kind == "company":
             c = companies[arg]
@@ -140,7 +142,8 @@ def build_loop_map(spec: dict) -> dict:
         "placeholder": True,
         "_comment": "由 tools/build_game_data.py 从原版上海数据生成，之后可直接修改。"
                     "每格的 next 列出可以走到的下一格；岔路就是 next 有多个格子。"
-                    "price_pct 是地价系数：空地价 = price_pct × blank_land_price ÷ 100。",
+                    "price_pct 是地价系数：空地价 = price_pct × blank_land_price ÷ 100，租金也按它算；"
+                    "build_cost_pct 是建房系数：造价 = 房子所占各块地的 build_cost_pct 之和 × 造价 ÷ 100。",
         "start_tile": 0,
         "prices": {
             "_comment": f"原版 {city['name']} 的 CITY_PROPERTY，单位万圆。",
@@ -160,10 +163,10 @@ def build_loop_map(spec: dict) -> dict:
 
 # ------------------------------------------------------------------ chance cards
 
-# id -> (simplified text, effects, setting_specific)
-# Effects use a small fixed vocabulary, documented in the output file.
+# Card effects as read from the game code (chance1..chance30 in 1940.exe,
+# see docs/original_rules.md). id -> (simplified text, effects, setting_specific)
 CARD_EFFECTS = {
-    1: ("成为小偷：盗窃所遇第一人的全部现款", [{"op": "state", "state": "thief", "days": 7}], False),
+    1: ("成为小偷：盗窃所遇第一人的全部现款", [{"op": "state", "state": "thief", "days": 0}], False),
     2: ("成为纵火犯：一周内烧毁所到地点的房屋", [{"op": "state", "state": "arsonist", "days": 7}], False),
     3: ("成为抢劫犯：一周内把所到公司据为己有", [{"op": "state", "state": "robber", "days": 7}], False),
     4: ("被金砖绊倒，得 300 万圆", [{"op": "money", "amount": 300}], False),
@@ -172,49 +175,72 @@ CARD_EFFECTS = {
     7: ("抗日募捐，收每人 50 万圆", [{"op": "money_from_each", "amount": 50}], True),
     8: ("贪污募捐款，坐牢三天", [{"op": "jail", "days": 3}], False),
     9: ("丑行败露，付每人遮丑费 100 万圆", [{"op": "money_to_each", "amount": 100}], False),
-    10: ("举止粗俗，送教堂感化", [{"op": "goto", "tile_type": "church"}], False),
+    10: ("举止粗俗，送教堂感化", [{"op": "goto", "tile_type": "church", "trigger_stop": True}], False),
     11: ("随地吐痰，罚款 30 万圆", [{"op": "money", "amount": -30}], False),
     12: ("赤膊上街，强令买衣服花费 100 万圆", [{"op": "money", "amount": -100}], False),
     13: ("出身贫贱，免费旅游一周", [{"op": "state", "state": "free_rent", "days": 7}], False),
     14: ("挥霍成性，加倍消费一周", [{"op": "state", "state": "double_rent", "days": 7}], False),
     15: ("生活拮据，半价旅行一周", [{"op": "state", "state": "half_rent", "days": 7}], False),
-    16: ("得罪市长，最贵地产被没收", [{"op": "lose_most_expensive_property"}], False),
+    16: ("得罪市长，最贵地产被没收", [{"op": "lose_most_expensive_land"}], False),
     17: ("支援抗战前线，抵押物业被政府收回", [{"op": "lose_mortgaged_properties"}], True),
     18: ("银行倒闭，所有存款丢失", [{"op": "lose_deposit"}], False),
     19: ("意外拾到 100 万圆", [{"op": "money", "amount": 100}], False),
     20: ("擦皮鞋，得 1 万圆", [{"op": "money", "amount": 1}], False),
     21: ("被富婆相中，得 300 万圆", [{"op": "money", "amount": 300}], False),
     22: ("见义勇为，反被巡捕房拘留 3 日", [{"op": "jail", "days": 3}], False),
-    23: ("得罪黑帮，一处房屋被砸", [{"op": "demolish_one_house"}], False),
-    24: ("经营不善，所有房产贬值 10%", [{"op": "property_value_pct", "target": "houses", "pct": -10}], False),
-    25: ("经营有方，所有土地增值 10%", [{"op": "property_value_pct", "target": "lands", "pct": 10}], False),
-    26: ("得到政府赏识，所有房产级别提升", [{"op": "upgrade_all_houses"}], False),
+    23: ("得罪黑帮，一处房屋被砸", [{"op": "demolish_random_house"}], False),
+    24: ("经营不善，所有房产贬值 10%", [{"op": "land_value_pct", "pct": -10}], False),
+    25: ("经营有方，所有土地增值 10%", [{"op": "land_value_pct", "pct": 10}], False),
+    26: ("得到政府赏识，所有房产级别提升", [{"op": "upgrade_houses"}], False),
     27: ("痛打洋鬼子，受国人拥戴，免费旅游三天", [{"op": "state", "state": "free_rent", "days": 3}], True),
     28: ("得罪洋大人，坐牢三天", [{"op": "jail", "days": 3}], True),
     29: ("支援抗战前线，捐款 100 万圆", [{"op": "money", "amount": -100}], True),
     30: ("发展慈善事业，所有产业免费开放一周", [{"op": "state", "state": "charity", "days": 7}], False),
-    31: ("发现古董，获利 1000 万圆", [{"op": "money", "amount": 1000}], False),
-    32: ("发生事故，房屋倒塌", [{"op": "demolish_one_house"}], False),
-    33: ("收到假钞，收益作废", [{"op": "void_next_income"}], False),
-    34: ("银行强行扣留应付款项", [{"op": "bank_seize_payment"}], False),
 }
 
+# Draw weight (0-100) and which original characters can draw each card,
+# copied from the tables at 0x45399c and 0x4538ac in 1940.exe.
+# Column order = PERSON_ID: 董莺雨 四毛 包德利 陈玛丽 赛珍珠 冯全篾 发达而 金如山
+ORIGINAL_ORDER = ["董莺雨", "四毛", "包德利", "陈玛丽", "赛珍珠", "冯全篾", "发达而", "金如山"]
+CARD_WEIGHT = {18: 30, 26: 30}
+CARD_ALLOWED = {
+    3: "01101110", 5: "10110101", 6: "01100001", 7: "11111110", 9: "00100111",
+    10: "01000101", 11: "01111101", 12: "01100001", 13: "11011101", 18: "11111011",
+    20: "00001001", 21: "01100101", 23: "11111011", 27: "11011101", 28: "11111101",
+}
+
+# Pictures 31-34 are not in the chance deck; the game shows them for other events.
+SPECIAL_EVENTS = [
+    {"id": "antique", "picture": "Sprite/Chance31.pic", "text": "发现古董，获利 1000 万圆",
+     "when": "建房后随机触发；概率按房子占地：1 块 1/61，2 块 1/41，3 块 1/31，4 块 1/16",
+     "effects": [{"op": "money", "amount": 1000}]},
+    {"id": "collapse", "picture": "Sprite/Chance32.pic", "text": "发生事故，房屋倒塌",
+     "when": "建房后没挖到古董时，再有 1/31 的概率触发；刚盖的房子被拆掉，造价不退",
+     "effects": [{"op": "demolish_new_house"}]},
+    {"id": "fake_money", "picture": "Sprite/Chance33.pic", "text": "收到假钞，收益作废",
+     "when": "程序里没有调用，是没用上的图", "effects": []},
+    {"id": "mortgage_seized", "picture": "Sprite/Chance34.pic", "text": "银行强行扣留应付款项",
+     "when": "抵押地产时有 1/21 的概率触发：地照样抵押，但拿不到钱",
+     "effects": [{"op": "mortgage_without_payment"}]},
+]
+
 CARD_OPS = {
-    "money": "现金增减 amount 万圆（负数为支出）",
-    "money_from_each": "向其他每位玩家各收 amount 万圆",
-    "money_to_each": "付给其他每位玩家各 amount 万圆",
-    "jail": "坐牢 days 天",
-    "goto": "移动到最近的 tile_type 格子（不经过起点结算）",
-    "state": "获得状态 state，持续 days 天。thief 小偷 / arsonist 纵火犯 / robber 抢劫犯 / "
-             "free_rent 免付租金 / double_rent 付租加倍 / half_rent 付租减半 / charity 自己的产业不收租",
-    "lose_most_expensive_property": "最贵的一块地产被收走",
-    "lose_mortgaged_properties": "所有已抵押的地产被收走",
-    "demolish_one_house": "随机一处房屋被拆掉（土地保留）",
-    "property_value_pct": "target（houses 房产 / lands 土地）的价值改变 pct%",
-    "upgrade_all_houses": "所有房屋升一级",
+    "money": "现金增减 amount 万圆；支出时先扣现金，不够再扣存款，还不够就破产",
+    "money_from_each": "向其他每位玩家各收 amount 万圆（对方付不起就破产）",
+    "money_to_each": "付给其他每位玩家各 amount 万圆（自己付不起就破产）",
+    "jail": "直接送到巡捕房，坐牢 days 回合（这期间跳过回合）",
+    "goto": "直接移动到 tile_type 格子；trigger_stop 为 true 时触发停在那里的效果",
+    "state": "进入状态 state，持续 days 回合（0 = 一直持续到触发一次）。thief 小偷 / arsonist 纵火犯 / "
+             "robber 抢劫犯 / free_rent 免付租金 / double_rent 付租加倍 / half_rent 付租减半 / "
+             "charity 自己的产业不收租。玩家同一时间只有一种状态，新状态会覆盖旧的",
+    "lose_most_expensive_land": "自己地价最高的一块空地被收走（地上的房子拆掉，变成无主）",
+    "lose_mortgaged_properties": "自己所有已抵押的地产和企业被收走（变成无主）",
+    "demolish_random_house": "随机拆掉自己的一栋房子",
+    "land_value_pct": "自己所有地块的地价系数改变 pct%（地价和租金都跟着变）",
+    "upgrade_houses": "自己所有旅社免费升成旅馆、小洋楼免费升成花园洋房",
     "lose_deposit": "银行存款清零",
-    "void_next_income": "下一笔收入作废（含义按卡面理解，未核实）",
-    "bank_seize_payment": "银行扣留应付款项（含义未核实）",
+    "demolish_new_house": "刚盖好的房子被拆掉",
+    "mortgage_without_payment": "这次抵押拿不到钱",
 }
 
 
@@ -222,20 +248,29 @@ def build_cards() -> dict:
     src = json.loads((EXTRACTED / "text/chance_cards.json").read_text("utf-8"))
     cards = []
     for c in src["cards"]:
+        if c["id"] not in CARD_EFFECTS:
+            continue
         text, effects, specific = CARD_EFFECTS[c["id"]]
+        mask = CARD_ALLOWED.get(c["id"], "11111111")
+        original_allowed = [n for n, bit in zip(ORIGINAL_ORDER, mask) if bit == "1"]
         card = {"id": c["id"], "text": text, "effects": effects,
+                "weight": CARD_WEIGHT.get(c["id"], 100),
+                "allowed_for": [cid for cid, ch in CHARACTERS.items() if ch["original"] in original_allowed],
+                "original_allowed": original_allowed,
                 "original_text": f"{c['title']} {c['text']}",
                 "picture": c["picture"]}
         if specific:
             card["setting_specific"] = True
         cards.append(card)
     return {
-        "_comment": "34 张机会卡。text 是游戏里显示的简体文字；original_text 是原版卡面（繁体）。"
-                    "effects 是程序执行的效果，可以组合多个。数值和效果按卡面文字理解，"
-                    "原版代码里的精确数值未核实。setting_specific 标出带 1940 年代中国背景、"
-                    "以后换皮时需要改写的卡。天数：先按一轮 = 一天。",
+        "_comment": "机会卡。效果和数值都是从原版程序里读出来的（见 docs/original_rules.md）。"
+                    "抽卡：随机选一张，若当前角色不在 allowed_for 里就重抽，再以 weight% 的概率保留，否则重抽。"
+                    "allowed_for 是 4 个新角色，暂时照抄借用的原版角色（斐斐=包德利，小九=冯全篾，"
+                    "孔雀=董莺雨，理理=发达而），作者可以按人设改；original_allowed 是原版 8 个角色。"
+                    "setting_specific 标出带 1940 年代中国背景、换皮时要改写的卡。",
         "ops": CARD_OPS,
         "cards": cards,
+        "special_events": SPECIAL_EVENTS,
     }
 
 
@@ -363,7 +398,9 @@ def build_reference() -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--force", action="store_true", help="overwrite existing files")
+    ap.add_argument("--only", default="", help="comma-separated file names to build, e.g. chance.json")
     a = ap.parse_args()
+    only = set(filter(None, a.only.split(",")))
     outputs = {
         "maps/shanghai_loop.json": lambda: build_loop_map(SHANGHAI_LOOP),
         "cards/chance.json": build_cards,
@@ -372,6 +409,8 @@ def main() -> None:
         "reference/original_cities.json": build_reference,
     }
     for rel, fn in outputs.items():
+        if only and Path(rel).name not in only:
+            continue
         path = DATA / rel
         if path.exists() and not a.force:
             print(f"跳过（已存在）：{rel}")

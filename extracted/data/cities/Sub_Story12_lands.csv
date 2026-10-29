@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 西马路1号,-9,11,100,80,50,10,8,0
 西马路2号,-9,12,100,80,50,10,8,0
 西马路3号,-9,13,100,80,50,10,8,0

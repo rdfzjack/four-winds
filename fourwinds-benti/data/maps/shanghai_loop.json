@@ -2,7 +2,7 @@
  "id": "shanghai_loop",
  "name": "上海（原版数据，一圈）",
  "placeholder": true,
- "_comment": "由 tools/build_game_data.py 从原版上海数据生成，之后可直接修改。每格的 next 列出可以走到的下一格；岔路就是 next 有多个格子。price_pct 是地价系数：空地价 = price_pct × blank_land_price ÷ 100。",
+ "_comment": "由 tools/build_game_data.py 从原版上海数据生成，之后可直接修改。每格的 next 列出可以走到的下一格；岔路就是 next 有多个格子。price_pct 是地价系数：空地价 = price_pct × blank_land_price ÷ 100，租金也按它算；build_cost_pct 是建房系数：造价 = 房子所占各块地的 build_cost_pct 之和 × 造价 ÷ 100。",
  "start_tile": 0,
  "prices": {
   "_comment": "原版 上海 的 CITY_PROPERTY，单位万圆。",
@@ -78,6 +78,7 @@
    "name": "顺昌路1号",
    "group": "顺昌路",
    "price_pct": 80,
+   "build_cost_pct": 80,
    "source": "Cit_Shaihai.cit 地块 (-11,34) 顺昌路1号",
    "pos": [
     9,
@@ -105,6 +106,7 @@
    "name": "顺昌路2号",
    "group": "顺昌路",
    "price_pct": 80,
+   "build_cost_pct": 80,
    "source": "Cit_Shaihai.cit 地块 (-10,34) 顺昌路2号",
    "pos": [
     7,
@@ -120,6 +122,7 @@
    "name": "北京路1号",
    "group": "北京路",
    "price_pct": 100,
+   "build_cost_pct": 100,
    "source": "Cit_Shaihai.cit 地块 (3,19) 北京路1号",
    "pos": [
     6,
@@ -135,6 +138,7 @@
    "name": "北京路2号",
    "group": "北京路",
    "price_pct": 100,
+   "build_cost_pct": 100,
    "source": "Cit_Shaihai.cit 地块 (4,19) 北京路2号",
    "pos": [
     5,
@@ -150,6 +154,7 @@
    "name": "北京路3号",
    "group": "北京路",
    "price_pct": 100,
+   "build_cost_pct": 100,
    "source": "Cit_Shaihai.cit 地块 (5,19) 北京路3号",
    "pos": [
     4,
@@ -181,6 +186,7 @@
    "name": "华山路1号",
    "group": "华山路",
    "price_pct": 110,
+   "build_cost_pct": 90,
    "source": "Cit_Shaihai.cit 地块 (-17,25) 华山路1号",
    "pos": [
     2,
@@ -196,6 +202,7 @@
    "name": "华山路2号",
    "group": "华山路",
    "price_pct": 110,
+   "build_cost_pct": 90,
    "source": "Cit_Shaihai.cit 地块 (-17,26) 华山路2号",
    "pos": [
     1,
@@ -223,6 +230,7 @@
    "name": "万航渡路1号",
    "group": "万航渡路",
    "price_pct": 130,
+   "build_cost_pct": 140,
    "source": "Cit_Shaihai.cit 地块 (-17,22) 万航渡路1号",
    "pos": [
     0,
@@ -254,6 +262,7 @@
    "name": "万航渡路2号",
    "group": "万航渡路",
    "price_pct": 130,
+   "build_cost_pct": 140,
    "source": "Cit_Shaihai.cit 地块 (-16,22) 万航渡路2号",
    "pos": [
     0,
@@ -269,6 +278,7 @@
    "name": "万航渡路3号",
    "group": "万航渡路",
    "price_pct": 130,
+   "build_cost_pct": 140,
    "source": "Cit_Shaihai.cit 地块 (-15,22) 万航渡路3号",
    "pos": [
     0,
@@ -296,6 +306,7 @@
    "name": "河南中路1号",
    "group": "河南中路",
    "price_pct": 140,
+   "build_cost_pct": 150,
    "source": "Cit_Shaihai.cit 地块 (3,25) 河南中路1号",
    "pos": [
     0,
@@ -323,6 +334,7 @@
    "name": "河南中路2号",
    "group": "河南中路",
    "price_pct": 140,
+   "build_cost_pct": 150,
    "source": "Cit_Shaihai.cit 地块 (3,26) 河南中路2号",
    "pos": [
     0,
@@ -350,6 +362,7 @@
    "name": "河南中路3号",
    "group": "河南中路",
    "price_pct": 140,
+   "build_cost_pct": 150,
    "source": "Cit_Shaihai.cit 地块 (3,27) 河南中路3号",
    "pos": [
     1,
@@ -377,6 +390,7 @@
    "name": "中华路1号",
    "group": "中华路",
    "price_pct": 150,
+   "build_cost_pct": 170,
    "source": "Cit_Shaihai.cit 地块 (-8,35) 中华路1号",
    "pos": [
     3,
@@ -392,6 +406,7 @@
    "name": "中华路2号",
    "group": "中华路",
    "price_pct": 150,
+   "build_cost_pct": 170,
    "source": "Cit_Shaihai.cit 地块 (-8,36) 中华路2号",
    "pos": [
     4,
@@ -423,6 +438,7 @@
    "name": "中华路3号",
    "group": "中华路",
    "price_pct": 150,
+   "build_cost_pct": 170,
    "source": "Cit_Shaihai.cit 地块 (-8,37) 中华路3号",
    "pos": [
     6,
@@ -450,6 +466,7 @@
    "name": "南京西路1号",
    "group": "南京西路",
    "price_pct": 160,
+   "build_cost_pct": 160,
    "source": "Cit_Shaihai.cit 地块 (-9,23) 南京西路1号",
    "pos": [
     8,
@@ -465,6 +482,7 @@
    "name": "南京西路2号",
    "group": "南京西路",
    "price_pct": 160,
+   "build_cost_pct": 160,
    "source": "Cit_Shaihai.cit 地块 (-8,23) 南京西路2号",
    "pos": [
     9,
@@ -492,6 +510,7 @@
    "name": "南京西路3号",
    "group": "南京西路",
    "price_pct": 160,
+   "build_cost_pct": 160,
    "source": "Cit_Shaihai.cit 地块 (-7,23) 南京西路3号",
    "pos": [
     10,
@@ -564,6 +583,7 @@
    "name": "南京路1号",
    "group": "南京路",
    "price_pct": 240,
+   "build_cost_pct": 220,
    "source": "Cit_Shaihai.cit 地块 (-1,23) 南京路1号",
    "pos": [
     10,
@@ -579,6 +599,7 @@
    "name": "南京路2号",
    "group": "南京路",
    "price_pct": 240,
+   "build_cost_pct": 220,
    "source": "Cit_Shaihai.cit 地块 (0,23) 南京路2号",
    "pos": [
     10,
@@ -594,6 +615,7 @@
    "name": "南京路3号",
    "group": "南京路",
    "price_pct": 240,
+   "build_cost_pct": 220,
    "source": "Cit_Shaihai.cit 地块 (1,23) 南京路3号",
    "pos": [
     10,

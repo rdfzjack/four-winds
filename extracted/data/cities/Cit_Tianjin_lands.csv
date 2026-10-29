@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 南开路8号,-16,21,90,90,72,13,8,0
 南开路7号,-16,22,90,90,72,13,8,0
 南开路6号,-16,23,90,90,72,13,8,0

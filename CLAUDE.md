@@ -7,12 +7,14 @@
 - `docs/design.md`：设计文档（角色、城市、远期新规则）。和作者最新指示冲突时以作者为准。
 - `docs/plan.md`：开发计划和当前进度。每完成一步就更新进度表。
 - `docs/analysis.md`：原版文件格式和数据结构。
+- `docs/original_rules.md`：反汇编确认的原版规则和数值（第 2 步按它实现规则）。
 
 ## 目录
 
 | 位置 | 内容 |
 |---|---|
 | `shanghai1940/` | 原版游戏文件。**只读，不要修改或删除** |
+| `tools/re/` | 反汇编工具：`disasm_exe.py` 生成带中文字符串注释的 `1940.exe` 汇编清单，已识别的函数会标上名字 |
 | `tools/` | Python 工具：解包原版（`extract_all.py`）、生成游戏数据初版（`build_game_data.py`，默认不覆盖已有文件）、校验 Godot 数据（`validate_data.py`） |
 | `extracted/` | 原版解包结果，只作参考。**不要整个拷进 Godot 项目**（85MB，会拖慢编辑器） |
 | `fourwinds-benti/` | Godot 项目 |

@@ -89,7 +89,7 @@ func test_broken_map_is_reported() -> void:
 		{"id": 0, "type": "start", "pos": [0, 0], "next": [0]},
 		{"id": 1, "type": "land", "pos": [1, 0], "next": [0]},
 	]})
-	check(errors.size() >= 2, "坏地图能被发现（走不到的格子、缺街道组）")
+	check(errors.size() >= 3, "坏地图能被发现（走不到的格子、缺街道组、缺系数）")
 
 
 func test_characters_ai_lines_match() -> void:
@@ -105,9 +105,11 @@ func test_characters_ai_lines_match() -> void:
 func test_cards_valid() -> void:
 	var errors: Array = []
 	var cards := JsonUtil.load_dict("res://data/cards/chance.json", errors)
-	errors.append_array(DataCheck.check_cards(cards))
+	var chars := JsonUtil.load_dict("res://data/characters.json", errors)
+	errors.append_array(DataCheck.check_cards(cards, chars.get("characters", [])))
 	check(errors.is_empty(), "机会卡格式正确 %s" % str(errors))
-	check(cards.get("cards", []).size() == 34, "34 张机会卡")
+	check(cards.get("cards", []).size() == 30, "牌堆 30 张机会卡")
+	check(cards.get("special_events", []).size() == 4, "4 个特殊事件")
 
 
 func test_broken_cards_reported() -> void:
@@ -117,9 +119,18 @@ func test_broken_cards_reported() -> void:
 			{"id": 1, "text": "a", "effects": [{"op": "fly_to_moon"}]},
 			{"id": 1, "text": "b", "effects": [{"op": "money"}]},
 			{"id": 2, "text": "c", "effects": [{"op": "state", "state": "rich", "days": 1}]},
+			{
+				"id": 3,
+				"text": "d",
+				"weight": 150,
+				"allowed_for": ["nobody"],
+				"effects": [{"op": "money", "amount": 1}]
+			},
 		]
 	}
-	check(DataCheck.check_cards(bad).size() == 4, "坏机会卡能被发现（未知效果、重复 id、缺参数、未知状态）")
+	var chars := [{"id": "david"}]
+	var errs := DataCheck.check_cards(bad, chars)
+	check(errs.size() == 6, "坏机会卡能被发现（未知效果、重复 id、缺参数、未知状态、权重、角色）%s" % str(errs))
 
 
 func test_default_map() -> void:

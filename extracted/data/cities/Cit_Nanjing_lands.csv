@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 虎踞路1号,-15,21,80,90,64,12,8,0
 虎踞路2号,-15,22,80,90,64,12,8,0
 虎踞路3号,-15,23,80,90,64,12,8,0

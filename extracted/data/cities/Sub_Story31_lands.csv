@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 乾坤里1号,-8,10,150,120,75,15,8,0
 乾坤里2号,-8,11,150,120,75,15,8,0
 东堤路1号,-4,15,80,100,40,8,8,0
