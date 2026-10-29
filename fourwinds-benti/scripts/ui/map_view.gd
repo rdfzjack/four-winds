@@ -368,6 +368,8 @@ func _draw_label(t: Dictionary) -> void:
 	_text(name_text, pos + Vector2(0, -2), 12, Color.WHITE)
 	if game.props.has(id):
 		var sub := "%d" % game.property_price(id) if game.owner_of(id) < 0 else "租 %d" % game.rent_of(id)
+		if game.props[id]["mortgaged"]:
+			sub = "抵押中"
 		_text(sub, pos + Vector2(0, 11), 10, Color("#fff59d"))
 
 

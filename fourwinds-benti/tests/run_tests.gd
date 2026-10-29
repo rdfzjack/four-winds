@@ -11,6 +11,7 @@ const GameTests = preload("res://tests/game_tests.gd")
 const AiTests = preload("res://tests/ai_tests.gd")
 const StreetTests = preload("res://tests/street_tests.gd")
 const OriginalMapTests = preload("res://tests/original_map_tests.gd")
+const TradeTests = preload("res://tests/trade_tests.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
 const Art = preload("res://scripts/ui/art.gd")
 
@@ -52,6 +53,7 @@ func run_logic_tests() -> void:
 	GameTests.new().run(self)
 	StreetTests.new().run(self)
 	OriginalMapTests.new().run(self)
+	TradeTests.new().run(self)
 	AiTests.new().run(self)
 
 
@@ -242,6 +244,12 @@ func _finish_table_smoke() -> void:
 	var cam = _table.get("_camera")
 	check(map != null and cam != null and cam.is_current(), "地图层和镜头都在")
 	check(map.tile_at(map.tile_position(0)) == 0, "点起点格子能点中起点")
+	# 对话框能搭起来（运行时错误会在输出里报出来）
+	_table._open_house_dialog()
+	_table._open_mortgage_dialog()
+	_table._open_auction_dialog()
+	_table._open_trade_dialog({})
+	check(_table.get("_overlay").visible, "抵押、拍卖、交易对话框能打开")
 	_table.queue_free()
 	root.get_node("Data").start_specs = []
 	root.get_node("Data").start_map = ""

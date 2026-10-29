@@ -128,6 +128,8 @@ func test_games(board: Board, count: int, label: String) -> void:
 	var ids := char_ids()
 	var total := {}
 	var finished := 0
+	var finish_days := 0
+	var full_streets := 0
 	for seed_value in range(1, count + 1):
 		var n := 2 + seed_value % 3
 		var who: Array = []
@@ -139,6 +141,8 @@ func test_games(board: Board, count: int, label: String) -> void:
 				% [label, seed_value, str(r["bad"].slice(0, 3))])
 		if g.phase == "over":
 			finished += 1
+			finish_days += g.day
+		full_streets += int(r["full_day30"])
 		for id in r["stats"]:
 			var s: Dictionary = total.get_or_add(id, {})
 			for k in r["stats"][id]:
@@ -157,8 +161,34 @@ func test_games(board: Board, count: int, label: String) -> void:
 			s.get("offer_company", 0), s.get("built", 0), s.get("big", 0), s.get("upgraded", 0),
 			s.get("removed", 0),
 			s.get("cash", 0) / maxi(1, s.get("turns", 0)), s.get("deposit", 0) / maxi(1, s.get("turns", 0))])
-	print("%s 原版 AI：%d/%d 局在 %d 天内打完\n  %s" % [label, finished, count, MAX_DAYS, "\n  ".join(lines)])
+	var deals := {}
+	for id in total:
+		for k in ["trade_proposed", "trade_done", "auction_start", "auction_sold", "mortgaged",
+				"unmortgaged"]:
+			deals[k] = int(deals.get(k, 0)) + int(total[id].get(k, 0))
+	print("%s 原版 AI：%d/%d 局在 %d 天内打完（平均第 %d 天）；第 30 天整条街归一人的共 %d 条\n  %s\n  %s" % [
+		label, finished, count, MAX_DAYS, finish_days / maxi(1, finished), full_streets,
+		"交易提议 %d 成交 %d · 拍卖 %d 卖出 %d · 抵押 %d 赎回 %d" % [deals["trade_proposed"],
+				deals["trade_done"], deals["auction_start"], deals["auction_sold"], deals["mortgaged"],
+				deals["unmortgaged"]],
+		"\n  ".join(lines)])
 	check(bought > 0 and built > 0 and big > 0, "%s 原版 AI 会买地、建房、盖大房子" % label)
+
+
+## 整条街（同一个 group 的地）都归同一个人的街有几条
+func full_street_count(g: Game) -> int:
+	var owners := {}
+	for t in g.props:
+		var tile: Dictionary = g.board.get_tile(t)
+		if tile["type"] != "land":
+			continue
+		var key := str(tile.get("group", ""))
+		var o := g.owner_of(t)
+		if not owners.has(key):
+			owners[key] = o
+		elif owners[key] != o:
+			owners[key] = -1
+	return owners.values().filter(func(o: int) -> bool: return o >= 0).size()
 
 
 ## 跑一局到结束或 MAX_DAYS 天。返回 {bad: [问题], stats: {角色: {计数}}}
@@ -166,8 +196,11 @@ func play(g: Game) -> Dictionary:
 	var bad: Array = []
 	var stats := {}
 	var steps := 0
+	var full_day30 := -1  ## 第 30 天开始时整条街归一人的街数（-1 = 还没到）
 	while g.phase != "over" and g.day <= MAX_DAYS and bad.is_empty():
 		steps += 1
+		if g.day == 30 and full_day30 < 0:
+			full_day30 = full_street_count(g)
 		if steps > 40000:
 			bad.append("步数太多，可能死循环")
 			break
@@ -195,12 +228,16 @@ func play(g: Game) -> Dictionary:
 					e["removed"] = int(e.get("removed", 0)) + 1
 				"upgraded":
 					e["upgraded"] = int(e.get("upgraded", 0)) + 1
+				"trade_proposed", "trade_done", "auction_start", "auction_sold", "auction_government", \
+						"mortgaged", "unmortgaged":
+					var k := str(ev["type"])
+					e[k] = int(e.get(k, 0)) + 1
 				"turn_start":
 					var p = g.players[int(ev["player"])]
 					e["turns"] = int(e.get("turns", 0)) + 1
 					e["cash"] = int(e.get("cash", 0)) + p.cash
 					e["deposit"] = int(e.get("deposit", 0)) + p.deposit
-	return {"bad": bad, "stats": stats}
+	return {"bad": bad, "stats": stats, "full_day30": maxi(full_day30, 0)}
 
 
 ## 同样的对局，只改一个参数，行为要有可测的差别

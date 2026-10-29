@@ -1,10 +1,11 @@
+# gdlint: disable=max-file-lines
 extends Node
 ## 棋盘画面 + 热座：把 Game（规则）画出来，人类用按钮操作，AI 用 Brain（原版 AI）自动走。
 ##
 ## 画面分两层：
 ##   - 地图层（map_view.gd，跟着 map_camera.gd 的镜头移动）：格子、房子、棋子
 ##   - 界面层（CanvasLayer，钉在屏幕上）：玩家卡片、按钮、日志、骰子、对话框
-## 以后的新界面（拍卖、交易、剧情对话、立绘）都加在界面层 _ui 下面。
+## 新界面（拍卖、交易、剧情对话、立绘）都加在界面层 _ui 下面（拍卖、交易现在是右边的按钮 + 对话框）。
 ##
 ## 这个脚本做三件事：
 ##   1. 人类点按钮 → 调 Game 的方法（roll / buy / build ...）
@@ -56,6 +57,8 @@ var _controls: VBoxContainer
 var _log: RichTextLabel
 var _overlay: Control
 var _overlay_box: VBoxContainer
+## 交易对话框的草稿：offer 的各项（give / get 是地块列表）+ counter（是不是还价）
+var _trade: Dictionary = {}
 
 
 func _ready() -> void:
@@ -228,7 +231,7 @@ func _advance() -> void:
 		_refresh()
 		if game.phase == "over":
 			break
-		if game.player().human:
+		if game.players[game.actor()].human:
 			break
 		await _wait(AI_DELAY)
 		if not Brain.step(game):
@@ -416,6 +419,30 @@ func _describe(ev: Dictionary) -> String:
 			return "%s 的状态结束：%s" % [_pname(pi), STATUS_NAMES.get(str(ev["kind"]), "")]
 		"payday":
 			return "%s 领到银行利息 %d 万" % [_pname(pi), int(ev["amount"])]
+		"mortgaged":
+			if ev["seized"]:
+				return "%s 抵押了 %s，银行强行扣留应付款项，一分没拿到！" % [_pname(pi), _tname(int(ev["tile"]))]
+			return "%s 抵押了 %s，得 %d 万" % [_pname(pi), _tname(int(ev["tile"])), int(ev["amount"])]
+		"unmortgaged":
+			return "%s 赎回了 %s，付 %d 万" % [_pname(pi), _tname(int(ev["tile"])), int(ev["cost"])]
+		"auction_start":
+			return "%s 拍卖 %s，起拍价 %d 万" % [_pname(pi), _tname(int(ev["tile"])), int(ev["price"])]
+		"auction_bid":
+			return "%s 出价 %d 万" % [_pname(pi), int(ev["price"])]
+		"auction_pass":
+			return "%s 不再出价%s" % [_pname(pi), "（现金不够）" if ev.get("auto", false) else ""]
+		"auction_sold":
+			return "%s 以 %d 万拍下 %s" % [_pname(pi), int(ev["price"]), _tname(int(ev["tile"]))]
+		"auction_government":
+			return "没人出价，政府按起拍价 %d 万收回 %s" % [int(ev["price"]), _tname(int(ev["tile"]))]
+		"trade_proposed":
+			return "%s 提议交易：%s" % [_pname(pi), _offer_text(ev["offer"])]
+		"trade_countered":
+			return "%s 还价：%s" % [_pname(pi), _offer_text(ev["offer"])]
+		"trade_done":
+			return "交易成交：%s" % _offer_text(ev["offer"])
+		"trade_rejected":
+			return "%s 拒绝了交易" % _pname(pi)
 		_:
 			return ""
 
@@ -451,6 +478,14 @@ func _speak(ev: Dictionary) -> void:
 		"alms":
 			who = int(ev["receiver"])
 			cond = "GET_CHARITY"
+		"trade_done":
+			who = int(ev["offer"]["from"])
+			cond = "TRADE_OK"
+		"trade_rejected":
+			# 被拒的一方说话：对方拒绝了发起人的提议，或发起人拒绝了还价
+			var o: Dictionary = ev["offer"]
+			who = int(o["from"]) if int(ev["player"]) == int(o["to"]) else int(o["to"])
+			cond = "TRADE_NOT_OK"
 		"card":
 			who = int(ev["player"])
 			cond = _card_mood(int(ev["card"]))
@@ -533,14 +568,17 @@ func _button(text: String, on_press: Callable) -> Button:
 
 func _show_controls() -> void:
 	_clear_controls()
-	if game.phase == "over" or not game.player().human:
+	if game.phase == "over" or not game.players[game.actor()].human:
 		return
-	var p = game.player()
+	var p = game.players[game.actor()]
 	_make_label(_controls, "轮到 %s（现金 %d · 存款 %d）" % [p.display_name, p.cash, p.deposit], 14,
 			Color.WHITE)
 	if game.phase == "pre_roll":
 		_button("掷骰子", _on_roll)
 		_button("房产：建房 / 升级 / 拆房", _open_house_dialog)
+		_button("抵押 / 赎回", _open_mortgage_dialog)
+		_button("拍卖", _open_auction_dialog)
+		_button("交易", func() -> void: _open_trade_dialog({}))
 		return
 	match str(game.pending["type"]):
 		"choose_direction":
@@ -565,7 +603,56 @@ func _show_controls() -> void:
 					Color("#fff59d"))
 			_button("交保释金（%d 万）" % amount, func() -> void: _do(func() -> void: game.bail(true)))
 			_button("坐牢", func() -> void: _do(func() -> void: game.bail(false)))
+		"auction":
+			_show_auction_controls(p)
+		"trade":
+			_show_trade_controls()
 	_map.queue_redraw()
+
+
+func _show_auction_controls(p) -> void:
+	var a: Dictionary = game.pending
+	var top := int(a["top"])
+	_make_label(_controls, "%s 拍卖 %s（价格 %d）\n现价 %d 万%s" % [
+		game.players[int(a["seller"])].display_name, _tname(int(a["tile"])),
+		game.property_price(int(a["tile"])), int(a["price"]),
+		"，%s 出的" % game.players[top].display_name if top >= 0 else "（起拍价，还没人出价）"],
+		14, Color("#fff59d"))
+	_map.highlight = [int(a["tile"])]
+	for step in game.bid_steps():
+		var s: int = step
+		var b := _button("加 %d（出 %d 万）" % [s, int(a["price"]) + s], func() -> void: _do(func() -> void:
+				game.auction_bid(s)))
+		b.disabled = p.cash < int(a["price"]) + s
+	_button("不出价了", func() -> void: _do(game.auction_pass))
+
+
+func _show_trade_controls() -> void:
+	var o: Dictionary = game.pending["offer"]
+	var counter: bool = game.pending["stage"] == "counter"
+	var title := "%s 还价：" % game.players[int(o["to"])].display_name if counter \
+			else "%s 向你提议交易：" % game.players[int(o["from"])].display_name
+	_make_label(_controls, title + _offer_text(o), 14, Color("#fff59d"))
+	_map.highlight = o["give"] + o["get"]
+	_button("同意", func() -> void: _do(func() -> void: game.trade_answer(true)))
+	_button("拒绝", func() -> void: _do(func() -> void: game.trade_answer(false)))
+	if not counter:
+		_button("还价", func() -> void: _open_trade_dialog(o))
+
+
+## 交易内容的文字：A 给 xx、yy 和 100 万；B 给 zz
+func _offer_text(o: Dictionary) -> String:
+	var sides: Array = []
+	var from_side := [int(o["from"]), o["give"], int(o["give_cash"])]
+	for side in [from_side, [int(o["to"]), o["get"], int(o["get_cash"])]]:
+		var items: Array = []
+		for t in side[1]:
+			items.append(_tname(int(t)) + ("（抵押中）" if game.props[int(t)]["mortgaged"] else ""))
+		if int(side[2]) > 0:
+			items.append("%d 万" % int(side[2]))
+		sides.append("%s 给 %s" % [game.players[side[0]].display_name,
+				"、".join(items) if not items.is_empty() else "（无）"])
+	return "；".join(sides)
 
 
 func _show_bank_controls(p) -> void:
@@ -741,6 +828,208 @@ func _dialog_button(parent: Node, text: String, tiles: Array, on_press: Callable
 func _house_action(error: String) -> void:
 	_flush_events()
 	_rebuild_house_dialog(error)
+
+
+# ───────────────────────── 抵押 / 拍卖 / 交易对话框 ─────────────────────────
+
+## 对话框的标题、错误提示和可滚动的列表；返回列表，选项加在里面
+func _dialog_frame(title: String, message: String) -> VBoxContainer:
+	_clear_overlay_box()
+	_map.hover_highlight = []
+	var p = game.players[game.actor()]
+	_make_label(_overlay_box, "%s · %s · 现金 %d 万" % [title, p.display_name, p.cash], 18, Color.WHITE)
+	if message != "":
+		_make_label(_overlay_box, message, 14, Color("#ef9a9a"))
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, 380)
+	_overlay_box.add_child(scroll)
+	var list := VBoxContainer.new()
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(list)
+	return list
+
+
+func _add_close_button(text: String = "关闭") -> void:
+	var close := Button.new()
+	close.text = text
+	close.custom_minimum_size = Vector2(0, 40)
+	close.pressed.connect(_close_overlay)
+	_overlay_box.add_child(close)
+
+
+func _open_mortgage_dialog() -> void:
+	_overlay.visible = true
+	_rebuild_mortgage_dialog("")
+
+
+func _rebuild_mortgage_dialog(message: String) -> void:
+	var list := _dialog_frame("抵押 / 赎回", message)
+	var pi := game.current
+	var can_mortgage: Array = []
+	var mortgaged: Array = []
+	for t in game.properties_of(pi):
+		if game.why_cannot_mortgage(pi, t) == "":
+			can_mortgage.append(t)
+		elif game.props[t]["mortgaged"]:
+			mortgaged.append(t)
+	_section(list, "抵押", can_mortgage.size())
+	for t in can_mortgage:
+		var tile: int = t
+		_dialog_button(list, "抵押 %s · 得 %d" % [_tname(tile), game.mortgage_value(tile)], [tile],
+				func() -> void: _mortgage_action(game.mortgage(pi, tile)))
+	_section(list, "赎回", mortgaged.size())
+	for t in mortgaged:
+		var tile: int = t
+		_dialog_button(list, "赎回 %s · 付 %d" % [_tname(tile), game.unmortgage_cost(tile)], [tile],
+				func() -> void: _mortgage_action(game.unmortgage(pi, tile)))
+	if can_mortgage.is_empty() and mortgaged.is_empty():
+		_make_label(list, "现在没有能抵押或赎回的地产", 13, Color("#90a4ae"))
+	_add_close_button()
+
+
+func _mortgage_action(error: String) -> void:
+	_flush_events()
+	_rebuild_mortgage_dialog(error)
+
+
+func _open_auction_dialog() -> void:
+	_overlay.visible = true
+	var list := _dialog_frame("拍卖", "")
+	var pi := game.current
+	var count := 0
+	for t in game.properties_of(pi):
+		if game.why_cannot_auction(pi, t) != "":
+			continue
+		var tile: int = t
+		count += 1
+		_dialog_button(list, "拍卖 %s · 起拍 %d" % [_tname(tile), game.auction_start_price(tile)], [tile],
+				func() -> void: _start_from_dialog(func() -> String: return game.start_auction(pi, tile)))
+	if count == 0:
+		_make_label(list, "现在没有能拍卖的地产", 13, Color("#90a4ae"))
+	_add_close_button()
+
+
+## 对话框里的操作会让别的玩家接着做决定（拍卖、交易）：关掉对话框，交给 _advance
+func _start_from_dialog(action: Callable) -> String:
+	var error: String = action.call()
+	if error == "":
+		_overlay.visible = false
+		_map.hover_highlight = []
+		_advance()
+	return error
+
+
+## base 为空：自己发起交易；否则是对 base 还价
+func _open_trade_dialog(base: Dictionary) -> void:
+	_overlay.visible = true
+	if base.is_empty():
+		var partner := -1
+		for q in game.alive_players():
+			if q.index != game.current:
+				partner = q.index
+				break
+		_trade = {"from": game.current, "to": partner, "give": [], "get": [], "give_cash": 0,
+				"get_cash": 0, "counter": false}
+	else:
+		_trade = base.duplicate(true)
+		_trade["counter"] = true
+	_rebuild_trade_dialog("")
+
+
+func _rebuild_trade_dialog(message: String) -> void:
+	var counter: bool = _trade["counter"]
+	var list := _dialog_frame("还价" if counter else "交易", message)
+	var a := int(_trade["from"])
+	if not counter:
+		var row := HBoxContainer.new()
+		list.add_child(row)
+		var who := _make_label(row, "和谁交易：", 14, Color.WHITE)
+		who.autowrap_mode = TextServer.AUTOWRAP_OFF
+		for q in game.alive_players():
+			if q.index == a:
+				continue
+			var qi: int = q.index
+			var b := Button.new()
+			b.text = q.display_name
+			b.toggle_mode = true
+			b.button_pressed = qi == int(_trade["to"])
+			b.pressed.connect(func() -> void:
+				_trade["to"] = qi
+				_trade["get"] = []
+				_trade["get_cash"] = 0
+				_rebuild_trade_dialog(""))
+			row.add_child(b)
+	var cols := HBoxContainer.new()
+	cols.add_theme_constant_override("separation", 16)
+	list.add_child(cols)
+	_trade_column(cols, a, "give", "give_cash")
+	_trade_column(cols, int(_trade["to"]), "get", "get_cash")
+	var send := Button.new()
+	send.text = "发出还价" if counter else "提议"
+	send.custom_minimum_size = Vector2(0, 40)
+	send.pressed.connect(_send_trade)
+	_overlay_box.add_child(send)
+	_add_close_button("取消")
+
+
+## 交易的一边：这个玩家能拿出的地产（有房子的整栋一项）和现金
+func _trade_column(parent: Node, pi: int, key: String, cash_key: String) -> void:
+	var col := VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parent.add_child(col)
+	_make_label(col, "%s 给出" % game.players[pi].display_name, 15, Color("#ffd54f"))
+	var seen := {}
+	for t in game.properties_of(pi):
+		if seen.has(t):
+			continue
+		var hid := game.house_at(t)
+		var tiles: Array = [t] if hid == 0 else game.houses[hid]["tiles"].duplicate()
+		for x in tiles:
+			seen[x] = true
+		var text := _tiles_text(tiles)
+		if hid != 0:
+			text += " · " + _house_name(str(game.houses[hid]["kind"]))
+		else:
+			text += " · %d" % game.property_price(t)
+		if game.props[t]["mortgaged"]:
+			text += " · 抵押中"
+		var box := CheckBox.new()
+		box.button_pressed = _trade[key].has(t)
+		box.text = ("√ " if box.button_pressed else "") + text
+		for state in ["font_pressed_color", "font_hover_pressed_color"]:
+			box.add_theme_color_override(state, Color("#ffd54f"))
+		box.toggled.connect(func(on: bool) -> void:
+			box.text = ("√ " if on else "") + text
+			for x in tiles:
+				_trade[key].erase(x)
+				if on:
+					_trade[key].append(x))
+		box.mouse_entered.connect(func() -> void:
+			_map.hover_highlight = tiles
+			_map.queue_redraw())
+		col.add_child(box)
+	var row := HBoxContainer.new()
+	col.add_child(row)
+	_make_label(row, "现金", 14, Color.WHITE)
+	var spin := SpinBox.new()
+	spin.min_value = 0
+	spin.max_value = game.players[pi].cash
+	spin.step = 10
+	spin.value = int(_trade[cash_key])
+	spin.value_changed.connect(func(v: float) -> void: _trade[cash_key] = int(v))
+	row.add_child(spin)
+
+
+func _send_trade() -> void:
+	var offer: Dictionary = _trade.duplicate(true)
+	offer.erase("counter")
+	var error := ""
+	if _trade["counter"]:
+		error = _start_from_dialog(func() -> String: return game.trade_counter(offer))
+	else:
+		error = _start_from_dialog(func() -> String: return game.propose_trade(offer))
+	if error != "":
+		_rebuild_trade_dialog(error)
 
 
 # ───────────────────────── 游戏结束 ─────────────────────────

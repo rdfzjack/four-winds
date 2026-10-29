@@ -1,14 +1,15 @@
 extends SceneTree
 ## 把棋盘画面自动玩一阵再截图，用来在云端检查画面和人类操作流程（不能用 --headless）：
 ##   xvfb-run -a -s "-screen 0 1280x720x24" godot --rendering-driver opengl3 \
-##     --script res://tools/ui_check.gd -- 输出.png [ai|human] [帧数] [地图 id]
+##     --script res://tools/ui_check.gd -- 输出.png [ai|human] [帧数] [地图 id] [house|mortgage|auction|trade]
 ## ai：全是 AI，只看对局能不能自己跑；human：位置 1 是人类，脚本替他点按钮（走和真人一样的画面代码），
-## 最后 60 帧停手，截图里能看到按钮。
+## 最后 60 帧停手，截图里能看到按钮；停在掷骰前时打开最后一个参数指定的对话框（默认房产）。
 
 var out_path := "user://ui_check.png"
 var mode := "ai"
 var total_frames := 900
 var map_id := ""   ## 空 = 默认地图
+var dialog := "house"
 var frames := 0
 var table: Node = null
 
@@ -23,6 +24,8 @@ func _init() -> void:
 		total_frames = int(args[2])
 	if args.size() > 3:
 		map_id = args[3]
+	if args.size() > 4:
+		dialog = args[4]
 
 
 func _process(_delta: float) -> bool:
@@ -44,7 +47,15 @@ func _process(_delta: float) -> bool:
 		if frames < total_frames - 60:
 			_human_step()
 		elif frames == total_frames - 10 and table.game.phase == "pre_roll":
-			table._open_house_dialog()  # 最后停在掷骰前时，顺便看看房产对话框
+			match dialog:  # 最后停在掷骰前时，顺便看看对话框
+				"mortgage":
+					table._open_mortgage_dialog()
+				"auction":
+					table._open_auction_dialog()
+				"trade":
+					table._open_trade_dialog({})
+				_:
+					table._open_house_dialog()
 	if frames == total_frames:
 		var img := root.get_texture().get_image()
 		img.save_png(out_path)
@@ -57,7 +68,7 @@ func _process(_delta: float) -> bool:
 ## 替人类点按钮：和画面上的按钮调用同样的函数
 func _human_step() -> void:
 	var g = table.game
-	if g.phase == "over" or not g.player().human:
+	if g.phase == "over" or not g.players[g.actor()].human:
 		return
 	if g.phase == "pre_roll":
 		if frames % 2 == 0:
@@ -73,3 +84,7 @@ func _human_step() -> void:
 			table._do(g.buy)
 		"bail":
 			table._do(func() -> void: g.bail(true))
+		"auction":
+			table._do(g.auction_pass)
+		"trade":
+			table._do(func() -> void: g.trade_answer(false))

@@ -122,6 +122,10 @@
    1200,
    1500
   ],
-  "upgrade_min_cash_score": 20
+  "upgrade_min_cash_score": 20,
+  "_trade_comment": "以下是第 5 步交易、拍卖的临时简单规则用的数（不是原版的，第 6a 步重写 AI 时换掉）。trade_offer_margin_pct：AI 主动提议时比对方的估价多给几成；trade_retry_days：同一个提议隔几天才再提；auction_cash_below_pct：现金 + 存款不到 keepCashExpect 的这个百分比时，AI 把最不值钱的地产拿去拍卖",
+  "trade_offer_margin_pct": 10,
+  "trade_retry_days": 5,
+  "auction_cash_below_pct": 20
  }
 }
