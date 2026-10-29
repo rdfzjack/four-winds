@@ -17,6 +17,13 @@ var shanghai: Board = null
 
 
 func run(p_runner: Object) -> void:
+	if not load_data(p_runner):
+		return
+	_run_all()
+
+
+## 读测试要用的数据；别的测试文件（extends 这个文件）也用它
+func load_data(p_runner: Object) -> bool:
 	runner = p_runner
 	var errors: Array = []
 	rules = JsonUtil.load_dict("res://data/rules.json", errors)
@@ -26,8 +33,10 @@ func run(p_runner: Object) -> void:
 	var map_data := JsonUtil.load_dict("res://data/maps/shanghai_loop.json", errors)
 	errors.append_array(shanghai.load_from(map_data))
 	check(errors.is_empty(), "规则测试需要的数据能读取 %s" % str(errors))
-	if not errors.is_empty():
-		return
+	return errors.is_empty()
+
+
+func _run_all() -> void:
 	test_street_lengths()
 	test_setup_and_roll()
 	test_buy_and_decline()

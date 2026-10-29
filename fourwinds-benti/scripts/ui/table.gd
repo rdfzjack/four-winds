@@ -15,6 +15,7 @@ extends Node
 const Board = preload("res://scripts/core/board.gd")
 const Game = preload("res://scripts/core/game.gd")
 const SimpleAI = preload("res://scripts/core/simple_ai.gd")
+const Streets = preload("res://scripts/core/streets.gd")
 const MapView = preload("res://scripts/ui/map_view.gd")
 const MapCamera = preload("res://scripts/ui/map_camera.gd")
 const DiceView = preload("res://scripts/ui/dice_view.gd")
@@ -664,6 +665,8 @@ func _rebuild_house_dialog(message: String) -> void:
 		_dialog_button(list, text, tiles, func() -> void:
 				_house_action(game.build(p.index, str(o["kind"]), tiles)))
 
+	_street_hints(list, p.index)
+
 	var upgradable: Array = []
 	var mine: Array = []
 	for hid in game.houses:
@@ -699,6 +702,28 @@ func _rebuild_house_dialog(message: String) -> void:
 	close.custom_minimum_size = Vector2(0, 40)
 	close.pressed.connect(_close_overlay)
 	_overlay_box.add_child(close)
+
+
+## 每条街凑大房子还差什么（旅社、小洋楼、别墅要同一条街上连着的自己的空地，平房占了就不能再用）
+func _street_hints(parent: Node, pi: int) -> void:
+	var streets: Array = Streets.progress(game, pi)
+	if streets.is_empty():
+		return
+	_section(parent, "凑大房子：同一条街上连着的自己的空地（盖了平房的地不算）")
+	for st in streets:
+		var text := "%s：%d 块里你有 %d 块，别人 %d 块，没主人 %d 块；空地最多连着 %d 块" % [
+			st["name"], int(st["total"]), int(st["mine"]), int(st["others"]), int(st["free"]),
+			int(st["run"])]
+		var wants: Array = []
+		for lv in Data.rules["houses"]["levels"]:
+			var lots := int(lv["lots"])
+			if lv.get("build_directly", true) and lots > int(st["run"]) and lots <= int(st["total"]):
+				wants.append("%s要 %d 块" % [lv["name"], lots])
+		if not wants.is_empty():
+			text += "（" + "、".join(wants) + "）"
+		if int(st["free"]) == 0 and not wants.is_empty():
+			text += "；这条街已经没有没主人的地，要凑只能等以后的交易（第 5 步）"
+		_make_label(parent, text, 13, Color("#b0bec5"))
 
 
 func _section(parent: Node, title: String) -> void:

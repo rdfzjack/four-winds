@@ -9,6 +9,7 @@ const Board = preload("res://scripts/core/board.gd")
 const DataCheck = preload("res://scripts/core/data_check.gd")
 const GameTests = preload("res://tests/game_tests.gd")
 const AiTests = preload("res://tests/ai_tests.gd")
+const StreetTests = preload("res://tests/street_tests.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
 const Art = preload("res://scripts/ui/art.gd")
 
@@ -47,6 +48,7 @@ func run_logic_tests() -> void:
 	test_broken_cards_reported()
 	test_default_map()
 	GameTests.new().run(self)
+	StreetTests.new().run(self)
 	AiTests.new().run(self)
 
 

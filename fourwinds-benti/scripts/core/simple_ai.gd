@@ -5,6 +5,8 @@ extends RefCounted
 ## 返回 false 表示现在没有要 AI 做的事（游戏结束，或轮到人类）。
 ## 只通过 Game 的公开方法操作，不访问画面。
 
+const Streets = preload("res://scripts/core/streets.gd")
+
 ## 现金低于这个数就不买地、不建房（万圆）
 const RESERVE := 400
 ## 现金超过这个数的部分，路过银行时存起来
@@ -44,7 +46,7 @@ static func step(game) -> bool:
 ## 掷骰前做一件建设。做了返回 true（调用者会再来一次）。
 static func _improve(game) -> bool:
 	var p = game.player()
-	# 先升级（便宜），再建最贵的买得起的房子
+	# 先升级（便宜），再建最贵的买得起的房子（平房除外，见下面）
 	for hid in game.houses:
 		if game.houses[hid]["owner"] == p.index and game.why_cannot_upgrade(p.index, hid) == "":
 			if p.cash - game.upgrade_fee(game.houses[hid]["tiles"]) >= RESERVE:
@@ -53,6 +55,9 @@ static func _improve(game) -> bool:
 	var best := {}
 	for o in game.build_options(p.index):
 		if p.cash - int(o["cost"]) < RESERVE:
+			continue
+		# 平房占了地就再也凑不成旅社 / 洋楼 / 别墅：这条街还有希望时先留着地
+		if str(o["kind"]) == "flat" and Streets.still_open(game, p.index, int(o["tiles"][0])):
 			continue
 		if best.is_empty() or int(o["cost"]) > int(best["cost"]):
 			best = o
