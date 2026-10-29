@@ -44,22 +44,30 @@ static func step(game) -> bool:
 ## 掷骰前做一件建设。做了返回 true（调用者会再来一次）。
 static func _improve(game) -> bool:
 	var p = game.player()
-	# 先升级（便宜），再建最贵的买得起的房子
+	# 先升级（便宜），再把并排的平房合并成最大的房子，再建最贵的买得起的房子
 	for hid in game.houses:
 		if game.houses[hid]["owner"] == p.index and game.why_cannot_upgrade(p.index, hid) == "":
 			if p.cash - game.upgrade_fee(game.houses[hid]["tiles"]) >= RESERVE:
 				game.upgrade(p.index, hid)
 				return true
-	var best := {}
-	for o in game.build_options(p.index):
-		if p.cash - int(o["cost"]) < RESERVE:
-			continue
-		if best.is_empty() or int(o["cost"]) > int(best["cost"]):
-			best = o
+	var merge := _most_expensive(game.build_options(p.index, true), p.cash)
+	if not merge.is_empty():
+		game.merge(p.index, str(merge["kind"]), merge["tiles"])
+		return true
+	var best := _most_expensive(game.build_options(p.index), p.cash)
 	if best.is_empty():
 		return false
 	game.build(p.index, str(best["kind"]), best["tiles"])
 	return true
+
+
+## 留够 RESERVE 后买得起的选项里最贵的一个；没有返回 {}
+static func _most_expensive(options: Array, cash: int) -> Dictionary:
+	var best := {}
+	for o in options:
+		if cash - int(o["cost"]) >= RESERVE and (best.is_empty() or int(o["cost"]) > int(best["cost"])):
+			best = o
+	return best
 
 
 static func _bank(game, p) -> void:

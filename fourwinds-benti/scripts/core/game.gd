@@ -1,4 +1,5 @@
 # gdlint: ignore=max-public-methods
+# gdlint: disable=max-file-lines
 extends RefCounted
 ## 一局游戏的规则（无画面）：回合、掷骰、移动、买地、收租、建房、银行、坐牢、机会卡、破产。
 ##
@@ -238,8 +239,9 @@ func alive_players() -> Array:
 # ───────────────────────── 掷骰前：建房、升级、拆房 ─────────────────────────
 
 ## 为什么现在不能建？返回原因，空字符串表示可以。
+## merging = 合并平房：占的地里可以有自己的平房（至少一块），见 merge()。
 # gdlint: disable=max-returns
-func why_cannot_build(pi: int, kind: String, tiles: Array) -> String:
+func why_cannot_build(pi: int, kind: String, tiles: Array, merging: bool = false) -> String:
 	if phase != "pre_roll" or current != pi:
 		return "现在不是你掷骰前的时间"
 	if not _house_defs.has(kind) or _house_defs[kind].get("build_directly", true) == false:
@@ -247,7 +249,12 @@ func why_cannot_build(pi: int, kind: String, tiles: Array) -> String:
 	var lots := int(_house_defs[kind]["lots"])
 	if tiles.size() != lots:
 		return "这种房子要占 %d 块地" % lots
-	var why := _why_lots_invalid(pi, tiles)
+	if merging:
+		if not rules["houses"].get("merge_flats", {}).get("enabled", false):
+			return "规则里没有开合并平房"
+		if lots < 2 or _flats_in(tiles).is_empty():
+			return "合并要占到自己的平房"
+	var why := _why_lots_invalid(pi, tiles, merging)
 	if why != "":
 		return why
 	var min_lots_no_player := int(rules["houses"]["placement"].get("no_player_on_lots_from", 99))
@@ -255,13 +262,13 @@ func why_cannot_build(pi: int, kind: String, tiles: Array) -> String:
 		for p in alive_players():
 			if tiles.has(p.pos):
 				return "有人站在要建房的地上"
-	if players[pi].cash < house_cost(kind, tiles):
+	if players[pi].cash < (merge_cost(kind, tiles) if merging else house_cost(kind, tiles)):
 		return "现金不够（建房只能用现金）"
 	return ""
 
 
 ## 占的几块地合不合格：都是自己的空地，同一条街，沿路连成一排。
-func _why_lots_invalid(pi: int, tiles: Array) -> String:
+func _why_lots_invalid(pi: int, tiles: Array, allow_flats: bool = false) -> String:
 	var same_street: bool = rules["houses"]["placement"].get("same_street", true)
 	var group := ""
 	for i in range(tiles.size()):
@@ -278,7 +285,7 @@ func _why_lots_invalid(pi: int, tiles: Array) -> String:
 			return "占的地都要是自己的"
 		if props[t]["mortgaged"]:
 			return "抵押中的地不能建房"
-		if house_at(t) != 0:
+		if house_at(t) != 0 and not (allow_flats and _flats_in([t]).size() == 1):
 			return "这块地上已经有房子"
 	return ""
 
@@ -287,7 +294,8 @@ func _why_lots_invalid(pi: int, tiles: Array) -> String:
 
 
 ## 所有现在能建的房子：[{kind, tiles, cost}]。AI 和建房界面都用它。
-func build_options(pi: int) -> Array:
+## merging = true 时列出“合并平房”的选项（cost 是合并要付的钱）
+func build_options(pi: int, merging: bool = false) -> Array:
 	var out: Array = []
 	var seen := {}
 	for kind in _house_defs:
@@ -304,8 +312,9 @@ func build_options(pi: int) -> Array:
 				if seen.has(key):
 					continue
 				seen[key] = true
-				if why_cannot_build(pi, kind, chain) == "":
-					out.append({"kind": kind, "tiles": chain, "cost": house_cost(kind, chain)})
+				if why_cannot_build(pi, kind, chain, merging) == "":
+					var cost := merge_cost(kind, chain) if merging else house_cost(kind, chain)
+					out.append({"kind": kind, "tiles": chain, "cost": cost})
 	return out
 
 
@@ -316,13 +325,8 @@ func build(pi: int, kind: String, tiles: Array) -> String:
 		return why
 	var cost := house_cost(kind, tiles)
 	players[pi].cash -= cost
-	var hid := _next_house_id
-	_next_house_id += 1
-	var tile_list: Array = []
-	for t in tiles:
-		tile_list.append(int(t))
-		props[int(t)]["house"] = hid
-	houses[hid] = {"kind": kind, "owner": pi, "tiles": tile_list}
+	var hid := _place_house(pi, kind, tiles)
+	var tile_list: Array = houses[hid]["tiles"]
 	_emit("built", {"player": pi, "house": hid, "kind": kind, "tiles": tile_list, "cost": cost})
 	# 建房后的随机事件：挖到古董；没挖到时房子可能倒塌
 	var lots := tile_list.size()
@@ -334,6 +338,52 @@ func build(pi: int, kind: String, tiles: Array) -> String:
 	elif rng.randi() % int(rules["houses"]["collapse_chance"]) == 0:
 		_demolish(hid)
 		_emit("collapse", {"player": pi, "house": hid, "tiles": tile_list})
+	return ""
+
+
+func _place_house(pi: int, kind: String, tiles: Array) -> int:
+	var hid := _next_house_id
+	_next_house_id += 1
+	var tile_list: Array = []
+	for t in tiles:
+		tile_list.append(int(t))
+		props[int(t)]["house"] = hid
+	houses[hid] = {"kind": kind, "owner": pi, "tiles": tile_list}
+	return hid
+
+
+## 这几块地上的平房（每块地一栋）的房屋编号
+func _flats_in(tiles: Array) -> Array:
+	var out: Array = []
+	for t in tiles:
+		var hid := house_at(int(t))
+		if hid != 0 and str(houses[hid]["kind"]) == "flat" and houses[hid]["tiles"].size() == 1:
+			out.append(hid)
+	return out
+
+
+## 合并平房要付的钱：新房子造价 − 拆掉的平房造价 × credit_flat_cost_pct%（不少于 0）
+func merge_cost(kind: String, tiles: Array) -> int:
+	var credit := 0
+	for hid in _flats_in(tiles):
+		credit += house_cost("flat", houses[hid]["tiles"])
+	var pct := int(rules["houses"].get("merge_flats", {}).get("credit_flat_cost_pct", 100))
+	return maxi(0, house_cost(kind, tiles) - pct_of(credit, pct))
+
+
+## 【作者定】同一条街上并排的自己的平房（可以夹着自己的空地）直接合并成旅社 / 小洋楼 / 别墅。
+## 不触发古董和倒塌（和升级一样）。成功返回 ""。
+func merge(pi: int, kind: String, tiles: Array) -> String:
+	var why := why_cannot_build(pi, kind, tiles, true)
+	if why != "":
+		return why
+	var cost := merge_cost(kind, tiles)
+	players[pi].cash -= cost
+	for hid in _flats_in(tiles):
+		_demolish(hid)
+	var hid := _place_house(pi, kind, tiles)
+	_emit("merged", {"player": pi, "house": hid, "kind": kind, "tiles": houses[hid]["tiles"],
+			"cost": cost})
 	return ""
 
 

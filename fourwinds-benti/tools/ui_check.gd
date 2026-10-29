@@ -9,7 +9,7 @@ var out_path := "user://ui_check.png"
 var mode := "ai"
 var total_frames := 900
 var frames := 0
-var table: Control = null
+var table: Node = null
 
 
 func _init() -> void:

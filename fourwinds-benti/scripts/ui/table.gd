@@ -1,46 +1,34 @@
-extends Control
+extends Node
 ## 棋盘画面 + 热座：把 Game（规则）画出来，人类用按钮操作，AI 用 SimpleAI 自动走。
 ##
-## 画面只做两件事：
+## 画面分两层：
+##   - 地图层（map_view.gd，跟着 map_camera.gd 的镜头移动）：格子、房子、棋子
+##   - 界面层（CanvasLayer，钉在屏幕上）：玩家卡片、按钮、日志、骰子、对话框
+## 以后的新界面（拍卖、交易、剧情对话、立绘）都加在界面层 _ui 下面。
+##
+## 这个脚本做三件事：
 ##   1. 人类点按钮 → 调 Game 的方法（roll / buy / build ...）
 ##   2. 每次操作后把 game.drain_events() 里的事件按顺序播放（棋子一步步走、写日志、冒台词）
+##   3. 告诉地图层要高亮什么、棋子到哪了、镜头跟谁
 ## 规则全在 scripts/core/game.gd，这里不改任何规则状态。
 
 const Board = preload("res://scripts/core/board.gd")
 const Game = preload("res://scripts/core/game.gd")
 const SimpleAI = preload("res://scripts/core/simple_ai.gd")
+const Streets = preload("res://scripts/core/streets.gd")
+const MapView = preload("res://scripts/ui/map_view.gd")
+const MapCamera = preload("res://scripts/ui/map_camera.gd")
+const DiceView = preload("res://scripts/ui/dice_view.gd")
 
-const TYPE_COLORS := {
-	"start": Color("#f5f5f5"),
-	"land": Color("#d7ccc8"),
-	"company": Color("#ffb74d"),
-	"chance": Color("#ffd54f"),
-	"bank": Color("#4db6ac"),
-	"tax": Color("#90a4ae"),
-	"jail": Color("#616161"),
-	"park": Color("#aed581"),
-	"church": Color("#ce93d8"),
-	"government": Color("#7986cb"),
-	"casino": Color("#f06292"),
-	"race_course": Color("#a1887f"),
-}
-const TYPE_NAMES := {
-	"start": "起点", "land": "空地", "company": "企业", "chance": "运气",
-	"bank": "银行", "tax": "税务局", "jail": "巡捕房", "park": "公园",
-	"church": "教堂", "government": "市政厅", "casino": "赌场", "race_course": "赛马场",
-}
 const STATUS_NAMES := {
 	"jail": "坐牢", "park": "游览公园", "charity": "慈善", "thief": "小偷", "arsonist": "纵火犯",
 	"robber": "抢劫犯", "believer": "信徒", "free_rent": "免租", "double_rent": "租金加倍",
 	"half_rent": "租金减半",
 }
 const PERMIT_NAMES := {"gang": "黑帮", "fortune_teller": "算命铺", "pawnshop": "当铺"}
-## 骰子点数的位置（3×3 格子里的哪几格，从左上数 0-8）
-const PIPS := {
-	1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8],
-}
 
 const BACKGROUND := Color("#1e2a24")
+const PANEL_COLOR := Color(0.1, 0.14, 0.12, 0.92)
 const LEFT_WIDTH := 270.0
 const RIGHT_WIDTH := 330.0
 const MARGIN := 12.0
@@ -49,21 +37,19 @@ const STEP_DELAY := 0.13
 
 var board: Board = null
 var game: Game = null
-var font: Font
 
 var _specs: Array = []
-var _token_tile: Array = []     ## 每个玩家的棋子画在哪一格（跟着事件一步步更新）
-var _dice: Array = []
-var _highlight: Array = []      ## 要高亮的格子（选方向、悬停在建房按钮上）
-var _hover_highlight: Array = []
-var _info_tile: int = -1
 var _busy: bool = false
 var _fast: bool = false
-var _centers: Dictionary = {}
-var _cell: float = 40.0
 
+var _map: MapView
+var _camera: MapCamera
+var _ui: Control                ## 界面层的根，所有 HUD 控件放在它下面
+var _dice: DiceView
 var _left: VBoxContainer
 var _right: VBoxContainer
+var _left_panel: PanelContainer
+var _right_panel: PanelContainer
 var _cards: Array = []          ## 每个玩家一张：{panel, label, bubble}
 var _info_label: Label
 var _head_label: Label
@@ -74,7 +60,7 @@ var _overlay_box: VBoxContainer
 
 
 func _ready() -> void:
-	font = get_theme_default_font()
+	RenderingServer.set_default_clear_color(BACKGROUND)
 	board = Data.default_map()
 	_specs = Data.start_specs
 	if _specs.is_empty():
@@ -87,21 +73,55 @@ func _ready() -> void:
 		push_error("开局失败：" + str(errors))
 		return
 	game.start()
-	for p in game.players:
-		_token_tile.append(p.pos)
+	_build_map()
 	_build_ui()
-	resized.connect(_on_resized)
+	get_viewport().size_changed.connect(_on_resized)
 	_on_resized()
+	_camera.focus(_map.token_position(game.current), true)
 	_refresh()
 	_advance()
 
 
-# ───────────────────────── 搭界面 ─────────────────────────
+# ───────────────────────── 搭画面 ─────────────────────────
+
+func _build_map() -> void:
+	var colors: Array = []
+	for p in game.players:
+		colors.append(Color(str(Data.character(p.character).get("color", "#ffffff"))))
+	_map = MapView.new()
+	add_child(_map)
+	_camera = MapCamera.new()
+	_map.camera = _camera
+	add_child(_camera)
+	_camera.make_current()
+	_map.setup(board, game, colors)
+	_camera.bounds = _map.world_bounds()
+	_map.tile_clicked.connect(_on_tile_clicked)
+
+
+## 左右两栏的底板（挡住鼠标，点在上面不会点到地图）
+func _panel(child: Control) -> PanelContainer:
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = PANEL_COLOR
+	style.set_content_margin_all(MARGIN / 2.0)
+	panel.add_theme_stylebox_override("panel", style)
+	panel.add_child(child)
+	_ui.add_child(panel)
+	return panel
+
 
 func _build_ui() -> void:
+	var layer := CanvasLayer.new()
+	add_child(layer)
+	_ui = Control.new()
+	_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(_ui)
+
 	_left = VBoxContainer.new()
 	_left.add_theme_constant_override("separation", 6)
-	add_child(_left)
+	_left_panel = _panel(_left)
 	for p in game.players:
 		_add_player_card(p)
 	_info_label = _make_label(_left, "点棋盘上的格子看详情", 13, Color("#b0bec5"))
@@ -109,7 +129,7 @@ func _build_ui() -> void:
 
 	_right = VBoxContainer.new()
 	_right.add_theme_constant_override("separation", 6)
-	add_child(_right)
+	_right_panel = _panel(_right)
 	var top := HBoxContainer.new()
 	_right.add_child(top)
 	_head_label = _make_label(top, "", 17, Color.WHITE)
@@ -122,6 +142,11 @@ func _build_ui() -> void:
 	menu.text = "菜单"
 	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/main.tscn"))
 	top.add_child(menu)
+	var home := Button.new()
+	home.text = "回到当前角色"
+	home.tooltip_text = "镜头回到当前玩家（拖动地图、方向键 / WASD 平移，滚轮缩放）"
+	home.pressed.connect(func() -> void: _camera.focus(_map.token_position(game.current)))
+	_right.add_child(home)
 
 	_controls = VBoxContainer.new()
 	_controls.add_theme_constant_override("separation", 6)
@@ -139,7 +164,7 @@ func _build_ui() -> void:
 	(_overlay as ColorRect).color = Color(0, 0, 0, 0.6)
 	_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_overlay.visible = false
-	add_child(_overlay)
+	_ui.add_child(_overlay)
 	var center := CenterContainer.new()
 	center.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_overlay.add_child(center)
@@ -149,6 +174,10 @@ func _build_ui() -> void:
 	_overlay_box.custom_minimum_size = Vector2(560, 0)
 	_overlay_box.add_theme_constant_override("separation", 6)
 	panel.add_child(_overlay_box)
+
+	_dice = DiceView.new()
+	_ui.add_child(_dice)
+	_ui.move_child(_dice, 0)
 
 
 func _add_player_card(p) -> void:
@@ -175,34 +204,15 @@ func _make_label(parent: Node, text: String, font_size: int, color: Color) -> La
 
 
 func _on_resized() -> void:
-	_left.position = Vector2(MARGIN, MARGIN)
-	_left.size = Vector2(LEFT_WIDTH - 2.0 * MARGIN, size.y - 2.0 * MARGIN)
-	_right.position = Vector2(size.x - RIGHT_WIDTH, MARGIN)
-	_right.size = Vector2(RIGHT_WIDTH - MARGIN, size.y - 2.0 * MARGIN)
-	_compute_layout()
-	queue_redraw()
-
-
-## 算出每格的中心和格子大小，让整张地图放进中间的区域
-func _compute_layout() -> void:
-	_centers.clear()
-	if board == null or board.tile_count() == 0:
-		return
-	var min_p := Vector2(INF, INF)
-	var max_p := Vector2(-INF, -INF)
-	for t in board.tiles:
-		var p := Vector2(t["pos"][0], t["pos"][1])
-		min_p = min_p.min(p)
-		max_p = max_p.max(p)
-	var cols := max_p.x - min_p.x + 1.0
-	var rows := max_p.y - min_p.y + 1.0
-	var area := Rect2(LEFT_WIDTH, MARGIN, size.x - LEFT_WIDTH - RIGHT_WIDTH - 10.0,
-			size.y - 2.0 * MARGIN)
-	_cell = minf(area.size.x / cols, area.size.y / rows)
-	var origin := area.position + (area.size - Vector2(cols, rows) * _cell) / 2.0
-	for t in board.tiles:
-		var gp := Vector2(t["pos"][0], t["pos"][1]) - min_p
-		_centers[t["id"]] = origin + (gp + Vector2(0.5, 0.5)) * _cell
+	var view := get_viewport().get_visible_rect().size
+	_left_panel.position = Vector2(MARGIN, MARGIN)
+	_left_panel.size = Vector2(LEFT_WIDTH - 2.0 * MARGIN, view.y - 2.0 * MARGIN)
+	_right_panel.position = Vector2(view.x - RIGHT_WIDTH, MARGIN)
+	_right_panel.size = Vector2(RIGHT_WIDTH - MARGIN, view.y - 2.0 * MARGIN)
+	_dice.position = Vector2(LEFT_WIDTH, MARGIN)
+	_dice.size = Vector2(view.x - LEFT_WIDTH - RIGHT_WIDTH, DiceView.SIZE.y)
+	# 镜头对准左右两栏之间空出来的那块
+	_camera.view_shift = Vector2((LEFT_WIDTH - RIGHT_WIDTH) / 2.0, 0.0)
 
 
 # ───────────────────────── 驱动游戏 ─────────────────────────
@@ -239,7 +249,7 @@ func _play(events: Array) -> void:
 	for ev in events:
 		var delay := _handle_event(ev)
 		_refresh()
-		queue_redraw()
+		_map.queue_redraw()
 		if delay > 0.0:
 			await _wait(delay)
 
@@ -250,13 +260,11 @@ func _flush_events() -> void:
 		_handle_event(ev)
 	_sync_tokens()
 	_refresh()
-	queue_redraw()
+	_map.queue_redraw()
 
 
 func _sync_tokens() -> void:
-	for p in game.players:
-		_token_tile[p.index] = p.pos
-	queue_redraw()
+	_map.sync_tokens()
 
 
 # ───────────────────────── 事件 → 日志 / 台词 / 动画 ─────────────────────────
@@ -266,21 +274,28 @@ func _handle_event(ev: Dictionary) -> float:
 	var type := str(ev["type"])
 	match type:
 		"step":
-			_token_tile[int(ev["player"])] = int(ev["tile"])
+			_move_token(int(ev["player"]), int(ev["tile"]))
 			return STEP_DELAY
 		"teleport":
-			_token_tile[int(ev["player"])] = int(ev["tile"])
+			_move_token(int(ev["player"]), int(ev["tile"]))
 		"jailed":
-			_token_tile[int(ev["player"])] = game.players[int(ev["player"])].pos
+			_move_token(int(ev["player"]), game.players[int(ev["player"])].pos)
 		"rolled":
-			_dice = ev["dice"]
+			_dice.values = ev["dice"]
 		"turn_start":
-			_dice = []
+			_dice.values = []
+			_camera.focus(_map.token_position(int(ev["player"])))
 	var text := _describe(ev)
 	if text != "":
 		_log.append_text(text + "\n")
 	_speak(ev)
 	return _delay_for(type)
+
+
+## 棋子挪一格，镜头跟着（玩家手动拖过镜头就不跟，见 map_camera.gd）
+func _move_token(player: int, tile: int) -> void:
+	_map.move_token(player, tile)
+	_camera.follow(_map.token_position(player))
 
 
 func _delay_for(type: String) -> float:
@@ -302,7 +317,7 @@ func _pname(i: int) -> String:
 
 func _tname(i: int) -> String:
 	var t: Dictionary = board.get_tile(i)
-	return str(t.get("name", TYPE_NAMES.get(str(t["type"]), "")))
+	return str(t.get("name", MapView.TYPE_NAMES.get(str(t["type"]), "")))
 
 
 func _house_name(kind: String) -> String:
@@ -384,6 +399,8 @@ func _describe(ev: Dictionary) -> String:
 			return "%s 刚盖的房子倒塌了！" % _pname(pi)
 		"upgraded":
 			return "%s 的房子升级成%s" % [_pname(pi), _house_name(str(ev["kind"]))]
+		"merged":
+			return "%s 把平房合并成%s，花了 %d 万" % [_pname(pi), _house_name(str(ev["kind"])), int(ev["cost"])]
 		"removed":
 			return "%s 拆了房子，退回 %d 万" % [_pname(pi), int(ev["refund"])]
 		"bankrupt":
@@ -418,7 +435,7 @@ func _speak(ev: Dictionary) -> void:
 		"jailed":
 			who = int(ev["player"])
 			cond = "TO_JAIL"
-		"built":
+		"built", "merged":
 			if str(ev["kind"]) == "villa":
 				who = int(ev["player"])
 				cond = "BUILD_VILLA"
@@ -500,10 +517,10 @@ func _refresh() -> void:
 # ───────────────────────── 右边：操作区 ─────────────────────────
 
 func _clear_controls() -> void:
-	_highlight = []
+	_map.highlight = []
 	for c in _controls.get_children():
 		c.queue_free()
-	queue_redraw()
+	_map.queue_redraw()
 
 
 func _button(text: String, on_press: Callable) -> Button:
@@ -529,7 +546,7 @@ func _show_controls() -> void:
 	match str(game.pending["type"]):
 		"choose_direction":
 			_make_label(_controls, "前面是十字路口，往哪边走？", 14, Color("#fff59d"))
-			_highlight = game.pending["options"].duplicate()
+			_map.highlight = game.pending["options"].duplicate()
 			for tile in game.pending["options"]:
 				var t: int = tile
 				_button("往 %s" % _tname(t), func() -> void: _do(func() -> void:
@@ -549,7 +566,7 @@ func _show_controls() -> void:
 					Color("#fff59d"))
 			_button("交保释金（%d 万）" % amount, func() -> void: _do(func() -> void: game.bail(true)))
 			_button("坐牢", func() -> void: _do(func() -> void: game.bail(false)))
-	queue_redraw()
+	_map.queue_redraw()
 
 
 func _show_bank_controls(p) -> void:
@@ -616,8 +633,8 @@ func _open_house_dialog() -> void:
 
 func _close_overlay() -> void:
 	_overlay.visible = false
-	_hover_highlight = []
-	queue_redraw()
+	_map.hover_highlight = []
+	_map.queue_redraw()
 	if game.phase != "over":
 		_show_controls()
 
@@ -629,7 +646,7 @@ func _clear_overlay_box() -> void:
 
 func _rebuild_house_dialog(message: String) -> void:
 	_clear_overlay_box()
-	_hover_highlight = []
+	_map.hover_highlight = []
 	var p = game.player()
 	_make_label(_overlay_box, "房产 · %s · 现金 %d 万（建房只能用现金）" % [p.display_name, p.cash], 18,
 			Color.WHITE)
@@ -649,6 +666,17 @@ func _rebuild_house_dialog(message: String) -> void:
 		var text := "建%s · %s · 造价 %d" % [_house_name(str(o["kind"])), _tiles_text(tiles), int(o["cost"])]
 		_dialog_button(list, text, tiles, func() -> void:
 				_house_action(game.build(p.index, str(o["kind"]), tiles)))
+
+	var merges: Array = game.build_options(p.index, true)
+	_section(list, "合并并排的平房（只付差价）（%d）" % merges.size())
+	for o in merges:
+		var tiles: Array = o["tiles"]
+		var text := "合并成%s · %s · 付 %d" % [_house_name(str(o["kind"])), _tiles_text(tiles),
+				int(o["cost"])]
+		_dialog_button(list, text, tiles, func() -> void:
+				_house_action(game.merge(p.index, str(o["kind"]), tiles)))
+
+	_street_hints(list, p.index)
 
 	var upgradable: Array = []
 	var mine: Array = []
@@ -687,6 +715,28 @@ func _rebuild_house_dialog(message: String) -> void:
 	_overlay_box.add_child(close)
 
 
+## 每条街凑大房子还差什么（旅社、小洋楼、别墅要同一条街上连着的自己的空地，平房占了就不能再用）
+func _street_hints(parent: Node, pi: int) -> void:
+	var streets: Array = Streets.progress(game, pi)
+	if streets.is_empty():
+		return
+	_section(parent, "凑大房子：同一条街上连着的自己的空地或平房（平房可以合并）")
+	for st in streets:
+		var text := "%s：%d 块里你有 %d 块，别人 %d 块，没主人 %d 块；你的地最多连着 %d 块" % [
+			st["name"], int(st["total"]), int(st["mine"]), int(st["others"]), int(st["free"]),
+			int(st["run"])]
+		var wants: Array = []
+		for lv in Data.rules["houses"]["levels"]:
+			var lots := int(lv["lots"])
+			if lv.get("build_directly", true) and lots > int(st["run"]) and lots <= int(st["total"]):
+				wants.append("%s要 %d 块" % [lv["name"], lots])
+		if not wants.is_empty():
+			text += "（" + "、".join(wants) + "）"
+		if int(st["free"]) == 0 and not wants.is_empty():
+			text += "；这条街已经没有没主人的地，要凑只能等以后的交易（第 5 步）"
+		_make_label(parent, text, 13, Color("#b0bec5"))
+
+
 func _section(parent: Node, title: String) -> void:
 	_make_label(parent, title, 15, Color("#ffd54f"))
 
@@ -703,11 +753,11 @@ func _dialog_button(parent: Node, text: String, tiles: Array, on_press: Callable
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.pressed.connect(on_press)
 	b.mouse_entered.connect(func() -> void:
-		_hover_highlight = tiles
-		queue_redraw())
+		_map.hover_highlight = tiles
+		_map.queue_redraw())
 	b.mouse_exited.connect(func() -> void:
-		_hover_highlight = []
-		queue_redraw())
+		_map.hover_highlight = []
+		_map.queue_redraw())
 	parent.add_child(b)
 
 
@@ -741,24 +791,17 @@ func _show_game_over() -> void:
 
 # ───────────────────────── 点格子看详情 ─────────────────────────
 
-func _gui_input(event: InputEvent) -> void:
-	var click := event as InputEventMouseButton
-	if click == null or not click.pressed or click.button_index != MOUSE_BUTTON_LEFT:
-		return
-	_info_tile = -1
-	for id in _centers:
-		var c: Vector2 = _centers[id]
-		if absf(click.position.x - c.x) < _cell / 2.0 and absf(click.position.y - c.y) < _cell / 2.0:
-			_info_tile = int(id)
-	_info_label.text = _tile_info(_info_tile)
-	queue_redraw()
+func _on_tile_clicked(tile: int) -> void:
+	_map.info_tile = tile
+	_info_label.text = _tile_info(tile)
+	_map.queue_redraw()
 
 
 func _tile_info(i: int) -> String:
 	if i < 0:
 		return "点棋盘上的格子看详情"
 	var t: Dictionary = board.get_tile(i)
-	var text := "%s（%s）" % [_tname(i), TYPE_NAMES.get(str(t["type"]), "")]
+	var text := "%s（%s）" % [_tname(i), MapView.TYPE_NAMES.get(str(t["type"]), "")]
 	if not game.props.has(i):
 		return text
 	text += "\n价格 %d 万 · 现在的租金 %d 万" % [game.property_price(i), game.rent_of(i)]
@@ -768,123 +811,3 @@ func _tile_info(i: int) -> String:
 	if hid != 0:
 		text += " · %s" % _house_name(str(game.houses[hid]["kind"]))
 	return text
-
-
-# ───────────────────────── 画棋盘 ─────────────────────────
-
-func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, size), BACKGROUND)
-	if board == null or game == null or _centers.is_empty():
-		return
-	for t in board.tiles:
-		for nx in t["next"]:
-			_draw_arrow(_centers[t["id"]], _centers[nx])
-	var pad := _cell * 0.05
-	var font_size := int(clampf(_cell * 0.17, 9.0, 15.0))
-	for t in board.tiles:
-		_draw_tile(t, pad, font_size)
-	for i in _highlight + _hover_highlight + [_info_tile]:
-		if int(i) >= 0:
-			var r := _tile_rect(int(i), pad)
-			draw_rect(r, Color("#fff176"), false, 4.0)
-	_draw_tokens()
-	_draw_dice()
-
-
-func _tile_rect(id: int, pad: float) -> Rect2:
-	var c: Vector2 = _centers[id]
-	return Rect2(c - Vector2(_cell, _cell) / 2.0 + Vector2(pad, pad),
-			Vector2(_cell, _cell) - Vector2(pad, pad) * 2.0)
-
-
-func _draw_tile(t: Dictionary, pad: float, font_size: int) -> void:
-	var id: int = t["id"]
-	var c: Vector2 = _centers[id]
-	var rect := _tile_rect(id, pad)
-	var tile_type := str(t["type"])
-	draw_rect(rect, TYPE_COLORS.get(tile_type, Color.MAGENTA))
-	if tile_type == "land":
-		var g: Dictionary = board.groups.get(str(t.get("group", "")), {})
-		draw_rect(Rect2(rect.position, Vector2(rect.size.x, rect.size.y * 0.2)),
-				Color(str(g.get("color", "#ffffff"))))
-	var name_text := str(t.get("name", TYPE_NAMES.get(tile_type, tile_type)))
-	_draw_centered_text(name_text, c + Vector2(0, -_cell * 0.04), rect.size.x - 4.0, font_size)
-	if game.props.has(id):
-		var sub := "%d" % game.property_price(id) if game.owner_of(id) < 0 else "租 %d" % game.rent_of(id)
-		_draw_centered_text(sub, c + Vector2(0, _cell * 0.2), rect.size.x - 4.0,
-				maxi(font_size - 2, 8), Color(0, 0, 0, 0.7))
-		var o := game.owner_of(id)
-		if o >= 0:
-			draw_rect(rect, _cards[o]["color"], false, 3.0)
-		var hid := game.house_at(id)
-		if hid != 0:
-			var strip := Rect2(rect.position + Vector2(0, rect.size.y * 0.72),
-					Vector2(rect.size.x, rect.size.y * 0.28))
-			draw_rect(strip, _cards[o]["color"])
-			_draw_centered_text(_house_name(str(game.houses[hid]["kind"])),
-					strip.position + Vector2(strip.size.x / 2.0, strip.size.y * 0.78),
-					rect.size.x - 2.0, maxi(font_size - 2, 8), Color.WHITE)
-	if board.is_crossroad(id):
-		draw_rect(rect.grow(-1.0), Color("#ffeb3b"), false, 1.5)
-
-
-func _draw_tokens() -> void:
-	var slots := {}
-	for p in game.players:
-		if p.bankrupt:
-			continue
-		var tile: int = _token_tile[p.index]
-		var n := int(slots.get(tile, 0))
-		slots[tile] = n + 1
-		var offset := Vector2((n % 2) * 2 - 1, (n >> 1) * 2 - 1) * _cell * 0.17
-		var pos: Vector2 = _centers[tile] + offset
-		var r := _cell * 0.12
-		draw_circle(pos, r, _cards[p.index]["color"])
-		draw_arc(pos, r, 0.0, TAU, 24, Color.WHITE if p.index == game.current else Color.BLACK, 2.0)
-
-
-func _draw_dice() -> void:
-	if _dice.is_empty():
-		return
-	var area := Rect2(LEFT_WIDTH, 0, size.x - LEFT_WIDTH - RIGHT_WIDTH, size.y)
-	var d := _cell * 1.1
-	var total := _dice.size() * d + (_dice.size() - 1) * d * 0.3
-	var x := area.get_center().x - total / 2.0
-	for v in _dice:
-		_draw_die(Vector2(x, area.get_center().y - d / 2.0), d, int(v))
-		x += d * 1.3
-
-
-func _draw_die(top_left: Vector2, d: float, value: int) -> void:
-	draw_rect(Rect2(top_left, Vector2(d, d)), Color.WHITE)
-	draw_rect(Rect2(top_left, Vector2(d, d)), Color.BLACK, false, 2.0)
-	for k in PIPS.get(value, []):
-		var cx := top_left.x + d * (0.2 + 0.3 * (int(k) % 3))
-		var cy := top_left.y + d * (0.2 + 0.3 * (int(k) / 3))
-		draw_circle(Vector2(cx, cy), d * 0.07, Color.BLACK)
-
-
-func _draw_arrow(from: Vector2, to: Vector2) -> void:
-	var dir := to - from
-	if dir.length() < 1.0:
-		return
-	dir = dir.normalized()
-	var color := Color(1, 1, 1, 0.3)
-	var a := from + dir * _cell * 0.42
-	var b := to - dir * _cell * 0.42
-	draw_line(a, b, color, 2.0)
-	var side := Vector2(-dir.y, dir.x)
-	var head := _cell * 0.08
-	draw_colored_polygon(PackedVector2Array([b, b - dir * head + side * head * 0.6,
-			b - dir * head - side * head * 0.6]), color)
-
-
-func _draw_centered_text(text: String, center: Vector2, width: float, font_size: int,
-		color: Color = Color.BLACK) -> void:
-	var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
-	var shown := text
-	while w > width and shown.length() > 1:
-		shown = shown.substr(0, shown.length() - 1)
-		w = font.get_string_size(shown, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
-	draw_string(font, Vector2(center.x - w / 2.0, center.y), shown,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
