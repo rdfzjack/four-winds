@@ -1,0 +1,128 @@
+标准：
+1_int buyLandExpect=30;    //越小，越喜欢买土地
+2_int buyCompanyExpect=30;  //越小，越喜欢买企业
+3_int keepCashExpect=1000;   //一般情况下希望保留的现金数
+4_int keepCashDiff=200	//越小，进入银行越频繁，例如计算出要保留1200而实际为1100，1200-1100《200，因此不进入银行
+5_int buildHouseExpect=45;  //越小，越喜欢建房
+6_int mortgageExpect=50;  //越小，越喜欢抵押
+7_int	unmortgageExpect=50;//越小，越喜欢赎回
+8_int removeExpect=40;	//越小，越喜欢拆房
+9_int intendToAddMuchMoney=50;  //越大，在拍卖中越喜欢
+10_int acceptableDiffenceInTrade=-10;  //以在交易中可以接受的				//价值差别，以百分数表示
+11_int tradeCycle=1;		//寻求交易的平均周期（次）
+12_int maxInvestment=10;	//总资产*maxInvestment/100 为继续进行投资的资金下限，
+						//如果资金少于此数目，不再投资
+
+四毛：
+1_int buyLandExpect=20; 
+2_int buyCompanyExpect=25;
+3_int keepCashExpect=500; 
+4_int keepCashDiff=30;	
+5_int buildHouseExpect=40;
+6_int mortgageExpect=40;
+7_int	unmortgageExpect=40;
+8_int removeExpect=35;
+9_int intendToAddMuchMoney=30;
+10_int acceptableDiffenceInTrade=0;
+11_int tradeCycle=1;
+12_int maxInvestment=10;
+			
+金如山：
+1_int buyLandExpect=20;    //越小，越喜欢买土地
+2_int buyCompanyExpect=30;  //越小，越喜欢买企业
+3_int keepCashExpect=400;   //一般情况下希望保留的现金数
+4_int keepCashDiff=5	//越小，进入银行越频繁，例如计算出要保留1200而实际为1100，1200-1100《200，因此不进入银行
+5_int buildHouseExpect=40;  //越小，越喜欢建房
+6_int mortgageExpect=45;  //越小，越喜欢抵押
+7_int	unmortgageExpect=45;//越小，越喜欢赎回
+8_int removeExpect=50;	//越小，越喜欢拆房
+9_int intendToAddMuchMoney=10;  //越大，在拍卖中越喜欢
+10_int acceptableDiffenceInTrade=-30;  //以在交易中可以接受的				//价值差别，以百分数表示
+11_int tradeCycle=3;		//寻求交易的平均周期（次）
+12_int maxInvestment=30;	//总资产*maxInvestment/100 为继续进行投资的资金下限，
+						//如果资金少于此数目，不再投资
+
+发达而：
+1_int buyLandExpect=24;    //越小，越喜欢买土地
+2_int buyCompanyExpect=30;  //越小，越喜欢买企业
+3_int keepCashExpect=800;   //一般情况下希望保留的现金数
+4_int keepCashDiff=200	//越小，进入银行越频繁，例如计算出要保留1200而实际为1100，1200-1100《200，因此不进入银行
+5_int buildHouseExpect=45;  //越小，越喜欢建房
+6_int mortgageExpect=45;  //越小，越喜欢抵押
+7_int	unmortgageExpect=45;//越小，越喜欢赎回
+8_int removeExpect=40;	//越小，越喜欢拆房
+9_int intendToAddMuchMoney=50;  //越大，在拍卖中越喜欢
+10_int acceptableDiffenceInTrade=-10;  //以在交易中可以接受的				//价值差别，以百分数表示
+11_int tradeCycle=2;		//寻求交易的平均周期（次）
+12_int maxInvestment=10;	//总资产*maxInvestment/100 为继续进行投资的资金下限，
+						//如果资金少于此数目，不再投资
+
+董莺雨：
+1_int buyLandExpect=20; 
+2_int buyCompanyExpect=25;
+3_int keepCashExpect=500; 
+4_int keepCashDiff=100;	
+5_int buildHouseExpect=43;
+6_int mortgageExpect=50;
+7_int	unmortgageExpect=50;
+8_int removeExpect=35;
+9_int intendToAddMuchMoney=50;
+10_int acceptableDiffenceInTrade=0;
+11_int tradeCycle=2;
+12_int maxInvestment=10;
+
+包德利：
+1_int buyLandExpect=20; 
+2_int buyCompanyExpect=25;
+3_int keepCashExpect=500; 
+4_int keepCashDiff=60;	
+5_int buildHouseExpect=43;
+6_int mortgageExpect=50;
+7_int	unmortgageExpect=50;
+8_int removeExpect=35;
+9_int intendToAddMuchMoney=50;
+10_int acceptableDiffenceInTrade=-20;
+11_int tradeCycle=1;
+12_int maxInvestment=10;
+						//如果资金少于此数目，不再投资
+赛珍珠：
+1_int buyLandExpect=24; 
+2_int buyCompanyExpect=25;
+3_int keepCashExpect=500; 
+4_int keepCashDiff=50;	
+5_int buildHouseExpect=42;
+6_int mortgageExpect=50;
+7_int	unmortgageExpect=50;
+8_int removeExpect=35;
+9_int intendToAddMuchMoney=50;
+10_int acceptableDiffenceInTrade=-15;
+11_int tradeCycle=1;
+12_int maxInvestment=10;
+
+冯全篾：
+1_int buyLandExpect=20;    //越小，越喜欢买土地
+2_int buyCompanyExpect=30;  //越小，越喜欢买企业
+3_int keepCashExpect=500;   //一般情况下希望保留的现金数
+4_int keepCashDiff=100	//越小，进入银行越频繁，例如计算出要保留1200而实际为1100，1200-1100《200，因此不进入银行
+5_int buildHouseExpect=43;  //越小，越喜欢建房
+6_int mortgageExpect=50;  //越小，越喜欢抵押
+7_int	unmortgageExpect=50;//越小，越喜欢赎回
+8_int removeExpect=40;	//越小，越喜欢拆房
+9_int intendToAddMuchMoney=40;  //越大，在拍卖中越喜欢
+10_int acceptableDiffenceInTrade=0;  //以在交易中可以接受的				//价值差别，以百分数表示
+11_int tradeCycle=3;		//寻求交易的平均周期（次）
+12_int maxInvestment=10;	//总资产*maxInvestment/100 为继续进行投资的资金下限，
+						//如果资金少于此数目，不再投资
+陈玛丽：
+1_int buyLandExpect=24; 
+2_int buyCompanyExpect=25;
+3_int keepCashExpect=800; 
+4_int keepCashDiff=100;	
+5_int buildHouseExpect=40;
+6_int mortgageExpect=50;
+7_int	unmortgageExpect=50;
+8_int removeExpect=35;
+9_int intendToAddMuchMoney=50;
+10_int acceptableDiffenceInTrade=-10;
+11_int tradeCycle=1;
+12_int maxInvestment=4;
