@@ -16,7 +16,7 @@
 | `shanghai1940/` | 原版游戏文件。**只读，不要修改或删除** |
 | `tools/re/` | 反汇编工具：`disasm_exe.py` 生成带中文字符串注释的 `1940.exe` 汇编清单，已识别的函数会标上名字 |
 | `tools/` | Python 工具：解包原版（`extract_all.py`）、生成游戏数据初版（`build_game_data.py`，默认不覆盖已有文件）、校验 Godot 数据（`validate_data.py`） |
-| `extracted/` | 原版解包结果，只作参考。**不要整个拷进 Godot 项目**（85MB，会拖慢编辑器） |
+| `extracted/` | 原版解包结果，只作参考。**不要整个拷进 Godot 项目**（85MB，会拖慢编辑器）；占位只拷用到的一小部分到 `fourwinds-benti/assets/placeholder/`（见 plan.md） |
 | `fourwinds-benti/` | Godot 项目 |
 | `fourwinds-benti/data/` | 所有规则数值、角色、地图、机会卡、AI 参数、台词（JSON），作者会自己改 |
 | `fourwinds-benti/data/reference/` | 原版城市价格参考，游戏不读 |
