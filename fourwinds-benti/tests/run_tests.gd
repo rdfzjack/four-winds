@@ -6,6 +6,7 @@ extends SceneTree
 const JsonUtil = preload("res://scripts/core/json_util.gd")
 const Board = preload("res://scripts/core/board.gd")
 const DataCheck = preload("res://scripts/core/data_check.gd")
+const GameTests = preload("res://tests/game_tests.gd")
 
 var failures := 0
 var checks := 0
@@ -21,6 +22,7 @@ func _init() -> void:
 	test_cards_valid()
 	test_broken_cards_reported()
 	test_default_map()
+	GameTests.new().run(self)
 	print("测试完成：%d 项检查，%d 项失败" % [checks, failures])
 	quit(1 if failures > 0 else 0)
 

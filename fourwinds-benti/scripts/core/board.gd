@@ -66,6 +66,12 @@ func next_tiles(index: int) -> Array:
 	return tiles[index]["next"]
 
 
+## 路口的类型：choice = 走到这里的人自己选方向，random = 随机走一个方向。
+## 地图里在路口格上写 "crossroad": "random"，不写就是 choice。
+func crossroad_mode(index: int) -> String:
+	return str(tiles[index].get("crossroad", "choice"))
+
+
 ## 这一格是不是路口（有不止一个方向可走）。
 func is_crossroad(index: int) -> bool:
 	return next_tiles(index).size() > 1
@@ -88,6 +94,62 @@ func walk(from: int, steps: int, choices: Array = []) -> Array:
 	return path
 
 
+## 第一块地是 start 的、同一条街上沿路连续的 n 块地（房子占地用）。
+## 返回所有可能的走法（路口会产生多条），每条是格子编号的数组，第一个是 start。
+## 只看地图本身，不看谁拥有。
+func lot_chains(start: int, n: int) -> Array:
+	var result: Array = []
+	if tiles[start]["type"] != "land":
+		return result
+	_extend_chain([start], n, result)
+	return result
+
+
+func _extend_chain(chain: Array, n: int, result: Array) -> void:
+	if chain.size() == n:
+		result.append(chain.duplicate())
+		return
+	var last: int = chain[chain.size() - 1]
+	for nx in next_tiles(last):
+		var t: Dictionary = tiles[nx]
+		if t["type"] != "land" or t.get("group", "") != tiles[chain[0]].get("group", ""):
+			continue
+		if chain.has(nx):
+			continue
+		chain.append(nx)
+		_extend_chain(chain, n, result)
+		chain.pop_back()
+
+
+## 这张地图里最长的一条街（同一街道组、沿路连续的地）有几块。
+func longest_street() -> int:
+	var best := 0
+	for i in range(tiles.size()):
+		if tiles[i]["type"] != "land":
+			continue
+		var n := 1
+		while not lot_chains(i, n + 1).is_empty():
+			n += 1
+		best = maxi(best, n)
+	return best
+
+
+## 离 from 最近（沿路往前走的步数最少）的某类格子；找不到返回 -1。
+func nearest_of_type(from: int, tile_type: String) -> int:
+	var seen := {from: true}
+	var queue := [from]
+	while not queue.is_empty():
+		var cur: int = queue.pop_front()
+		for nx in next_tiles(cur):
+			if seen.has(nx):
+				continue
+			if tiles[nx]["type"] == tile_type:
+				return nx
+			seen[nx] = true
+			queue.append(nx)
+	return -1
+
+
 ## 检查地图数据是否完整。返回错误列表。
 func validate() -> Array:
 	var errors: Array = []
@@ -108,6 +170,8 @@ func validate() -> Array:
 		var nexts: Array = t["next"]
 		if nexts.is_empty():
 			errors.append("%s 没有下一格（next 为空）" % label)
+		if t.has("crossroad") and not ["choice", "random"].has(str(t["crossroad"])):
+			errors.append("%s 的 crossroad 只能是 choice 或 random" % label)
 		for nx in nexts:
 			if nx < 0 or nx >= n:
 				errors.append("%s 的下一格 %d 超出范围" % [label, nx])

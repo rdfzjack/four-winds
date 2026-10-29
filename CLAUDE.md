@@ -20,7 +20,7 @@
 | `fourwinds-benti/` | Godot 项目 |
 | `fourwinds-benti/data/` | 所有规则数值、角色、地图、机会卡、AI 参数、台词（JSON），作者会自己改 |
 | `fourwinds-benti/data/reference/` | 原版城市价格参考，游戏不读 |
-| `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试 |
+| `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试。`game.gd` 是一局游戏的全部规则（用法见文件开头的注释），`board.gd` 是地图，`player.gd` 是玩家数据 |
 | `fourwinds-benti/scripts/ui/` | 画面和操作 |
 | `fourwinds-benti/scripts/autoload/` | 全局单例（`Data` 读取 data/ 下的所有数据） |
 | `fourwinds-benti/tests/` | 无头测试 `run_tests.gd` |
@@ -30,6 +30,7 @@
 - 规则和画面分开：`scripts/core/` 里的脚本不访问场景树和节点。
 - 数值不写死在代码里，放 `data/*.json`。`data/` 里的文件生成后归作者所有，不要用 `build_game_data.py --force` 覆盖作者的修改。
 - 台词是“事件 → 句子列表”，游戏随机挑一句；4 个角色的台词目前是草稿。
+- 每张地图至少要有一条街（同一个 `group`）有 ≥ 4 块沿路连续的地，别墅要占 4 块；`validate_data.py` 会检查。
 - 地图按“路网”存：每格的 `next` 列出可去的下一格。一圈 = 每格一个 next；岔路 = 多个 next。规则只通过 `Board.walk()` / `next_tiles()` 移动。
 - 脚本之间用 `const X = preload("res://...")` 引用，不用 `class_name`（无头测试时全局类缓存可能不存在）。
 - JSON 读出的数字是浮点数，当整数用要 `int()`。

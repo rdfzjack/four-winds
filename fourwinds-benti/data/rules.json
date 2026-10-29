@@ -20,7 +20,7 @@
    "trade"
   ],
   "build_anywhere_on_own_land": true,
-  "_build_note": "原版建房不需要站在那块地上：掷骰前可以在自己任意符合条件的地上盖房"
+  "_build_note": "【作者已定】建房时机照原版：掷骰前可以在自己任意符合条件的地上建房，不需要站在那块地上。design.md“原版的问题”第 4 条是记错了，不用解决"
  },
  "payment": {
   "_comment": "付钱顺序：先扣现金，不够再连存款一起扣；还不够就破产，剩下的钱全部给收款人。",
@@ -30,7 +30,8 @@
  "bank": {
   "interest_pct": 10,
   "payday_every_days": 7,
-  "_note": "原版每逢星期六派息：存款 × 10% 加进现金。经过银行时可以存款或取款"
+  "_note": "原版每逢星期六派息：存款 × 10% 加进现金。经过银行时可以存款或取款",
+  "_payday_note": "日期从第 1 天开始，每过 payday_every_days 天（第 7、14、21… 天开始时）派一次息；原版是星期六，这里的星期几是假设的，可以改"
  },
  "tax": {
   "pct_of_total_assets": 5,
@@ -84,7 +85,7 @@
    40
   ],
   "record_prize": 200,
-  "_note": "原版是纯随机赛马，复刻时简化成掷骰决定名次；冠军 100、亚军 60、季军 40，破纪录再加 200"
+  "_note": "原版是赛马小游戏，复刻先简化成随机名次：冠军 100、亚军 60、季军 40（等概率），不算破纪录。以后做真正的赛马再改"
  },
  "casino": {
   "_note": "原版赌场停下没有效果"
@@ -162,7 +163,13 @@
    "4": 16
   },
   "collapse_chance": 31,
-  "_events_note": "建房后有 1/N 的概率挖到古董（+1000），没挖到时再有 1/31 的概率房子倒塌（见 cards/chance.json 的 special_events）"
+  "_events_note": "建房后有 1/N 的概率挖到古董（+1000），没挖到时再有 1/31 的概率房子倒塌（见 cards/chance.json 的 special_events）",
+  "placement": {
+   "_note": "【作者已定】房子占地照原版：平房 1 块、旅社/旅馆 2 块、小洋楼/花园洋房 3 块、别墅 4 块。占的几块地必须是同一条街（同一个 group）上沿路连续的、都是自己的空地、没有抵押。以后设计地图时，每张图至少要有一条街有 4 块连续的地（validate_data.py 会检查）。",
+   "same_street": true,
+   "no_player_on_lots_from": 3,
+   "_no_player_note": "占 3 块地以上的房子，所占的地上不能有人站着（原版是“门前道路上没有人”；我们的地就在路上，所以按地上有没有人算）"
+  }
  },
  "companies": {
   "same_industry_multiplier": 2,
@@ -187,13 +194,19 @@
   "_note": "破产者名下房子全部拆掉，地和企业归让他破产的人（被政府逼破产则变成无主）。只剩 1 个玩家时他获胜"
  },
  "crossroads": {
-  "follow_arrow": true,
-  "arrow_change_chance": "4/11",
-  "_note": "原版走到十字路口时按箭头方向走，玩家不能选；每天每个路口有 4/11 的概率随机换方向。四方来财的地图要不要照搬，由作者决定"
+  "modes": [
+   "choice",
+   "random"
+  ],
+  "_note": "【作者已定】十字路口分两种，在地图的路口格上用 crossroad 字段指定：choice = 玩家（或 AI）自己选方向；random = 随机走一个方向。不写默认 choice。不照搬原版的箭头规则。这是一个策略点：以后某些角色的特性可以让他们在 random 路口也能选方向（见 game.gd 的 _may_choose_direction）"
  },
  "speech": {
   "much_money_pct": 20,
   "little_money_pct": 10,
   "_note": "付钱超过自己现金+存款的 20% 时说“付了一大笔钱”的台词，少于 10% 时说“付了一点小钱”"
+ },
+ "states": {
+  "_note": "纵火犯停在别人有房子的地上：烧掉房子，这次不收租（原版细节不明，按这个实现）。状态天数：timed 状态在自己每个回合开始时减 1，减到 0 失效。小偷/信徒见 original_rules.md 第 5 节",
+  "believer_alms_divisor": 4
  }
 }

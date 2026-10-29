@@ -29,7 +29,26 @@ def load(path: Path, errors: list[str]):
     return None
 
 
-def check_map(d: dict) -> list[str]:
+def longest_street(tiles: list) -> int:
+    """最长的一条街：同一街道组、沿路（next）连续的地有几块。"""
+    best = 0
+
+    def extend(chain: list) -> int:
+        longest = len(chain)
+        for nx in tiles[chain[-1]]["next"]:
+            t = tiles[nx]
+            if t.get("type") == "land" and t.get("group") == tiles[chain[0]].get("group") \
+                    and nx not in chain:
+                longest = max(longest, extend(chain + [nx]))
+        return longest
+
+    for i, t in enumerate(tiles):
+        if t.get("type") == "land":
+            best = max(best, extend([i]))
+    return best
+
+
+def check_map(d: dict, max_house_lots: int = 4) -> list[str]:
     errors: list[str] = []
     if not d.get("id"):
         errors.append("地图缺少 id")
@@ -51,6 +70,8 @@ def check_map(d: dict) -> list[str]:
         for nx in nexts:
             if not isinstance(nx, int) or not 0 <= nx < n:
                 errors.append(f"{label} 的下一格 {nx} 超出范围")
+        if "crossroad" in t and t["crossroad"] not in ("choice", "random"):
+            errors.append(f"{label} 的 crossroad {t['crossroad']!r} 不认识（只能是 choice 或 random）")
         if typ == "land":
             if t.get("group") not in groups:
                 errors.append(f"{label} 的街道组 {t.get('group')!r} 没有定义")
@@ -77,6 +98,10 @@ def check_map(d: dict) -> list[str]:
                 queue.append(nx)
     if len(seen) != n:
         errors.append(f"从起点走不到：{sorted(set(range(n)) - seen)}")
+    street = longest_street(tiles)
+    if street < max_house_lots:
+        errors.append(f"最长的街只有 {street} 块连续的地，别墅要占 {max_house_lots} 块，"
+                      f"至少要有一条街有 {max_house_lots} 块连续的地")
     positions = [tuple(t["pos"]) for t in tiles]
     if len(set(positions)) != n:
         errors.append("有格子的 pos 重复")
@@ -136,7 +161,8 @@ def main() -> int:
         if d is None:
             continue
         map_ids.append(d.get("id"))
-        for e in check_map(d):
+        lots = max((lv.get("lots", 1) for lv in rules.get("houses", {}).get("levels", [])), default=4)
+        for e in check_map(d, lots):
             errors.append(f"{f.name}：{e}")
         print(f"{f.name}: {len(d.get('tiles', []))} 格, "
               f"路口 {sum(1 for t in d.get('tiles', []) if len(t.get('next', [])) > 1)} 个")
