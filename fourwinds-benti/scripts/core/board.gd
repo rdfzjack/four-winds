@@ -6,6 +6,11 @@ extends RefCounted
 ## - 有岔路的地图：路口格子有多个 next，走到这里时由玩家（或 AI）选方向。
 ## 规则代码只通过 next_tiles() / walk() 移动，所以以后加岔路不用改规则。
 ##
+## 原版地图（tools/cit_to_map.py 转出来的）：棋子走的是路面格，地和建筑在路边（lot 字段）。
+## 一块地 / 一栋建筑可能挨着好几格路，停在哪一格都算停在它上面：
+## 其中一格是“正格”（带名字、价格），其余格写 "site": 正格编号（“分身格”，类型和正格相同）。
+## 规则里的地产归属、建房都只认正格，用 site() 换算。旁边什么都没有的路面格类型是 road。
+##
 ## 这个脚本只处理数据，不依赖任何画面节点，可以在无头模式下测试。
 
 const TILE_TYPES := [
@@ -21,6 +26,7 @@ const TILE_TYPES := [
 	"government",  # 市政厅
 	"casino",      # 赌场
 	"race_course", # 赛马场
+	"road",        # 普通路面，停下没有效果
 ]
 
 var id: String = ""
@@ -66,6 +72,16 @@ func next_tiles(index: int) -> Array:
 	return tiles[index]["next"]
 
 
+## 这一格代表的正格：分身格返回它的 site，其他格返回自己。
+func site(index: int) -> int:
+	return int(tiles[index].get("site", index))
+
+
+## 是不是分身格（停在这里等于停在 site 那一格）。
+func is_alias(index: int) -> bool:
+	return site(index) != index
+
+
 ## 路口的类型：choice = 走到这里的人自己选方向，random = 随机走一个方向。
 ## 地图里在路口格上写 "crossroad": "random"，不写就是 choice。
 func crossroad_mode(index: int) -> String:
@@ -99,7 +115,7 @@ func walk(from: int, steps: int, choices: Array = []) -> Array:
 ## 只看地图本身，不看谁拥有。
 func lot_chains(start: int, n: int) -> Array:
 	var result: Array = []
-	if tiles[start]["type"] != "land":
+	if tiles[start]["type"] != "land" or is_alias(start):
 		return result
 	_extend_chain([start], n, result)
 	return result
@@ -112,7 +128,8 @@ func _extend_chain(chain: Array, n: int, result: Array) -> void:
 	var last: int = chain[chain.size() - 1]
 	for nx in next_tiles(last):
 		var t: Dictionary = tiles[nx]
-		if t["type"] != "land" or t.get("group", "") != tiles[chain[0]].get("group", ""):
+		if t["type"] != "land" or is_alias(nx) \
+				or t.get("group", "") != tiles[chain[0]].get("group", ""):
 			continue
 		if chain.has(nx):
 			continue
@@ -175,7 +192,11 @@ func validate() -> Array:
 		for nx in nexts:
 			if nx < 0 or nx >= n:
 				errors.append("%s 的下一格 %d 超出范围" % [label, nx])
-		if tile_type == "land":
+		if t.has("site"):
+			var s := int(t["site"])
+			if s < 0 or s >= n or tiles[s].has("site") or str(tiles[s].get("type", "")) != tile_type:
+				errors.append("%s 的 site 要指向一个同类型的正格（不能是分身格）" % label)
+		elif tile_type == "land":
 			var g := str(t.get("group", ""))
 			if not groups.has(g):
 				errors.append("%s 的街道组 \"%s\" 没有在 groups 里定义" % [label, g])
@@ -183,7 +204,7 @@ func validate() -> Array:
 				errors.append("%s 缺少 price_pct（地价系数）" % label)
 			if not t.has("build_cost_pct"):
 				errors.append("%s 缺少 build_cost_pct（建房系数）" % label)
-		if tile_type == "company":
+		if tile_type == "company" and not t.has("site"):
 			if not t.has("price") or not t.has("rent"):
 				errors.append("%s 是企业，需要 price 和 rent" % label)
 		var pos: Variant = t.get("pos", null)

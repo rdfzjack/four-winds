@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 TILE_TYPES = {"start", "land", "company", "chance", "bank", "tax", "jail", "park",
-              "church", "government", "casino", "race_course"}
+              "church", "government", "casino", "race_course", "road"}
 
 
 def load(path: Path, errors: list[str]):
@@ -37,13 +37,13 @@ def longest_street(tiles: list) -> int:
         longest = len(chain)
         for nx in tiles[chain[-1]]["next"]:
             t = tiles[nx]
-            if t.get("type") == "land" and t.get("group") == tiles[chain[0]].get("group") \
-                    and nx not in chain:
+            if t.get("type") == "land" and "site" not in t \
+                    and t.get("group") == tiles[chain[0]].get("group") and nx not in chain:
                 longest = max(longest, extend(chain + [nx]))
         return longest
 
     for i, t in enumerate(tiles):
-        if t.get("type") == "land":
+        if t.get("type") == "land" and "site" not in t:
             best = max(best, extend([i]))
     return best
 
@@ -72,14 +72,20 @@ def check_map(d: dict, max_house_lots: int = 4) -> list[str]:
                 errors.append(f"{label} 的下一格 {nx} 超出范围")
         if "crossroad" in t and t["crossroad"] not in ("choice", "random"):
             errors.append(f"{label} 的 crossroad {t['crossroad']!r} 不认识（只能是 choice 或 random）")
-        if typ == "land":
+        if "site" in t:
+            # 分身格：停在这里等于停在 site 那一格，site 要是同类型的正格
+            s = t["site"]
+            if not (isinstance(s, int) and 0 <= s < n and "site" not in tiles[s]
+                    and tiles[s].get("type") == typ):
+                errors.append(f"{label} 的 site 要指向一个同类型的正格（不能是分身格）")
+        elif typ == "land":
             if t.get("group") not in groups:
                 errors.append(f"{label} 的街道组 {t.get('group')!r} 没有定义")
             if "price_pct" not in t:
                 errors.append(f"{label} 缺少 price_pct")
             if "build_cost_pct" not in t:
                 errors.append(f"{label} 缺少 build_cost_pct")
-        if typ == "company" and ("price" not in t or "rent" not in t):
+        if typ == "company" and "site" not in t and ("price" not in t or "rent" not in t):
             errors.append(f"{label} 是企业，需要 price 和 rent")
         pos = t.get("pos")
         if not (isinstance(pos, list) and len(pos) == 2):

@@ -10,7 +10,7 @@ static func progress(game, pi: int) -> Array:
 	var out: Array = []
 	var by_group := {}
 	for t in game.board.tiles:
-		if str(t["type"]) != "land":
+		if str(t["type"]) != "land" or t.has("site"):
 			continue
 		var g := str(t.get("group", ""))
 		if not by_group.has(g):

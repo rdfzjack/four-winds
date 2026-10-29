@@ -1,13 +1,14 @@
 extends SceneTree
 ## 把棋盘画面自动玩一阵再截图，用来在云端检查画面和人类操作流程（不能用 --headless）：
 ##   xvfb-run -a -s "-screen 0 1280x720x24" godot --rendering-driver opengl3 \
-##     --script res://tools/ui_check.gd -- 输出.png [ai|human] [帧数]
+##     --script res://tools/ui_check.gd -- 输出.png [ai|human] [帧数] [地图 id]
 ## ai：全是 AI，只看对局能不能自己跑；human：位置 1 是人类，脚本替他点按钮（走和真人一样的画面代码），
 ## 最后 60 帧停手，截图里能看到按钮。
 
 var out_path := "user://ui_check.png"
 var mode := "ai"
 var total_frames := 900
+var map_id := ""   ## 空 = 默认地图
 var frames := 0
 var table: Node = null
 
@@ -20,6 +21,8 @@ func _init() -> void:
 		mode = args[1]
 	if args.size() > 2:
 		total_frames = int(args[2])
+	if args.size() > 3:
+		map_id = args[3]
 
 
 func _process(_delta: float) -> bool:
@@ -32,6 +35,7 @@ func _process(_delta: float) -> bool:
 			{"character": "marcel", "human": false},
 			{"character": "eric", "human": false},
 		]
+		root.get_node("Data").start_map = map_id
 		change_scene_to_file("res://scenes/table.tscn")
 	if frames == 5:
 		table = current_scene

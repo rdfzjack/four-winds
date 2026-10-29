@@ -25,6 +25,7 @@ var lines: Dictionary = {}  ## 整个 lines/speech.json
 var errors: Array = []  ## 读取或校验时发现的问题，主界面会显示出来
 ## 主界面选好的座位，开局时交给棋盘画面：[{character: 角色 id, human: bool}, ...]
 var start_specs: Array = []
+var start_map: String = ""   ## 主界面选的地图 id；空 = 默认地图
 
 
 func _ready() -> void:
@@ -71,6 +72,13 @@ func default_map() -> Board:
 	if not maps.is_empty():
 		return maps.values()[0]
 	return null
+
+
+## 这局用的地图：主界面选过就用选的，否则用默认地图。
+func selected_map() -> Board:
+	if maps.has(start_map):
+		return maps[start_map]
+	return default_map()
 
 
 ## 按 id 找角色；找不到返回空字典。
