@@ -15,7 +15,6 @@ extends Node
 const Board = preload("res://scripts/core/board.gd")
 const Game = preload("res://scripts/core/game.gd")
 const SimpleAI = preload("res://scripts/core/simple_ai.gd")
-const Streets = preload("res://scripts/core/streets.gd")
 const MapView = preload("res://scripts/ui/map_view.gd")
 const MapCamera = preload("res://scripts/ui/map_camera.gd")
 const DiceView = preload("res://scripts/ui/dice_view.gd")
@@ -61,7 +60,7 @@ var _overlay_box: VBoxContainer
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(BACKGROUND)
-	board = Data.default_map()
+	board = Data.selected_map()
 	_specs = Data.start_specs
 	if _specs.is_empty():
 		for i in range(mini(4, Data.characters.size())):
@@ -648,8 +647,7 @@ func _rebuild_house_dialog(message: String) -> void:
 	_clear_overlay_box()
 	_map.hover_highlight = []
 	var p = game.player()
-	_make_label(_overlay_box, "房产 · %s · 现金 %d 万（建房只能用现金）" % [p.display_name, p.cash], 18,
-			Color.WHITE)
+	_make_label(_overlay_box, "房产 · %s · 现金 %d 万" % [p.display_name, p.cash], 18, Color.WHITE)
 	if message != "":
 		_make_label(_overlay_box, message, 14, Color("#ef9a9a"))
 	var scroll := ScrollContainer.new()
@@ -660,7 +658,7 @@ func _rebuild_house_dialog(message: String) -> void:
 	scroll.add_child(list)
 
 	var options: Array = game.build_options(p.index)
-	_section(list, "可以建的房子（%d）" % options.size())
+	_section(list, "建房", options.size())
 	for o in options:
 		var tiles: Array = o["tiles"]
 		var text := "建%s · %s · 造价 %d" % [_house_name(str(o["kind"])), _tiles_text(tiles), int(o["cost"])]
@@ -668,15 +666,13 @@ func _rebuild_house_dialog(message: String) -> void:
 				_house_action(game.build(p.index, str(o["kind"]), tiles)))
 
 	var merges: Array = game.build_options(p.index, true)
-	_section(list, "合并并排的平房（只付差价）（%d）" % merges.size())
+	_section(list, "合并平房", merges.size())
 	for o in merges:
 		var tiles: Array = o["tiles"]
 		var text := "合并成%s · %s · 付 %d" % [_house_name(str(o["kind"])), _tiles_text(tiles),
 				int(o["cost"])]
 		_dialog_button(list, text, tiles, func() -> void:
 				_house_action(game.merge(p.index, str(o["kind"]), tiles)))
-
-	_street_hints(list, p.index)
 
 	var upgradable: Array = []
 	var mine: Array = []
@@ -687,7 +683,7 @@ func _rebuild_house_dialog(message: String) -> void:
 		mine.append(hid)
 		if game.why_cannot_upgrade(p.index, hid) == "":
 			upgradable.append(hid)
-	_section(list, "可以升级的房子（%d）" % upgradable.size())
+	_section(list, "升级", upgradable.size())
 	for hid in upgradable:
 		var h: Dictionary = game.houses[hid]
 		var id: int = hid
@@ -696,7 +692,7 @@ func _rebuild_house_dialog(message: String) -> void:
 		_dialog_button(list, text, h["tiles"], func() -> void:
 				_house_action(game.upgrade(p.index, id)))
 
-	_section(list, "拆房（退还造价的一半）")
+	_section(list, "拆房", mine.size())
 	for hid in mine:
 		var h: Dictionary = game.houses[hid]
 		var id: int = hid
@@ -705,8 +701,9 @@ func _rebuild_house_dialog(message: String) -> void:
 		var text := "拆除 %s · %s · 退还 %d" % [_house_name(str(h["kind"])), _tiles_text(h["tiles"]), refund]
 		_dialog_button(list, text, h["tiles"], func() -> void:
 				_house_action(game.remove_house(p.index, id)))
-	if mine.is_empty():
-		_make_label(list, "（你还没有房子）", 13, Color("#90a4ae"))
+
+	if options.size() + merges.size() + upgradable.size() + mine.size() == 0:
+		_make_label(list, "现在没有能建、能合并、能升级或能拆的房子", 13, Color("#90a4ae"))
 
 	var close := Button.new()
 	close.text = "关闭"
@@ -715,30 +712,10 @@ func _rebuild_house_dialog(message: String) -> void:
 	_overlay_box.add_child(close)
 
 
-## 每条街凑大房子还差什么（旅社、小洋楼、别墅要同一条街上连着的自己的空地，平房占了就不能再用）
-func _street_hints(parent: Node, pi: int) -> void:
-	var streets: Array = Streets.progress(game, pi)
-	if streets.is_empty():
-		return
-	_section(parent, "凑大房子：同一条街上连着的自己的空地或平房（平房可以合并）")
-	for st in streets:
-		var text := "%s：%d 块里你有 %d 块，别人 %d 块，没主人 %d 块；你的地最多连着 %d 块" % [
-			st["name"], int(st["total"]), int(st["mine"]), int(st["others"]), int(st["free"]),
-			int(st["run"])]
-		var wants: Array = []
-		for lv in Data.rules["houses"]["levels"]:
-			var lots := int(lv["lots"])
-			if lv.get("build_directly", true) and lots > int(st["run"]) and lots <= int(st["total"]):
-				wants.append("%s要 %d 块" % [lv["name"], lots])
-		if not wants.is_empty():
-			text += "（" + "、".join(wants) + "）"
-		if int(st["free"]) == 0 and not wants.is_empty():
-			text += "；这条街已经没有没主人的地，要凑只能等以后的交易（第 5 步）"
-		_make_label(parent, text, 13, Color("#b0bec5"))
-
-
-func _section(parent: Node, title: String) -> void:
-	_make_label(parent, title, 15, Color("#ffd54f"))
+## 一栏的标题；这一栏没有选项时不显示
+func _section(parent: Node, title: String, count: int) -> void:
+	if count > 0:
+		_make_label(parent, title, 15, Color("#ffd54f"))
 
 
 func _tiles_text(tiles: Array) -> String:
@@ -792,6 +769,8 @@ func _show_game_over() -> void:
 # ───────────────────────── 点格子看详情 ─────────────────────────
 
 func _on_tile_clicked(tile: int) -> void:
+	if tile >= 0:
+		tile = board.site(tile)  # 点到分身格，显示它代表的那块地 / 建筑
 	_map.info_tile = tile
 	_info_label.text = _tile_info(tile)
 	_map.queue_redraw()

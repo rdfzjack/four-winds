@@ -10,6 +10,8 @@ const BACKGROUND := Color("#1e2a24")
 var _kind_boxes: Array = []
 var _char_boxes: Array = []
 var _hint: Label = null
+var _map_box: OptionButton = null
+var _map_ids: Array = []
 
 
 func _ready() -> void:
@@ -27,10 +29,8 @@ func _ready() -> void:
 	center.add_child(box)
 
 	_label(box, "四方来财 Four Winds", 36, Color.WHITE)
-	var board = Data.default_map()
-	if board != null:
-		_label(box, "地图：%s（%d 格）· 热座：每个位置选人类或 AI" % [board.display_name, board.tile_count()],
-				15, Color("#b0bec5"))
+	_add_map_choice(box)
+	_label(box, "热座：每个位置选人类或 AI", 15, Color("#b0bec5"))
 	box.add_child(HSeparator.new())
 
 	for i in range(SEAT_COUNT):
@@ -51,6 +51,26 @@ func _ready() -> void:
 		_label(box, "数据有 %d 个问题：" % Data.errors.size(), 15, Color("#ef5350"))
 		for e in Data.errors:
 			_label(box, "· " + str(e), 13, Color("#ef9a9a"))
+
+
+## 选地图：data/maps 里的每张图一项，默认选 rules.json 的 default_map
+func _add_map_choice(parent: Node) -> void:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	parent.add_child(row)
+	var title := _label(row, "地图", 18, Color.WHITE)
+	title.custom_minimum_size = Vector2(80, 0)
+	_map_box = OptionButton.new()
+	_map_box.custom_minimum_size = Vector2(520, 40)
+	row.add_child(_map_box)
+	var fallback = Data.default_map()
+	_map_ids = Data.maps.keys()
+	_map_ids.sort()
+	for id in _map_ids:
+		var board = Data.maps[id]
+		_map_box.add_item("%s（%d 格）" % [board.display_name, board.tile_count()])
+		if fallback != null and id == fallback.id:
+			_map_box.select(_map_box.item_count - 1)
 
 
 func _add_seat(parent: Node, i: int) -> void:
@@ -103,8 +123,9 @@ func _on_start() -> void:
 	if specs.size() < 2:
 		_hint.text = "至少要 2 个玩家。"
 		return
-	if Data.default_map() == null:
+	if _map_ids.is_empty():
 		_hint.text = "没有读到地图，看下面的数据问题。"
 		return
+	Data.start_map = str(_map_ids[_map_box.selected])
 	Data.start_specs = specs
 	get_tree().change_scene_to_file("res://scenes/table.tscn")

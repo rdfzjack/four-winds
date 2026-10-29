@@ -38,7 +38,7 @@ var phase: String = "idle"      ## idle / pre_roll / pending / over
 var pending: Dictionary = {}    ## 等待玩家做的选择，见上面
 var winner: int = -1            ## 获胜者编号；-1 = 没有（还没结束，或人类全部破产）
 ## 地块编号 -> {owner: 玩家编号或 -1, mortgaged: bool, house: 房屋编号或 0, pct: 当前地价系数}
-## 只有 land 和 company 格子有。
+## 只有 land 和 company 的正格有（分身格用 board.site() 换成正格）。
 var props: Dictionary = {}
 ## 房屋编号 -> {kind: 房屋 id, owner: 玩家编号, tiles: [占的地块编号]}
 var houses: Dictionary = {}
@@ -78,7 +78,7 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 		_house_defs[str(lv["id"])] = lv
 	_jail_tile = -1
 	for t in board.tiles:
-		if t["type"] == "jail":
+		if t["type"] == "jail" and not t.has("site"):
 			_jail_tile = int(t["id"])
 			break
 	if specs.size() < 2 or specs.size() > int(rules.get("max_players", 4)):
@@ -100,7 +100,7 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 		players.append(p)
 	props.clear()
 	for t in board.tiles:
-		if t["type"] == "land" or t["type"] == "company":
+		if (t["type"] == "land" or t["type"] == "company") and not t.has("site"):
 			props[int(t["id"])] = {
 				"owner": -1, "mortgaged": false, "house": 0, "pct": int(t.get("price_pct", 100)),
 			}
@@ -260,7 +260,7 @@ func why_cannot_build(pi: int, kind: String, tiles: Array, merging: bool = false
 	var min_lots_no_player := int(rules["houses"]["placement"].get("no_player_on_lots_from", 99))
 	if lots >= min_lots_no_player:
 		for p in alive_players():
-			if tiles.has(p.pos):
+			if tiles.has(board.site(p.pos)):
 				return "有人站在要建房的地上"
 	if players[pi].cash < (merge_cost(kind, tiles) if merging else house_cost(kind, tiles)):
 		return "现金不够（建房只能用现金）"
@@ -458,7 +458,7 @@ func roll() -> Dictionary:
 	for d in dice:
 		steps += int(d)
 	_emit("rolled", {"player": current, "dice": dice, "steps": steps})
-	_move = {"remaining": steps, "pick": -1}
+	_move = {"remaining": steps, "pick": -1, "passed": {}}
 	_continue_move()
 	return {"dice": dice, "steps": steps}
 
@@ -535,7 +535,13 @@ func _meet_players(p: Player) -> void:
 
 
 ## 路过（不是最后一步）某格的效果。返回 true 表示要等玩家做选择。
+## 一栋建筑挨着好几格路时（原版地图），一次移动里只触发一次。
 func _on_pass(p: Player) -> bool:
+	var site := board.site(p.pos)
+	var passed: Dictionary = _move.get_or_add("passed", {})
+	if passed.has(site):
+		return false
+	passed[site] = true
 	var tile_type: String = board.get_tile(p.pos)["type"]
 	if tile_type == "bank" and (p.cash > 0 or p.deposit > 0):
 		_set_pending({"type": "bank", "tile": p.pos})
@@ -623,14 +629,14 @@ func _on_stop(p: Player, from_card: bool = false) -> void:
 			p.cash += prize
 			_emit("race", {"player": p.index, "rank": rank + 1, "prize": prize})
 		_:
-			pass  # 起点、赌场：停下没有效果
+			pass  # 起点、普通路面、赌场：停下没有效果
 
 
 func _stop_on_land(p: Player) -> void:
-	var tile := p.pos
+	var tile := board.site(p.pos)
 	var owner := owner_of(tile)
 	if owner == -1:
-		_offer_purchase(p, "buy_land", land_price(tile))
+		_offer_purchase(p, tile, "buy_land", land_price(tile))
 		return
 	if owner == p.index:
 		return
@@ -643,10 +649,10 @@ func _stop_on_land(p: Player) -> void:
 
 
 func _stop_on_company(p: Player) -> void:
-	var tile := p.pos
+	var tile := board.site(p.pos)
 	var owner := owner_of(tile)
 	if owner == -1:
-		_offer_purchase(p, "buy_company", property_price(tile))
+		_offer_purchase(p, tile, "buy_company", property_price(tile))
 	elif owner != p.index:
 		if p.status_kind() == "robber":
 			props[tile]["owner"] = p.index
@@ -655,11 +661,11 @@ func _stop_on_company(p: Player) -> void:
 		_collect_rent(p, tile)
 
 
-func _offer_purchase(p: Player, kind: String, price: int) -> void:
+func _offer_purchase(p: Player, tile: int, kind: String, price: int) -> void:
 	if p.cash < price:
-		_emit("cannot_afford", {"player": p.index, "tile": p.pos, "price": price})
+		_emit("cannot_afford", {"player": p.index, "tile": tile, "price": price})
 		return
-	_set_pending({"type": kind, "tile": p.pos, "price": price})
+	_set_pending({"type": kind, "tile": tile, "price": price})
 
 
 func _collect_rent(p: Player, tile: int) -> void:

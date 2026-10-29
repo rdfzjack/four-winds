@@ -10,11 +10,13 @@ const DataCheck = preload("res://scripts/core/data_check.gd")
 const GameTests = preload("res://tests/game_tests.gd")
 const AiTests = preload("res://tests/ai_tests.gd")
 const StreetTests = preload("res://tests/street_tests.gd")
+const OriginalMapTests = preload("res://tests/original_map_tests.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
 const Art = preload("res://scripts/ui/art.gd")
 
 const SMOKE_DAYS := 3          ## 棋盘画面跑到第几天算通过
 const SMOKE_TIMEOUT_MS := 30000  ## 最多等这么久
+const SMOKE_MAP := "shanghai"     ## 冒烟测试用的地图（原版上海，格子最多）
 
 var failures := 0
 var checks := 0
@@ -49,6 +51,7 @@ func run_logic_tests() -> void:
 	test_default_map()
 	GameTests.new().run(self)
 	StreetTests.new().run(self)
+	OriginalMapTests.new().run(self)
 	AiTests.new().run(self)
 
 
@@ -206,7 +209,7 @@ func test_art_table() -> void:
 		check(Art.SPRITES.has("walker_" + str(c["id"])), "角色 %s 有走路图" % c["id"])
 
 
-## 棋盘画面冒烟测试：全 AI 开一局，跑到第 SMOKE_DAYS 天
+## 棋盘画面冒烟测试：全 AI 在原版上海地图上开一局，跑到第 SMOKE_DAYS 天
 func _smoke_done() -> bool:
 	if Time.get_ticks_msec() - _smoke_start > SMOKE_TIMEOUT_MS:
 		return true
@@ -220,6 +223,7 @@ func _start_table_smoke() -> void:
 	for c in root.get_node("Data").characters:
 		specs.append({"character": str(c["id"]), "human": false})
 	root.get_node("Data").start_specs = specs
+	root.get_node("Data").start_map = SMOKE_MAP
 	_table = load("res://scenes/table.tscn").instantiate()
 	root.add_child(_table)
 	_table._fast = true
@@ -240,3 +244,4 @@ func _finish_table_smoke() -> void:
 	check(map.tile_at(map.tile_position(0)) == 0, "点起点格子能点中起点")
 	_table.queue_free()
 	root.get_node("Data").start_specs = []
+	root.get_node("Data").start_map = ""

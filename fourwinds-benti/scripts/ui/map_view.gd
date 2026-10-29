@@ -4,6 +4,7 @@ extends Node2D
 ## - 位置换算全部走 iso.gd；图片全部走 art.gd（找不到图就画色块）。
 ## - 每格 pos 是棋子走的“路面格”。空地（land）、企业和公共建筑另有一个“路边格”放地基和房子：
 ##   地图里写了 lot: [x, y] 就用它；没写就取直路往外侧（远离地图中心）的那一格；拐角格没有路边格，画在路面上。
+##   普通路面（road）和分身格（带 site，见 board.gd）没有路边格，也不写名字。
 ## - 只读 game 的状态来画，不改规则状态。
 ## - 鼠标左键拖动 / 右键拖动平移镜头，滚轮缩放，单击格子发 tile_clicked。
 
@@ -27,11 +28,13 @@ const TYPE_COLORS := {
 	"government": Color("#7986cb"),
 	"casino": Color("#f06292"),
 	"race_course": Color("#a1887f"),
+	"road": Color("#8d8a7e"),
 }
 const TYPE_NAMES := {
 	"start": "起点", "land": "空地", "company": "企业", "chance": "运气",
 	"bank": "银行", "tax": "税务局", "jail": "巡捕房", "park": "公园",
 	"church": "教堂", "government": "市政厅", "casino": "赌场", "race_course": "赛马场",
+	"road": "路",
 }
 ## 公共建筑在路边格上画成多高的方块（像素）
 const BUILDING_HEIGHT := 26.0
@@ -144,7 +147,7 @@ func _layout() -> void:
 	centre /= maxf(1.0, board.tile_count())
 	for t in board.tiles:
 		var id := int(t["id"])
-		if str(t["type"]) == "start":
+		if str(t["type"]) == "start" or _is_bare_road(t):
 			continue
 		var lot = null
 		if t.has("lot"):
@@ -268,7 +271,7 @@ func _draw_road(id: int) -> void:
 			key = "road_y"
 	if not _draw_frame(key, cell, id):
 		draw_colored_polygon(Iso.diamond(cell), Color("#8d8a7e"))
-	if not _lot_cell.has(id) and str(t["type"]) != "land":
+	if not _lot_cell.has(id) and str(t["type"]) != "land" and not _is_bare_road(t):
 		# 拐角上的起点、巡捕房等：路面上铺一层颜色表示类型
 		draw_colored_polygon(Iso.diamond(cell, 0.8), _type_color(t, 0.55))
 	if board.is_crossroad(id):
@@ -354,6 +357,8 @@ func _draw_token(player: int, slot: int) -> void:
 
 
 func _draw_label(t: Dictionary) -> void:
+	if _is_bare_road(t):
+		return
 	var id := int(t["id"])
 	var cell: Vector2 = _lot_cell.get(id, _road_cell[id])
 	var pos := Iso.to_world(cell)
@@ -367,6 +372,11 @@ func _draw_label(t: Dictionary) -> void:
 
 
 # ───────────────────────── 小工具 ─────────────────────────
+
+## 普通路面和分身格：不画路边格、类型色和名字
+func _is_bare_road(t: Dictionary) -> bool:
+	return t.has("site") or str(t["type"]) == "road"
+
 
 ## 按素材表画一帧，参考点对准格子中心；没有图返回 false
 func _draw_frame(key: String, cell: Vector2, index: int = 0) -> bool:
