@@ -117,6 +117,8 @@ func validate() -> Array:
 				errors.append("%s 的街道组 \"%s\" 没有在 groups 里定义" % [label, g])
 			if not t.has("price_pct"):
 				errors.append("%s 缺少 price_pct（地价系数）" % label)
+			if not t.has("build_cost_pct"):
+				errors.append("%s 缺少 build_cost_pct（建房系数）" % label)
 		if tile_type == "company":
 			if not t.has("price") or not t.has("rent"):
 				errors.append("%s 是企业，需要 price 和 rent" % label)

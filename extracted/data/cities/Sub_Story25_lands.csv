@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 肇周路1号,-8,18,100,100,80,15,8,0
 肇周路2号,-8,19,100,100,80,15,8,0
 肇周路3号,-8,20,100,100,80,15,8,0

@@ -1152,9 +1152,9 @@
    "building_index": 2,
    "frame": 0,
    "owner": 7,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "金家西院儿",
-   "base_value_pct": 500,
+   "build_cost_pct": 500,
    "value_pct": 200,
    "price": 100,
    "rent_blank": 20
@@ -1306,35 +1306,35 @@
    "x": -7,
    "y": 8,
    "road_frame": 2,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -7,
    "y": 9,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -7,
    "y": 10,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -7,
    "y": 11,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -7,
    "y": 12,
    "road_frame": 4,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -1343,9 +1343,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "西弯儿3号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 80,
    "price": 40,
    "rent_blank": 8
@@ -1487,7 +1487,7 @@
    "x": -6,
    "y": 8,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -1496,9 +1496,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "里巷1号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 50,
    "rent_blank": 10
@@ -1510,9 +1510,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "里巷2号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 50,
    "rent_blank": 10
@@ -1529,7 +1529,7 @@
    "x": -6,
    "y": 12,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -1538,9 +1538,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "西弯儿2号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 80,
    "price": 40,
    "rent_blank": 8
@@ -1685,7 +1685,7 @@
    "x": -5,
    "y": 8,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -1714,7 +1714,7 @@
    "x": -5,
    "y": 12,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -1723,9 +1723,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "西弯儿1号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 80,
    "price": 40,
    "rent_blank": 8
@@ -1875,7 +1875,7 @@
    "x": -4,
    "y": 8,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -1898,9 +1898,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "三岔口3号",
-   "base_value_pct": 180,
+   "build_cost_pct": 180,
    "value_pct": 150,
    "price": 75,
    "rent_blank": 15
@@ -1910,7 +1910,7 @@
    "x": -4,
    "y": 12,
    "road_frame": 9,
-   "road_1": 0,
+   "persons_here": 0,
    "arrow_dir": 1,
    "arrow_prefer": 0
   },
@@ -1919,21 +1919,21 @@
    "x": -4,
    "y": 13,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -4,
    "y": 14,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -4,
    "y": 15,
    "road_frame": 4,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -1942,9 +1942,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "临河街3号",
-   "base_value_pct": 60,
+   "build_cost_pct": 60,
    "value_pct": 60,
    "price": 30,
    "rent_blank": 6
@@ -2072,9 +2072,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "钱行街4号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 150,
    "price": 75,
    "rent_blank": 15
@@ -2084,7 +2084,7 @@
    "x": -3,
    "y": 8,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -2107,9 +2107,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "三岔口2号",
-   "base_value_pct": 180,
+   "build_cost_pct": 180,
    "value_pct": 150,
    "price": 75,
    "rent_blank": 15
@@ -2119,7 +2119,7 @@
    "x": -3,
    "y": 12,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -2142,7 +2142,7 @@
    "x": -3,
    "y": 15,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -2151,9 +2151,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "临河街2号",
-   "base_value_pct": 60,
+   "build_cost_pct": 60,
    "value_pct": 60,
    "price": 30,
    "rent_blank": 6
@@ -2282,9 +2282,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "钱行街3号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 150,
    "price": 75,
    "rent_blank": 15
@@ -2294,7 +2294,7 @@
    "x": -2,
    "y": 8,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -2317,9 +2317,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "三岔口1号",
-   "base_value_pct": 180,
+   "build_cost_pct": 180,
    "value_pct": 150,
    "price": 75,
    "rent_blank": 15
@@ -2329,7 +2329,7 @@
    "x": -2,
    "y": 12,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -2351,7 +2351,7 @@
    "x": -2,
    "y": 15,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -2360,9 +2360,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "临河街1号",
-   "base_value_pct": 60,
+   "build_cost_pct": 60,
    "value_pct": 60,
    "price": 30,
    "rent_blank": 6
@@ -2498,7 +2498,7 @@
    "x": -1,
    "y": 8,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -2507,9 +2507,9 @@
    "building_index": 3,
    "frame": 0,
    "owner": 7,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "金家北院儿",
-   "base_value_pct": 500,
+   "build_cost_pct": 500,
    "value_pct": 200,
    "price": 100,
    "rent_blank": 20
@@ -2534,7 +2534,7 @@
    "x": -1,
    "y": 12,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "PUBLIC_BASE",
@@ -2555,7 +2555,7 @@
    "x": -1,
    "y": 15,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -2687,9 +2687,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "钱行街2号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 150,
    "price": 75,
    "rent_blank": 15
@@ -2699,7 +2699,7 @@
    "x": 0,
    "y": 8,
    "road_frame": 0,
-   "road_1": 2
+   "persons_here": 2
   },
   {
    "class": "SURFACE",
@@ -2728,7 +2728,7 @@
    "x": 0,
    "y": 12,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "PUBLIC_BASE",
@@ -2749,7 +2749,7 @@
    "x": 0,
    "y": 15,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -2876,9 +2876,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "钱行街1号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 150,
    "price": 75,
    "rent_blank": 15
@@ -2888,35 +2888,35 @@
    "x": 1,
    "y": 8,
    "road_frame": 5,
-   "road_1": 8
+   "persons_here": 8
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 9,
    "road_frame": 1,
-   "road_1": 1
+   "persons_here": 1
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 10,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 11,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "CROSS_ROAD",
    "x": 1,
    "y": 12,
    "road_frame": 10,
-   "road_1": 0,
+   "persons_here": 0,
    "arrow_dir": 0,
    "arrow_prefer": 0
   },
@@ -2925,21 +2925,21 @@
    "x": 1,
    "y": 13,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 14,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 15,
    "road_frame": 3,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -3076,9 +3076,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "东马路1号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 50,
    "rent_blank": 10
@@ -3090,9 +3090,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "东马路2号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 50,
    "rent_blank": 10
@@ -3104,9 +3104,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "东马路3号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 50,
    "rent_blank": 10
@@ -3141,9 +3141,9 @@
    "building_index": 4,
    "frame": 0,
    "owner": 7,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "金家东院儿",
-   "base_value_pct": 500,
+   "build_cost_pct": 500,
    "value_pct": 200,
    "price": 100,
    "rent_blank": 20
@@ -4653,7 +4653,7 @@
    "class": "HOUSE",
    "class_id": 10,
    "house_level": 0,
-   "line_value": 1,
+   "lots": 1,
    "direction": 1,
    "owner": 7,
    "sprite_kind": 0,
@@ -4665,7 +4665,7 @@
    "class": "HOUSE",
    "class_id": 10,
    "house_level": 0,
-   "line_value": 1,
+   "lots": 1,
    "direction": 0,
    "owner": 7,
    "sprite_kind": 0,
@@ -4677,7 +4677,7 @@
    "class": "HOUSE",
    "class_id": 10,
    "house_level": 0,
-   "line_value": 1,
+   "lots": 1,
    "direction": 3,
    "owner": 7,
    "sprite_kind": 0,
@@ -4690,54 +4690,54 @@
   {
    "ai": 1,
    "cards": [],
-   "value_9c": 2,
+   "direction": 2,
    "person_id": 5,
    "grid": [
     1,
     9
    ],
    "name": "冯全篾",
-   "value_88": 1,
-   "money_98": 200,
-   "money_94": 300,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 200,
+   "deposit": 300,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 0,
    "person_name": "HEI_B 冯全篾"
   },
   {
    "ai": 1,
    "cards": [],
-   "value_9c": 3,
+   "direction": 3,
    "person_id": 7,
    "grid": [
     0,
     8
    ],
    "name": "金如山",
-   "value_88": 1,
-   "money_98": 300,
-   "money_94": 400,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 300,
+   "deposit": 400,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 1,
    "person_name": "BAO_SP 金如山"
   },
   {
    "ai": 0,
    "cards": [],
-   "value_9c": 3,
+   "direction": 3,
    "person_id": 1,
    "grid": [
     1,
     8
    ],
    "name": "四毛",
-   "value_88": 1,
-   "money_98": 200,
-   "money_94": 300,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 200,
+   "deposit": 300,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 3,
    "person_name": "LIU_LE 四毛"
   }

@@ -19,6 +19,7 @@ var rules: Dictionary = {}
 var characters: Array = []
 var maps: Dictionary = {}  ## 地图 id -> Board
 var cards: Array = []  ## 机会卡列表
+var special_events: Array = []  ## 不在牌堆里的特殊事件（古董、倒塌等）
 var ai_profiles: Dictionary = {}  ## AI 参数 id -> {参数名: 数值}
 var lines: Dictionary = {}  ## 整个 lines/speech.json
 var errors: Array = []  ## 读取或校验时发现的问题，主界面会显示出来
@@ -35,12 +36,13 @@ func reload() -> void:
 	characters = chars.get("characters", [])
 	var cards_file := JsonUtil.load_dict(CARDS_PATH, errors)
 	cards = cards_file.get("cards", [])
+	special_events = cards_file.get("special_events", [])
 	var ai := JsonUtil.load_dict(AI_PATH, errors)
 	ai_profiles = ai.get("profiles", {})
 	lines = JsonUtil.load_dict(LINES_PATH, errors)
 
 	errors.append_array(DataCheck.check_characters(characters, ai, lines))
-	errors.append_array(DataCheck.check_cards(cards_file))
+	errors.append_array(DataCheck.check_cards(cards_file, characters))
 
 	maps.clear()
 	for file in DirAccess.get_files_at(MAPS_DIR):

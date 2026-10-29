@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 西直门大街6号,-16,22,100,100,80,15,8,0
 西直门大街5号,-16,23,100,100,80,15,8,0
 西直门大街4号,-16,24,100,100,80,15,8,0

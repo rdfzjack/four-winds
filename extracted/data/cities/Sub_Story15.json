@@ -3790,9 +3790,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "交通路1号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -3804,9 +3804,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "交通路2号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -3818,9 +3818,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "交通路3号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -3848,9 +3848,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "交通路4号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -3862,9 +3862,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "交通路5号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -3876,9 +3876,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "交通路6号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -4112,9 +4112,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路9号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -4124,84 +4124,84 @@
    "x": -11,
    "y": 19,
    "road_frame": 2,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 20,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 21,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 22,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 23,
    "road_frame": 1,
-   "road_1": 1
+   "persons_here": 1
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 24,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 25,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 26,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 27,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 28,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 29,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -11,
    "y": 30,
    "road_frame": 4,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -4415,9 +4415,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路8号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -4427,7 +4427,7 @@
    "x": -10,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -4504,7 +4504,7 @@
    "x": -10,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -4724,9 +4724,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路7号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -4736,7 +4736,7 @@
    "x": -9,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -4814,7 +4814,7 @@
    "x": -9,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -5044,7 +5044,7 @@
    "x": -8,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -5122,7 +5122,7 @@
    "x": -8,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -5131,9 +5131,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路1号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -5362,7 +5362,7 @@
    "x": -7,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -5440,7 +5440,7 @@
    "x": -7,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -5449,9 +5449,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路2号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -5683,7 +5683,7 @@
    "x": -6,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -5692,9 +5692,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路6号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -5767,7 +5767,7 @@
    "x": -6,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -5776,9 +5776,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路3号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -6011,7 +6011,7 @@
    "x": -5,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -6020,9 +6020,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路5号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -6095,7 +6095,7 @@
    "x": -5,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -6104,9 +6104,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路4号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -6313,9 +6313,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "广延路1号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 120,
    "price": 96,
    "rent_blank": 18
@@ -6327,9 +6327,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "广延路2号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 120,
    "price": 96,
    "rent_blank": 18
@@ -6353,7 +6353,7 @@
    "x": -4,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -6362,9 +6362,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路4号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -6413,9 +6413,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "沪太路4号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -6427,9 +6427,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "沪太路5号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -6441,9 +6441,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "沪太路6号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -6460,7 +6460,7 @@
    "x": -4,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -6469,9 +6469,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路5号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -6662,49 +6662,49 @@
    "x": -3,
    "y": 13,
    "road_frame": 2,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 14,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 15,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 16,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 17,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 18,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "CROSS_ROAD",
    "x": -3,
    "y": 19,
    "road_frame": 6,
-   "road_1": 2,
+   "persons_here": 2,
    "arrow_dir": 1,
    "arrow_prefer": 2
   },
@@ -6713,77 +6713,77 @@
    "x": -3,
    "y": 20,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 21,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 22,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 23,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 24,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 25,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 26,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 27,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 28,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": -3,
    "y": 29,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "CROSS_ROAD",
    "x": -3,
    "y": 30,
    "road_frame": 7,
-   "road_1": 0,
+   "persons_here": 0,
    "arrow_dir": 1,
    "arrow_prefer": 0
   },
@@ -6794,9 +6794,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路6号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -6984,9 +6984,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "延长路3号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -6996,7 +6996,7 @@
    "x": -2,
    "y": 13,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -7039,7 +7039,7 @@
    "x": -2,
    "y": 19,
    "road_frame": 0,
-   "road_1": 4
+   "persons_here": 4
   },
   {
    "class": "SURFACE",
@@ -7055,9 +7055,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "沪太路1号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -7069,9 +7069,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "沪太路2号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -7083,9 +7083,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "沪太路3号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -7137,7 +7137,7 @@
    "x": -2,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -7146,9 +7146,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路7号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -7336,9 +7336,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "延长路2号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -7348,7 +7348,7 @@
    "x": -1,
    "y": 13,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -7391,7 +7391,7 @@
    "x": -1,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -7468,7 +7468,7 @@
    "x": -1,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -7477,9 +7477,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路8号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -7666,9 +7666,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "延长路3号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 80,
    "price": 64,
    "rent_blank": 12
@@ -7678,7 +7678,7 @@
    "x": 0,
    "y": 13,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -7715,9 +7715,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路3号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -7727,7 +7727,7 @@
    "x": 0,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -7778,9 +7778,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "宝山路1号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -7792,9 +7792,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "宝山路2号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -7806,9 +7806,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "宝山路3号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -7825,7 +7825,7 @@
    "x": 0,
    "y": 30,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -7834,9 +7834,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "天目路9号",
-   "base_value_pct": 150,
+   "build_cost_pct": 150,
    "value_pct": 150,
    "price": 120,
    "rent_blank": 22
@@ -8022,7 +8022,7 @@
    "x": 1,
    "y": 13,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -8059,9 +8059,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路2号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -8071,7 +8071,7 @@
    "x": 1,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -8120,35 +8120,35 @@
    "x": 1,
    "y": 26,
    "road_frame": 2,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 27,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 28,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 29,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 1,
    "y": 30,
    "road_frame": 3,
-   "road_1": 8
+   "persons_here": 8
   },
   {
    "class": "SURFACE",
@@ -8333,7 +8333,7 @@
    "x": 2,
    "y": 13,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -8370,9 +8370,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "中山路1号",
-   "base_value_pct": 100,
+   "build_cost_pct": 100,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -8382,7 +8382,7 @@
    "x": 2,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -8431,7 +8431,7 @@
    "x": 2,
    "y": 26,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -8642,7 +8642,7 @@
    "x": 3,
    "y": 13,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "LAND",
@@ -8651,9 +8651,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "北宝兴路1号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -8665,9 +8665,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "北宝兴路2号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -8679,9 +8679,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "北宝兴路3号",
-   "base_value_pct": 80,
+   "build_cost_pct": 80,
    "value_pct": 100,
    "price": 80,
    "rent_blank": 15
@@ -8705,7 +8705,7 @@
    "x": 3,
    "y": 19,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -8754,7 +8754,7 @@
    "x": 3,
    "y": 26,
    "road_frame": 0,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -8961,49 +8961,49 @@
    "x": 4,
    "y": 13,
    "road_frame": 5,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 14,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 15,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 16,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 17,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 18,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "CROSS_ROAD",
    "x": 4,
    "y": 19,
    "road_frame": 10,
-   "road_1": 16,
+   "persons_here": 16,
    "arrow_dir": 0,
    "arrow_prefer": 0
   },
@@ -9012,49 +9012,49 @@
    "x": 4,
    "y": 20,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 21,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 22,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 23,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 24,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 25,
    "road_frame": 1,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "ROAD",
    "x": 4,
    "y": 26,
    "road_frame": 3,
-   "road_1": 0
+   "persons_here": 0
   },
   {
    "class": "SURFACE",
@@ -9299,9 +9299,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "西宝兴路1号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 120,
    "price": 96,
    "rent_blank": 18
@@ -9313,9 +9313,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "西宝兴路2号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 120,
    "price": 96,
    "rent_blank": 18
@@ -9327,9 +9327,9 @@
    "building_index": -1,
    "frame": 0,
    "owner": 8,
-   "land_flag": 0,
+   "mortgaged": 0,
    "name": "西宝兴路3号",
-   "base_value_pct": 120,
+   "build_cost_pct": 120,
    "value_pct": 120,
    "price": 96,
    "rent_blank": 18
@@ -13186,7 +13186,7 @@
   {
    "class": "COMPANY",
    "class_id": 6,
-   "company_flag": 0,
+   "mortgaged": 0,
    "company_group": 0,
    "describe": "",
    "price": 400,
@@ -13212,7 +13212,7 @@
   {
    "class": "COMPANY",
    "class_id": 6,
-   "company_flag": 0,
+   "mortgaged": 0,
    "company_group": 0,
    "describe": "",
    "price": 340,
@@ -13238,7 +13238,7 @@
   {
    "class": "COMPANY",
    "class_id": 6,
-   "company_flag": 0,
+   "mortgaged": 0,
    "company_group": 0,
    "describe": "",
    "price": 360,
@@ -13254,7 +13254,7 @@
   {
    "class": "COMPANY",
    "class_id": 6,
-   "company_flag": 0,
+   "mortgaged": 0,
    "company_group": 0,
    "describe": "",
    "price": 340,
@@ -13272,90 +13272,90 @@
   {
    "ai": 0,
    "cards": [],
-   "value_9c": 2,
+   "direction": 2,
    "person_id": 1,
    "grid": [
     -11,
     23
    ],
    "name": "四毛",
-   "value_88": 1,
-   "money_98": 1000,
-   "money_94": 2000,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 1000,
+   "deposit": 2000,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 0,
    "person_name": "LIU_LE 四毛"
   },
   {
    "ai": 1,
    "cards": [],
-   "value_9c": 3,
+   "direction": 3,
    "person_id": 6,
    "grid": [
     -3,
     19
    ],
    "name": "发达而",
-   "value_88": 1,
-   "money_98": 1000,
-   "money_94": 2000,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 1000,
+   "deposit": 2000,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 1,
    "person_name": "WAI_GR 发达而"
   },
   {
    "ai": 1,
    "cards": [],
-   "value_9c": 3,
+   "direction": 3,
    "person_id": 2,
    "grid": [
     -2,
     19
    ],
    "name": "包德利",
-   "value_88": 1,
-   "money_98": 1000,
-   "money_94": 2000,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 1000,
+   "deposit": 2000,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 2,
    "person_name": "MAI_B 包德利"
   },
   {
    "ai": 1,
    "cards": [],
-   "value_9c": 3,
+   "direction": 3,
    "person_id": 0,
    "grid": [
     1,
     30
    ],
    "name": "董莺雨",
-   "value_88": 1,
-   "money_98": 1000,
-   "money_94": 2000,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 1000,
+   "deposit": 2000,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 3,
    "person_name": "NV_XS 董莺雨"
   },
   {
    "ai": 1,
    "cards": [],
-   "value_9c": 2,
+   "direction": 2,
    "person_id": 4,
    "grid": [
     4,
     19
    ],
    "name": "赛珍珠",
-   "value_88": 1,
-   "money_98": 1000,
-   "money_94": 2000,
-   "value_84": 0,
-   "value_80": 0,
+   "state": 1,
+   "cash": 1000,
+   "deposit": 2000,
+   "state_days": 0,
+   "bankrupted_by": 0,
    "slot": 4,
    "person_name": "JIAO_JH 赛珍珠"
   }

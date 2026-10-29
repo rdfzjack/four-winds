@@ -1,22 +1,81 @@
 {
- "_comment": "全局规则参数，单位万圆。标 source 的是从原版确认过的数值；放在 unconfirmed 里的还没核实，第 2 步决定。",
+ "_comment": "全局规则参数，单位万圆。除特别说明外，数值都是从原版程序反汇编确认的（详见 docs/original_rules.md）。城市各自的造价、租金、地价在地图文件的 prices 里。",
  "currency": "万圆",
  "default_map": "shanghai_loop",
  "max_players": 4,
  "starting_cash": 2000,
  "starting_deposit": 2000,
- "_starting_money_source": "原版地图文件里每个玩家开局有两个 2000（推测为现金和存款）",
- "dice_count": 1,
+ "_starting_money_note": "原版自由模式（上海）每人现金 2000、存款 2000；战役各关不同，以后放进关卡数据",
+ "dice_count": 2,
  "dice_sides": 6,
- "day_per_round": 1,
- "_day_note": "原版按“天”计时（坐牢三天、一周免租）。先定为每一轮 = 一天。",
+ "turn": {
+  "_comment": "所有玩家各走一次 = 一天。状态的天数按“这个玩家的回合”递减。",
+  "actions_before_roll": [
+   "build",
+   "upgrade",
+   "remove",
+   "mortgage",
+   "unmortgage",
+   "auction",
+   "trade"
+  ],
+  "build_anywhere_on_own_land": true,
+  "_build_note": "原版建房不需要站在那块地上：掷骰前可以在自己任意符合条件的地上盖房"
+ },
+ "payment": {
+  "_comment": "付钱顺序：先扣现金，不够再连存款一起扣；还不够就破产，剩下的钱全部给收款人。",
+  "buy_with_cash_only": true,
+  "_buy_note": "买地、买企业、建房、升级、赎回都只能用现金，存款不算"
+ },
+ "bank": {
+  "interest_pct": 10,
+  "payday_every_days": 7,
+  "_note": "原版每逢星期六派息：存款 × 10% 加进现金。经过银行时可以存款或取款"
+ },
+ "tax": {
+  "pct_of_total_assets": 5,
+  "_note": "停在税务局：交总资产的 5%。总资产 = 现金 + 存款 + 地价 + 企业价 + 房屋造价（抵押中的地和企业按一半算）"
+ },
  "jail": {
   "days": 3,
-  "source": "exe：坐牢三天；可缴保释金（金额公式未核实）"
+  "bail_min": 50,
+  "bail_max": 150,
+  "_note": "停在巡捕房：现金够的话可以交 50–150 万（随机）保释；不交就坐牢 3 回合，期间跳过回合，自己的地不收租"
  },
  "church": {
   "pass_donation": 30,
-  "source": "exe：路过教堂,捐款30万圆；停留则成为信徒"
+  "pass_every": 2,
+  "believer_days": 3,
+  "_note": "路过教堂：每路过两次捐一次 30 万。停在教堂：成为信徒 3 回合，期间路过别的玩家要把自己现金的 1/4 施舍给对方"
+ },
+ "park": {
+  "rest_days": 1,
+  "_note": "停在公园：游览 1 回合（跳过下一回合），期间自己的地不收租"
+ },
+ "government": {
+  "_note": "停在市政厅：随机得到一张特许证（黑帮 / 算命铺 / 当铺），用来建对应的特许建筑"
+ },
+ "function_buildings": {
+  "lots": 2,
+  "_cost_note": "造价 = 两块地的 build_cost_pct 之和 × prices.build_cost.function ÷ 100，需要对应特许证",
+  "gang": {
+   "toll_pct_of_total_assets": 1,
+   "pass_every": 2,
+   "_note": "黑帮：别人每路过两次交一次买路费 = 过路者总资产的 1%，交给黑帮老板"
+  },
+  "fortune_teller": {
+   "fee_multiplier_min_pct": 50,
+   "fee_multiplier_max_pct": 150,
+   "thresholds": [
+    80,
+    160,
+    240
+   ],
+   "_note": "算命铺：停下的人自己定酬金付给老板，卦分 = 酬金 × 50%–150%；卦分 <80 被传送到别人租金最高的地，80–160 到自己的地，160–240 到一块无主空地，≥240 到最值钱的无主地产或企业"
+  },
+  "pawnshop": {
+   "_note": "当铺：停下的人名下最便宜的一块空地（没盖房子的）直接归当铺老板"
+  }
  },
  "race_course": {
   "prizes": [
@@ -25,15 +84,116 @@
    40
   ],
   "record_prize": 200,
-  "source": "exe：冠军 100 万、亚军 60 万、季军 40 万，打破纪录 200 万。复刻时不做赛马小游戏，第 2 步决定简化规则"
+  "_note": "原版是纯随机赛马，复刻时简化成掷骰决定名次；冠军 100、亚军 60、季军 40，破纪录再加 200"
  },
- "unconfirmed": {
-  "dice_count": "源码有 getMoveSteps(num1, num2)，可能是两颗",
-  "upgrade": "旅社→旅馆、小洋楼→花园洋房的升级条件",
-  "bank_interest": "银行利率和派息日",
-  "tax": "税务局财产税公式",
-  "bail": "保释金公式",
-  "auction": "拍卖流程",
-  "company_group_bonus": "同一行业企业的组合加成"
+ "casino": {
+  "_note": "原版赌场停下没有效果"
+ },
+ "houses": {
+  "_comment": "房屋按 HOUSE_ID 顺序。lots = 占几块相邻的自己的地（沿道路连成一排）。造价 = 所占各块地 build_cost_pct 之和 × cost ÷ 100；租金 = 所占各块地 price_pct 之和 × rent ÷ 100。cost/rent 的值是 prices 里的键名。",
+  "levels": [
+   {
+    "id": "flat",
+    "name": "平房",
+    "lots": 1,
+    "cost": [
+     "flat"
+    ],
+    "rent": "flat"
+   },
+   {
+    "id": "hotel",
+    "name": "旅社",
+    "lots": 2,
+    "cost": [
+     "hotel"
+    ],
+    "rent": "hotel",
+    "upgrade_to": "super_hotel"
+   },
+   {
+    "id": "super_hotel",
+    "name": "旅馆",
+    "lots": 2,
+    "cost": [
+     "hotel",
+     "upgrade"
+    ],
+    "rent": "super_hotel",
+    "build_directly": false
+   },
+   {
+    "id": "floor",
+    "name": "小洋楼",
+    "lots": 3,
+    "cost": [
+     "floor"
+    ],
+    "rent": "floor",
+    "upgrade_to": "super_floor"
+   },
+   {
+    "id": "super_floor",
+    "name": "花园洋房",
+    "lots": 3,
+    "cost": [
+     "floor",
+     "upgrade"
+    ],
+    "rent": "super_floor",
+    "build_directly": false
+   },
+   {
+    "id": "villa",
+    "name": "别墅",
+    "lots": 4,
+    "cost": [
+     "villa"
+    ],
+    "rent": "villa"
+   }
+  ],
+  "upgrade_note": "旅社→旅馆、小洋楼→花园洋房只需付升级费（upgrade × build_cost_pct 之和 ÷ 100）",
+  "remove_refund_pct": 50,
+  "antique_chance_by_lots": {
+   "1": 61,
+   "2": 41,
+   "3": 31,
+   "4": 16
+  },
+  "collapse_chance": 31,
+  "_events_note": "建房后有 1/N 的概率挖到古董（+1000），没挖到时再有 1/31 的概率房子倒塌（见 cards/chance.json 的 special_events）"
+ },
+ "companies": {
+  "same_industry_multiplier": 2,
+  "_note": "企业租金 = 基本租金 × 2^(同老板同行业企业数 − 1)"
+ },
+ "mortgage": {
+  "payout_pct": 50,
+  "unmortgage_cost_pct": 60,
+  "seize_chance": 21,
+  "_note": "只能抵押没盖房子的地和企业，得到价格的 50%；赎回要付 60%。抵押中不收租，总资产按一半算。每次抵押有 1/21 的概率被银行扣留，拿不到钱"
+ },
+ "auction": {
+  "start_price_pct": 50,
+  "bid_steps": [
+   1,
+   10,
+   50
+  ],
+  "_note": "只能拍卖没盖房子的地和企业，起拍价是价格的一半，其他玩家加价；没人出价时政府按起拍价收回"
+ },
+ "bankruptcy": {
+  "_note": "破产者名下房子全部拆掉，地和企业归让他破产的人（被政府逼破产则变成无主）。只剩 1 个玩家时他获胜"
+ },
+ "crossroads": {
+  "follow_arrow": true,
+  "arrow_change_chance": "4/11",
+  "_note": "原版走到十字路口时按箭头方向走，玩家不能选；每天每个路口有 4/11 的概率随机换方向。四方来财的地图要不要照搬，由作者决定"
+ },
+ "speech": {
+  "much_money_pct": 20,
+  "little_money_pct": 10,
+  "_note": "付钱超过自己现金+存款的 20% 时说“付了一大笔钱”的台词，少于 10% 时说“付了一点小钱”"
  }
 }

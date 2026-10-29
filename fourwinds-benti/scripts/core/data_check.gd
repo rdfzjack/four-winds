@@ -10,14 +10,14 @@ const CARD_OP_PARAMS := {
 	"jail": ["days"],
 	"goto": ["tile_type"],
 	"state": ["state", "days"],
-	"lose_most_expensive_property": [],
+	"lose_most_expensive_land": [],
 	"lose_mortgaged_properties": [],
-	"demolish_one_house": [],
-	"property_value_pct": ["target", "pct"],
-	"upgrade_all_houses": [],
+	"demolish_random_house": [],
+	"land_value_pct": ["pct"],
+	"upgrade_houses": [],
 	"lose_deposit": [],
-	"void_next_income": [],
-	"bank_seize_payment": [],
+	"demolish_new_house": [],
+	"mortgage_without_payment": [],
 }
 
 const CARD_STATES := [
@@ -71,11 +71,14 @@ static func check_characters(characters: Array, ai: Dictionary, lines: Dictionar
 	return errors
 
 
-static func check_cards(cards_file: Dictionary) -> Array:
+static func check_cards(cards_file: Dictionary, characters: Array = []) -> Array:
 	var errors: Array = []
 	var cards: Array = cards_file.get("cards", [])
 	if cards.is_empty():
 		errors.append("没有机会卡")
+	var char_ids := {}
+	for c in characters:
+		char_ids[str(c.get("id", ""))] = true
 	var seen := {}
 	for card in cards:
 		var cid := int(card.get("id", -1))
@@ -85,17 +88,32 @@ static func check_cards(cards_file: Dictionary) -> Array:
 		seen[cid] = true
 		if str(card.get("text", "")) == "":
 			errors.append("%s 没有文字" % label)
+		var weight := int(card.get("weight", 100))
+		if weight < 0 or weight > 100:
+			errors.append("%s 的 weight 应该在 0 到 100 之间" % label)
+		if not char_ids.is_empty():
+			for who in card.get("allowed_for", []):
+				if not char_ids.has(str(who)):
+					errors.append("%s 的 allowed_for 里有不存在的角色 \"%s\"" % [label, str(who)])
 		var effects: Array = card.get("effects", [])
 		if effects.is_empty():
 			errors.append("%s 没有效果" % label)
-		for e in effects:
-			var op := str(e.get("op", ""))
-			if not CARD_OP_PARAMS.has(op):
-				errors.append("%s 的效果 \"%s\" 不认识" % [label, op])
-				continue
-			for p in CARD_OP_PARAMS[op]:
-				if not e.has(p):
-					errors.append("%s 的效果 %s 缺少参数 %s" % [label, op, p])
-			if op == "state" and not CARD_STATES.has(str(e.get("state", ""))):
-				errors.append("%s 的状态 \"%s\" 不认识" % [label, str(e.get("state", ""))])
+		errors.append_array(_check_effects(label, effects))
+	for ev in cards_file.get("special_events", []):
+		errors.append_array(_check_effects("特殊事件 %s" % str(ev.get("id", "?")), ev.get("effects", [])))
+	return errors
+
+
+static func _check_effects(label: String, effects: Array) -> Array:
+	var errors: Array = []
+	for e in effects:
+		var op := str(e.get("op", ""))
+		if not CARD_OP_PARAMS.has(op):
+			errors.append("%s 的效果 \"%s\" 不认识" % [label, op])
+			continue
+		for p in CARD_OP_PARAMS[op]:
+			if not e.has(p):
+				errors.append("%s 的效果 %s 缺少参数 %s" % [label, op, p])
+		if op == "state" and not CARD_STATES.has(str(e.get("state", ""))):
+			errors.append("%s 的状态 \"%s\" 不认识" % [label, str(e.get("state", ""))])
 	return errors

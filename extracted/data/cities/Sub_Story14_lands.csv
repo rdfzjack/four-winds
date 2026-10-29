@@ -1,4 +1,4 @@
-﻿name,x,y,value_pct,base_value_pct,price,rent_blank,owner,land_flag
+﻿name,x,y,value_pct,build_cost_pct,price,rent_blank,owner,mortgaged
 市府路1号,-16,19,150,140,120,22,8,0
 市府路2号,-16,20,150,140,120,22,8,0
 石围塘1号,-12,16,80,60,64,12,8,0

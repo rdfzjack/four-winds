@@ -56,6 +56,8 @@ def check_map(d: dict) -> list[str]:
                 errors.append(f"{label} 的街道组 {t.get('group')!r} 没有定义")
             if "price_pct" not in t:
                 errors.append(f"{label} 缺少 price_pct")
+            if "build_cost_pct" not in t:
+                errors.append(f"{label} 缺少 build_cost_pct")
         if typ == "company" and ("price" not in t or "rent" not in t):
             errors.append(f"{label} 是企业，需要 price 和 rent")
         pos = t.get("pos")
@@ -116,7 +118,13 @@ def main() -> int:
     ids = [c.get("id") for c in cards.get("cards", [])]
     if len(ids) != len(set(ids)):
         errors.append("机会卡 id 重复")
+    char_ids = {c.get("id") for c in chars}
     for c in cards.get("cards", []):
+        if not 0 <= c.get("weight", 100) <= 100:
+            errors.append(f"机会卡 {c.get('id')} 的 weight 超出 0-100")
+        for who in c.get("allowed_for", []):
+            if who not in char_ids:
+                errors.append(f"机会卡 {c.get('id')} 的 allowed_for 有不存在的角色 {who!r}")
         for e in c.get("effects", []):
             if e.get("op") not in ops:
                 errors.append(f"机会卡 {c.get('id')} 的效果 {e.get('op')!r} 没有在 ops 里说明")
