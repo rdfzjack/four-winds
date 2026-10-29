@@ -14,6 +14,8 @@ var bankrupt: bool = false
 var status: Dictionary = {}
 var church_passes: int = 0  ## 路过教堂的次数（每路过两次捐一次）
 var permit: String = ""     ## 市政厅发的特许证（建特许建筑用，还没做）
+## 原版 AI 的记忆（brain.gd）：cash_need = 掷骰前想建房还差多少现金，路过银行时多取。存档时要一起存。
+var ai_memory: Dictionary = {}
 
 
 func status_kind() -> String:

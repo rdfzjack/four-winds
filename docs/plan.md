@@ -7,9 +7,9 @@
 | # | 内容 | 状态 |
 |---|---|---|
 | 0–3.5 | 项目骨架、数据转换、反汇编原版规则、核心规则（无画面）、棋盘画面 + 热座、地图层 / 界面层 + 等距 + 镜头 + 占位素材 | ✅ 完成（作者已测试合并） |
-| 3.6 | 原版 `.cit` 地图转换工具，转出原版上海地图；主界面选地图；建房对话框只留选项 | ✅ 完成（等作者在 Windows 上测试合并） |
-| 4 | 原版 AI：12 个阈值参数，4 个角色各一套；在原版上海地图上调。交接见下面“第 4 步交接” | 下一步 |
-| 5 | 抵押、交易、拍卖。做完后再测地图平衡（原版靠交易把一条街凑齐） | |
+| 3.6 | 原版 `.cit` 地图转换工具，转出原版上海地图；主界面选地图；建房对话框只留选项 | ✅ 完成（作者已测试合并） |
+| 4 | 原版 AI（`brain.gd`，照反汇编的 Brain.cpp）：买地、买企业、建房、升级、银行、保释。结论见“第 4 步结论” | ✅ 完成（等作者在 Windows 上测试合并） |
+| 5 | 抵押、交易、拍卖（含 AI 这部分）。做完后再测地图平衡（原版靠交易把一条街凑齐）。交接见“第 5 步交接” | 下一步 |
 | 6 | 角色生动化：每种事件多句台词、针对不同对手的台词、表情立绘、性格化 AI | |
 | 7 | 存档 / 读档 | |
 | 8 | 个人主线：每个角色 5–7 关。开头先扒原版战役图（见“第 8 步备忘”） | |
@@ -55,20 +55,21 @@
 
 **地图格式里原版地图特有的东西**（`board.gd` 开头有说明）：`lot` = 地 / 建筑所在的路边格；一块地 / 一栋建筑挨着几格路时，一格是正格，其余是带 `site` 的分身格，规则用 `Board.site()` 换算；旁边没东西的路是 `road` 类型。
 
-## 第 4 步交接
+## 第 4 步结论
 
-**要做的**：用原版 12 个阈值参数（`data/ai/profiles.json`，4 个角色各一套，含义写在文件里，原文见 `docs/analysis.md` 6.8）替换临时 AI，在原版上海地图（`data/maps/shanghai.json`）上调。
+- 原版 AI 在 `scripts/core/brain.gd`，接口和临时 AI 一样（`Brain.step(game)`），临时 AI 已删。公式和函数地址写在 `docs/original_rules.md` 第 10 节。
+- 参数照原版没改（`data/ai/profiles.json`）；新加了 `bailFactor`（保释系数，原版按人物写死在 exe 里）和 `scoring`（原版写死的现金分档表）。mortgageExpect、removeExpect 原版 AI 没用到。
+- AI 的临时记忆（建房还差多少钱）放在 `Player.ai_memory`，第 7 步存档要一起存。
+- 和原版不同的地方：凑大房子时平房走作者的“合并”规则，别的房子照原版先拆再盖；没有 `lot` 坐标的地图（`shanghai_loop`）把格子排成一条线来算地分。
+- **对局结果**（已用无头对局验证，`tests/ai_tests.gd`，原版上海 12 局、每局最多 120 天）：不卡、数据一致，7 局打完。AI 几乎见地就买（买地率约 94%，企业全买），留地凑大房子是公式自带的（大房子占建房的 7 成以上）。斐斐（包德利的参数：buildHouseExpect 50、maxInvestment 20）建房明显少、存款多。
+- 同一组对局只改一个参数（已验证）：buyLandExpect 20 / 45 → 买地率 0.99 / 0.79；keepCashExpect 300 / 3000 → 平均现金 634 / 1644；buildHouseExpect 30 / 70 → 建房 334 / 7。
+- 按人设细调参数放到第 6 步（性格化 AI）。
 
-**现有代码**
-- 临时 AI `scripts/core/simple_ai.gd`：`SimpleAI.step(game)` 每次做一个决定，只调 `Game` 的公开方法。处理 `pre_roll`（建 / 升级 / 合并后掷骰）和 `pending` 的 `choose_direction`、`bank`、`buy_land` / `buy_company`、`bail`。新 AI 保持同样的接口，`table.gd` 和 `tests/ai_tests.gd` 就不用大改。
-- 可用的查询：`game.build_options(pi[, merging])`、`why_cannot_upgrade`、`house_cost`、`rent_of`、`total_assets`、`land_price` / `property_price`；街道进度 `scripts/core/streets.gd` 的 `Streets.progress(game, pi)`（每条街自己有几块、连续几块）。
-- 角色 → 参数：`characters.json` 的 `ai_profile`。
+## 第 5 步交接
 
-**原版 AI 在反汇编里的位置**（已查到，还没读）：用 `python3 tools/re/disasm_exe.py --out <文件>` 生成清单（要 `pip install capstone pefile`），带 `Brain.cpp` 断言字符串的函数在 `0x4073f0`–`0x40b7e0` 之间（共 23 个）。函数名（`getPriceIThink`、`bestSiteToBuild` 等）只在预编译头的标识符列表里（`extracted/devfiles/`），要靠读代码对上。抵押、交易、拍卖相关的（`tryToTrade` 等）留给第 5 步。
-
-**第 3 步测试得到的结论**（已用对局验证）：临时 AI 一买到地就盖平房，地就凑不成大房子；改成“同街还能凑大房子时先不盖平房”后才出现旅馆。原版 AI 也要处理“留地凑大房子”。地图平衡等第 5 步交易做完再测。
-
-**验收**：`tests/ai_tests.gd` 里 4 个 AI 在原版上海跑多局不卡、数据自洽；不同参数的角色行为有可测的差别（比如买地率、存款）。写进文档的结论注明是否用对局验证过。
+- 原版顺序里还没做的：交易（`0x40a510`，用 tradeCycle、acceptableDiffenceInTrade）、抵押（`0x408ea0`）、赎回（`0x409060`）、拍卖（`0x40aae0`，用 intendToAddMuchMoney）。抵押 / 赎回的公式已读出（`original_rules.md` 第 10 节），交易和拍卖的估价函数还没读（`0x409ff0`、`0x40a2c0`、`0x40afe0`、`0x40b340`、`0x40b390`）。
+- 加在 `brain.gd` 的 `_improve` 里，按原版顺序：交易 → 建房 → 升级 → 抵押 → 赎回 → 拍卖。抵押要排除建房计划要用的地。
+- 反汇编清单：`python3 tools/re/disasm_exe.py --out <文件>`（要 `pip install capstone pefile`）。
 
 ## 第 8 步备忘
 
@@ -86,7 +87,6 @@
 
 | 步骤 | 用哪个 | 理由 |
 |---|---|---|
-| 4 原版 AI | Opus；只有台词交给 Sonnet | 难在从反汇编读懂参数怎么用 |
 | 5 交易、拍卖、抵押 | 一起用 Opus | 交易、拍卖里 AI 的出价和应对（`tryToTrade`）也要读反汇编 |
 | 6 角色生动化 | Sonnet；性格化 AI 用 Opus | 台词和表情主要靠作者定人设 |
 | 7 存档 / 读档 | Sonnet | 验收测试：在 `pending` 时存档，读回后用同样的随机数继续走，结果和不存档完全一样；浮点数要 `int()` |

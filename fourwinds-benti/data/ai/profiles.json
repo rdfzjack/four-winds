@@ -1,18 +1,19 @@
 {
- "_comment": "AI 性格参数（原版 12 项阈值）。4 个角色暂时借用原版角色的参数（based_on），来源 shanghai1940/Ai/Standard.ai。第 4 步再按人设细调。",
+ "_comment": "AI 性格参数（原版 12 项阈值 + 保释系数）。4 个角色暂时借用原版角色的参数（based_on），来源 shanghai1940/Ai/Standard.ai。怎么用见 scripts/core/brain.gd。按人设细调放到第 6 步。",
  "params": {
   "buyLandExpect": "越小，越喜欢买土地",
   "buyCompanyExpect": "越小，越喜欢买企业",
   "keepCashExpect": "一般情况下希望保留的现金数（万圆）",
   "keepCashDiff": "越小，进入银行越频繁",
   "buildHouseExpect": "越小，越喜欢建房",
-  "mortgageExpect": "越小，越喜欢抵押",
+  "mortgageExpect": "越小，越喜欢抵押（原版 AI 里没用到）",
   "unmortgageExpect": "越小，越喜欢赎回",
-  "removeExpect": "越小，越喜欢拆房",
+  "removeExpect": "越小，越喜欢拆房（原版 AI 里没用到）",
   "intendToAddMuchMoney": "越大，拍卖时越愿意加价",
   "acceptableDiffenceInTrade": "交易中能接受的价值差（百分比，负数 = 愿意吃亏）",
   "tradeCycle": "平均几回合主动找人交易一次",
-  "maxInvestment": "资金低于 总资产 × 此值 ÷ 100 时不再投资"
+  "maxInvestment": "资金低于 总资产 × 此值 ÷ 100 时不再投资",
+  "bailFactor": "越小，越愿意交保释金：现金因子 × 此值 < 100 就交。不在 .ai 文件里，原版按人物写死在 exe 中（董莺雨 100、四毛 140、包德利 100、陈玛丽 70、赛珍珠 100、冯全篾 120、发达而 60、金如山 160）"
  },
  "profiles": {
   "standard": {
@@ -28,7 +29,8 @@
    "intendToAddMuchMoney": 50,
    "acceptableDiffenceInTrade": -20,
    "tradeCycle": 1,
-   "maxInvestment": 10
+   "maxInvestment": 10,
+   "bailFactor": 100
   },
   "david": {
    "based_on": "包德利",
@@ -43,7 +45,8 @@
    "intendToAddMuchMoney": 40,
    "acceptableDiffenceInTrade": -20,
    "tradeCycle": 1,
-   "maxInvestment": 20
+   "maxInvestment": 20,
+   "bailFactor": 100
   },
   "giorgio": {
    "based_on": "冯全篾",
@@ -58,7 +61,8 @@
    "intendToAddMuchMoney": 80,
    "acceptableDiffenceInTrade": 0,
    "tradeCycle": 3,
-   "maxInvestment": 10
+   "maxInvestment": 10,
+   "bailFactor": 120
   },
   "marcel": {
    "based_on": "董莺雨",
@@ -73,7 +77,8 @@
    "intendToAddMuchMoney": 50,
    "acceptableDiffenceInTrade": -10,
    "tradeCycle": 2,
-   "maxInvestment": 15
+   "maxInvestment": 15,
+   "bailFactor": 100
   },
   "eric": {
    "based_on": "发达而",
@@ -88,7 +93,35 @@
    "intendToAddMuchMoney": 80,
    "acceptableDiffenceInTrade": -10,
    "tradeCycle": 2,
-   "maxInvestment": 15
+   "maxInvestment": 15,
+   "bailFactor": 60
   }
+ },
+ "scoring": {
+  "_comment": "原版 AI 的打分表（exe 里写死的，所有角色共用）。money_score_*：现金或存款低于第 1 个数得 0 分，低于第 2 个数得 10 分……都不低于得 90 分。路面格多于 big_map_roads 的地图用 big 表。",
+  "big_map_roads": 80,
+  "money_score_big": [
+   40,
+   100,
+   300,
+   500,
+   700,
+   1000,
+   1500,
+   2000,
+   2500
+  ],
+  "money_score_small": [
+   30,
+   80,
+   200,
+   300,
+   500,
+   700,
+   900,
+   1200,
+   1500
+  ],
+  "upgrade_min_cash_score": 20
  }
 }

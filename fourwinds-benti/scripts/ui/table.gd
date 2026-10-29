@@ -1,5 +1,5 @@
 extends Node
-## 棋盘画面 + 热座：把 Game（规则）画出来，人类用按钮操作，AI 用 SimpleAI 自动走。
+## 棋盘画面 + 热座：把 Game（规则）画出来，人类用按钮操作，AI 用 Brain（原版 AI）自动走。
 ##
 ## 画面分两层：
 ##   - 地图层（map_view.gd，跟着 map_camera.gd 的镜头移动）：格子、房子、棋子
@@ -14,7 +14,7 @@ extends Node
 
 const Board = preload("res://scripts/core/board.gd")
 const Game = preload("res://scripts/core/game.gd")
-const SimpleAI = preload("res://scripts/core/simple_ai.gd")
+const Brain = preload("res://scripts/core/brain.gd")
 const MapView = preload("res://scripts/ui/map_view.gd")
 const MapCamera = preload("res://scripts/ui/map_camera.gd")
 const DiceView = preload("res://scripts/ui/dice_view.gd")
@@ -231,7 +231,7 @@ func _advance() -> void:
 		if game.player().human:
 			break
 		await _wait(AI_DELAY)
-		if not SimpleAI.step(game):
+		if not Brain.step(game):
 			break
 	_busy = false
 	if game.phase == "over":
