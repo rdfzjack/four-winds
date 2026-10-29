@@ -2,18 +2,41 @@ extends SceneTree
 ## 自动测试（不开窗口）。在项目文件夹里运行：
 ##   godot --headless --script res://tests/run_tests.gd
 ## 全部通过时退出码为 0，有失败时为 1。
+## 测试在第一帧才开始（这时全局的 Data 才加载好），最后把棋盘画面全 AI 跑几秒，确认画面代码能跑。
 
 const JsonUtil = preload("res://scripts/core/json_util.gd")
 const Board = preload("res://scripts/core/board.gd")
 const DataCheck = preload("res://scripts/core/data_check.gd")
 const GameTests = preload("res://tests/game_tests.gd")
 const AiTests = preload("res://tests/ai_tests.gd")
+const Iso = preload("res://scripts/ui/iso.gd")
+const Art = preload("res://scripts/ui/art.gd")
+
+const SMOKE_DAYS := 3          ## 棋盘画面跑到第几天算通过
+const SMOKE_TIMEOUT_MS := 30000  ## 最多等这么久
 
 var failures := 0
 var checks := 0
+var _frame := 0
+var _table: Node = null
+var _smoke_start := 0
 
 
-func _init() -> void:
+func _process(_delta: float) -> bool:
+	_frame += 1
+	if _frame == 1:
+		run_logic_tests()
+		test_iso()
+		test_art_table()
+		_start_table_smoke()
+	elif _smoke_done():
+		_finish_table_smoke()
+		print("测试完成：%d 项检查，%d 项失败" % [checks, failures])
+		quit(1 if failures > 0 else 0)
+	return false
+
+
+func run_logic_tests() -> void:
 	test_data_files_load()
 	test_maps_valid()
 	test_walk_on_loop()
@@ -25,8 +48,6 @@ func _init() -> void:
 	test_default_map()
 	GameTests.new().run(self)
 	AiTests.new().run(self)
-	print("测试完成：%d 项检查，%d 项失败" % [checks, failures])
-	quit(1 if failures > 0 else 0)
 
 
 func check(ok: bool, what: String) -> void:
@@ -150,3 +171,70 @@ func test_default_map() -> void:
 	var n := board.tile_count()
 	check(n >= 30 and n <= 40, "默认地图 30-40 格（现在 %d）" % n)
 	check(board.walk(n - 1, 1) == [0], "最后一格的下一格是起点")
+
+
+func test_iso() -> void:
+	for cell in [Vector2(0, 0), Vector2(3, 7), Vector2(-2, 5), Vector2(11, 9)]:
+		var w := Iso.to_world(cell)
+		check(Iso.to_cell_f(w).is_equal_approx(cell), "等距换算能换回来 %s" % str(cell))
+		check(Iso.to_cell(w + Vector2(15, 5)) == Vector2i(cell), "点在菱形里面算这一格 %s" % str(cell))
+	check(Iso.to_world(Vector2(1, 0)) == Vector2(40, 20), "x 加 1 往右下半格（80×40 菱形）")
+	check(Iso.to_world(Vector2(0, 1)) == Vector2(-40, 20), "y 加 1 往左下半格")
+	check(Iso.depth(Vector2(2, 2)) > Iso.depth(Vector2(1, 2)), "靠前（屏幕下方）的格子后画")
+	check(Iso.facing(Vector2(1, 0)) == "down_right" and Iso.facing(Vector2(-1, 0)) == "up_left"
+			and Iso.facing(Vector2(0, 1)) == "down_left" and Iso.facing(Vector2(0, -1)) == "up_right",
+			"走一步的朝向")
+
+
+## 素材表：placeholder 目录在的时候每一项都能取到图；不在的时候（删掉后）全部返回空，不报错
+func test_art_table() -> void:
+	var has_placeholder := DirAccess.dir_exists_absolute(Art.P)
+	for key in Art.SPRITES:
+		var f: Dictionary
+		if str(key).begins_with("walker_"):
+			for facing in Art.FACING_GROUPS:
+				f = Art.walker(str(key).trim_prefix("walker_"), facing)
+				check(f.is_empty() != has_placeholder, "素材 %s 朝向 %s" % [key, facing])
+		else:
+			for i in Art.frame_count(key):
+				f = Art.frame(key, i)
+				check(f.is_empty() != has_placeholder, "素材 %s 第 %d 帧" % [key, i])
+	check(Art.frame("没有这种图").is_empty(), "表里没有的图返回空")
+	for c in root.get_node("Data").characters:
+		check(Art.SPRITES.has("walker_" + str(c["id"])), "角色 %s 有走路图" % c["id"])
+
+
+## 棋盘画面冒烟测试：全 AI 开一局，跑到第 SMOKE_DAYS 天
+func _smoke_done() -> bool:
+	if Time.get_ticks_msec() - _smoke_start > SMOKE_TIMEOUT_MS:
+		return true
+	var g = _table.get("game") if _table != null else null
+	return g == null or g.day >= SMOKE_DAYS or g.phase == "over"
+
+
+
+func _start_table_smoke() -> void:
+	var specs: Array = []
+	for c in root.get_node("Data").characters:
+		specs.append({"character": str(c["id"]), "human": false})
+	root.get_node("Data").start_specs = specs
+	_table = load("res://scenes/table.tscn").instantiate()
+	root.add_child(_table)
+	_table._fast = true
+	_smoke_start = Time.get_ticks_msec()
+
+
+func _finish_table_smoke() -> void:
+	var g = _table.get("game") if _table != null else null
+	check(g != null, "棋盘画面能打开")
+	if g == null:
+		return
+	check(g.check_invariants().is_empty(), "棋盘画面跑完数据自洽 %s" % str(g.check_invariants()))
+	check(g.day >= SMOKE_DAYS or g.phase == "over", "棋盘画面上 AI 在走（%d 秒内到第 %d 天）"
+			% [SMOKE_TIMEOUT_MS / 1000, g.day])
+	var map = _table.get("_map")
+	var cam = _table.get("_camera")
+	check(map != null and cam != null and cam.is_current(), "地图层和镜头都在")
+	check(map.tile_at(map.tile_position(0)) == 0, "点起点格子能点中起点")
+	_table.queue_free()
+	root.get_node("Data").start_specs = []
