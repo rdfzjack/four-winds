@@ -5,6 +5,7 @@ extends SceneTree
 
 const JsonUtil = preload("res://scripts/core/json_util.gd")
 const Board = preload("res://scripts/core/board.gd")
+const DataCheck = preload("res://scripts/core/data_check.gd")
 
 var failures := 0
 var checks := 0
@@ -16,6 +17,10 @@ func _init() -> void:
 	test_walk_on_loop()
 	test_walk_with_crossroad()
 	test_broken_map_is_reported()
+	test_characters_ai_lines_match()
+	test_cards_valid()
+	test_broken_cards_reported()
+	test_default_map()
 	print("测试完成：%d 项检查，%d 项失败" % [checks, failures])
 	quit(1 if failures > 0 else 0)
 
@@ -85,3 +90,48 @@ func test_broken_map_is_reported() -> void:
 		{"id": 1, "type": "land", "pos": [1, 0], "next": [0]},
 	]})
 	check(errors.size() >= 2, "坏地图能被发现（走不到的格子、缺街道组）")
+
+
+func test_characters_ai_lines_match() -> void:
+	var errors: Array = []
+	var chars := JsonUtil.load_dict("res://data/characters.json", errors)
+	var ai := JsonUtil.load_dict("res://data/ai/profiles.json", errors)
+	var lines := JsonUtil.load_dict("res://data/lines/speech.json", errors)
+	errors.append_array(DataCheck.check_characters(chars.get("characters", []), ai, lines))
+	check(errors.is_empty(), "角色、AI 参数、台词对得上 %s" % str(errors))
+	check(lines.get("conditions", {}).size() == 12, "台词有 12 种事件")
+
+
+func test_cards_valid() -> void:
+	var errors: Array = []
+	var cards := JsonUtil.load_dict("res://data/cards/chance.json", errors)
+	errors.append_array(DataCheck.check_cards(cards))
+	check(errors.is_empty(), "机会卡格式正确 %s" % str(errors))
+	check(cards.get("cards", []).size() == 34, "34 张机会卡")
+
+
+func test_broken_cards_reported() -> void:
+	var bad := {
+		"cards":
+		[
+			{"id": 1, "text": "a", "effects": [{"op": "fly_to_moon"}]},
+			{"id": 1, "text": "b", "effects": [{"op": "money"}]},
+			{"id": 2, "text": "c", "effects": [{"op": "state", "state": "rich", "days": 1}]},
+		]
+	}
+	check(DataCheck.check_cards(bad).size() == 4, "坏机会卡能被发现（未知效果、重复 id、缺参数、未知状态）")
+
+
+func test_default_map() -> void:
+	var errors: Array = []
+	var rules := JsonUtil.load_dict("res://data/rules.json", errors)
+	var map_id := str(rules.get("default_map", ""))
+	var d := JsonUtil.load_dict("res://data/maps/%s.json" % map_id, errors)
+	var board := Board.new()
+	errors.append_array(board.load_from(d))
+	check(errors.is_empty(), "默认地图 %s 能读取 %s" % [map_id, str(errors)])
+	if not errors.is_empty():
+		return
+	var n := board.tile_count()
+	check(n >= 30 and n <= 40, "默认地图 30-40 格（现在 %d）" % n)
+	check(board.walk(n - 1, 1) == [0], "最后一格的下一格是起点")

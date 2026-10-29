@@ -1,0 +1,607 @@
+{
+ "id": "shanghai_loop",
+ "name": "上海（原版数据，一圈）",
+ "placeholder": true,
+ "_comment": "由 tools/build_game_data.py 从原版上海数据生成，之后可直接修改。每格的 next 列出可以走到的下一格；岔路就是 next 有多个格子。price_pct 是地价系数：空地价 = price_pct × blank_land_price ÷ 100。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版 上海 的 CITY_PROPERTY，单位万圆。",
+  "blank_land_price": 80,
+  "build_cost": {
+   "flat": 40,
+   "hotel": 100,
+   "floor": 140,
+   "villa": 200,
+   "upgrade": 60,
+   "function": 80
+  },
+  "rent": {
+   "blank_land": 15,
+   "flat": 30,
+   "hotel": 60,
+   "super_hotel": 80,
+   "floor": 80,
+   "super_floor": 120,
+   "villa": 150
+  }
+ },
+ "groups": {
+  "顺昌路": {
+   "name": "顺昌路",
+   "color": "#8d6e63"
+  },
+  "北京路": {
+   "name": "北京路",
+   "color": "#4fc3f7"
+  },
+  "华山路": {
+   "name": "华山路",
+   "color": "#f48fb1"
+  },
+  "万航渡路": {
+   "name": "万航渡路",
+   "color": "#ba68c8"
+  },
+  "河南中路": {
+   "name": "河南中路",
+   "color": "#ff8a65"
+  },
+  "中华路": {
+   "name": "中华路",
+   "color": "#e57373"
+  },
+  "南京西路": {
+   "name": "南京西路",
+   "color": "#fff176"
+  },
+  "南京路": {
+   "name": "南京路",
+   "color": "#81c784"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "start",
+   "name": "起点",
+   "pos": [
+    10,
+    9
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "land",
+   "name": "顺昌路1号",
+   "group": "顺昌路",
+   "price_pct": 80,
+   "source": "Cit_Shaihai.cit 地块 (-11,34) 顺昌路1号",
+   "pos": [
+    9,
+    9
+   ],
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "chance",
+   "name": "运气",
+   "pos": [
+    8,
+    9
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "land",
+   "name": "顺昌路2号",
+   "group": "顺昌路",
+   "price_pct": 80,
+   "source": "Cit_Shaihai.cit 地块 (-10,34) 顺昌路2号",
+   "pos": [
+    7,
+    9
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "land",
+   "name": "北京路1号",
+   "group": "北京路",
+   "price_pct": 100,
+   "source": "Cit_Shaihai.cit 地块 (3,19) 北京路1号",
+   "pos": [
+    6,
+    9
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "land",
+   "name": "北京路2号",
+   "group": "北京路",
+   "price_pct": 100,
+   "source": "Cit_Shaihai.cit 地块 (4,19) 北京路2号",
+   "pos": [
+    5,
+    9
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "land",
+   "name": "北京路3号",
+   "group": "北京路",
+   "price_pct": 100,
+   "source": "Cit_Shaihai.cit 地块 (5,19) 北京路3号",
+   "pos": [
+    4,
+    9
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "company",
+   "name": "上海站",
+   "industry": "transport",
+   "price": 560,
+   "rent": 130,
+   "source": "Cit_Shaihai.cit 建筑 上海站",
+   "pos": [
+    3,
+    9
+   ],
+   "next": [
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "land",
+   "name": "华山路1号",
+   "group": "华山路",
+   "price_pct": 110,
+   "source": "Cit_Shaihai.cit 地块 (-17,25) 华山路1号",
+   "pos": [
+    2,
+    9
+   ],
+   "next": [
+    9
+   ]
+  },
+  {
+   "id": 9,
+   "type": "land",
+   "name": "华山路2号",
+   "group": "华山路",
+   "price_pct": 110,
+   "source": "Cit_Shaihai.cit 地块 (-17,26) 华山路2号",
+   "pos": [
+    1,
+    9
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "jail",
+   "name": "巡捕房",
+   "pos": [
+    0,
+    9
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "land",
+   "name": "万航渡路1号",
+   "group": "万航渡路",
+   "price_pct": 130,
+   "source": "Cit_Shaihai.cit 地块 (-17,22) 万航渡路1号",
+   "pos": [
+    0,
+    8
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "company",
+   "name": "大世界夜总会",
+   "industry": "entertainment",
+   "price": 450,
+   "rent": 120,
+   "source": "Cit_Shaihai.cit 建筑 大世界夜总会",
+   "pos": [
+    0,
+    7
+   ],
+   "next": [
+    13
+   ]
+  },
+  {
+   "id": 13,
+   "type": "land",
+   "name": "万航渡路2号",
+   "group": "万航渡路",
+   "price_pct": 130,
+   "source": "Cit_Shaihai.cit 地块 (-16,22) 万航渡路2号",
+   "pos": [
+    0,
+    6
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "land",
+   "name": "万航渡路3号",
+   "group": "万航渡路",
+   "price_pct": 130,
+   "source": "Cit_Shaihai.cit 地块 (-15,22) 万航渡路3号",
+   "pos": [
+    0,
+    5
+   ],
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "bank",
+   "name": "银行",
+   "pos": [
+    0,
+    4
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "land",
+   "name": "河南中路1号",
+   "group": "河南中路",
+   "price_pct": 140,
+   "source": "Cit_Shaihai.cit 地块 (3,25) 河南中路1号",
+   "pos": [
+    0,
+    3
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "chance",
+   "name": "运气",
+   "pos": [
+    0,
+    2
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 18,
+   "type": "land",
+   "name": "河南中路2号",
+   "group": "河南中路",
+   "price_pct": 140,
+   "source": "Cit_Shaihai.cit 地块 (3,26) 河南中路2号",
+   "pos": [
+    0,
+    1
+   ],
+   "next": [
+    19
+   ]
+  },
+  {
+   "id": 19,
+   "type": "park",
+   "name": "公园",
+   "pos": [
+    0,
+    0
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "land",
+   "name": "河南中路3号",
+   "group": "河南中路",
+   "price_pct": 140,
+   "source": "Cit_Shaihai.cit 地块 (3,27) 河南中路3号",
+   "pos": [
+    1,
+    0
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "church",
+   "name": "教堂",
+   "pos": [
+    2,
+    0
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "land",
+   "name": "中华路1号",
+   "group": "中华路",
+   "price_pct": 150,
+   "source": "Cit_Shaihai.cit 地块 (-8,35) 中华路1号",
+   "pos": [
+    3,
+    0
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "land",
+   "name": "中华路2号",
+   "group": "中华路",
+   "price_pct": 150,
+   "source": "Cit_Shaihai.cit 地块 (-8,36) 中华路2号",
+   "pos": [
+    4,
+    0
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "company",
+   "name": "十六铺码头",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "source": "Cit_Shaihai.cit 建筑 十六铺码头",
+   "pos": [
+    5,
+    0
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "land",
+   "name": "中华路3号",
+   "group": "中华路",
+   "price_pct": 150,
+   "source": "Cit_Shaihai.cit 地块 (-8,37) 中华路3号",
+   "pos": [
+    6,
+    0
+   ],
+   "next": [
+    26
+   ]
+  },
+  {
+   "id": 26,
+   "type": "race_course",
+   "name": "赛马场",
+   "pos": [
+    7,
+    0
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "land",
+   "name": "南京西路1号",
+   "group": "南京西路",
+   "price_pct": 160,
+   "source": "Cit_Shaihai.cit 地块 (-9,23) 南京西路1号",
+   "pos": [
+    8,
+    0
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "land",
+   "name": "南京西路2号",
+   "group": "南京西路",
+   "price_pct": 160,
+   "source": "Cit_Shaihai.cit 地块 (-8,23) 南京西路2号",
+   "pos": [
+    9,
+    0
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "government",
+   "name": "市政厅",
+   "pos": [
+    10,
+    0
+   ],
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "land",
+   "name": "南京西路3号",
+   "group": "南京西路",
+   "price_pct": 160,
+   "source": "Cit_Shaihai.cit 地块 (-7,23) 南京西路3号",
+   "pos": [
+    10,
+    1
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "company",
+   "name": "百乐门夜总会",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 90,
+   "source": "Cit_Shaihai.cit 建筑 百乐门夜总会",
+   "pos": [
+    10,
+    2
+   ],
+   "next": [
+    32
+   ]
+  },
+  {
+   "id": 32,
+   "type": "chance",
+   "name": "运气",
+   "pos": [
+    10,
+    3
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "company",
+   "name": "先施百货公司",
+   "industry": "shop",
+   "price": 480,
+   "rent": 120,
+   "slogan": "本店宗旨：收罗全球百货",
+   "source": "Cit_Shaihai.cit 建筑 先施百货公司",
+   "pos": [
+    10,
+    4
+   ],
+   "next": [
+    34
+   ]
+  },
+  {
+   "id": 34,
+   "type": "bank",
+   "name": "银行",
+   "pos": [
+    10,
+    5
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "land",
+   "name": "南京路1号",
+   "group": "南京路",
+   "price_pct": 240,
+   "source": "Cit_Shaihai.cit 地块 (-1,23) 南京路1号",
+   "pos": [
+    10,
+    6
+   ],
+   "next": [
+    36
+   ]
+  },
+  {
+   "id": 36,
+   "type": "land",
+   "name": "南京路2号",
+   "group": "南京路",
+   "price_pct": 240,
+   "source": "Cit_Shaihai.cit 地块 (0,23) 南京路2号",
+   "pos": [
+    10,
+    7
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 37,
+   "type": "land",
+   "name": "南京路3号",
+   "group": "南京路",
+   "price_pct": 240,
+   "source": "Cit_Shaihai.cit 地块 (1,23) 南京路3号",
+   "pos": [
+    10,
+    8
+   ],
+   "next": [
+    0
+   ]
+  }
+ ]
+}

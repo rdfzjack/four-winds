@@ -1,0 +1,3251 @@
+{
+ "_comment": "原版 24 张地图的价格表、街道、企业，供设计新地图时参考。游戏不读这个文件。",
+ "cities": [
+  {
+   "file": "Cit/Beiping.cit",
+   "name": "北平",
+   "grid_size": 60,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "西直门大街": {
+     "lots": 4,
+     "price_pct": 100
+    },
+    "阜成门大街": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "西单": {
+     "lots": 5,
+     "price_pct": 170
+    },
+    "长安街": {
+     "lots": 6,
+     "price_pct": [
+      160,
+      160,
+      160,
+      160,
+      180,
+      180
+     ]
+    },
+    "新街口": {
+     "lots": 2,
+     "price_pct": 120
+    },
+    "德胜门": {
+     "lots": 5,
+     "price_pct": 70
+    },
+    "地安门大街": {
+     "lots": 4,
+     "price_pct": 100
+    },
+    "王府井": {
+     "lots": 3,
+     "price_pct": 260
+    },
+    "鼓楼大街": {
+     "lots": 2,
+     "price_pct": 65
+    },
+    "崇文门": {
+     "lots": 3,
+     "price_pct": 130
+    },
+    "东四北大街": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "东单北大街": {
+     "lots": 6,
+     "price_pct": 160
+    },
+    "东四十条": {
+     "lots": 4,
+     "price_pct": 100
+    },
+    "朝阳门北大街": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "朝阳门南大街": {
+     "lots": 3,
+     "price_pct": 75
+    },
+    "建国门": {
+     "lots": 7,
+     "price_pct": 100
+    }
+   },
+   "companies": [
+    {
+     "name": "北平火车站",
+     "industry": "transport",
+     "price": 500,
+     "rent": 100,
+     "slogan": "每日运送旅客多达80人次"
+    },
+    {
+     "name": "大洋百货",
+     "industry": "shop",
+     "price": 500,
+     "rent": 120,
+     "slogan": "各色洋货,应有尽有"
+    },
+    {
+     "name": "华夏商场",
+     "industry": "shop",
+     "price": 500,
+     "rent": 120,
+     "slogan": "花样繁多之首选国货,勘与洋货媲美"
+    },
+    {
+     "name": "联合百货公司",
+     "industry": "shop",
+     "price": 500,
+     "rent": 120,
+     "slogan": "东洋西洋汇聚,华夏南北融合"
+    },
+    {
+     "name": "香满楼饭庄",
+     "industry": "food",
+     "price": 400,
+     "rent": 100,
+     "slogan": "名飘四海,酒香满楼"
+    },
+    {
+     "name": "价特低电车公司",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60,
+     "slogan": "门外踏板可免费搭乘"
+    },
+    {
+     "name": "便利电车公司",
+     "industry": "transport",
+     "price": 400,
+     "rent": 80,
+     "slogan": "乘坐之便利只需步行5里"
+    },
+    {
+     "name": "锐智报馆",
+     "industry": "newspaper",
+     "price": 300,
+     "rent": 70,
+     "slogan": "思维敏锐"
+    },
+    {
+     "name": "愚人书局",
+     "industry": "newspaper",
+     "price": 400,
+     "rent": 80,
+     "slogan": "大智若愚"
+    },
+    {
+     "name": "思想者出版社",
+     "industry": "newspaper",
+     "price": 300,
+     "rent": 70,
+     "slogan": "精于思考"
+    },
+    {
+     "name": "独一处酒楼",
+     "industry": "food",
+     "price": 350,
+     "rent": 80,
+     "slogan": "正宗饺子,独我一处"
+    },
+    {
+     "name": "东来顺饭店",
+     "industry": "food",
+     "price": 350,
+     "rent": 80,
+     "slogan": "北方火锅,绝对正宗"
+    },
+    {
+     "name": "全聚德烤鸭店",
+     "industry": "food",
+     "price": 380,
+     "rent": 70
+    },
+    {
+     "name": "迅捷电车公司",
+     "industry": "transport",
+     "price": 370,
+     "rent": 80,
+     "slogan": "速度之快每小时可跑10里之多"
+    }
+   ],
+   "other_buildings": {
+    "park": 2,
+    "chance": 3,
+    "church": 1,
+    "government": 1,
+    "race_course": 1,
+    "bank": 2,
+    "watch_man_house": 1
+   }
+  },
+  {
+   "file": "Cit/Nanjing.cit",
+   "name": "南京",
+   "grid_size": 50,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 100,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "虎踞路": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "汉中路": {
+     "lots": 8,
+     "price_pct": [
+      140,
+      140,
+      140,
+      140,
+      140,
+      160,
+      160,
+      160
+     ]
+    },
+    "虎踞南路": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "北京东路": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "升州路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "莫愁路": {
+     "lots": 7,
+     "price_pct": 120
+    },
+    "上海路": {
+     "lots": 3,
+     "price_pct": 140
+    },
+    "健康路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "建宁路": {
+     "lots": 3,
+     "price_pct": 70
+    },
+    "中央路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "龙幡路": {
+     "lots": 7,
+     "price_pct": [
+      70,
+      70,
+      70,
+      60,
+      60,
+      60,
+      60
+     ]
+    },
+    "中山南路": {
+     "lots": 5,
+     "price_pct": 130
+    },
+    "北京西路": {
+     "lots": 7,
+     "price_pct": 170
+    },
+    "中山东路": {
+     "lots": 6,
+     "price_pct": 200
+    },
+    "御道街": {
+     "lots": 4,
+     "price_pct": 100
+    },
+    "北安门街": {
+     "lots": 3,
+     "price_pct": 120
+    }
+   },
+   "companies": [
+    {
+     "name": "南京火车站",
+     "industry": "transport",
+     "price": 450,
+     "rent": 100,
+     "slogan": "拥有机车2.5辆"
+    },
+    {
+     "name": "黑且亮供水公司",
+     "industry": "public",
+     "price": 420,
+     "rent": 90,
+     "slogan": "水质绝对清洁可靠"
+    },
+    {
+     "name": "中原丝厂",
+     "industry": "weaving",
+     "price": 400,
+     "rent": 100,
+     "slogan": "国货精粹,无与伦比"
+    },
+    {
+     "name": "中山码头",
+     "industry": "transport",
+     "price": 500,
+     "rent": 120,
+     "slogan": "实乃长江航运之枢纽"
+    },
+    {
+     "name": "看得见电灯公司",
+     "industry": "public",
+     "price": 430,
+     "rent": 100,
+     "slogan": "本电灯公司保证你黑天看得见东西"
+    },
+    {
+     "name": "多能煤球公司",
+     "industry": "public",
+     "price": 360,
+     "rent": 80,
+     "slogan": "本公司煤球不但能取暖还能用来煮饭"
+    },
+    {
+     "name": "1100公交公司",
+     "industry": "transport",
+     "price": 450,
+     "rent": 110,
+     "slogan": "拥有人力黄包车300余辆"
+    },
+    {
+     "name": "悦耳电话公司",
+     "industry": "public",
+     "price": 380,
+     "rent": 80,
+     "slogan": "传递之声音比原来更加悦耳动听"
+    },
+    {
+     "name": "西洋色布厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 100,
+     "slogan": "花样繁多,永不退色"
+    },
+    {
+     "name": "东瀛纱厂",
+     "industry": "weaving",
+     "price": 440,
+     "rent": 120,
+     "slogan": "出产金刚砂牌超薄棉纱"
+    }
+   ],
+   "other_buildings": {
+    "park": 1,
+    "chance": 3,
+    "government": 1,
+    "watch_man_house": 1,
+    "race_course": 1,
+    "church": 1,
+    "bank": 2
+   }
+  },
+  {
+   "file": "Cit/Shaihai.cit",
+   "name": "上海",
+   "grid_size": 54,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "万航渡路": {
+     "lots": 4,
+     "price_pct": 130
+    },
+    "华山路": {
+     "lots": 2,
+     "price_pct": 110
+    },
+    "衡山路": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "顺昌路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "南京西路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "金陵西路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "中华路": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "西藏南路": {
+     "lots": 2,
+     "price_pct": 120
+    },
+    "西藏北路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "西藏中路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "金陵中路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "天目路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "南京路": {
+     "lots": 3,
+     "price_pct": 240
+    },
+    "北京路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "河南北路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "河南中路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "河南南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金陵东路": {
+     "lots": 2,
+     "price_pct": 130
+    },
+    "中山路": {
+     "lots": 5,
+     "price_pct": 180
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 560,
+     "rent": 130
+    },
+    {
+     "name": "大世界夜总会",
+     "industry": "entertainment",
+     "price": 450,
+     "rent": 120
+    },
+    {
+     "name": "公平路码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "三井洋行",
+     "industry": "shop",
+     "price": 420,
+     "rent": 110,
+     "slogan": "新到花生油、洋灰、胶底皮鞋"
+    },
+    {
+     "name": "百老汇夜总会",
+     "industry": "entertainment",
+     "price": 400,
+     "rent": 120
+    },
+    {
+     "name": "电车公司",
+     "industry": "transport",
+     "price": 480,
+     "rent": 100
+    },
+    {
+     "name": "十六铺码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "协昌祥百货公司",
+     "industry": "shop",
+     "price": 400,
+     "rent": 100,
+     "slogan": "出售三光蒸馏汽水"
+    },
+    {
+     "name": "天外天夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 100
+    },
+    {
+     "name": "大新百货公司",
+     "industry": "shop",
+     "price": 450,
+     "rent": 100,
+     "slogan": "最新商品，美国犀飞利自来水笔"
+    },
+    {
+     "name": "百乐门夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 90
+    },
+    {
+     "name": "先施百货公司",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "本店宗旨：收罗全球百货"
+    },
+    {
+     "name": "新丰纺织印染厂",
+     "industry": "weaving",
+     "price": 380,
+     "rent": 90
+    },
+    {
+     "name": "五合织造厂",
+     "industry": "weaving",
+     "price": 410,
+     "rent": 100,
+     "slogan": "麻纱汗衫，鹅牌第一"
+    },
+    {
+     "name": "永康绵织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "请用爱神牌内衣"
+    },
+    {
+     "name": "安乐毛绒纺织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "美女牌绒线，各界女士，均所欢迎"
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "park": 1,
+    "chance": 3,
+    "government": 1,
+    "race_course": 1,
+    "church": 1,
+    "bank": 2
+   }
+  },
+  {
+   "file": "Cit/Tianjin.cit",
+   "name": "天津",
+   "grid_size": 50,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "南开路": {
+     "lots": 8,
+     "price_pct": 90
+    },
+    "南门外大街": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "南营门": {
+     "lots": 4,
+     "price_pct": 90
+    },
+    "西北角": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "多伦道": {
+     "lots": 5,
+     "price_pct": 160
+    },
+    "鞍山道": {
+     "lots": 5,
+     "price_pct": 140
+    },
+    "曲埠道": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "北马路": {
+     "lots": 4,
+     "price_pct": 110
+    },
+    "和平路": {
+     "lots": 8,
+     "price_pct": [
+      160,
+      160,
+      160,
+      200,
+      200,
+      200,
+      200,
+      200
+     ]
+    },
+    "东北角": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "大沽路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "赤峰路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "张自忠路": {
+     "lots": 8,
+     "price_pct": 130
+    },
+    "海河东路": {
+     "lots": 10,
+     "price_pct": [
+      90,
+      90,
+      90,
+      90,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100
+     ]
+    }
+   },
+   "companies": [
+    {
+     "name": "天津火车站",
+     "industry": "transport",
+     "price": 420,
+     "rent": 100,
+     "slogan": "陆路远途之首选"
+    },
+    {
+     "name": "美靓电灯公司",
+     "industry": "public",
+     "price": 380,
+     "rent": 90,
+     "slogan": "电力充足，决无停电现象"
+    },
+    {
+     "name": "狗不理包子铺",
+     "industry": "food",
+     "price": 380,
+     "rent": 90,
+     "slogan": "倍儿香"
+    },
+    {
+     "name": "劝业场",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "专营各种洋货"
+    },
+    {
+     "name": "和平百货",
+     "industry": "shop",
+     "price": 450,
+     "rent": 110,
+     "slogan": "地处闹市,交通便捷,价格公道"
+    },
+    {
+     "name": "多来多百货",
+     "industry": "shop",
+     "price": 450,
+     "rent": 110,
+     "slogan": "货物花样之繁多令您眼花缭乱"
+    },
+    {
+     "name": "省力煤球公司",
+     "industry": "public",
+     "price": 380,
+     "rent": 90,
+     "slogan": "您不必再费力煽火"
+    },
+    {
+     "name": "甘荷水厂",
+     "industry": "public",
+     "price": 410,
+     "rent": 100,
+     "slogan": "永不干涸"
+    },
+    {
+     "name": "东北角码头",
+     "industry": "transport",
+     "price": 380,
+     "rent": 90,
+     "slogan": "横渡海河只需半小时"
+    },
+    {
+     "name": "新兴电车公司",
+     "industry": "transport",
+     "price": 380,
+     "rent": 90,
+     "slogan": "欢迎踊跃搭乘"
+    },
+    {
+     "name": "桂发祥麻花店",
+     "industry": "food",
+     "price": 380,
+     "rent": 80,
+     "slogan": "倍儿脆"
+    },
+    {
+     "name": "耳朵眼儿炸糕铺",
+     "industry": "food",
+     "price": 380,
+     "rent": 80,
+     "slogan": "倍儿软"
+    },
+    {
+     "name": "悟升电话公司",
+     "industry": "public",
+     "price": 420,
+     "rent": 100,
+     "slogan": "声音近在咫尺清晰可辨"
+    }
+   ],
+   "other_buildings": {
+    "church": 1,
+    "chance": 2,
+    "watch_man_house": 1,
+    "race_course": 1,
+    "government": 1,
+    "bank": 2,
+    "park": 1
+   }
+  },
+  {
+   "file": "Sub/Story11.cit",
+   "name": "金县",
+   "grid_size": 27,
+   "prices": {
+    "uCost_FLAT_HOUSE": 30,
+    "uCost_HOTEL_HOUSE": 80,
+    "uCost_FLOOR_HOUSE": 100,
+    "uCost_VILLA_HOUSE": 120,
+    "uCost_UPDATE": 30,
+    "uCost_FUNCTION_HOUSE": 50,
+    "uRent_BLANK_LAND": 10,
+    "uRent_FLAT_HOUSE": 20,
+    "uRent_HOTEL_HOUSE": 30,
+    "uRent_SUPER_HOTEL_HOUSE": 40,
+    "uRent_FLOOR_HOUSE": 40,
+    "uRent_SUPER_FLOOR_HOUSE": 50,
+    "uRent_VILLA_HOUSE": 80,
+    "uPrice_BLANK_LAND": 50
+   },
+   "streets": {
+    "金家西院儿": {
+     "lots": 1,
+     "price_pct": 200
+    },
+    "西弯儿": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "里巷": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "三岔口": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "临河街": {
+     "lots": 3,
+     "price_pct": 60
+    },
+    "钱行街": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "金家北院儿": {
+     "lots": 1,
+     "price_pct": 200
+    },
+    "东马路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金家东院儿": {
+     "lots": 1,
+     "price_pct": 200
+    }
+   },
+   "companies": [],
+   "other_buildings": {
+    "bank": 1,
+    "chance": 1,
+    "house": 3
+   }
+  },
+  {
+   "file": "Sub/Story12.cit",
+   "name": "金县",
+   "grid_size": 33,
+   "prices": {
+    "uCost_FLAT_HOUSE": 30,
+    "uCost_HOTEL_HOUSE": 80,
+    "uCost_FLOOR_HOUSE": 100,
+    "uCost_VILLA_HOUSE": 120,
+    "uCost_UPDATE": 30,
+    "uCost_FUNCTION_HOUSE": 50,
+    "uRent_BLANK_LAND": 10,
+    "uRent_FLAT_HOUSE": 20,
+    "uRent_HOTEL_HOUSE": 30,
+    "uRent_SUPER_HOTEL_HOUSE": 40,
+    "uRent_FLOOR_HOUSE": 40,
+    "uRent_SUPER_FLOOR_HOUSE": 50,
+    "uRent_VILLA_HOUSE": 80,
+    "uPrice_BLANK_LAND": 50
+   },
+   "streets": {
+    "西马路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金家西院儿": {
+     "lots": 1,
+     "price_pct": 200
+    },
+    "里巷": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "正阳街": {
+     "lots": 6,
+     "price_pct": 120
+    },
+    "三岔口": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "临河街": {
+     "lots": 3,
+     "price_pct": 60
+    },
+    "钱行街": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "金家北院儿": {
+     "lots": 1,
+     "price_pct": 200
+    },
+    "东马路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金家东院儿": {
+     "lots": 1,
+     "price_pct": 200
+    },
+    "新开巷": {
+     "lots": 2,
+     "price_pct": 100
+    }
+   },
+   "companies": [
+    {
+     "name": "快活林酒家",
+     "industry": "food",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "同茂菜馆",
+     "industry": "food",
+     "price": 180,
+     "rent": 40
+    },
+    {
+     "name": "丰盛饭庄",
+     "industry": "food",
+     "price": 160,
+     "rent": 40
+    }
+   ],
+   "other_buildings": {
+    "bank": 1,
+    "house": 3,
+    "chance": 1,
+    "watch_man_house": 1
+   }
+  },
+  {
+   "file": "Sub/Story13.cit",
+   "name": "银城",
+   "grid_size": 40,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 120,
+    "uCost_VILLA_HOUSE": 150,
+    "uCost_UPDATE": 40,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 100,
+    "uRent_VILLA_HOUSE": 120,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "市府路": {
+     "lots": 2,
+     "price_pct": 150
+    },
+    "石围塘": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "金桥路": {
+     "lots": 7,
+     "price_pct": [
+      80,
+      80,
+      80,
+      100,
+      100,
+      100,
+      100
+     ]
+    },
+    "民主路": {
+     "lots": 5,
+     "price_pct": 50
+    },
+    "鹦鹉大道": {
+     "lots": 3,
+     "price_pct": 90
+    },
+    "宝丰路": {
+     "lots": 3,
+     "price_pct": 200
+    },
+    "浦口路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "顺城路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "古田路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "天后宫": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "崇善路": {
+     "lots": 3,
+     "price_pct": 100
+    }
+   },
+   "companies": [
+    {
+     "name": "石围塘码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "朱张渡码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "鹦鹉洲码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "浦口码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "",
+     "industry": "food",
+     "price": 100,
+     "rent": 20
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "bank": 1,
+    "chance": 1,
+    "park": 1,
+    "government": 1,
+    "race_course": 1
+   }
+  },
+  {
+   "file": "Sub/Story14.cit",
+   "name": "银城",
+   "grid_size": 40,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 120,
+    "uCost_VILLA_HOUSE": 150,
+    "uCost_UPDATE": 40,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 100,
+    "uRent_VILLA_HOUSE": 120,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "市府路": {
+     "lots": 2,
+     "price_pct": 150
+    },
+    "石围塘": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "金桥路": {
+     "lots": 7,
+     "price_pct": [
+      80,
+      80,
+      80,
+      100,
+      100,
+      100,
+      100
+     ]
+    },
+    "民主路": {
+     "lots": 5,
+     "price_pct": 50
+    },
+    "鹦鹉大道": {
+     "lots": 3,
+     "price_pct": 90
+    },
+    "宝丰路": {
+     "lots": 3,
+     "price_pct": 200
+    },
+    "浦口路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "顺城路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "古田路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "天后宫": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "崇善路": {
+     "lots": 3,
+     "price_pct": 100
+    }
+   },
+   "companies": [
+    {
+     "name": "石围塘码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "朱张渡码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "鹦鹉洲码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "浦口码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "",
+     "industry": "food",
+     "price": 100,
+     "rent": 20
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "bank": 1,
+    "chance": 1,
+    "park": 1,
+    "government": 1,
+    "race_course": 1
+   }
+  },
+  {
+   "file": "Sub/Story15.cit",
+   "name": "上海闸北",
+   "grid_size": 46,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "交通路": {
+     "lots": 6,
+     "price_pct": 80
+    },
+    "中山路": {
+     "lots": 9,
+     "price_pct": 100
+    },
+    "天目路": {
+     "lots": 9,
+     "price_pct": 150
+    },
+    "广延路": {
+     "lots": 2,
+     "price_pct": 120
+    },
+    "沪太路": {
+     "lots": 6,
+     "price_pct": 100
+    },
+    "延长路": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "宝山路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "北宝兴路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "西宝兴路": {
+     "lots": 3,
+     "price_pct": 120
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 400,
+     "rent": 100
+    },
+    {
+     "name": "环球电车公司",
+     "industry": "transport",
+     "price": 340,
+     "rent": 80
+    },
+    {
+     "name": "上海北站",
+     "industry": "transport",
+     "price": 360,
+     "rent": 80
+    },
+    {
+     "name": "马可菠萝电车公司",
+     "industry": "transport",
+     "price": 340,
+     "rent": 80
+    }
+   ],
+   "other_buildings": {
+    "park": 1,
+    "church": 1,
+    "watch_man_house": 1,
+    "bank": 1,
+    "race_course": 1,
+    "chance": 1,
+    "government": 1
+   }
+  },
+  {
+   "file": "Sub/Story16.cit",
+   "name": "上海",
+   "grid_size": 50,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "南京西路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "金陵西路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "西藏南路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "西藏北路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "西藏中路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "金陵中路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "天目路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "南京路": {
+     "lots": 3,
+     "price_pct": 240
+    },
+    "北京路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "河南北路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "河南中路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "河南南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金陵东路": {
+     "lots": 2,
+     "price_pct": 130
+    },
+    "中山路": {
+     "lots": 5,
+     "price_pct": 180
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 560,
+     "rent": 130
+    },
+    {
+     "name": "先施百货公司",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "本店宗旨：收罗全球百货"
+    },
+    {
+     "name": "百乐门夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 90
+    },
+    {
+     "name": "十六铺码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "大世界夜总会",
+     "industry": "entertainment",
+     "price": 450,
+     "rent": 110
+    },
+    {
+     "name": "大新百货公司",
+     "industry": "shop",
+     "price": 450,
+     "rent": 100,
+     "slogan": "最新商品，美国犀飞利自来水笔"
+    },
+    {
+     "name": "公平路码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "三井洋行",
+     "industry": "shop",
+     "price": 420,
+     "rent": 110,
+     "slogan": "新到花生油、洋灰、胶底皮鞋"
+    },
+    {
+     "name": "百老汇夜总会",
+     "industry": "entertainment",
+     "price": 400,
+     "rent": 120
+    },
+    {
+     "name": "天外天夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 100
+    },
+    {
+     "name": "协昌祥百货公司",
+     "industry": "shop",
+     "price": 400,
+     "rent": 100,
+     "slogan": "出售三光蒸馏汽水"
+    },
+    {
+     "name": "电车公司",
+     "industry": "transport",
+     "price": 480,
+     "rent": 100
+    }
+   ],
+   "other_buildings": {
+    "bank": 1,
+    "government": 1,
+    "chance": 2,
+    "church": 1,
+    "race_course": 1,
+    "watch_man_house": 1,
+    "park": 1,
+    "house": 5
+   }
+  },
+  {
+   "file": "Sub/Story17.cit",
+   "name": "上海",
+   "grid_size": 54,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "万航渡路": {
+     "lots": 4,
+     "price_pct": 130
+    },
+    "华山路": {
+     "lots": 2,
+     "price_pct": 110
+    },
+    "衡山路": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "顺昌路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "南京西路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "金陵西路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "中华路": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "西藏南路": {
+     "lots": 2,
+     "price_pct": 120
+    },
+    "西藏北路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "西藏中路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "金陵中路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "天目路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "南京路": {
+     "lots": 3,
+     "price_pct": 240
+    },
+    "北京路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "河南北路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "河南中路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "河南南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金陵东路": {
+     "lots": 2,
+     "price_pct": 130
+    },
+    "中山路": {
+     "lots": 5,
+     "price_pct": 180
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 560,
+     "rent": 130
+    },
+    {
+     "name": "大世界夜总会",
+     "industry": "entertainment",
+     "price": 450,
+     "rent": 120
+    },
+    {
+     "name": "公平路码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "三井洋行",
+     "industry": "shop",
+     "price": 420,
+     "rent": 110,
+     "slogan": "新到花生油、洋灰、胶底皮鞋"
+    },
+    {
+     "name": "百老汇夜总会",
+     "industry": "entertainment",
+     "price": 400,
+     "rent": 120
+    },
+    {
+     "name": "电车公司",
+     "industry": "transport",
+     "price": 480,
+     "rent": 100
+    },
+    {
+     "name": "十六铺码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "协昌祥百货公司",
+     "industry": "shop",
+     "price": 400,
+     "rent": 100,
+     "slogan": "出售三光蒸馏汽水"
+    },
+    {
+     "name": "天外天夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 100
+    },
+    {
+     "name": "大新百货公司",
+     "industry": "shop",
+     "price": 450,
+     "rent": 100,
+     "slogan": "最新商品，美国犀飞利自来水笔"
+    },
+    {
+     "name": "百乐门夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 90
+    },
+    {
+     "name": "先施百货公司",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "本店宗旨：收罗全球百货"
+    },
+    {
+     "name": "新丰纺织印染厂",
+     "industry": "weaving",
+     "price": 380,
+     "rent": 90
+    },
+    {
+     "name": "五合织造厂",
+     "industry": "weaving",
+     "price": 410,
+     "rent": 100,
+     "slogan": "麻纱汗衫，鹅牌第一"
+    },
+    {
+     "name": "永康绵织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "请用爱神牌内衣"
+    },
+    {
+     "name": "安乐毛绒纺织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "美女牌绒线，各界女士，均所欢迎"
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "park": 1,
+    "chance": 3,
+    "government": 1,
+    "race_course": 1,
+    "church": 1,
+    "bank": 2
+   }
+  },
+  {
+   "file": "Sub/Story21.cit",
+   "name": "金县",
+   "grid_size": 27,
+   "prices": {
+    "uCost_FLAT_HOUSE": 30,
+    "uCost_HOTEL_HOUSE": 80,
+    "uCost_FLOOR_HOUSE": 100,
+    "uCost_VILLA_HOUSE": 120,
+    "uCost_UPDATE": 30,
+    "uCost_FUNCTION_HOUSE": 50,
+    "uRent_BLANK_LAND": 10,
+    "uRent_FLAT_HOUSE": 20,
+    "uRent_HOTEL_HOUSE": 30,
+    "uRent_SUPER_HOTEL_HOUSE": 40,
+    "uRent_FLOOR_HOUSE": 40,
+    "uRent_SUPER_FLOOR_HOUSE": 50,
+    "uRent_VILLA_HOUSE": 80,
+    "uPrice_BLANK_LAND": 50
+   },
+   "streets": {
+    "金家西院儿": {
+     "lots": 1,
+     "price_pct": 200
+    },
+    "西弯儿": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "里巷": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "三岔口": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "临河街": {
+     "lots": 3,
+     "price_pct": 60
+    },
+    "钱行街": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "金家北院儿": {
+     "lots": 1,
+     "price_pct": 200
+    },
+    "东马路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金家东院儿": {
+     "lots": 1,
+     "price_pct": 200
+    }
+   },
+   "companies": [],
+   "other_buildings": {
+    "bank": 1,
+    "chance": 1,
+    "house": 3
+   }
+  },
+  {
+   "file": "Sub/Story22.cit",
+   "name": "元宝山",
+   "grid_size": 32,
+   "prices": {
+    "uCost_FLAT_HOUSE": 30,
+    "uCost_HOTEL_HOUSE": 80,
+    "uCost_FLOOR_HOUSE": 100,
+    "uCost_VILLA_HOUSE": 120,
+    "uCost_UPDATE": 30,
+    "uCost_FUNCTION_HOUSE": 50,
+    "uRent_BLANK_LAND": 10,
+    "uRent_FLAT_HOUSE": 20,
+    "uRent_HOTEL_HOUSE": 30,
+    "uRent_SUPER_HOTEL_HOUSE": 40,
+    "uRent_FLOOR_HOUSE": 40,
+    "uRent_SUPER_FLOOR_HOUSE": 50,
+    "uRent_VILLA_HOUSE": 80,
+    "uPrice_BLANK_LAND": 50
+   },
+   "streets": {
+    "金沙坪": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "石桥铺": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "西胜街": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "青龙街": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "中央街": {
+     "lots": 2,
+     "price_pct": 140
+    },
+    "花园路": {
+     "lots": 3,
+     "price_pct": 160
+    },
+    "黄金路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "四马路": {
+     "lots": 3,
+     "price_pct": 80
+    }
+   },
+   "companies": [
+    {
+     "name": "十里香酒家",
+     "industry": "food",
+     "price": 300,
+     "rent": 70
+    },
+    {
+     "name": "三朋饭庄",
+     "industry": "food",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "金陵饭店",
+     "industry": "food",
+     "price": 200,
+     "rent": 40
+    }
+   ],
+   "other_buildings": {
+    "bank": 1,
+    "park": 1,
+    "chance": 1
+   }
+  },
+  {
+   "file": "Sub/Story23.cit",
+   "name": "溪口镇",
+   "grid_size": 36,
+   "prices": {
+    "uCost_FLAT_HOUSE": 30,
+    "uCost_HOTEL_HOUSE": 80,
+    "uCost_FLOOR_HOUSE": 110,
+    "uCost_VILLA_HOUSE": 140,
+    "uCost_UPDATE": 30,
+    "uCost_FUNCTION_HOUSE": 50,
+    "uRent_BLANK_LAND": 10,
+    "uRent_FLAT_HOUSE": 20,
+    "uRent_HOTEL_HOUSE": 30,
+    "uRent_SUPER_HOTEL_HOUSE": 40,
+    "uRent_FLOOR_HOUSE": 40,
+    "uRent_SUPER_FLOOR_HOUSE": 60,
+    "uRent_VILLA_HOUSE": 100,
+    "uPrice_BLANK_LAND": 50
+   },
+   "streets": {
+    "石灰巷": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "槐树街": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "八宝街": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "乾坤里": {
+     "lots": 2,
+     "price_pct": 150
+    },
+    "花牌坊街": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "东堤路": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "久兴里": {
+     "lots": 3,
+     "price_pct": 200
+    },
+    "未名巷": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "顺风里": {
+     "lots": 5,
+     "price_pct": [
+      120,
+      120,
+      100,
+      100,
+      100
+     ]
+    }
+   },
+   "companies": [
+    {
+     "name": "溪口码头",
+     "industry": "transport",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "天台恒仁书报社",
+     "industry": "newspaper",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "中华书局",
+     "industry": "newspaper",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "新月书局",
+     "industry": "newspaper",
+     "price": 200,
+     "rent": 50
+    }
+   ],
+   "other_buildings": {
+    "chance": 1,
+    "bank": 1
+   }
+  },
+  {
+   "file": "Sub/Story24.cit",
+   "name": "银城",
+   "grid_size": 40,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 120,
+    "uCost_VILLA_HOUSE": 150,
+    "uCost_UPDATE": 40,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 100,
+    "uRent_VILLA_HOUSE": 120,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "市府路": {
+     "lots": 2,
+     "price_pct": 150
+    },
+    "石围塘": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "金桥路": {
+     "lots": 7,
+     "price_pct": [
+      80,
+      80,
+      80,
+      100,
+      100,
+      100,
+      100
+     ]
+    },
+    "民主路": {
+     "lots": 5,
+     "price_pct": 50
+    },
+    "鹦鹉大道": {
+     "lots": 3,
+     "price_pct": 90
+    },
+    "宝丰路": {
+     "lots": 3,
+     "price_pct": 200
+    },
+    "浦口路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "顺城路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "古田路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "天后宫": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "崇善路": {
+     "lots": 3,
+     "price_pct": 100
+    }
+   },
+   "companies": [
+    {
+     "name": "石围塘码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "朱张渡码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "鹦鹉洲码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "浦口码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "",
+     "industry": "food",
+     "price": 100,
+     "rent": 20
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "bank": 1,
+    "chance": 1,
+    "park": 1,
+    "government": 1,
+    "race_course": 1
+   }
+  },
+  {
+   "file": "Sub/Story25.cit",
+   "name": "上海南浦",
+   "grid_size": 46,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "肇周路": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "方浜中路": {
+     "lots": 7,
+     "price_pct": 180
+    },
+    "国货路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "复兴路": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "中山南路": {
+     "lots": 4,
+     "price_pct": 100
+    },
+    "东南路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "洋浦路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "浦建路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "杨高路": {
+     "lots": 4,
+     "price_pct": 60
+    }
+   },
+   "companies": [
+    {
+     "name": "安乐毛绒纺织长",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 120,
+     "slogan": "美女牌绒线，各界女士，均所欢迎"
+    },
+    {
+     "name": "永康绵织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 120,
+     "slogan": "请用爱神牌内衣"
+    },
+    {
+     "name": "五和织造厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 120,
+     "slogan": "本厂出品：鹅牌麻纱汗衫"
+    }
+   ],
+   "other_buildings": {
+    "chance": 1,
+    "bank": 1,
+    "race_course": 1,
+    "church": 1,
+    "park": 1,
+    "government": 1,
+    "watch_man_house": 1
+   }
+  },
+  {
+   "file": "Sub/Story26.cit",
+   "name": "上海",
+   "grid_size": 50,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "南京西路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "金陵西路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "西藏南路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "西藏北路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "西藏中路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "金陵中路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "天目路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "南京路": {
+     "lots": 3,
+     "price_pct": 240
+    },
+    "北京路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "河南北路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "河南中路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "河南南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金陵东路": {
+     "lots": 2,
+     "price_pct": 130
+    },
+    "中山路": {
+     "lots": 5,
+     "price_pct": 180
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 560,
+     "rent": 130
+    },
+    {
+     "name": "先施百货公司",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "本店宗旨：收罗全球百货"
+    },
+    {
+     "name": "百乐门夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 90
+    },
+    {
+     "name": "十六铺码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "大世界夜总会",
+     "industry": "entertainment",
+     "price": 450,
+     "rent": 120
+    },
+    {
+     "name": "大新百货公司",
+     "industry": "shop",
+     "price": 450,
+     "rent": 100,
+     "slogan": "最新商品，美国犀飞利自来水笔"
+    },
+    {
+     "name": "公平路码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "三井洋行",
+     "industry": "shop",
+     "price": 420,
+     "rent": 110,
+     "slogan": "新到花生油、洋灰、胶底皮鞋"
+    },
+    {
+     "name": "百老汇夜总会",
+     "industry": "entertainment",
+     "price": 400,
+     "rent": 120
+    },
+    {
+     "name": "天外天夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 100
+    },
+    {
+     "name": "协昌祥百货公司",
+     "industry": "shop",
+     "price": 400,
+     "rent": 100,
+     "slogan": "出售三光蒸馏汽水"
+    },
+    {
+     "name": "电车公司",
+     "industry": "transport",
+     "price": 480,
+     "rent": 100
+    }
+   ],
+   "other_buildings": {
+    "bank": 1,
+    "government": 1,
+    "chance": 2,
+    "church": 1,
+    "race_course": 1,
+    "watch_man_house": 1,
+    "park": 1
+   }
+  },
+  {
+   "file": "Sub/Story27.cit",
+   "name": "上海",
+   "grid_size": 54,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "万航渡路": {
+     "lots": 4,
+     "price_pct": 130
+    },
+    "华山路": {
+     "lots": 2,
+     "price_pct": 110
+    },
+    "衡山路": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "顺昌路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "南京西路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "金陵西路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "中华路": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "西藏南路": {
+     "lots": 2,
+     "price_pct": 120
+    },
+    "西藏北路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "西藏中路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "金陵中路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "天目路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "南京路": {
+     "lots": 3,
+     "price_pct": 240
+    },
+    "北京路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "河南北路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "河南中路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "河南南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金陵东路": {
+     "lots": 2,
+     "price_pct": 130
+    },
+    "中山路": {
+     "lots": 5,
+     "price_pct": 180
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 560,
+     "rent": 130
+    },
+    {
+     "name": "大世界夜总会",
+     "industry": "entertainment",
+     "price": 450,
+     "rent": 120
+    },
+    {
+     "name": "公平路码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "三井洋行",
+     "industry": "shop",
+     "price": 420,
+     "rent": 110,
+     "slogan": "新到花生油、洋灰、胶底皮鞋"
+    },
+    {
+     "name": "百老汇夜总会",
+     "industry": "entertainment",
+     "price": 400,
+     "rent": 120
+    },
+    {
+     "name": "电车公司",
+     "industry": "transport",
+     "price": 480,
+     "rent": 100
+    },
+    {
+     "name": "十六铺码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "协昌祥百货公司",
+     "industry": "shop",
+     "price": 400,
+     "rent": 100,
+     "slogan": "出售三光蒸馏汽水"
+    },
+    {
+     "name": "天外天夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 100
+    },
+    {
+     "name": "大新百货公司",
+     "industry": "shop",
+     "price": 450,
+     "rent": 100,
+     "slogan": "最新商品，美国犀飞利自来水笔"
+    },
+    {
+     "name": "百乐门夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 90
+    },
+    {
+     "name": "先施百货公司",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "本店宗旨：收罗全球百货"
+    },
+    {
+     "name": "新丰纺织印染厂",
+     "industry": "weaving",
+     "price": 380,
+     "rent": 90
+    },
+    {
+     "name": "五合织造厂",
+     "industry": "weaving",
+     "price": 410,
+     "rent": 100,
+     "slogan": "麻纱汗衫，鹅牌第一"
+    },
+    {
+     "name": "永康绵织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "请用爱神牌内衣"
+    },
+    {
+     "name": "安乐毛绒纺织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "美女牌绒线，各界女士，均所欢迎"
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "park": 1,
+    "chance": 3,
+    "government": 1,
+    "race_course": 1,
+    "church": 1,
+    "bank": 2
+   }
+  },
+  {
+   "file": "Sub/Story31.cit",
+   "name": "溪口镇",
+   "grid_size": 27,
+   "prices": {
+    "uCost_FLAT_HOUSE": 30,
+    "uCost_HOTEL_HOUSE": 80,
+    "uCost_FLOOR_HOUSE": 100,
+    "uCost_VILLA_HOUSE": 120,
+    "uCost_UPDATE": 30,
+    "uCost_FUNCTION_HOUSE": 50,
+    "uRent_BLANK_LAND": 10,
+    "uRent_FLAT_HOUSE": 20,
+    "uRent_HOTEL_HOUSE": 30,
+    "uRent_SUPER_HOTEL_HOUSE": 40,
+    "uRent_FLOOR_HOUSE": 40,
+    "uRent_SUPER_FLOOR_HOUSE": 50,
+    "uRent_VILLA_HOUSE": 80,
+    "uPrice_BLANK_LAND": 50
+   },
+   "streets": {
+    "乾坤里": {
+     "lots": 2,
+     "price_pct": 150
+    },
+    "东堤路": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "久兴里": {
+     "lots": 3,
+     "price_pct": 200
+    },
+    "西北角": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "顺风里": {
+     "lots": 5,
+     "price_pct": [
+      120,
+      120,
+      100,
+      100,
+      100
+     ]
+    }
+   },
+   "companies": [
+    {
+     "name": "溪口码头",
+     "industry": "transport",
+     "price": 200,
+     "rent": 50
+    }
+   ],
+   "other_buildings": {
+    "chance": 1,
+    "bank": 1
+   }
+  },
+  {
+   "file": "Sub/Story32.cit",
+   "name": "溪口镇",
+   "grid_size": 36,
+   "prices": {
+    "uCost_FLAT_HOUSE": 30,
+    "uCost_HOTEL_HOUSE": 80,
+    "uCost_FLOOR_HOUSE": 100,
+    "uCost_VILLA_HOUSE": 120,
+    "uCost_UPDATE": 30,
+    "uCost_FUNCTION_HOUSE": 50,
+    "uRent_BLANK_LAND": 10,
+    "uRent_FLAT_HOUSE": 20,
+    "uRent_HOTEL_HOUSE": 30,
+    "uRent_SUPER_HOTEL_HOUSE": 40,
+    "uRent_FLOOR_HOUSE": 40,
+    "uRent_SUPER_FLOOR_HOUSE": 50,
+    "uRent_VILLA_HOUSE": 80,
+    "uPrice_BLANK_LAND": 50
+   },
+   "streets": {
+    "石灰巷": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "槐树街": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "八宝街": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "乾坤里": {
+     "lots": 2,
+     "price_pct": 150
+    },
+    "花牌坊街": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "东堤路": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "久兴里": {
+     "lots": 3,
+     "price_pct": 200
+    },
+    "董家巷": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "顺风里": {
+     "lots": 5,
+     "price_pct": [
+      120,
+      120,
+      100,
+      100,
+      100
+     ]
+    }
+   },
+   "companies": [
+    {
+     "name": "溪口码头",
+     "industry": "transport",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "天台恒仁书报社",
+     "industry": "newspaper",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "中华书局",
+     "industry": "newspaper",
+     "price": 200,
+     "rent": 50
+    },
+    {
+     "name": "新月书局",
+     "industry": "newspaper",
+     "price": 200,
+     "rent": 50
+    }
+   ],
+   "other_buildings": {
+    "chance": 1,
+    "bank": 1
+   }
+  },
+  {
+   "file": "Sub/Story33.cit",
+   "name": "银城",
+   "grid_size": 40,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 120,
+    "uCost_VILLA_HOUSE": 150,
+    "uCost_UPDATE": 40,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 100,
+    "uRent_VILLA_HOUSE": 120,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "市府路": {
+     "lots": 2,
+     "price_pct": 150
+    },
+    "石围塘": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "金桥路": {
+     "lots": 7,
+     "price_pct": [
+      80,
+      80,
+      80,
+      100,
+      100,
+      100,
+      100
+     ]
+    },
+    "民主路": {
+     "lots": 5,
+     "price_pct": 50
+    },
+    "鹦鹉大道": {
+     "lots": 3,
+     "price_pct": 90
+    },
+    "宝丰路": {
+     "lots": 3,
+     "price_pct": 200
+    },
+    "浦口路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "顺城路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "古田路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "天后宫": {
+     "lots": 3,
+     "price_pct": 150
+    },
+    "崇善路": {
+     "lots": 3,
+     "price_pct": 100
+    }
+   },
+   "companies": [
+    {
+     "name": "石围塘码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "朱张渡码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "鹦鹉洲码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "浦口码头",
+     "industry": "transport",
+     "price": 300,
+     "rent": 60
+    },
+    {
+     "name": "",
+     "industry": "food",
+     "price": 100,
+     "rent": 20
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "bank": 1,
+    "chance": 1,
+    "park": 1,
+    "government": 1,
+    "race_course": 1
+   }
+  },
+  {
+   "file": "Sub/Story34.cit",
+   "name": "上海西区",
+   "grid_size": 46,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "常熟路": {
+     "lots": 2,
+     "price_pct": 140
+    },
+    "淮海中路": {
+     "lots": 6,
+     "price_pct": 120
+    },
+    "南京西路": {
+     "lots": 5,
+     "price_pct": [
+      180,
+      200,
+      200,
+      200,
+      200
+     ]
+    },
+    "华山路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "万航渡路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "长乐路": {
+     "lots": 3,
+     "price_pct": 80
+    },
+    "北京路": {
+     "lots": 5,
+     "price_pct": 150
+    },
+    "陕西北路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "陕西南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "武胜路": {
+     "lots": 4,
+     "price_pct": 100
+    },
+    "石门路": {
+     "lots": 5,
+     "price_pct": 150
+    }
+   },
+   "companies": [
+    {
+     "name": "华生电灯公司",
+     "industry": "public",
+     "price": 450,
+     "rent": 90
+    },
+    {
+     "name": "永康自来水公司",
+     "industry": "public",
+     "price": 400,
+     "rent": 80
+    },
+    {
+     "name": "南洋煤球公司",
+     "industry": "public",
+     "price": 400,
+     "rent": 80
+    },
+    {
+     "name": "上海电话公司",
+     "industry": "public",
+     "price": 450,
+     "rent": 90
+    }
+   ],
+   "other_buildings": {
+    "bank": 1,
+    "race_course": 1,
+    "government": 1,
+    "church": 1,
+    "chance": 1,
+    "park": 1,
+    "watch_man_house": 1
+   }
+  },
+  {
+   "file": "Sub/Story35.cit",
+   "name": "上海",
+   "grid_size": 50,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "南京西路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "金陵西路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "西藏南路": {
+     "lots": 3,
+     "price_pct": 120
+    },
+    "西藏北路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "西藏中路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "金陵中路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "天目路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "南京路": {
+     "lots": 3,
+     "price_pct": 240
+    },
+    "北京路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "河南北路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "河南中路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "河南南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金陵东路": {
+     "lots": 2,
+     "price_pct": 130
+    },
+    "中山路": {
+     "lots": 5,
+     "price_pct": 180
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 560,
+     "rent": 130
+    },
+    {
+     "name": "先施百货公司",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "本店宗旨：收罗全球百货"
+    },
+    {
+     "name": "百乐门夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 90
+    },
+    {
+     "name": "十六铺码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "大世界夜总会",
+     "industry": "entertainment",
+     "price": 450,
+     "rent": 120
+    },
+    {
+     "name": "天外天夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 100
+    },
+    {
+     "name": "公平路码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "三井洋行",
+     "industry": "shop",
+     "price": 420,
+     "rent": 110,
+     "slogan": "新到花生油、洋灰、胶底皮鞋"
+    },
+    {
+     "name": "百老汇夜总会",
+     "industry": "entertainment",
+     "price": 400,
+     "rent": 120
+    },
+    {
+     "name": "大新百货公司",
+     "industry": "shop",
+     "price": 450,
+     "rent": 100,
+     "slogan": "最新商品，美国犀飞利自来水笔"
+    },
+    {
+     "name": "协昌祥百货公司",
+     "industry": "shop",
+     "price": 400,
+     "rent": 100,
+     "slogan": "出售三光蒸馏汽水"
+    },
+    {
+     "name": "电车公司",
+     "industry": "transport",
+     "price": 480,
+     "rent": 100
+    }
+   ],
+   "other_buildings": {
+    "bank": 1,
+    "government": 1,
+    "chance": 2,
+    "church": 1,
+    "race_course": 1,
+    "watch_man_house": 1,
+    "park": 1
+   }
+  },
+  {
+   "file": "Sub/Story36.cit",
+   "name": "上海",
+   "grid_size": 54,
+   "prices": {
+    "uCost_FLAT_HOUSE": 40,
+    "uCost_HOTEL_HOUSE": 100,
+    "uCost_FLOOR_HOUSE": 140,
+    "uCost_VILLA_HOUSE": 200,
+    "uCost_UPDATE": 60,
+    "uCost_FUNCTION_HOUSE": 80,
+    "uRent_BLANK_LAND": 15,
+    "uRent_FLAT_HOUSE": 30,
+    "uRent_HOTEL_HOUSE": 60,
+    "uRent_SUPER_HOTEL_HOUSE": 80,
+    "uRent_FLOOR_HOUSE": 80,
+    "uRent_SUPER_FLOOR_HOUSE": 120,
+    "uRent_VILLA_HOUSE": 150,
+    "uPrice_BLANK_LAND": 80
+   },
+   "streets": {
+    "万航渡路": {
+     "lots": 4,
+     "price_pct": 130
+    },
+    "华山路": {
+     "lots": 2,
+     "price_pct": 110
+    },
+    "衡山路": {
+     "lots": 5,
+     "price_pct": 100
+    },
+    "顺昌路": {
+     "lots": 2,
+     "price_pct": 80
+    },
+    "南京西路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "金陵西路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "中华路": {
+     "lots": 4,
+     "price_pct": 150
+    },
+    "西藏南路": {
+     "lots": 2,
+     "price_pct": 120
+    },
+    "西藏北路": {
+     "lots": 4,
+     "price_pct": 80
+    },
+    "西藏中路": {
+     "lots": 3,
+     "price_pct": 180
+    },
+    "金陵中路": {
+     "lots": 4,
+     "price_pct": 160
+    },
+    "天目路": {
+     "lots": 4,
+     "price_pct": 120
+    },
+    "南京路": {
+     "lots": 3,
+     "price_pct": 240
+    },
+    "北京路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "河南北路": {
+     "lots": 2,
+     "price_pct": 100
+    },
+    "河南中路": {
+     "lots": 4,
+     "price_pct": 140
+    },
+    "河南南路": {
+     "lots": 3,
+     "price_pct": 100
+    },
+    "金陵东路": {
+     "lots": 2,
+     "price_pct": 130
+    },
+    "中山路": {
+     "lots": 5,
+     "price_pct": 180
+    }
+   },
+   "companies": [
+    {
+     "name": "上海站",
+     "industry": "transport",
+     "price": 560,
+     "rent": 130
+    },
+    {
+     "name": "大世界夜总会",
+     "industry": "entertainment",
+     "price": 450,
+     "rent": 120
+    },
+    {
+     "name": "公平路码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "三井洋行",
+     "industry": "shop",
+     "price": 420,
+     "rent": 110,
+     "slogan": "新到花生油、洋灰、胶底皮鞋"
+    },
+    {
+     "name": "百老汇夜总会",
+     "industry": "entertainment",
+     "price": 400,
+     "rent": 120
+    },
+    {
+     "name": "电车公司",
+     "industry": "transport",
+     "price": 480,
+     "rent": 100
+    },
+    {
+     "name": "十六铺码头",
+     "industry": "transport",
+     "price": 520,
+     "rent": 120
+    },
+    {
+     "name": "协昌祥百货公司",
+     "industry": "shop",
+     "price": 400,
+     "rent": 100,
+     "slogan": "出售三光蒸馏汽水"
+    },
+    {
+     "name": "天外天夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 100
+    },
+    {
+     "name": "大新百货公司",
+     "industry": "shop",
+     "price": 450,
+     "rent": 100,
+     "slogan": "最新商品，美国犀飞利自来水笔"
+    },
+    {
+     "name": "百乐门夜总会",
+     "industry": "entertainment",
+     "price": 360,
+     "rent": 90
+    },
+    {
+     "name": "先施百货公司",
+     "industry": "shop",
+     "price": 480,
+     "rent": 120,
+     "slogan": "本店宗旨：收罗全球百货"
+    },
+    {
+     "name": "新丰纺织印染厂",
+     "industry": "weaving",
+     "price": 380,
+     "rent": 90
+    },
+    {
+     "name": "五合织造厂",
+     "industry": "weaving",
+     "price": 410,
+     "rent": 100,
+     "slogan": "麻纱汗衫，鹅牌第一"
+    },
+    {
+     "name": "永康绵织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "请用爱神牌内衣"
+    },
+    {
+     "name": "安乐毛绒纺织厂",
+     "industry": "weaving",
+     "price": 420,
+     "rent": 110,
+     "slogan": "美女牌绒线，各界女士，均所欢迎"
+    }
+   ],
+   "other_buildings": {
+    "watch_man_house": 1,
+    "park": 1,
+    "chance": 3,
+    "government": 1,
+    "race_course": 1,
+    "church": 1,
+    "bank": 2
+   }
+  }
+ ]
+}

@@ -1,0 +1,286 @@
+{
+ "_comment": "角色台词。characters 里每种事件是一个列表，游戏从中随机挑一句，可以随时加句子。这一版是按设计文档人设写的草稿，等作者改写。以后可加 \"vs\"：{对手 id: {事件: [台词]}}，做针对某个对手的专属台词。original_reference 是原版 8 个角色的台词（来自 Sentence/*.spr），只作参考，游戏不读。",
+ "status": "草稿",
+ "conditions": {
+  "GIVE_MUCH_MONEY": "付了一大笔钱（高额租金）",
+  "GIVE_LITTLE_MONEY": "付了一点小钱",
+  "GOOD_LUCK": "交好运",
+  "BAD_LUCK": "倒霉",
+  "TO_JAIL": "进巡捕房",
+  "BUILD_VILLA": "建成别墅",
+  "TRADE_OK": "交易成功",
+  "TRADE_NOT_OK": "交易被拒",
+  "GET_CHARITY": "得到施舍",
+  "BEEN_STOLEN": "被偷",
+  "STEAL": "偷到钱",
+  "AFTER_DANGER": "脱险"
+ },
+ "characters": {
+  "david": {
+   "GIVE_MUCH_MONEY": [
+    "这笔账，我记下了。"
+   ],
+   "GIVE_LITTLE_MONEY": [
+    "零钱而已，不必找了。"
+   ],
+   "GOOD_LUCK": [
+    "运气也是一种资产。"
+   ],
+   "BAD_LUCK": [
+    "短期波动，不足挂齿。"
+   ],
+   "TO_JAIL": [
+    "我要见我的律师——还有我的银行经理。"
+   ],
+   "BUILD_VILLA": [
+    "利息总会回来的。"
+   ],
+   "TRADE_OK": [
+    "很高兴和您做生意。"
+   ],
+   "TRADE_NOT_OK": [
+    "您先开个价，我再考虑。"
+   ],
+   "GET_CHARITY": [
+    "这算借款，还是赠予？"
+   ],
+   "BEEN_STOLEN": [
+    "保险公司会处理的……我希望。"
+   ],
+   "STEAL": [
+    "就当是提前收的手续费。"
+   ],
+   "AFTER_DANGER": [
+    "风险已对冲。"
+   ]
+  },
+  "giorgio": {
+   "GIVE_MUCH_MONEY": [
+    "Mamma mia！这比海关还狠！"
+   ],
+   "GIVE_LITTLE_MONEY": [
+    "拿去，朋友，喝杯咖啡。"
+   ],
+   "GOOD_LUCK": [
+    "圣母保佑那不勒斯人！"
+   ],
+   "BAD_LUCK": [
+    "今天的海风不对劲。"
+   ],
+   "TO_JAIL": [
+    "我只是个卖橄榄油的！"
+   ],
+   "BUILD_VILLA": [
+    "给我妈妈也盖一间。"
+   ],
+   "TRADE_OK": [
+    "成交！握手就算合同。"
+   ],
+   "TRADE_NOT_OK": [
+    "朋友之间，别这么算计嘛。"
+   ],
+   "GET_CHARITY": [
+    "你是好人，我欠你一次。"
+   ],
+   "BEEN_STOLEN": [
+    "谁动了我的货？！"
+   ],
+   "STEAL": [
+    "这不叫偷，这叫转运。"
+   ],
+   "AFTER_DANGER": [
+    "跑得比缉私船还快。"
+   ]
+  },
+  "marcel": {
+   "GIVE_MUCH_MONEY": [
+    "如此粗鄙的数字……"
+   ],
+   "GIVE_LITTLE_MONEY": [
+    "区区小数，不值一提。"
+   ],
+   "GOOD_LUCK": [
+    "这是学识的回报。"
+   ],
+   "BAD_LUCK": [
+    "此乃命运对学者的嫉妒。"
+   ],
+   "TO_JAIL": [
+    "你们可知道我是法兰西学院的……？"
+   ],
+   "BUILD_VILLA": [
+    "终于有地方放我的藏书了。"
+   ],
+   "TRADE_OK": [
+    "成交。记得在报上写明是我让的价。"
+   ],
+   "TRADE_NOT_OK": [
+    "这种价格，有辱斯文。"
+   ],
+   "GET_CHARITY": [
+    "我收下，纯粹是为了学术。"
+   ],
+   "BEEN_STOLEN": [
+    "那可是吐火罗文的手稿！"
+   ],
+   "STEAL": [
+    "这叫文物保护。"
+   ],
+   "AFTER_DANGER": [
+    "体面，总算保住了。"
+   ]
+  },
+  "eric": {
+   "GIVE_MUCH_MONEY": [
+    "记在竞选经费里。"
+   ],
+   "GIVE_LITTLE_MONEY": [
+    "我早就算到了。"
+   ],
+   "GOOD_LUCK": [
+    "内部消息从不出错。"
+   ],
+   "BAD_LUCK": [
+    "这是对手的抹黑！"
+   ],
+   "TO_JAIL": [
+    "我要求举行听证会。"
+   ],
+   "BUILD_VILLA": [
+    "下一步，州长官邸。"
+   ],
+   "TRADE_OK": [
+    "你刚刚错过了更好的价格。"
+   ],
+   "TRADE_NOT_OK": [
+    "没关系，我已经买下了你隔壁那块。"
+   ],
+   "GET_CHARITY": [
+    "选民的支持我心领了。"
+   ],
+   "BEEN_STOLEN": [
+    "我会让国会调查此事。"
+   ],
+   "STEAL": [
+    "这叫再分配。"
+   ],
+   "AFTER_DANGER": [
+    "我从不出现在出事的现场。"
+   ]
+  }
+ },
+ "original_reference": {
+  "四毛": {
+   "GIVE_MUCH_MONEY": "咋这贵哩？",
+   "GIVE_LITTLE_MONEY": "咋这贱哩？",
+   "GOOD_LUCK": "好人好报",
+   "BAD_LUCK": "穷人穷命",
+   "TO_JAIL": "凭啥哩？",
+   "BUILD_VILLA": "我也有今天",
+   "TRADE_OK": "够爽快哩！",
+   "TRADE_NOT_OK": "咋这贵哩？",
+   "GET_CHARITY": "活菩萨",
+   "BEEN_STOLEN": "穷人穷命",
+   "STEAL": "生活所迫",
+   "AFTER_DANGER": "好人好报"
+  },
+  "金如山": {
+   "GIVE_MUCH_MONEY": "打死我吧！",
+   "GIVE_LITTLE_MONEY": "不交才好！",
+   "GOOD_LUCK": "祖上有德",
+   "BAD_LUCK": "霉运当头",
+   "TO_JAIL": "我儿子是保长！",
+   "BUILD_VILLA": "财大气大抵不上房大地大！",
+   "TRADE_OK": "买卖公平",
+   "TRADE_NOT_OK": "贪得无厌",
+   "GET_CHARITY": "活菩萨",
+   "BEEN_STOLEN": "我的命啊！",
+   "STEAL": "人无歪财不富",
+   "AFTER_DANGER": "祖上有德"
+  },
+  "发达而": {
+   "GIVE_MUCH_MONEY": "MY GOD！",
+   "GIVE_LITTLE_MONEY": "Piece of cake",
+   "GOOD_LUCK": "Is it true？",
+   "BAD_LUCK": "Shit！",
+   "TO_JAIL": "WHY？",
+   "BUILD_VILLA": "Wonderful！",
+   "TRADE_OK": "Good！",
+   "TRADE_NOT_OK": "FOOL",
+   "GET_CHARITY": "God bless you",
+   "BEEN_STOLEN": "？",
+   "STEAL": "……",
+   "AFTER_DANGER": "Thanks my god"
+  },
+  "董莺雨": {
+   "GIVE_MUCH_MONEY": "天 啊！",
+   "GIVE_LITTLE_MONEY": "拿去买糖吧！",
+   "GOOD_LUCK": "书中自有gold屋",
+   "BAD_LUCK": "商海无涯苦做boat",
+   "TO_JAIL": "黑白不分",
+   "BUILD_VILLA": "安得此厦千万间？",
+   "TRADE_OK": "知识是成功之本",
+   "TRADE_NOT_OK": "fish和熊掌不可兼得",
+   "GET_CHARITY": "你就是“主”",
+   "BEEN_STOLEN": "世态炎凉",
+   "STEAL": "生活所迫",
+   "AFTER_DANGER": "有惊无险"
+  },
+  "包德利": {
+   "GIVE_MUCH_MONEY": "无商不奸",
+   "GIVE_LITTLE_MONEY": "小意思",
+   "GOOD_LUCK": "时来运转",
+   "BAD_LUCK": "真倒霉",
+   "TO_JAIL": "我要找律师",
+   "BUILD_VILLA": "我真是天才",
+   "TRADE_OK": "合作愉快",
+   "TRADE_NOT_OK": "贪得无厌",
+   "GET_CHARITY": "雪中送炭",
+   "BEEN_STOLEN": "真倒霉",
+   "STEAL": "人无歪财不富",
+   "AFTER_DANGER": "有惊无险"
+  },
+  "赛珍珠": {
+   "GIVE_MUCH_MONEY": "呜——我不活了！",
+   "GIVE_LITTLE_MONEY": "也好意思要",
+   "GOOD_LUCK": "是因为我有魅力吗？",
+   "BAD_LUCK": "天生苦命",
+   "TO_JAIL": "一身清白付注东流",
+   "BUILD_VILLA": "豪宅美女",
+   "TRADE_OK": "英雄难过美人关",
+   "TRADE_NOT_OK": "德行",
+   "GET_CHARITY": "林子大，什么鸟都有",
+   "BEEN_STOLEN": "挨千刀的",
+   "STEAL": "人无歪财不富",
+   "AFTER_DANGER": "有惊无险"
+  },
+  "冯全篾": {
+   "GIVE_MUCH_MONEY": "我也敢宰？",
+   "GIVE_LITTLE_MONEY": "拿去",
+   "GOOD_LUCK": "有福不用忙",
+   "BAD_LUCK": "江湖险恶",
+   "TO_JAIL": "常来常往",
+   "BUILD_VILLA": "这才象龙头老大",
+   "TRADE_OK": "爽快",
+   "TRADE_NOT_OK": "话不投机",
+   "GET_CHARITY": "不要白不要",
+   "BEEN_STOLEN": "我非砍死他",
+   "STEAL": "哈哈哈",
+   "AFTER_DANGER": "福大命大"
+  },
+  "陈玛丽": {
+   "GIVE_MUCH_MONEY": "人家不干",
+   "GIVE_LITTLE_MONEY": "小意思",
+   "GOOD_LUCK": "这是真的吗",
+   "BAD_LUCK": "真倒霉",
+   "TO_JAIL": "我要回家",
+   "BUILD_VILLA": "梦想成真",
+   "TRADE_OK": "成功",
+   "TRADE_NOT_OK": "讨厌",
+   "GET_CHARITY": "当我是什么人",
+   "BEEN_STOLEN": "真倒霉",
+   "STEAL": "咦！哪来的钱",
+   "AFTER_DANGER": "好险啊！"
+  }
+ }
+}

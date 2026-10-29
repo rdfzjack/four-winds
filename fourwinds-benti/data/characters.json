@@ -1,5 +1,5 @@
 {
- "_comment": "4 个可选角色，同时也是 AI 对手。abilities 是设计文档里的特殊能力，复刻阶段不启用。ai_base_profile 指向原版 Ai/Standard.ai 里的一套参数，作为 AI 性格的起点，第 4 步再细调。",
+ "_comment": "4 个可选角色，同时也是 AI 对手。ability 是设计文档里的特殊能力，复刻阶段不启用（enabled=false）。ai_profile 和 lines 分别指向 ai/profiles.json 和 lines/speech.json 里的条目。placeholder_art 是第 3 步要借用的原版角色图片（只作占位）。home_city 是建议，待作者确认。",
  "characters": [
   {
    "id": "david",
@@ -15,7 +15,18 @@
     "enabled": false
    },
    "ai_style": "冷静估价，谈判时让对方先开口",
-   "ai_base_profile": "包德利"
+   "home_city": "伦敦",
+   "voice": "客气、冷静，全是银行和账本的说法",
+   "ai_profile": "david",
+   "lines": "david",
+   "placeholder_art": {
+    "borrowed_from": "包德利",
+    "walk": "extracted/images/Sprite/Mai_b.png",
+    "portrait": "extracted/images/Sprite/Itr_bdl.png",
+    "full_body": "extracted/images/Describe/Mai.png",
+    "win": "extracted/images/Sprite/Bdl_w.png",
+    "bankrupt": "extracted/images/Sprite/Bdl_f.png"
+   }
   },
   {
    "id": "giorgio",
@@ -31,7 +42,18 @@
     "enabled": false
    },
    "ai_style": "讲义气，对某个玩家特别好说话",
-   "ai_base_profile": "冯全篾"
+   "home_city": "那不勒斯（城市待定）",
+   "voice": "热情、夹意大利语，讲义气，满口“朋友”",
+   "ai_profile": "giorgio",
+   "lines": "giorgio",
+   "placeholder_art": {
+    "borrowed_from": "冯全篾",
+    "walk": "extracted/images/Sprite/Hei_b.png",
+    "portrait": "extracted/images/Sprite/Itr_fqm.png",
+    "full_body": "extracted/images/Describe/Hb.png",
+    "win": "extracted/images/Sprite/Fqm_w.png",
+    "bankrupt": "extracted/images/Sprite/Fqm_f.png"
+   }
   },
   {
    "id": "marcel",
@@ -47,7 +69,18 @@
     "enabled": false
    },
    "ai_style": "精明但爱面子",
-   "ai_base_profile": "董莺雨"
+   "home_city": "巴黎（城市待定）",
+   "voice": "文绉绉、爱面子，动不动搬出学术头衔",
+   "ai_profile": "marcel",
+   "lines": "marcel",
+   "placeholder_art": {
+    "borrowed_from": "董莺雨",
+    "walk": "extracted/images/Sprite/Nu_x.png",
+    "portrait": "extracted/images/Sprite/Itr_dyy.png",
+    "full_body": "extracted/images/Describe/Xs.png",
+    "win": "extracted/images/Sprite/Dyy_w.png",
+    "bankrupt": "extracted/images/Sprite/Dyy_f.png"
+   }
   },
   {
    "id": "eric",
@@ -63,7 +96,18 @@
     "enabled": false
    },
    "ai_style": "永远比你快半步",
-   "ai_base_profile": "发达而"
+   "home_city": "纽约",
+   "voice": "政客腔，永远“早就料到”，什么都推给对手",
+   "ai_profile": "eric",
+   "lines": "eric",
+   "placeholder_art": {
+    "borrowed_from": "发达而",
+    "walk": "extracted/images/Sprite/Wai_g.png",
+    "portrait": "extracted/images/Sprite/Itr_fdr.png",
+    "full_body": "extracted/images/Describe/Wai.png",
+    "win": "extracted/images/Sprite/Fdr_w.png",
+    "bankrupt": "extracted/images/Sprite/Fdr_f.png"
+   }
   }
  ]
 }

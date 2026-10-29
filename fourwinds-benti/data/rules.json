@@ -1,11 +1,39 @@
 {
- "_comment": "全局规则参数。数值是占位，先照原版（开局现金、存款各 2000 万圆），以后在这里改。",
+ "_comment": "全局规则参数，单位万圆。标 source 的是从原版确认过的数值；放在 unconfirmed 里的还没核实，第 2 步决定。",
  "currency": "万圆",
- "default_map": "test_loop",
+ "default_map": "shanghai_loop",
  "max_players": 4,
  "starting_cash": 2000,
  "starting_deposit": 2000,
+ "_starting_money_source": "原版地图文件里每个玩家开局有两个 2000（推测为现金和存款）",
  "dice_count": 1,
  "dice_sides": 6,
- "_dice_note": "原版骰子数还没核实：源码里有 getMoveSteps(num1, num2)，可能是两颗。"
+ "day_per_round": 1,
+ "_day_note": "原版按“天”计时（坐牢三天、一周免租）。先定为每一轮 = 一天。",
+ "jail": {
+  "days": 3,
+  "source": "exe：坐牢三天；可缴保释金（金额公式未核实）"
+ },
+ "church": {
+  "pass_donation": 30,
+  "source": "exe：路过教堂,捐款30万圆；停留则成为信徒"
+ },
+ "race_course": {
+  "prizes": [
+   100,
+   60,
+   40
+  ],
+  "record_prize": 200,
+  "source": "exe：冠军 100 万、亚军 60 万、季军 40 万，打破纪录 200 万。复刻时不做赛马小游戏，第 2 步决定简化规则"
+ },
+ "unconfirmed": {
+  "dice_count": "源码有 getMoveSteps(num1, num2)，可能是两颗",
+  "upgrade": "旅社→旅馆、小洋楼→花园洋房的升级条件",
+  "bank_interest": "银行利率和派息日",
+  "tax": "税务局财产税公式",
+  "bail": "保释金公式",
+  "auction": "拍卖流程",
+  "company_group_bonus": "同一行业企业的组合加成"
+ }
 }
