@@ -17,6 +17,8 @@ const SPRITES := {
 	"road_y": {"sheet": P + "Road", "group": 0, "frames": [0]},       ## 沿格子 y 方向的直路
 	"road_plain": {"sheet": P + "Road", "group": 0, "frames": [2, 3, 4, 5, 6, 7, 8, 9, 10]},
 	"lot": {"sheet": P + "Base", "group": 0, "frames": [0]},          ## 路边可买的空地
+	"sign": {"sheet": P + "Sign", "group": 0, "frames": [0]},         ## 地主牌：不变色的部分
+	"sign_tint": {"sheet": P + "Sign", "group": 1, "frames": [0]},    ## 地主牌：乘上主人颜色的部分
 	"select": {"sheet": P + "Flag", "group": 0, "frames": [5]},       ## 选中 / 高亮框
 	"outline": {"sheet": P + "Flag", "group": 0, "frames": [4]},      ## 普通白框（路口）
 	"arrow": {"sheet": P + "Flag", "group": 0, "frames": [0, 1, 2, 3]},  ## 方向箭头：↖ ↗ ↘ ↙

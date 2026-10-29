@@ -4,7 +4,8 @@ extends RefCounted
 ## 每条街的情况（玩家在上面有地的街才列出）：凑大房子还差什么。AI 和建房界面都用它。
 ## 用法：Streets.progress(game, 玩家编号)
 ## 返回 [{group, name, total: 这条街几块地, mine: 自己有几块, free: 还没主人的几块,
-##         others: 别人有几块, run: 自己的空地（没房子、没抵押）沿路最多连着几块}]
+##         others: 别人有几块, run: 自己的空地或平房（没抵押）沿路最多连着几块}]
+## 平房也算进 run：并排的平房可以合并成大房子（Game.merge）
 static func progress(game, pi: int) -> Array:
 	var out: Array = []
 	var by_group := {}
@@ -36,9 +37,12 @@ static func progress(game, pi: int) -> Array:
 	return out
 
 
-## 自己的、没房子、没抵押的地
+## 自己的、没抵押、空着或只有一栋平房的地
 static func _is_free_lot(game, pi: int, tile: int) -> bool:
-	return game.owner_of(tile) == pi and game.house_at(tile) == 0 and not game.props[tile]["mortgaged"]
+	if game.owner_of(tile) != pi or game.props[tile]["mortgaged"]:
+		return false
+	var hid: int = game.house_at(tile)
+	return hid == 0 or str(game.houses[hid]["kind"]) == "flat"
 
 
 static func _free_chain_exists(game, pi: int, start: int, n: int) -> bool:
@@ -47,17 +51,5 @@ static func _free_chain_exists(game, pi: int, start: int, n: int) -> bool:
 		for t in chain:
 			ok = ok and _is_free_lot(game, pi, int(t))
 		if ok:
-			return true
-	return false
-
-
-## 这块地所在的街还有机会凑成大房子吗：街上还有没主人的地，或者自己还有别的空地
-static func still_open(game, pi: int, tile: int) -> bool:
-	var g := str(game.board.get_tile(tile).get("group", ""))
-	for t in game.board.tiles:
-		var id := int(t["id"])
-		if id == tile or str(t["type"]) != "land" or str(t.get("group", "")) != g:
-			continue
-		if game.owner_of(id) < 0 or _is_free_lot(game, pi, id):
 			return true
 	return false

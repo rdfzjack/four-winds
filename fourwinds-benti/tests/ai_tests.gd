@@ -54,9 +54,11 @@ func test_simple_ai_games() -> void:
 					built += 1
 					if str(ev["kind"]) != "flat":
 						big += 1
+				elif ev["type"] == "merged":
+					big += 1
 		check(bad.is_empty(), "临时 AI 对局 %d 数据一致 %s" % [seed_value, str(bad.slice(0, 3))])
 		if g.phase == "over":
 			finished += 1
-	print("临时 AI 对局：%d/12 局打完，买地 %d 次，建房 %d 次（其中平房以外 %d 次）" % [finished, bought, built, big])
+	print("临时 AI 对局：%d/12 局打完，买地 %d 次，建房 %d 次（平房以外的新建 + 合并 %d 次）" % [finished, bought, built, big])
 	check(bought > 0 and built > 0, "临时 AI 会买地也会建房")
-	check(big > 0, "临时 AI 会留地凑大房子，不是只盖平房")
+	check(big > 0, "临时 AI 会建或合并出平房以外的房子")

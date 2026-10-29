@@ -154,6 +154,11 @@
     "rent": "villa"
    }
   ],
+  "merge_flats": {
+   "_note": "【作者定】同一条街上并排的自己的平房（中间可以夹自己的空地）可以直接合并成旅社 / 小洋楼 / 别墅。要付：新房子造价 − 拆掉的平房造价 × credit_flat_cost_pct ÷ 100。合并不触发古董和倒塌。",
+   "enabled": true,
+   "credit_flat_cost_pct": 100
+  },
   "upgrade_note": "旅社→旅馆、小洋楼→花园洋房只需付升级费（upgrade × build_cost_pct 之和 ÷ 100）",
   "remove_refund_pct": 50,
   "antique_chance_by_lots": {

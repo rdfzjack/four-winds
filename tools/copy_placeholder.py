@@ -14,11 +14,16 @@ pivot = 帧里要对准“参考点”的像素：地面图块对准菱形中心
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from fw_formats import SHADOW, TRANSPARENT, read_palette, read_spr  # noqa: E402
+
+GAME = ROOT / "shanghai1940"
 SRC = ROOT / "extracted" / "images"
 OUT = ROOT / "fourwinds-benti" / "assets" / "placeholder"
 
@@ -75,6 +80,49 @@ def copy_sprite(name: str, rel: str, groups: list[int] | None, kind: str) -> dic
     return meta
 
 
+# 原版换色表 Color.idx 会把这些色号染成玩家的颜色（地主牌的旗面）
+PLAYER_COLOR_INDEXES = {56, *range(184, 192)}
+
+
+def copy_sign() -> str:
+    """地主牌（Base.spr 第 2 帧）拆成两层：第 1 组 = 旗杆等不变色的部分，第 2 组 = 旗面的灰度，
+    画的时候第 2 组乘上主人的颜色。"""
+    pal = read_palette(GAME / "Sprite" / "1940.col")
+    f = read_spr(GAME / "Sprite" / "Base.spr").groups[0][1]
+    shades = [sum(pal[i]) / 3 for i in PLAYER_COLOR_INDEXES]
+    top = max(shades)
+    base = Image.new("RGBA", (f.width, f.height))
+    tint = Image.new("RGBA", (f.width, f.height))
+    bp, tp = [], []
+    for v in f.pixels:
+        if v in PLAYER_COLOR_INDEXES:
+            g = int(255 * (sum(pal[v]) / 3) / top)
+            bp.append((0, 0, 0, 0))
+            tp.append((g, g, g, 255))
+        else:
+            tp.append((0, 0, 0, 0))
+            if v == TRANSPARENT:
+                bp.append((0, 0, 0, 0))
+            elif v == SHADOW:
+                bp.append((0, 0, 0, 110))
+            else:
+                bp.append((*pal[v], 255))
+    base.putdata(bp)
+    tint.putdata(tp)
+    out = Image.new("RGBA", (f.width, f.height * 2))
+    out.alpha_composite(base, (0, 0))
+    out.alpha_composite(tint, (0, f.height))
+    out.save(OUT / "Sign.png")
+    pivot = [HALF_W - f.hot_x, f.hot_y]
+    data = {"source": "Sprite/Base.spr", "groups": [
+        [{"rect": [0, 0, f.width, f.height], "pivot": pivot}],
+        [{"rect": [0, f.height, f.width, f.height], "pivot": pivot}],
+    ]}
+    (OUT / "Sign.json").write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return ("| `Sign.png` / `Sign.json` | `Sprite/Base.spr`（原版文件，用 `Sprite/1940.col` 调色板） | 第 2 帧 "
+            "| 地主牌：第 1 组是旗杆，第 2 组是旗面灰度（原版色号 56、184–191），画面乘上主人颜色 |")
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     lines = [
@@ -91,6 +139,7 @@ def main() -> None:
         which = "全部" if groups is None else "第 " + "、".join(str(g + 1) for g in groups) + " 组"
         lines.append(f"| `{name}.png` / `{name}.json` | `{meta['source']}`（解包：`extracted/images/{rel}.png`） "
                      f"| {which} | {use} |")
+    lines.append(copy_sign())
     (OUT / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("已写入", OUT)
 

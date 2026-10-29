@@ -14,3 +14,4 @@
 | `Hei_b.png` / `Hei_b.json` | `Sprite/Hei_b.spr`（解包：`extracted/images/Sprite/Hei_b.png`） | 全部 | 黑帮走路图，占位给小九 |
 | `Mai_b.png` / `Mai_b.json` | `Sprite/Mai_b.spr`（解包：`extracted/images/Sprite/Mai_b.png`） | 全部 | 买办走路图，占位给孔雀 |
 | `Tu_c.png` / `Tu_c.json` | `Sprite/Tu_c.spr`（解包：`extracted/images/Sprite/Tu_c.png`） | 全部 | 土财主走路图，占位给理理 |
+| `Sign.png` / `Sign.json` | `Sprite/Base.spr`（原版文件，用 `Sprite/1940.col` 调色板） | 第 2 帧 | 地主牌：第 1 组是旗杆，第 2 组是旗面灰度（原版色号 56、184–191），画面乘上主人颜色 |

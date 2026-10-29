@@ -399,6 +399,8 @@ func _describe(ev: Dictionary) -> String:
 			return "%s 刚盖的房子倒塌了！" % _pname(pi)
 		"upgraded":
 			return "%s 的房子升级成%s" % [_pname(pi), _house_name(str(ev["kind"]))]
+		"merged":
+			return "%s 把平房合并成%s，花了 %d 万" % [_pname(pi), _house_name(str(ev["kind"])), int(ev["cost"])]
 		"removed":
 			return "%s 拆了房子，退回 %d 万" % [_pname(pi), int(ev["refund"])]
 		"bankrupt":
@@ -433,7 +435,7 @@ func _speak(ev: Dictionary) -> void:
 		"jailed":
 			who = int(ev["player"])
 			cond = "TO_JAIL"
-		"built":
+		"built", "merged":
 			if str(ev["kind"]) == "villa":
 				who = int(ev["player"])
 				cond = "BUILD_VILLA"
@@ -665,6 +667,15 @@ func _rebuild_house_dialog(message: String) -> void:
 		_dialog_button(list, text, tiles, func() -> void:
 				_house_action(game.build(p.index, str(o["kind"]), tiles)))
 
+	var merges: Array = game.build_options(p.index, true)
+	_section(list, "合并并排的平房（只付差价）（%d）" % merges.size())
+	for o in merges:
+		var tiles: Array = o["tiles"]
+		var text := "合并成%s · %s · 付 %d" % [_house_name(str(o["kind"])), _tiles_text(tiles),
+				int(o["cost"])]
+		_dialog_button(list, text, tiles, func() -> void:
+				_house_action(game.merge(p.index, str(o["kind"]), tiles)))
+
 	_street_hints(list, p.index)
 
 	var upgradable: Array = []
@@ -709,9 +720,9 @@ func _street_hints(parent: Node, pi: int) -> void:
 	var streets: Array = Streets.progress(game, pi)
 	if streets.is_empty():
 		return
-	_section(parent, "凑大房子：同一条街上连着的自己的空地（盖了平房的地不算）")
+	_section(parent, "凑大房子：同一条街上连着的自己的空地或平房（平房可以合并）")
 	for st in streets:
-		var text := "%s：%d 块里你有 %d 块，别人 %d 块，没主人 %d 块；空地最多连着 %d 块" % [
+		var text := "%s：%d 块里你有 %d 块，别人 %d 块，没主人 %d 块；你的地最多连着 %d 块" % [
 			st["name"], int(st["total"]), int(st["mine"]), int(st["others"]), int(st["free"]),
 			int(st["run"])]
 		var wants: Array = []

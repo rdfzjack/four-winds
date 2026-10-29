@@ -292,7 +292,7 @@ func _draw_lot(id: int) -> void:
 	else:
 		draw_colored_polygon(Iso.diamond(cell), _type_color(t, 0.35))
 	var o := game.owner_of(id) if game.props.has(id) else -1
-	if o >= 0:
+	if o >= 0 and Art.frame("sign_tint").is_empty():
 		draw_polyline(_closed(Iso.diamond(cell, 0.86)), player_colors[o], 3.0)
 
 
@@ -323,8 +323,21 @@ func _draw_structure(id: int) -> void:
 		if hid != 0:
 			var h: Dictionary = game.houses[hid]
 			_draw_box(cell, 14.0 + 8.0 * _house_level(str(h["kind"])), player_colors[int(h["owner"])])
+		elif game.owner_of(id) >= 0:
+			_draw_sign(cell, player_colors[game.owner_of(id)])
 	else:
 		_draw_box(cell, BUILDING_HEIGHT, _type_color(t, 0.0))
+
+
+## 地主牌（原版：买下的空地上立一块主人颜色的牌子）
+func _draw_sign(cell: Vector2, color: Color) -> void:
+	var at := Iso.to_world(cell)
+	var base := Art.frame("sign")
+	var tint := Art.frame("sign_tint")
+	if not base.is_empty():
+		draw_texture(base["tex"], at - base["pivot"])
+	if not tint.is_empty():
+		draw_texture(tint["tex"], at - tint["pivot"], color)
 
 
 func _draw_token(player: int, slot: int) -> void:
