@@ -35,7 +35,27 @@
 
 ## 测试
 
-云端环境目前下载不了 Godot（github.com 的下载被网络策略拦截），所以：
+云端可以从 Godot 官网下载和作者同版本的 Godot（github.com 的下载会被拦截，所以不用它）：
+
+```bash
+bash tools/setup_godot.sh
+```
+
+然后在 `fourwinds-benti/` 里运行无头测试，并把主界面跑几十帧确认没有运行时报错：
+
+```bash
+godot --headless --import
+```
+
+```bash
+godot --headless --script res://tests/run_tests.gd
+```
+
+```bash
+godot --headless --quit-after 60
+```
+
+数据和语法的快速检查（不需要 Godot）：
 
 ```bash
 python3 tools/validate_data.py
@@ -45,10 +65,5 @@ python3 tools/validate_data.py
 pip install "gdtoolkit==4.*" && gdlint $(find fourwinds-benti/scripts fourwinds-benti/tests -name '*.gd')
 ```
 
-有 Godot 时（作者本机，或以后云端放开下载）在 `fourwinds-benti/` 里运行：
-
-```bash
-godot --headless --script res://tests/run_tests.gd
-```
-
-gdlint 只查语法和风格，查不出类型错误和运行时错误；改了 GDScript 后要请作者在 Godot 里按 F5 确认。
+无头测试只能验证规则和脚本，画面效果和手感仍需作者在 Windows 上按 F5 确认。
+Godot 生成的 `*.uid` 文件要提交进仓库。
