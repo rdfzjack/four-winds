@@ -23,6 +23,8 @@ var special_events: Array = []  ## 不在牌堆里的特殊事件（古董、倒
 var ai_profiles: Dictionary = {}  ## AI 参数 id -> {参数名: 数值}
 var lines: Dictionary = {}  ## 整个 lines/speech.json
 var errors: Array = []  ## 读取或校验时发现的问题，主界面会显示出来
+## 主界面选好的座位，开局时交给棋盘画面：[{character: 角色 id, human: bool}, ...]
+var start_specs: Array = []
 
 
 func _ready() -> void:

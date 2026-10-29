@@ -9,7 +9,7 @@ extends RefCounted
 ##   轮到某人时 game.phase == "pre_roll"：可以 build / upgrade / remove_house，然后 roll()。
 ##   走到需要选择的地方 game.phase == "pending"，看 game.pending["type"]：
 ##     choose_direction → choose_direction(tile)   十字路口选方向
-##     bank             → bank_deposit / bank_withdraw，最后 bank_done()
+##     bank             → bank_deposit / bank_withdraw，最后 bank_done()（路过或停在银行都会弹）
 ##     buy_land / buy_company → buy() 或 decline()
 ##     bail             → bail(true) 交保释金，bail(false) 坐牢
 ##   每个选择做完，游戏会自己往下走，直到轮到下一个人（phase 回到 "pre_roll"）或结束（"over"）。
@@ -527,8 +527,12 @@ func bank_withdraw(amount: int) -> bool:
 func bank_done() -> bool:
 	if pending.get("type", "") != "bank":
 		return false
+	var stopped: bool = pending.get("stop", false)
 	_clear_pending()
-	_continue_move()
+	if stopped:
+		_finish_turn()  # 停在银行：存取完这回合就结束
+	else:
+		_continue_move()
 	return true
 
 
@@ -549,6 +553,10 @@ func _on_stop(p: Player, from_card: bool = false) -> void:
 			var amount := pct_of(total_assets(p.index), int(rules["tax"]["pct_of_total_assets"]))
 			_emit("tax", {"player": p.index, "amount": amount})
 			pay(p.index, amount, -1)
+		"bank":
+			# 作者定的规则：停在银行也能存取款（原版反汇编表里停下没有效果）
+			if p.cash > 0 or p.deposit > 0:
+				_set_pending({"type": "bank", "tile": p.pos, "stop": true})
 		"jail":
 			_stop_at_jail(p)
 		"church":
@@ -565,7 +573,7 @@ func _on_stop(p: Player, from_card: bool = false) -> void:
 			p.cash += prize
 			_emit("race", {"player": p.index, "rank": rank + 1, "prize": prize})
 		_:
-			pass  # 起点、银行（只有路过才有效果）、赌场：停下没有效果
+			pass  # 起点、赌场：停下没有效果
 
 
 func _stop_on_land(p: Player) -> void:

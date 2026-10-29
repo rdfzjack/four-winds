@@ -437,7 +437,12 @@ func test_bank_pass() -> void:
 	)
 	var stop := new_game()
 	move(stop, bank - 1, 1)
-	check(stop.phase == "pre_roll" and stop.current == 1, "停在银行上没有效果")
+	check(
+		stop.phase == "pending" and stop.pending["type"] == "bank" and stop.current == 0,
+		"停在银行上也能存取款（作者定的规则）"
+	)
+	check(stop.bank_deposit(300) and stop.players[0].deposit == 2300, "停在银行存款")
+	check(stop.bank_done() and stop.phase == "pre_roll" and stop.current == 1, "存完这回合结束")
 
 
 func test_church() -> void:

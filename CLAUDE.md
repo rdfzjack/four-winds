@@ -3,7 +3,7 @@
 用 Godot 4 重做 1998 年《上海大富翁1940》的换皮版本，自用，不公开发布原版素材。
 作者对 Godot 不熟，说明要简单直白；作者在自己的 Windows 电脑上用 Godot 4.7 测试。
 
-先读：
+先读（做事方式见 `docs/plan.md` 的“作者定下的做事方式”）：
 - `docs/design.md`：设计文档（角色、城市、远期新规则）。和作者最新指示冲突时以作者为准。
 - `docs/plan.md`：开发计划和当前进度。每完成一步就更新进度表。
 - `docs/analysis.md`：原版文件格式和数据结构。
@@ -21,7 +21,7 @@
 | `fourwinds-benti/data/` | 所有规则数值、角色、地图、机会卡、AI 参数、台词（JSON），作者会自己改 |
 | `fourwinds-benti/data/reference/` | 原版城市价格参考，游戏不读 |
 | `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试。`game.gd` 是一局游戏的全部规则（用法见文件开头的注释），`board.gd` 是地图，`player.gd` 是玩家数据 |
-| `fourwinds-benti/scripts/ui/` | 画面和操作 |
+| `fourwinds-benti/scripts/ui/` | 画面和操作：`main.gd` 选座位，`table.gd` 棋盘和热座 |
 | `fourwinds-benti/scripts/autoload/` | 全局单例（`Data` 读取 data/ 下的所有数据） |
 | `fourwinds-benti/tests/` | 无头测试 `run_tests.gd` |
 
@@ -76,5 +76,6 @@ pip install "gdtoolkit==4.*" && gdlint $(find fourwinds-benti/scripts fourwinds-
 xvfb-run -s "-screen 0 1280x720x24" godot --rendering-driver opengl3 --script res://tools/screenshot.gd -- /tmp/shot.png
 ```
 
+`fourwinds-benti/tools/ui_check.gd` 会让画面自动玩一阵再截图（`ai` 全 AI，`human` 替人类点按钮，用法见文件开头）。
 云端截图能查排版，手感仍需作者在 Windows 上按 F5 确认。
 Godot 生成的 `*.uid` 文件要提交进仓库。
