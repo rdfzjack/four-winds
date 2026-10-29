@@ -66,6 +66,12 @@ func next_tiles(index: int) -> Array:
 	return tiles[index]["next"]
 
 
+## 路口的类型：choice = 走到这里的人自己选方向，random = 随机走一个方向。
+## 地图里在路口格上写 "crossroad": "random"，不写就是 choice。
+func crossroad_mode(index: int) -> String:
+	return str(tiles[index].get("crossroad", "choice"))
+
+
 ## 这一格是不是路口（有不止一个方向可走）。
 func is_crossroad(index: int) -> bool:
 	return next_tiles(index).size() > 1
@@ -164,6 +170,8 @@ func validate() -> Array:
 		var nexts: Array = t["next"]
 		if nexts.is_empty():
 			errors.append("%s 没有下一格（next 为空）" % label)
+		if t.has("crossroad") and not ["choice", "random"].has(str(t["crossroad"])):
+			errors.append("%s 的 crossroad 只能是 choice 或 random" % label)
 		for nx in nexts:
 			if nx < 0 or nx >= n:
 				errors.append("%s 的下一格 %d 超出范围" % [label, nx])

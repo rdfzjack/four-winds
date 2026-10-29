@@ -116,7 +116,7 @@ func rules_with(changes: Dictionary) -> Dictionary:
 
 
 ## 自定义小棋盘：0 起点 → 1 地 → 2 税务局 → 3 路口地 → (4 地 | 5 地) → 6 巡捕房 → 7 地 → 回 0
-func crossroad_board() -> Board:
+func crossroad_board(mode: String = "choice") -> Board:
 	var tiles: Array = []
 	var spec := [
 		["start", [1]], ["land", [2]], ["tax", [3]], ["land", [4, 5]], ["land", [6]],
@@ -128,6 +128,8 @@ func crossroad_board() -> Board:
 			t["group"] = "g"
 			t["price_pct"] = 100
 			t["build_cost_pct"] = 100
+		if spec[i][1].size() > 1:
+			t["crossroad"] = mode
 		tiles.append(t)
 	var board := Board.new()
 	var errors := board.load_from({
@@ -487,6 +489,29 @@ func test_tax_and_crossroad() -> void:
 		k.events.filter(func(e): return e["type"] == "step" and e["tile"] == 4).size() == 1,
 		"确实走了 4 号格"
 	)
+	# 随机路口：不停下来问，自己随机选一边
+	var seen := {}
+	for seed_value in range(1, 30):
+		var rg := new_game(crossroad_board("random"), 2, {}, seed_value)
+		rg.players[0].pos = 2
+		rg.forced_dice.append([3, 0])
+		rg.roll()
+		check(rg.pending.get("type", "") == "bail", "随机路口不用选方向，直接走到巡捕房")
+		for e in rg.events:
+			if e["type"] == "random_direction":
+				seen[e["tile"]] = true
+	check(seen.has(4) and seen.has(5) and seen.size() == 2, "随机路口两个方向都会走到")
+	check(crossroad_board("random").crossroad_mode(3) == "random", "路口类型能读出来")
+	var bad_board := Board.new()
+	var bad_errors := bad_board.load_from({
+		"id": "b", "start_tile": 0,
+		"tiles": [
+			{"id": 0, "type": "start", "pos": [0, 0], "next": [1, 2], "crossroad": "arrow"},
+			{"id": 1, "type": "chance", "pos": [1, 0], "next": [0]},
+			{"id": 2, "type": "chance", "pos": [2, 0], "next": [0]},
+		],
+	})
+	check(bad_errors.size() == 1, "不认识的路口类型会被发现 %s" % str(bad_errors))
 	# 从路口格出发也要先选方向
 	var m := new_game(cb, 2)
 	m.players[0].pos = 3

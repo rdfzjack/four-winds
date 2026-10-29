@@ -194,8 +194,11 @@
   "_note": "破产者名下房子全部拆掉，地和企业归让他破产的人（被政府逼破产则变成无主）。只剩 1 个玩家时他获胜"
  },
  "crossroads": {
-  "mode": "player_choice",
-  "_note": "【作者已定】十字路口由玩家（或 AI）自己选方向，不照搬原版的箭头规则。地图里 next 有多个格子的就是路口"
+  "modes": [
+   "choice",
+   "random"
+  ],
+  "_note": "【作者已定】十字路口分两种，在地图的路口格上用 crossroad 字段指定：choice = 玩家（或 AI）自己选方向；random = 随机走一个方向。不写默认 choice。不照搬原版的箭头规则。这是一个策略点：以后某些角色的特性可以让他们在 random 路口也能选方向（见 game.gd 的 _may_choose_direction）"
  },
  "speech": {
   "much_money_pct": 20,

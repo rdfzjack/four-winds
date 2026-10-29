@@ -429,11 +429,15 @@ func _continue_move() -> void:
 		var options: Array = board.next_tiles(p.pos)
 		var dest: int = options[0]
 		if options.size() > 1:
-			if int(_move["pick"]) < 0:
+			if int(_move["pick"]) >= 0:
+				dest = int(_move["pick"])
+				_move["pick"] = -1
+			elif _may_choose_direction(p, p.pos):
 				_set_pending({"type": "choose_direction", "from": p.pos, "options": options.duplicate()})
 				return
-			dest = int(_move["pick"])
-			_move["pick"] = -1
+			else:
+				dest = options[rng.randi() % options.size()]
+				_emit("random_direction", {"player": p.index, "from": p.pos, "tile": dest})
 		p.pos = dest
 		_move["remaining"] = int(_move["remaining"]) - 1
 		_emit("step", {"player": p.index, "tile": dest})
@@ -450,6 +454,13 @@ func _continue_move() -> void:
 	_on_stop(p)
 	if phase != "pending" and phase != "over":
 		_finish_turn()
+
+
+## 走到这个路口时，这个玩家能不能自己选方向。
+## 现在只看路口类型（choice 能选，random 不能）；以后角色特性可以在这里开例外，
+## 比如某个角色在随机路口也能选。
+func _may_choose_direction(_p: Player, tile: int) -> bool:
+	return board.crossroad_mode(tile) == "choice"
 
 
 ## 路上遇到别的玩家：小偷偷走现金，信徒施舍现金。

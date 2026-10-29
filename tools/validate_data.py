@@ -70,6 +70,8 @@ def check_map(d: dict, max_house_lots: int = 4) -> list[str]:
         for nx in nexts:
             if not isinstance(nx, int) or not 0 <= nx < n:
                 errors.append(f"{label} 的下一格 {nx} 超出范围")
+        if "crossroad" in t and t["crossroad"] not in ("choice", "random"):
+            errors.append(f"{label} 的 crossroad {t['crossroad']!r} 不认识（只能是 choice 或 random）")
         if typ == "land":
             if t.get("group") not in groups:
                 errors.append(f"{label} 的街道组 {t.get('group')!r} 没有定义")
