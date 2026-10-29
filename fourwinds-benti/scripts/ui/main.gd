@@ -1,5 +1,5 @@
 extends Control
-## 第 0 步的主界面：确认数据能读进来，并按地图数据把棋盘画出来。
+## 主界面（目前是数据预览）：确认数据能读进来，并按地图数据把棋盘画出来。
 ## 还不能玩，掷骰、买地这些在后面的步骤里加。
 
 const TYPE_COLORS := {
@@ -46,18 +46,28 @@ func _build_side_panel() -> void:
 	add_child(panel)
 
 	_add_label(panel, "四方来财 Four Winds", 26, Color.WHITE)
-	_add_label(panel, "第 0 步：项目骨架（还不能玩）", 14, Color("#b0bec5"))
+	_add_label(panel, "第 1 步：数据就位（还不能玩）", 14, Color("#b0bec5"))
 
 	if board != null:
 		_add_label(panel, "地图：%s（%d 格）" % [board.display_name, board.tile_count()], 16, Color.WHITE)
 	else:
 		_add_label(panel, "没有读到地图", 16, Color("#ef5350"))
 
+	var conditions: Dictionary = Data.lines.get("conditions", {})
+	_add_label(panel, "机会卡 %d 张 · 台词 %d 人 × %d 种事件" % [
+		Data.cards.size(), Data.lines.get("characters", {}).size(), conditions.size()
+	], 14, Color("#b0bec5"))
+
 	_add_label(panel, "", 8, Color.WHITE)
-	_add_label(panel, "角色", 18, Color.WHITE)
+	_add_label(panel, "角色（每次启动随机显示一句台词）", 18, Color.WHITE)
 	for c in Data.characters:
+		var cid := str(c.get("id", ""))
 		var line := "%s（%s）%s" % [c.get("name", "?"), c.get("nickname", ""), c.get("identity", "")]
 		_add_label(panel, "● " + line, 15, Color(str(c.get("color", "#ffffff"))))
+		if not conditions.is_empty():
+			var cond: String = conditions.keys().pick_random()
+			var said := Data.random_line(cid, cond)
+			_add_label(panel, "    %s：“%s”" % [conditions[cond], said], 13, Color("#cfd8dc"))
 
 	_add_label(panel, "", 8, Color.WHITE)
 	if Data.errors.is_empty():

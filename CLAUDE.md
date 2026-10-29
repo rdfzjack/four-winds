@@ -13,10 +13,11 @@
 | 位置 | 内容 |
 |---|---|
 | `shanghai1940/` | 原版游戏文件。**只读，不要修改或删除** |
-| `tools/` | Python 工具：解包原版（`extract_all.py`）、校验 Godot 数据（`validate_data.py`） |
+| `tools/` | Python 工具：解包原版（`extract_all.py`）、生成游戏数据初版（`build_game_data.py`，默认不覆盖已有文件）、校验 Godot 数据（`validate_data.py`） |
 | `extracted/` | 原版解包结果，只作参考。**不要整个拷进 Godot 项目**（85MB，会拖慢编辑器） |
 | `fourwinds-benti/` | Godot 项目 |
-| `fourwinds-benti/data/` | 所有规则数值、角色、地图（JSON），作者会自己改 |
+| `fourwinds-benti/data/` | 所有规则数值、角色、地图、机会卡、AI 参数、台词（JSON），作者会自己改 |
+| `fourwinds-benti/data/reference/` | 原版城市价格参考，游戏不读 |
 | `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试 |
 | `fourwinds-benti/scripts/ui/` | 画面和操作 |
 | `fourwinds-benti/scripts/autoload/` | 全局单例（`Data` 读取 data/ 下的所有数据） |
@@ -25,7 +26,8 @@
 ## 约定
 
 - 规则和画面分开：`scripts/core/` 里的脚本不访问场景树和节点。
-- 数值不写死在代码里，放 `data/*.json`。
+- 数值不写死在代码里，放 `data/*.json`。`data/` 里的文件生成后归作者所有，不要用 `build_game_data.py --force` 覆盖作者的修改。
+- 台词是“事件 → 句子列表”，游戏随机挑一句；4 个角色的台词目前是草稿。
 - 地图按“路网”存：每格的 `next` 列出可去的下一格。一圈 = 每格一个 next；岔路 = 多个 next。规则只通过 `Board.walk()` / `next_tiles()` 移动。
 - 脚本之间用 `const X = preload("res://...")` 引用，不用 `class_name`（无头测试时全局类缓存可能不存在）。
 - JSON 读出的数字是浮点数，当整数用要 `int()`。
@@ -65,5 +67,11 @@ python3 tools/validate_data.py
 pip install "gdtoolkit==4.*" && gdlint $(find fourwinds-benti/scripts fourwinds-benti/tests -name '*.gd')
 ```
 
-无头测试只能验证规则和脚本，画面效果和手感仍需作者在 Windows 上按 F5 确认。
+看画面：用虚拟显示器渲染主界面截图（不能加 --headless）：
+
+```bash
+xvfb-run -s "-screen 0 1280x720x24" godot --rendering-driver opengl3 --script res://tools/screenshot.gd -- /tmp/shot.png
+```
+
+云端截图能查排版，手感仍需作者在 Windows 上按 F5 确认。
 Godot 生成的 `*.uid` 文件要提交进仓库。

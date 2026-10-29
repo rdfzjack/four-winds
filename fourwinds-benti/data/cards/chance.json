@@ -1,0 +1,436 @@
+{
+ "_comment": "34 张机会卡。text 是游戏里显示的简体文字；original_text 是原版卡面（繁体）。effects 是程序执行的效果，可以组合多个。数值和效果按卡面文字理解，原版代码里的精确数值未核实。setting_specific 标出带 1940 年代中国背景、以后换皮时需要改写的卡。天数：先按一轮 = 一天。",
+ "ops": {
+  "money": "现金增减 amount 万圆（负数为支出）",
+  "money_from_each": "向其他每位玩家各收 amount 万圆",
+  "money_to_each": "付给其他每位玩家各 amount 万圆",
+  "jail": "坐牢 days 天",
+  "goto": "移动到最近的 tile_type 格子（不经过起点结算）",
+  "state": "获得状态 state，持续 days 天。thief 小偷 / arsonist 纵火犯 / robber 抢劫犯 / free_rent 免付租金 / double_rent 付租加倍 / half_rent 付租减半 / charity 自己的产业不收租",
+  "lose_most_expensive_property": "最贵的一块地产被收走",
+  "lose_mortgaged_properties": "所有已抵押的地产被收走",
+  "demolish_one_house": "随机一处房屋被拆掉（土地保留）",
+  "property_value_pct": "target（houses 房产 / lands 土地）的价值改变 pct%",
+  "upgrade_all_houses": "所有房屋升一级",
+  "lose_deposit": "银行存款清零",
+  "void_next_income": "下一笔收入作废（含义按卡面理解，未核实）",
+  "bank_seize_payment": "银行扣留应付款项（含义未核实）"
+ },
+ "cards": [
+  {
+   "id": 1,
+   "text": "成为小偷：盗窃所遇第一人的全部现款",
+   "effects": [
+    {
+     "op": "state",
+     "state": "thief",
+     "days": 7
+    }
+   ],
+   "original_text": "成為小偷 盜竊所遇第一人的全部現款",
+   "picture": "Sprite/Chance1.pic"
+  },
+  {
+   "id": 2,
+   "text": "成为纵火犯：一周内烧毁所到地点的房屋",
+   "effects": [
+    {
+     "op": "state",
+     "state": "arsonist",
+     "days": 7
+    }
+   ],
+   "original_text": "成為縱火犯 一周內燒毀所到地點的房屋",
+   "picture": "Sprite/Chance2.pic"
+  },
+  {
+   "id": 3,
+   "text": "成为抢劫犯：一周内把所到公司据为己有",
+   "effects": [
+    {
+     "op": "state",
+     "state": "robber",
+     "days": 7
+    }
+   ],
+   "original_text": "成為搶劫犯 一周內把所到公司據為己有",
+   "picture": "Sprite/Chance3.pic"
+  },
+  {
+   "id": 4,
+   "text": "被金砖绊倒，得 300 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": 300
+    }
+   ],
+   "original_text": "被金磚絆倒 得300萬圓",
+   "picture": "Sprite/Chance4.pic"
+  },
+  {
+   "id": 5,
+   "text": "走私军火，拘留五天",
+   "effects": [
+    {
+     "op": "jail",
+     "days": 5
+    }
+   ],
+   "original_text": "走私軍火 拘留五天",
+   "picture": "Sprite/Chance5.pic"
+  },
+  {
+   "id": 6,
+   "text": "逛夜总会，花费 100 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": -100
+    }
+   ],
+   "original_text": "逛夜總會 花費100萬圓",
+   "picture": "Sprite/Chance6.pic"
+  },
+  {
+   "id": 7,
+   "text": "抗日募捐，收每人 50 万圆",
+   "effects": [
+    {
+     "op": "money_from_each",
+     "amount": 50
+    }
+   ],
+   "original_text": "抗日募捐 收每人50萬圓",
+   "picture": "Sprite/Chance7.pic",
+   "setting_specific": true
+  },
+  {
+   "id": 8,
+   "text": "贪污募捐款，坐牢三天",
+   "effects": [
+    {
+     "op": "jail",
+     "days": 3
+    }
+   ],
+   "original_text": "貪污募捐款 坐牢三天",
+   "picture": "Sprite/Chance8.pic"
+  },
+  {
+   "id": 9,
+   "text": "丑行败露，付每人遮丑费 100 万圆",
+   "effects": [
+    {
+     "op": "money_to_each",
+     "amount": 100
+    }
+   ],
+   "original_text": "丑行敗露 付每人遮丑費100萬圓",
+   "picture": "Sprite/Chance9.pic"
+  },
+  {
+   "id": 10,
+   "text": "举止粗俗，送教堂感化",
+   "effects": [
+    {
+     "op": "goto",
+     "tile_type": "church"
+    }
+   ],
+   "original_text": "舉止粗俗 送教堂感化",
+   "picture": "Sprite/Chance10.pic"
+  },
+  {
+   "id": 11,
+   "text": "随地吐痰，罚款 30 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": -30
+    }
+   ],
+   "original_text": "隨地吐痰 罰款30萬圓",
+   "picture": "Sprite/Chance11.pic"
+  },
+  {
+   "id": 12,
+   "text": "赤膊上街，强令买衣服花费 100 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": -100
+    }
+   ],
+   "original_text": "赤膊上街 强令買衣服花費100萬圓",
+   "picture": "Sprite/Chance12.pic"
+  },
+  {
+   "id": 13,
+   "text": "出身贫贱，免费旅游一周",
+   "effects": [
+    {
+     "op": "state",
+     "state": "free_rent",
+     "days": 7
+    }
+   ],
+   "original_text": "出身貧賤 免費旅游一周",
+   "picture": "Sprite/Chance13.pic"
+  },
+  {
+   "id": 14,
+   "text": "挥霍成性，加倍消费一周",
+   "effects": [
+    {
+     "op": "state",
+     "state": "double_rent",
+     "days": 7
+    }
+   ],
+   "original_text": "揮霍成性 加倍消費一周",
+   "picture": "Sprite/Chance14.pic"
+  },
+  {
+   "id": 15,
+   "text": "生活拮据，半价旅行一周",
+   "effects": [
+    {
+     "op": "state",
+     "state": "half_rent",
+     "days": 7
+    }
+   ],
+   "original_text": "生活拮据 半價旅行一周",
+   "picture": "Sprite/Chance15.pic"
+  },
+  {
+   "id": 16,
+   "text": "得罪市长，最贵地产被没收",
+   "effects": [
+    {
+     "op": "lose_most_expensive_property"
+    }
+   ],
+   "original_text": "得罪市長 最貴地產被沒收",
+   "picture": "Sprite/Chance16.pic"
+  },
+  {
+   "id": 17,
+   "text": "支援抗战前线，抵押物业被政府收回",
+   "effects": [
+    {
+     "op": "lose_mortgaged_properties"
+    }
+   ],
+   "original_text": "支援抗戰前綫 抵押物業被政府收回",
+   "picture": "Sprite/Chance17.pic",
+   "setting_specific": true
+  },
+  {
+   "id": 18,
+   "text": "银行倒闭，所有存款丢失",
+   "effects": [
+    {
+     "op": "lose_deposit"
+    }
+   ],
+   "original_text": "銀行倒閉 所有存款丟失",
+   "picture": "Sprite/Chance18.pic"
+  },
+  {
+   "id": 19,
+   "text": "意外拾到 100 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": 100
+    }
+   ],
+   "original_text": "意外拾到 100萬圓",
+   "picture": "Sprite/Chance19.pic"
+  },
+  {
+   "id": 20,
+   "text": "擦皮鞋，得 1 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": 1
+    }
+   ],
+   "original_text": "擦皮鞋 得1萬圓",
+   "picture": "Sprite/Chance20.pic"
+  },
+  {
+   "id": 21,
+   "text": "被富婆相中，得 300 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": 300
+    }
+   ],
+   "original_text": "被富婆相中 得300萬圓",
+   "picture": "Sprite/Chance21.pic"
+  },
+  {
+   "id": 22,
+   "text": "见义勇为，反被巡捕房拘留 3 日",
+   "effects": [
+    {
+     "op": "jail",
+     "days": 3
+    }
+   ],
+   "original_text": "見義勇為 反被巡捕房拘留3日",
+   "picture": "Sprite/Chance22.pic"
+  },
+  {
+   "id": 23,
+   "text": "得罪黑帮，一处房屋被砸",
+   "effects": [
+    {
+     "op": "demolish_one_house"
+    }
+   ],
+   "original_text": "得罪黑幫 一處房屋被砸",
+   "picture": "Sprite/Chance23.pic"
+  },
+  {
+   "id": 24,
+   "text": "经营不善，所有房产贬值 10%",
+   "effects": [
+    {
+     "op": "property_value_pct",
+     "target": "houses",
+     "pct": -10
+    }
+   ],
+   "original_text": "經營不善 所有房產貶值10%",
+   "picture": "Sprite/Chance24.pic"
+  },
+  {
+   "id": 25,
+   "text": "经营有方，所有土地增值 10%",
+   "effects": [
+    {
+     "op": "property_value_pct",
+     "target": "lands",
+     "pct": 10
+    }
+   ],
+   "original_text": "經營有方 所有土地增值10%",
+   "picture": "Sprite/Chance25.pic"
+  },
+  {
+   "id": 26,
+   "text": "得到政府赏识，所有房产级别提升",
+   "effects": [
+    {
+     "op": "upgrade_all_houses"
+    }
+   ],
+   "original_text": "得到政府賞識 所有房產級別提升",
+   "picture": "Sprite/Chance26.pic"
+  },
+  {
+   "id": 27,
+   "text": "痛打洋鬼子，受国人拥戴，免费旅游三天",
+   "effects": [
+    {
+     "op": "state",
+     "state": "free_rent",
+     "days": 3
+    }
+   ],
+   "original_text": "痛打洋鬼子 受國人擁戴，免費旅游三天",
+   "picture": "Sprite/Chance27.pic",
+   "setting_specific": true
+  },
+  {
+   "id": 28,
+   "text": "得罪洋大人，坐牢三天",
+   "effects": [
+    {
+     "op": "jail",
+     "days": 3
+    }
+   ],
+   "original_text": "得罪洋大人 坐牢三天",
+   "picture": "Sprite/Chance28.pic",
+   "setting_specific": true
+  },
+  {
+   "id": 29,
+   "text": "支援抗战前线，捐款 100 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": -100
+    }
+   ],
+   "original_text": "支援抗戰前綫 捐款100萬圓",
+   "picture": "Sprite/Chance29.pic",
+   "setting_specific": true
+  },
+  {
+   "id": 30,
+   "text": "发展慈善事业，所有产业免费开放一周",
+   "effects": [
+    {
+     "op": "state",
+     "state": "charity",
+     "days": 7
+    }
+   ],
+   "original_text": "發展慈善事業 所有產業免費開放一周",
+   "picture": "Sprite/Chance30.pic"
+  },
+  {
+   "id": 31,
+   "text": "发现古董，获利 1000 万圆",
+   "effects": [
+    {
+     "op": "money",
+     "amount": 1000
+    }
+   ],
+   "original_text": "發現古董 獲利1000萬圓",
+   "picture": "Sprite/Chance31.pic"
+  },
+  {
+   "id": 32,
+   "text": "发生事故，房屋倒塌",
+   "effects": [
+    {
+     "op": "demolish_one_house"
+    }
+   ],
+   "original_text": "發生事故 房屋倒塌",
+   "picture": "Sprite/Chance32.pic"
+  },
+  {
+   "id": 33,
+   "text": "收到假钞，收益作废",
+   "effects": [
+    {
+     "op": "void_next_income"
+    }
+   ],
+   "original_text": "收到假鈔 收益作廢",
+   "picture": "Sprite/Chance33.pic"
+  },
+  {
+   "id": 34,
+   "text": "银行强行扣留应付款项",
+   "effects": [
+    {
+     "op": "bank_seize_payment"
+    }
+   ],
+   "original_text": "銀行强行扣留 應付款項",
+   "picture": "Sprite/Chance34.pic"
+  }
+ ]
+}

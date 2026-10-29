@@ -98,6 +98,30 @@ def main() -> int:
     if len(set(ids)) != len(ids) or not all(ids):
         errors.append("角色 id 为空或重复")
 
+    ai = load(proj / "data/ai/profiles.json", errors) or {}
+    lines = load(proj / "data/lines/speech.json", errors) or {}
+    conditions = lines.get("conditions", {})
+    for c in chars:
+        if c.get("ai_profile") not in ai.get("profiles", {}):
+            errors.append(f"角色 {c.get('id')} 的 AI 参数 {c.get('ai_profile')!r} 不存在")
+        lset = lines.get("characters", {}).get(c.get("lines"))
+        if lset is None:
+            errors.append(f"角色 {c.get('id')} 的台词 {c.get('lines')!r} 不存在")
+        else:
+            for cond in conditions:
+                if not lset.get(cond):
+                    errors.append(f"角色 {c.get('id')} 缺少事件 {cond} 的台词")
+    cards = load(proj / "data/cards/chance.json", errors) or {}
+    ops = cards.get("ops", {})
+    ids = [c.get("id") for c in cards.get("cards", [])]
+    if len(ids) != len(set(ids)):
+        errors.append("机会卡 id 重复")
+    for c in cards.get("cards", []):
+        for e in c.get("effects", []):
+            if e.get("op") not in ops:
+                errors.append(f"机会卡 {c.get('id')} 的效果 {e.get('op')!r} 没有在 ops 里说明")
+    print(f"机会卡 {len(ids)} 张，台词 {len(lines.get('characters', {}))} 人 × {len(conditions)} 种事件")
+
     map_ids = []
     for f in sorted((proj / "data/maps").glob("*.json")):
         d = load(f, errors)
