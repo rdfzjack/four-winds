@@ -1,5 +1,5 @@
 {
- "_comment": "AI 性格参数（原版 12 项阈值 + 保释系数）。4 个角色暂时借用原版角色的参数（based_on），来源 shanghai1940/Ai/Standard.ai。怎么用见 scripts/core/brain.gd。按人设细调放到第 6 步。",
+ "_comment": "AI 性格参数（原版 12 项阈值 + 保释系数）。4 个角色暂时借用原版角色的参数（based_on），来源 shanghai1940/Ai/Standard.ai。怎么用见 scripts/core/brain.gd。按人设的 AI 放到第 6a 步。",
  "params": {
   "buyLandExpect": "越小，越喜欢买土地",
   "buyCompanyExpect": "越小，越喜欢买企业",
