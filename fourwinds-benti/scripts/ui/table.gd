@@ -553,7 +553,7 @@ func _show_controls() -> void:
 
 
 func _show_bank_controls(p) -> void:
-	_make_label(_controls, "路过银行：现金 %d · 存款 %d。存取款？" % [p.cash, p.deposit], 14,
+	_make_label(_controls, "银行：现金 %d · 存款 %d。存取款？" % [p.cash, p.deposit], 14,
 			Color("#fff59d"))
 	var row := HBoxContainer.new()
 	_controls.add_child(row)
@@ -585,7 +585,7 @@ func _show_bank_controls(p) -> void:
 	all_out.pressed.connect(func() -> void: _bank_act(func() -> void:
 			game.bank_withdraw(game.player().deposit)))
 	row2.add_child(all_out)
-	_button("完成，继续走", func() -> void: _do(game.bank_done))
+	_button("完成", func() -> void: _do(game.bank_done))
 
 
 ## 存取款后留在银行：只刷新日志和按钮，不往下走
