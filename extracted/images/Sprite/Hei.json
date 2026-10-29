@@ -1,0 +1,17 @@
+{
+ "source": "Sprite/Hei.pic",
+ "width": 235,
+ "height": 197,
+ "screen_pos": [
+  320,
+  200
+ ],
+ "anchor": [
+  112,
+  93
+ ],
+ "compression": "raw",
+ "palette": "Sprite/1940.col",
+ "has_transparency": false,
+ "has_shadow": false
+}

@@ -1,0 +1,17 @@
+{
+ "source": "Race/End.pic",
+ "width": 17,
+ "height": 299,
+ "screen_pos": [
+  229,
+  36
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": false,
+ "has_shadow": false
+}

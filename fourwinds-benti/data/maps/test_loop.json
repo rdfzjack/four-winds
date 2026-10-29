@@ -1,0 +1,550 @@
+{
+ "id": "test_loop",
+ "name": "测试环线（上海占位）",
+ "placeholder": true,
+ "_comment": "第 0 步的测试地图：一圈 36 格。街道名、地价系数、企业价格借用原版上海（extracted/data/cities/Cit_Shaihai.json），只作占位。每格的 next 列出可以走到的下一格；岔路就是 next 有多个格子。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版上海的 CITY_PROPERTY，单位万圆。空地价 = price_pct × blank_land_price ÷ 100，空地租金 = price_pct × rent.blank_land ÷ 100",
+  "blank_land_price": 80,
+  "build_cost": {
+   "flat": 40,
+   "hotel": 100,
+   "floor": 140,
+   "villa": 200,
+   "upgrade": 60,
+   "function": 80
+  },
+  "rent": {
+   "blank_land": 15,
+   "flat": 30,
+   "hotel": 60,
+   "super_hotel": 80,
+   "floor": 80,
+   "super_floor": 120,
+   "villa": 150
+  }
+ },
+ "groups": {
+  "shunchang": {
+   "name": "顺昌路",
+   "color": "#8d6e63"
+  },
+  "beijing": {
+   "name": "北京路",
+   "color": "#4fc3f7"
+  },
+  "wanhangdu": {
+   "name": "万航渡路",
+   "color": "#ba68c8"
+  },
+  "henan": {
+   "name": "河南中路",
+   "color": "#ff8a65"
+  },
+  "zhonghua": {
+   "name": "中华路",
+   "color": "#e57373"
+  },
+  "jinling": {
+   "name": "金陵中路",
+   "color": "#fff176"
+  },
+  "xizang": {
+   "name": "西藏中路",
+   "color": "#81c784"
+  },
+  "nanjing": {
+   "name": "南京路",
+   "color": "#1565c0"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "start",
+   "name": "起点",
+   "pos": [
+    9,
+    9
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "land",
+   "name": "顺昌路1号",
+   "group": "shunchang",
+   "price_pct": 80,
+   "pos": [
+    8,
+    9
+   ],
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "land",
+   "name": "顺昌路2号",
+   "group": "shunchang",
+   "price_pct": 80,
+   "pos": [
+    7,
+    9
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "chance",
+   "name": "运气",
+   "pos": [
+    6,
+    9
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "land",
+   "name": "北京路1号",
+   "group": "beijing",
+   "price_pct": 100,
+   "pos": [
+    5,
+    9
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "land",
+   "name": "北京路2号",
+   "group": "beijing",
+   "price_pct": 100,
+   "pos": [
+    4,
+    9
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "land",
+   "name": "北京路3号",
+   "group": "beijing",
+   "price_pct": 100,
+   "pos": [
+    3,
+    9
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "company",
+   "name": "上海站",
+   "industry": "transport",
+   "price": 560,
+   "rent": 130,
+   "pos": [
+    2,
+    9
+   ],
+   "next": [
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "bank",
+   "name": "银行",
+   "pos": [
+    1,
+    9
+   ],
+   "next": [
+    9
+   ]
+  },
+  {
+   "id": 9,
+   "type": "jail",
+   "name": "巡捕房",
+   "pos": [
+    0,
+    9
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "land",
+   "name": "万航渡路1号",
+   "group": "wanhangdu",
+   "price_pct": 130,
+   "pos": [
+    0,
+    8
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "land",
+   "name": "万航渡路2号",
+   "group": "wanhangdu",
+   "price_pct": 130,
+   "pos": [
+    0,
+    7
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "land",
+   "name": "万航渡路3号",
+   "group": "wanhangdu",
+   "price_pct": 130,
+   "pos": [
+    0,
+    6
+   ],
+   "next": [
+    13
+   ]
+  },
+  {
+   "id": 13,
+   "type": "tax",
+   "name": "税务局",
+   "pos": [
+    0,
+    5
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "land",
+   "name": "河南中路1号",
+   "group": "henan",
+   "price_pct": 140,
+   "pos": [
+    0,
+    4
+   ],
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "land",
+   "name": "河南中路2号",
+   "group": "henan",
+   "price_pct": 140,
+   "pos": [
+    0,
+    3
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "company",
+   "name": "百乐门夜总会",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 90,
+   "pos": [
+    0,
+    2
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "chance",
+   "name": "运气",
+   "pos": [
+    0,
+    1
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 18,
+   "type": "park",
+   "name": "公园",
+   "pos": [
+    0,
+    0
+   ],
+   "next": [
+    19
+   ]
+  },
+  {
+   "id": 19,
+   "type": "land",
+   "name": "中华路1号",
+   "group": "zhonghua",
+   "price_pct": 150,
+   "pos": [
+    1,
+    0
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "land",
+   "name": "中华路2号",
+   "group": "zhonghua",
+   "price_pct": 150,
+   "pos": [
+    2,
+    0
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "land",
+   "name": "中华路3号",
+   "group": "zhonghua",
+   "price_pct": 150,
+   "pos": [
+    3,
+    0
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "church",
+   "name": "教堂",
+   "pos": [
+    4,
+    0
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "land",
+   "name": "金陵中路1号",
+   "group": "jinling",
+   "price_pct": 160,
+   "pos": [
+    5,
+    0
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "land",
+   "name": "金陵中路2号",
+   "group": "jinling",
+   "price_pct": 160,
+   "pos": [
+    6,
+    0
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "company",
+   "name": "先施百货公司",
+   "industry": "shop",
+   "price": 480,
+   "rent": 120,
+   "pos": [
+    7,
+    0
+   ],
+   "next": [
+    26
+   ]
+  },
+  {
+   "id": 26,
+   "type": "chance",
+   "name": "运气",
+   "pos": [
+    8,
+    0
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "government",
+   "name": "市政厅",
+   "pos": [
+    9,
+    0
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "land",
+   "name": "西藏中路1号",
+   "group": "xizang",
+   "price_pct": 180,
+   "pos": [
+    9,
+    1
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "land",
+   "name": "西藏中路2号",
+   "group": "xizang",
+   "price_pct": 180,
+   "pos": [
+    9,
+    2
+   ],
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "land",
+   "name": "西藏中路3号",
+   "group": "xizang",
+   "price_pct": 180,
+   "pos": [
+    9,
+    3
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "company",
+   "name": "十六铺码头",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "pos": [
+    9,
+    4
+   ],
+   "next": [
+    32
+   ]
+  },
+  {
+   "id": 32,
+   "type": "bank",
+   "name": "银行",
+   "pos": [
+    9,
+    5
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "land",
+   "name": "南京路1号",
+   "group": "nanjing",
+   "price_pct": 240,
+   "pos": [
+    9,
+    6
+   ],
+   "next": [
+    34
+   ]
+  },
+  {
+   "id": 34,
+   "type": "land",
+   "name": "南京路2号",
+   "group": "nanjing",
+   "price_pct": 240,
+   "pos": [
+    9,
+    7
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "land",
+   "name": "南京路3号",
+   "group": "nanjing",
+   "price_pct": 240,
+   "pos": [
+    9,
+    8
+   ],
+   "next": [
+    0
+   ]
+  }
+ ]
+}

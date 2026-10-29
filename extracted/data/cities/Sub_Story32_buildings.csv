@@ -1,0 +1,7 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,CHANCE,运气,CHANCE,,,,3,8,
+1,BANK,金泰钱行,BANK,,,,2,8,
+2,COMPANY,溪口码头,YARD,TRANSPORT 运输业,200,50,3,8,
+3,COMPANY,天台恒仁书报社,NEWSPAPER_OFFICE,NEWSPAPER 报社,200,50,2,8,
+4,COMPANY,中华书局,NEWSPAPER_OFFICE,NEWSPAPER 报社,200,50,1,8,
+5,COMPANY,新月书局,NEWSPAPER_OFFICE,NEWSPAPER 报社,200,50,0,8,

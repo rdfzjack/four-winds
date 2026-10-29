@@ -1,0 +1,278 @@
+{
+ "source": "Sprite/Chance1.pic … Sprite/Chance34.pic (text is painted into the pictures; Photoshop originals in WP/J*.PCC)",
+ "note": "Hand transcription of the card pictures, keeping the original traditional characters. 'effect' is a reading of the card text, not taken from game code. 1940.exe has functions chance1..chance30 plus showBuildChance1/2, showMortgageChance and showGetRentChance; cards 31-34 probably belong to those special cases, not confirmed. Amounts are in 万圆.",
+ "cards": [
+  {
+   "id": 1,
+   "picture": "Sprite/Chance1.pic",
+   "title": "成為小偷",
+   "text": "盜竊所遇第一人的全部現款",
+   "effect_type": "state",
+   "effect": "STATE_THIEF：偷走遇到的第一个人的全部现金"
+  },
+  {
+   "id": 2,
+   "picture": "Sprite/Chance2.pic",
+   "title": "成為縱火犯",
+   "text": "一周內燒毀所到地點的房屋",
+   "effect_type": "state",
+   "effect": "STATE_FIRE：一周内烧毁走到的地点上的房屋"
+  },
+  {
+   "id": 3,
+   "picture": "Sprite/Chance3.pic",
+   "title": "成為搶劫犯",
+   "text": "一周內把所到公司據為己有",
+   "effect_type": "state",
+   "effect": "STATE_ROBBER：一周内把走到的公司占为己有"
+  },
+  {
+   "id": 4,
+   "picture": "Sprite/Chance4.pic",
+   "title": "被金磚絆倒",
+   "text": "得300萬圓",
+   "effect_type": "money",
+   "effect": 300
+  },
+  {
+   "id": 5,
+   "picture": "Sprite/Chance5.pic",
+   "title": "走私軍火",
+   "text": "拘留五天",
+   "effect_type": "jail",
+   "effect": 5
+  },
+  {
+   "id": 6,
+   "picture": "Sprite/Chance6.pic",
+   "title": "逛夜總會",
+   "text": "花費100萬圓",
+   "effect_type": "money",
+   "effect": -100
+  },
+  {
+   "id": 7,
+   "picture": "Sprite/Chance7.pic",
+   "title": "抗日募捐",
+   "text": "收每人50萬圓",
+   "effect_type": "money_from_each",
+   "effect": 50
+  },
+  {
+   "id": 8,
+   "picture": "Sprite/Chance8.pic",
+   "title": "貪污募捐款",
+   "text": "坐牢三天",
+   "effect_type": "jail",
+   "effect": 3
+  },
+  {
+   "id": 9,
+   "picture": "Sprite/Chance9.pic",
+   "title": "丑行敗露",
+   "text": "付每人遮丑費100萬圓",
+   "effect_type": "money_to_each",
+   "effect": -100
+  },
+  {
+   "id": 10,
+   "picture": "Sprite/Chance10.pic",
+   "title": "舉止粗俗",
+   "text": "送教堂感化",
+   "effect_type": "goto",
+   "effect": "CHURCH"
+  },
+  {
+   "id": 11,
+   "picture": "Sprite/Chance11.pic",
+   "title": "隨地吐痰",
+   "text": "罰款30萬圓",
+   "effect_type": "money",
+   "effect": -30
+  },
+  {
+   "id": 12,
+   "picture": "Sprite/Chance12.pic",
+   "title": "赤膊上街",
+   "text": "强令買衣服花費100萬圓",
+   "effect_type": "money",
+   "effect": -100
+  },
+  {
+   "id": 13,
+   "picture": "Sprite/Chance13.pic",
+   "title": "出身貧賤",
+   "text": "免費旅游一周",
+   "effect_type": "state",
+   "effect": "STATE_FREE_CHARGE（免付租金一周）"
+  },
+  {
+   "id": 14,
+   "picture": "Sprite/Chance14.pic",
+   "title": "揮霍成性",
+   "text": "加倍消費一周",
+   "effect_type": "state",
+   "effect": "STATE_DOUBLE_CHARGE（付租加倍一周）"
+  },
+  {
+   "id": 15,
+   "picture": "Sprite/Chance15.pic",
+   "title": "生活拮据",
+   "text": "半價旅行一周",
+   "effect_type": "state",
+   "effect": "STATE_HALF_CHARGE（付租减半一周）"
+  },
+  {
+   "id": 16,
+   "picture": "Sprite/Chance16.pic",
+   "title": "得罪市長",
+   "text": "最貴地產被沒收",
+   "effect_type": "property",
+   "effect": "失去最贵的一块地产"
+  },
+  {
+   "id": 17,
+   "picture": "Sprite/Chance17.pic",
+   "title": "支援抗戰前綫",
+   "text": "抵押物業被政府收回",
+   "effect_type": "property",
+   "effect": "失去所有已抵押的地产"
+  },
+  {
+   "id": 18,
+   "picture": "Sprite/Chance18.pic",
+   "title": "銀行倒閉",
+   "text": "所有存款丟失",
+   "effect_type": "money",
+   "effect": "存款清零"
+  },
+  {
+   "id": 19,
+   "picture": "Sprite/Chance19.pic",
+   "title": "意外拾到",
+   "text": "100萬圓",
+   "effect_type": "money",
+   "effect": 100
+  },
+  {
+   "id": 20,
+   "picture": "Sprite/Chance20.pic",
+   "title": "擦皮鞋",
+   "text": "得1萬圓",
+   "effect_type": "money",
+   "effect": 1
+  },
+  {
+   "id": 21,
+   "picture": "Sprite/Chance21.pic",
+   "title": "被富婆相中",
+   "text": "得300萬圓",
+   "effect_type": "money",
+   "effect": 300
+  },
+  {
+   "id": 22,
+   "picture": "Sprite/Chance22.pic",
+   "title": "見義勇為",
+   "text": "反被巡捕房拘留3日",
+   "effect_type": "jail",
+   "effect": 3
+  },
+  {
+   "id": 23,
+   "picture": "Sprite/Chance23.pic",
+   "title": "得罪黑幫",
+   "text": "一處房屋被砸",
+   "effect_type": "property",
+   "effect": "一处房屋被拆"
+  },
+  {
+   "id": 24,
+   "picture": "Sprite/Chance24.pic",
+   "title": "經營不善",
+   "text": "所有房產貶值10%",
+   "effect_type": "property",
+   "effect": "所有房产贬值10%"
+  },
+  {
+   "id": 25,
+   "picture": "Sprite/Chance25.pic",
+   "title": "經營有方",
+   "text": "所有土地增值10%",
+   "effect_type": "property",
+   "effect": "所有土地增值10%"
+  },
+  {
+   "id": 26,
+   "picture": "Sprite/Chance26.pic",
+   "title": "得到政府賞識",
+   "text": "所有房產級別提升",
+   "effect_type": "property",
+   "effect": "所有房屋升一级"
+  },
+  {
+   "id": 27,
+   "picture": "Sprite/Chance27.pic",
+   "title": "痛打洋鬼子",
+   "text": "受國人擁戴，免費旅游三天",
+   "effect_type": "state",
+   "effect": "免付租金三天"
+  },
+  {
+   "id": 28,
+   "picture": "Sprite/Chance28.pic",
+   "title": "得罪洋大人",
+   "text": "坐牢三天",
+   "effect_type": "jail",
+   "effect": 3
+  },
+  {
+   "id": 29,
+   "picture": "Sprite/Chance29.pic",
+   "title": "支援抗戰前綫",
+   "text": "捐款100萬圓",
+   "effect_type": "money",
+   "effect": -100
+  },
+  {
+   "id": 30,
+   "picture": "Sprite/Chance30.pic",
+   "title": "發展慈善事業",
+   "text": "所有產業免費開放一周",
+   "effect_type": "state",
+   "effect": "STATE_CHARITY（自己的产业一周不收租）"
+  },
+  {
+   "id": 31,
+   "picture": "Sprite/Chance31.pic",
+   "title": "發現古董",
+   "text": "獲利1000萬圓",
+   "effect_type": "money",
+   "effect": 1000
+  },
+  {
+   "id": 32,
+   "picture": "Sprite/Chance32.pic",
+   "title": "發生事故",
+   "text": "房屋倒塌",
+   "effect_type": "property",
+   "effect": "一处房屋倒塌"
+  },
+  {
+   "id": 33,
+   "picture": "Sprite/Chance33.pic",
+   "title": "收到假鈔",
+   "text": "收益作廢",
+   "effect_type": "money",
+   "effect": "本次收入作废"
+  },
+  {
+   "id": 34,
+   "picture": "Sprite/Chance34.pic",
+   "title": "銀行强行扣留",
+   "text": "應付款項",
+   "effect_type": "money",
+   "effect": "银行扣留应付款项"
+  }
+ ]
+}

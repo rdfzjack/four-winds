@@ -1,0 +1,17 @@
+{
+ "source": "Describe/Xs.pic",
+ "width": 272,
+ "height": 426,
+ "screen_pos": [
+  428,
+  391
+ ],
+ "anchor": [
+  271,
+  425
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

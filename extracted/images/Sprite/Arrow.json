@@ -1,0 +1,77 @@
+{
+ "source": "Sprite/Arrow.spr",
+ "palette": "Sprite/1940.col",
+ "default_group": 0,
+ "group_params": [
+  0
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     48,
+     30
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -28,
+     43
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     48,
+     0,
+     46,
+     30
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -34,
+     43
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     96,
+     0,
+     46,
+     30
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -31,
+     43
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     144,
+     0,
+     46,
+     30
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -31,
+     43
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}

@@ -1,0 +1,6 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,BANK,惠发钱行,BANK,,,,2,8,
+1,CHANCE,运气,CHANCE,,,,1,8,
+2,HOUSE,民宅,FLAT_HOUSE,,,,1,7,
+3,HOUSE,民宅,FLAT_HOUSE,,,,0,7,
+4,HOUSE,民宅,FLAT_HOUSE,,,,3,7,

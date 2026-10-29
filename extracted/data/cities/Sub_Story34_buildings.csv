@@ -1,0 +1,12 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,BANK,银行,BANK,,,,3,8,
+1,COMPANY,华生电灯公司,LAMP_COM,PUBLIC 公共事业,450,90,2,8,
+2,RACE_COURSE,赛马场,RACE_COURSE,,,,0,8,
+3,GOVERNMENT,市政厅,GOVERMENT,,,,3,8,
+4,CHURCH,教堂,CHURCH,,,,3,8,
+5,COMPANY,永康自来水公司,WATER_COM,PUBLIC 公共事业,400,80,3,8,
+6,CHANCE,运气,CHANCE,,,,1,8,
+7,PARK,静安公园,PARK,,,,1,8,
+8,COMPANY,南洋煤球公司,COAL_COM,PUBLIC 公共事业,400,80,1,8,
+9,COMPANY,上海电话公司,TELEPHONE_COM,PUBLIC 公共事业,450,90,3,8,
+10,WATCH_MAN_HOUSE,巡捕房,WATCHMAN_HOUSE,,,,3,8,

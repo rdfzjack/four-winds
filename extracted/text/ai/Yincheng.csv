@@ -1,0 +1,10 @@
+﻿profile,buyLandExpect,buyCompanyExpect,keepCashExpect,keepCashDiff,buildHouseExpect,mortgageExpect,unmortgageExpect,removeExpect,intendToAddMuchMoney,acceptableDiffenceInTrade,tradeCycle,maxInvestment
+标准,30,30,1000,200,45,50,50,40,50,-10,1,10
+四毛,20,25,500,30,40,40,40,35,30,0,1,10
+金如山,20,30,400,5,40,45,45,50,10,-30,3,30
+发达而,24,30,800,200,45,45,45,40,50,-10,2,10
+董莺雨,20,25,500,100,43,50,50,35,50,0,2,10
+包德利,20,25,500,60,43,50,50,35,50,-20,1,10
+赛珍珠,24,25,500,50,42,50,50,35,50,-15,1,10
+冯全篾,20,30,500,100,43,50,50,40,40,0,3,10
+陈玛丽,24,25,800,100,40,50,50,35,50,-10,1,4

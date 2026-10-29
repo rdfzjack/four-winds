@@ -1,0 +1,26 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,PARK,地坛公园,PARK,,,,2,8,
+1,PARK,公园,PARK,,,,2,8,
+2,COMPANY,北平火车站,RAIL_ROAD,TRANSPORT 运输业,500,100,0,8,每日运送旅客多达80人次
+3,CHANCE,运气,CHANCE,,,,1,8,
+4,CHANCE,运气,CHANCE,,,,3,8,
+5,CHURCH,教堂,CHURCH,,,,3,8,
+6,GOVERNMENT,市政厅,GOVERMENT,,,,3,8,
+7,COMPANY,大洋百货,SHOP,SHOP 商业,500,120,3,8,"各色洋货,应有尽有"
+8,COMPANY,华夏商场,SHOP,SHOP 商业,500,120,3,8,"花样繁多之首选国货,勘与洋货媲美"
+9,COMPANY,联合百货公司,SHOP,SHOP 商业,500,120,1,8,"东洋西洋汇聚,华夏南北融合"
+10,COMPANY,香满楼饭庄,FOOD_COM,FOOD 饮食业,400,100,1,8,"名飘四海,酒香满楼"
+11,COMPANY,价特低电车公司,ELECTRIC_BUS_COM,TRANSPORT 运输业,300,60,2,8,门外踏板可免费搭乘
+12,RACE_COURSE,赛马场,RACE_COURSE,,,,3,8,
+14,COMPANY,便利电车公司,ELECTRIC_BUS_COM,TRANSPORT 运输业,400,80,2,8,乘坐之便利只需步行5里
+15,COMPANY,锐智报馆,NEWSPAPER_OFFICE,NEWSPAPER 报社,300,70,1,8,思维敏锐
+16,COMPANY,愚人书局,NEWSPAPER_OFFICE,NEWSPAPER 报社,400,80,2,8,大智若愚
+17,COMPANY,思想者出版社,NEWSPAPER_OFFICE,NEWSPAPER 报社,300,70,3,8,精于思考
+18,BANK,银行,BANK,,,,3,8,
+19,BANK,银行,BANK,,,,0,8,
+20,WATCH_MAN_HOUSE,巡捕房,WATCHMAN_HOUSE,,,,1,8,
+21,CHANCE,运气,CHANCE,,,,1,8,
+22,COMPANY,独一处酒楼,FOOD_COM,FOOD 饮食业,350,80,3,8,"正宗饺子,独我一处"
+23,COMPANY,东来顺饭店,FOOD_COM,FOOD 饮食业,350,80,0,8,"北方火锅,绝对正宗"
+24,COMPANY,全聚德烤鸭店,FOOD_COM,FOOD 饮食业,380,70,3,8,
+25,COMPANY,迅捷电车公司,ELECTRIC_BUS_COM,TRANSPORT 运输业,370,80,3,8,速度之快每小时可跑10里之多

@@ -1,0 +1,17 @@
+{
+ "source": "Describe/Mai.pic",
+ "width": 289,
+ "height": 427,
+ "screen_pos": [
+  0,
+  0
+ ],
+ "anchor": [
+  288,
+  427
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

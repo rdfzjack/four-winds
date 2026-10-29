@@ -1,0 +1,133 @@
+{
+ "note": "person_id order comes from the PERSON_ID enum in the developer's const.h (recovered from Map.lib). Bios are from 1940.exe.",
+ "characters": [
+  {
+   "person_id": 0,
+   "code": "dyy",
+   "name": "董莺雨",
+   "const_tag": "NV_XS",
+   "walk_sprite": "Sprite/Nu_x.spr",
+   "files": {
+    "portrait_full": "Sprite/Dyy_f.pic",
+    "portrait_w": "Sprite/Dyy_w.pic",
+    "intro": "Sprite/Itr_dyy.pic",
+    "speech_simplified": "Sentence/Dyy_j.spr",
+    "speech_traditional": "Sentence/Dyy_f.spr",
+    "trade_button": "Trade/Dyy.spr"
+   },
+   "bio": "‘古的猫宁’,‘古的衣屋宁’每当清晨，溪口镇大发米号董老板家里便传出朗朗的读书声！街坊们都知道，这是董老板的掌上明珠董莺雨小姐又在念“洋经”了。这董小姐喜欢接受新思想，读了很多书，据说又懂洋文，许多男子都自愧不如。她也深信，知识就是财富。"
+  },
+  {
+   "person_id": 1,
+   "code": "sm",
+   "name": "四毛",
+   "const_tag": "LIU_LE",
+   "walk_sprite": "Sprite/Liu_l.spr",
+   "files": {
+    "portrait_full": "Sprite/Sm_f.pic",
+    "portrait_w": "Sprite/Sm_w.pic",
+    "intro": "Sprite/Itr_sm.pic",
+    "speech_simplified": "Sentence/Sm_j.spr",
+    "speech_traditional": "Sentence/Sm_f.spr",
+    "trade_button": "Trade/Sm.spr"
+   },
+   "bio": "四毛，出身贫苦，但从小自立，又极聪明伶俐。巧逢机缘，在拾荒时拾得古董而小富，欲买地造屋，安家立业，但当地豪绅金如山欺其年幼，  经常排挤盘剥。四毛立志出人头地，至此踏入商海，虽然已经腰缠万贯，但其克勤克简，不丢本业，仍一如既往背着那给他带来好运的竹篓"
+  },
+  {
+   "person_id": 2,
+   "code": "bdl",
+   "name": "包德利",
+   "const_tag": "MAI_B",
+   "walk_sprite": "Sprite/Mai_b.spr",
+   "files": {
+    "portrait_full": "Sprite/Bdl_f.pic",
+    "portrait_w": "Sprite/Bdl_w.pic",
+    "intro": "Sprite/Itr_bdl.pic",
+    "speech_simplified": "Sentence/Bdl_j.spr",
+    "speech_traditional": "Sentence/Bdl_f.spr",
+    "trade_button": "Trade/Bdl.spr"
+   },
+   "bio": "包德利，投机专家，精明干练。因此，到‘达利’洋行做了不到半年，便由跑街升至买卖，给洋行赚了大钱的同时，也肥了自己的私囊，他善于依靠洋人势力，又能通过买办身份结交华商。同他做生意的人都非常小心，稍不留神，就会中了他的圈套。"
+  },
+  {
+   "person_id": 3,
+   "code": "cml",
+   "name": "陈玛丽",
+   "const_tag": "FU_JXJ",
+   "walk_sprite": "Sprite/Fu_j.spr",
+   "files": {
+    "portrait_full": "Sprite/Cml_f.pic",
+    "portrait_w": "Sprite/Cml_w.pic",
+    "intro": "Sprite/Itr_cml.pic",
+    "speech_simplified": "Sentence/Cml_j.spr",
+    "speech_traditional": "Sentence/Cml_f.spr",
+    "trade_button": "Trade/Cml.spr"
+   },
+   "bio": "陈玛丽，溪口镇富商陈大户的千金，这陈大户靠经营纱厂起家，财源滚滚却子孙凋零，娶了四房太太才得此女，视如珍宝。陈玛丽自小在溺爱中长大，极为任性，做事不计后果，挥金如土。"
+  },
+  {
+   "person_id": 4,
+   "code": "szz",
+   "name": "赛珍珠",
+   "const_tag": "JIAO_JH",
+   "walk_sprite": "Sprite/Jao_j.spr",
+   "files": {
+    "portrait_full": "Sprite/Szz_f.pic",
+    "portrait_w": "Sprite/Szz_w.pic",
+    "intro": "Sprite/Itr_szz.pic",
+    "speech_simplified": "Sentence/Szz_j.spr",
+    "speech_traditional": "Sentence/Szz_f.spr",
+    "trade_button": "Trade/Szz.spr"
+   },
+   "bio": "赛珍珠，出身于青楼，赎身从良后，靠私房钱和得天独厚的交际才能逐渐步入商场，成为远近闻名的交际花。"
+  },
+  {
+   "person_id": 5,
+   "code": "fqm",
+   "name": "冯全篾",
+   "const_tag": "HEI_B",
+   "walk_sprite": "Sprite/Hei_b.spr",
+   "files": {
+    "portrait_full": "Sprite/Fqm_f.pic",
+    "portrait_w": "Sprite/Fqm_w.pic",
+    "intro": "Sprite/Itr_fqm.pic",
+    "speech_simplified": "Sentence/Fqm_j.spr",
+    "speech_traditional": "Sentence/Fqm_f.spr",
+    "trade_button": "Trade/Fqm.spr"
+   },
+   "bio": "冯全篾，元宝山黑帮老大，虽为黑帮，但少有杀人越货之举，喜欢经营、投资，冯全篾为人很豪爽，不计小利，在黑白两道都很吃得开。"
+  },
+  {
+   "person_id": 6,
+   "code": "fdr",
+   "name": "发达而",
+   "const_tag": "WAI_GR",
+   "walk_sprite": "Sprite/Wai_g.spr",
+   "files": {
+    "portrait_full": "Sprite/Fdr_f.pic",
+    "portrait_w": "Sprite/Fdr_w.pic",
+    "intro": "Sprite/Itr_fdr.pic",
+    "speech_simplified": "Sentence/Fdr_j.spr",
+    "speech_traditional": "Sentence/Fdr_f.spr",
+    "trade_button": "Trade/Fdr.spr"
+   },
+   "bio": "发达而，原为美商船运公司的职员，到中国后，见中国商界动荡，利于投机，便留在中国经商，发达而为人狂妄自大，傲慢无理，但由于他财大气粗，出手阔绰，却也有不少的追随者。"
+  },
+  {
+   "person_id": 7,
+   "code": "jrs",
+   "name": "金如山",
+   "const_tag": "BAO_SP",
+   "walk_sprite": "Sprite/Tu_c.spr",
+   "files": {
+    "portrait_full": "Sprite/Jrs_f.pic",
+    "portrait_w": "Sprite/Jrs_w.pic",
+    "intro": "Sprite/Itr_jrs.pic",
+    "speech_simplified": "Sentence/Jrs_j.spr",
+    "speech_traditional": "Sentence/Jrs_f.spr",
+    "trade_button": "Trade/Jrs.spr"
+   },
+   "bio": "金如山，金县大财主，极端贪婪吝啬，守财如命，大半辈子积攒了良田千顷，黄金万两。由于金县交通便利，商业逐步繁荣，金如山见房地产能摄暴利，便拿出自己的‘命’来投资地产，虽不善经营，但其精于算计，分毫必争，倒也收获不小。"
+  }
+ ]
+}

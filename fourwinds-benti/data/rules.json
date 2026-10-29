@@ -1,0 +1,11 @@
+{
+ "_comment": "全局规则参数。数值是占位，先照原版（开局现金、存款各 2000 万圆），以后在这里改。",
+ "currency": "万圆",
+ "default_map": "test_loop",
+ "max_players": 4,
+ "starting_cash": 2000,
+ "starting_deposit": 2000,
+ "dice_count": 1,
+ "dice_sides": 6,
+ "_dice_note": "原版骰子数还没核实：源码里有 getMoveSteps(num1, num2)，可能是两颗。"
+}

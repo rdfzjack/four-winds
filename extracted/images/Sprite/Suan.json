@@ -1,0 +1,17 @@
+{
+ "source": "Sprite/Suan.pic",
+ "width": 249,
+ "height": 213,
+ "screen_pos": [
+  320,
+  180
+ ],
+ "anchor": [
+  112,
+  104
+ ],
+ "compression": "raw",
+ "palette": "Sprite/1940.col",
+ "has_transparency": false,
+ "has_shadow": false
+}

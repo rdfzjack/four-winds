@@ -1,0 +1,17 @@
+{
+ "source": "Build/Null.pic",
+ "width": 2,
+ "height": 2,
+ "screen_pos": [
+  0,
+  0
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": false
+}

@@ -1,0 +1,17 @@
+{
+ "source": "Describe/Wai.pic",
+ "width": 275,
+ "height": 424,
+ "screen_pos": [
+  428,
+  391
+ ],
+ "anchor": [
+  274,
+  423
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

@@ -1,0 +1,468 @@
+﻿source,kind,status,outputs,detail,size
+1940.exe,Windows executable,partial,text/exe_strings.json;text/exe_strings.csv;text/characters.json;text/campaigns.json,286 GBK strings exported; game logic itself not decompiled,438322
+Ai/Jinxian.ai,AI personality (GBK text),ok,text/ai/Jinxian.json;text/ai/Jinxian.csv;text/ai/Jinxian.utf8.txt,9 profiles x 12 parameters,4739
+Ai/Standard.ai,AI personality (GBK text),ok,text/ai/Standard.json;text/ai/Standard.csv;text/ai/Standard.utf8.txt,9 profiles x 12 parameters,6875
+Ai/Yincheng.ai,AI personality (GBK text),ok,text/ai/Yincheng.json;text/ai/Yincheng.csv;text/ai/Yincheng.utf8.txt,9 profiles x 12 parameters,4737
+Build/Bao_s.spr,sprite (.spr),ok,images/Build/Bao_s.png;images/Build/Bao_s.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",43349
+Build/Bie_s.spr,sprite (.spr),ok,images/Build/Bie_s.png;images/Build/Bie_s.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",74459
+Build/Chao_j.spr,sprite (.spr),ok,images/Build/Chao_j.png;images/Build/Chao_j.preview.png,"4 group(s), 8 frame(s), palette Sprite/1940.col",28276
+Build/Dang_p.spr,sprite (.spr),ok,images/Build/Dang_p.png;images/Build/Dang_p.preview.png,"4 group(s), 8 frame(s), palette Sprite/1940.col",28335
+Build/Dian_c.spr,sprite (.spr),ok,images/Build/Dian_c.png;images/Build/Dian_c.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",33680
+Build/Dian_d.spr,sprite (.spr),ok,images/Build/Dian_d.png;images/Build/Dian_d.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",38675
+Build/Dian_h.spr,sprite (.spr),ok,images/Build/Dian_h.png;images/Build/Dian_h.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",39989
+Build/Du_c.spr,sprite (.spr),ok,images/Build/Du_c.png;images/Build/Du_c.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",46828
+Build/Fan_d.spr,sprite (.spr),ok,images/Build/Fan_d.png;images/Build/Fan_d.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",39476
+Build/Fang_z.spr,sprite (.spr),ok,images/Build/Fang_z.png;images/Build/Fang_z.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",44275
+Build/Gong_y.spr,sprite (.spr),ok,images/Build/Gong_y.png;images/Build/Gong_y.preview.png,"4 group(s), 8 frame(s), palette Sprite/1940.col",25229
+Build/Gong_yu.spr,sprite (.spr),ok,images/Build/Gong_yu.png;images/Build/Gong_yu.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",29653
+Build/Hei_b.spr,sprite (.spr),ok,images/Build/Hei_b.png;images/Build/Hei_b.preview.png,"4 group(s), 8 frame(s), palette Sprite/1940.col",27188
+Build/Hua_y.spr,sprite (.spr),ok,images/Build/Hua_y.png;images/Build/Hua_y.preview.png,"4 group(s), 12 frame(s), palette Sprite/1940.col",49651
+Build/Huo_c.spr,sprite (.spr),ok,images/Build/Huo_c.png;images/Build/Huo_c.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",29698
+Build/Jiao_t.spr,sprite (.spr),ok,images/Build/Jiao_t.png;images/Build/Jiao_t.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",45108
+Build/Ma_t.spr,sprite (.spr),ok,images/Build/Ma_t.png;images/Build/Ma_t.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",29388
+Build/Mei_q.spr,sprite (.spr),ok,images/Build/Mei_q.png;images/Build/Mei_q.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",47188
+Build/Null.pic,image (.pic),ok,images/Build/Null.png,"2x2, rle, palette Sprite/1940.col",36
+Build/Ping_f.spr,sprite (.spr),ok,images/Build/Ping_f.png;images/Build/Ping_f.preview.png,"4 group(s), 4 frame(s), palette Sprite/1940.col",14339
+Build/Sai_m.spr,sprite (.spr),ok,images/Build/Sai_m.png;images/Build/Sai_m.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",25164
+Build/Shang_d.spr,sprite (.spr),ok,images/Build/Shang_d.png;images/Build/Shang_d.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",60265
+Build/Shi_z.spr,sprite (.spr),ok,images/Build/Shi_z.png;images/Build/Shi_z.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",32445
+Build/Shui_w.spr,sprite (.spr),ok,images/Build/Shui_w.png;images/Build/Shui_w.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",55245
+Build/Suan_m.spr,sprite (.spr),ok,images/Build/Suan_m.png;images/Build/Suan_m.preview.png,"4 group(s), 8 frame(s), palette Sprite/1940.col",20830
+Build/Xiao_y.spr,sprite (.spr),ok,images/Build/Xiao_y.png;images/Build/Xiao_y.preview.png,"4 group(s), 12 frame(s), palette Sprite/1940.col",45909
+Build/Xun_b.spr,sprite (.spr),ok,images/Build/Xun_b.png;images/Build/Xun_b.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",38320
+Build/Yan_c.spr,sprite (.spr),ok,images/Build/Yan_c.png;images/Build/Yan_c.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",41162
+Build/Yie_z.spr,sprite (.spr),ok,images/Build/Yie_z.png;images/Build/Yie_z.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",57201
+Build/Yin_h.spr,sprite (.spr),ok,images/Build/Yin_h.png;images/Build/Yin_h.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",53062
+Build/Yun_q.spr,sprite (.spr),ok,images/Build/Yun_q.png;images/Build/Yun_q.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",28316
+Build/Zi_l.spr,sprite (.spr),ok,images/Build/Zi_l.png;images/Build/Zi_l.preview.png,"4 group(s), 16 frame(s), palette Sprite/1940.col",38993
+Cit/Beiping.cit,city map,ok,data/cities/Cit_Beiping.json;data/cities/Cit_Beiping_lands.csv;data/cities/Cit_Beiping_buildings.csv;data/cities/Cit_Beiping_map.png;data/cities/Cit_Beiping_iso.jpg,"北平: 60x60 grid, 66 lands, 25 buildings, 1 players",44981
+Cit/Nanjing.cit,city map,ok,data/cities/Cit_Nanjing.json;data/cities/Cit_Nanjing_lands.csv;data/cities/Cit_Nanjing_buildings.csv;data/cities/Cit_Nanjing_map.png;data/cities/Cit_Nanjing_iso.jpg,"南京: 50x50 grid, 74 lands, 20 buildings, 1 players",32613
+Cit/Shaihai.cit,city map,ok,data/cities/Cit_Shaihai.json;data/cities/Cit_Shaihai_lands.csv;data/cities/Cit_Shaihai_buildings.csv;data/cities/Cit_Shaihai_map.png;data/cities/Cit_Shaihai_iso.jpg,"上海: 54x54 grid, 64 lands, 26 buildings, 6 players",37565
+Cit/Tianjin.cit,city map,ok,data/cities/Cit_Tianjin.json;data/cities/Cit_Tianjin_lands.csv;data/cities/Cit_Tianjin_buildings.csv;data/cities/Cit_Tianjin_map.png;data/cities/Cit_Tianjin_iso.jpg,"天津: 50x50 grid, 69 lands, 22 buildings, 1 players",32630
+DDrawCompat.ini,DDrawCompat settings (modern add-on),not extracted,,,4137
+Describe/Back.pic,image (.pic),ok,images/Describe/Back.png,"640x480, rle, palette Sprite/1940.col",310112
+Describe/Bsp.pic,image (.pic),ok,images/Describe/Bsp.png,"368x384, rle, palette Sprite/1940.col",71500
+Describe/Fxj.pic,image (.pic),ok,images/Describe/Fxj.png,"294x410, rle, palette Sprite/1940.col",55911
+Describe/Hb.pic,image (.pic),ok,images/Describe/Hb.png,"282x418, rle, palette Sprite/1940.col",69873
+Describe/Jao.pic,image (.pic),ok,images/Describe/Jao.png,"230x407, rle, palette Sprite/1940.col",46742
+Describe/Lll.pic,image (.pic),ok,images/Describe/Lll.png,"261x424, rle, palette Sprite/1940.col",45554
+Describe/Mai.pic,image (.pic),ok,images/Describe/Mai.png,"289x427, rle, palette Sprite/1940.col",59731
+Describe/State.spr,sprite (.spr),ok,images/Describe/State.png,"1 group(s), 12 frame(s), palette Sprite/1940.col",23025
+Describe/Wai.pic,image (.pic),ok,images/Describe/Wai.png,"275x424, rle, palette Sprite/1940.col",67759
+Describe/Xs.pic,image (.pic),ok,images/Describe/Xs.png,"272x426, rle, palette Sprite/1940.col",46395
+Font/Asc16,bitmap font,ok,fonts/Asc16.png,"8x16 ASCII, 256 glyphs, 16 bytes each",4096
+Font/H16_f,bitmap font,ok,fonts/H16_f.png,"16x16 Chinese (traditional), 8280 glyphs x 32 bytes, indexed by GB2312 (row-0xA1)*94+(col-0xA1); sheet rows = GB2312 rows",264960
+Font/H16_j,bitmap font,ok,fonts/H16_j.png,"16x16 Chinese (simplified), 8363 glyphs x 32 bytes, indexed by GB2312 (row-0xA1)*94+(col-0xA1); sheet rows = GB2312 rows",267616
+Houses.lib,"Visual C++ browse database (.bsc, PDB 2.00 container)",ok (not game data),devfiles/Houses_identifiers.txt;devfiles/Houses_source_paths.txt,raw-deflate stream -> 5781468 bytes (b'Microsof'...); game never opens it. Exported identifier names only.,5891072
+Map.lib,Visual C++ precompiled header (.pch),ok (not game data),devfiles/Map_identifiers.txt;devfiles/Map_source_paths.txt,raw-deflate stream -> 4790842 bytes (b'VCPCH0\x00\x00'...); game never opens it. Exported identifier names only.,4885928
+Pubsell/Ban.pic,image (.pic),ok,images/Pubsell/Ban.png,"640x100, raw, palette Sprite/1940.col",64032
+Pubsell/Ban1.pic,image (.pic),ok,images/Pubsell/Ban1.png,"640x100, raw, palette Sprite/1940.col",64032
+Pubsell/Basepric.pic,image (.pic),ok,images/Pubsell/Basepric.png,"253x53, rle, palette Sprite/1940.col",12744
+Pubsell/Blg.pic,image (.pic),ok,images/Pubsell/Blg.png,"306x302, rle, palette Sprite/1940.col",41832
+Pubsell/Blg.spr,sprite (.spr),ok,images/Pubsell/Blg.png,"1 group(s), 6 frame(s), palette Sprite/1940.col",24754
+Pubsell/Describe.pic,image (.pic),ok,images/Pubsell/Describe.png,"174x104, rle, palette Sprite/1940.col",13412
+Pubsell/Niu_1.spr,sprite (.spr),ok,images/Pubsell/Niu_1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",1572
+Pubsell/Niu_10.spr,sprite (.spr),ok,images/Pubsell/Niu_10.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",1572
+Pubsell/Niu_101.spr,sprite (.spr),ok,images/Pubsell/Niu_101.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",1572
+Pubsell/Niu_11.spr,sprite (.spr),ok,images/Pubsell/Niu_11.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",1572
+Pubsell/Niu_50.spr,sprite (.spr),ok,images/Pubsell/Niu_50.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",1572
+Pubsell/Niu_501.spr,sprite (.spr),ok,images/Pubsell/Niu_501.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",1572
+Pubsell/Pai.pic,image (.pic),ok,images/Pubsell/Pai.png,"29x48, rle, palette Sprite/1940.col",1159
+Pubsell/Person.spr,sprite (.spr),ok,images/Pubsell/Person.png,"1 group(s), 9 frame(s), palette Sprite/1940.col",37571
+Pubsell/Shadow.pic,image (.pic),ok,images/Pubsell/Shadow.png,"640x480, rle, palette Sprite/1940.col",2912
+Pubsell/Topprice.pic,image (.pic),ok,images/Pubsell/Topprice.png,"253x53, rle, palette Sprite/1940.col",12744
+Race/Back1.pic,image (.pic),ok,images/Race/Back1.png,"640x421, raw, palette Sprite/1940.col",269472
+Race/Back2.pic,image (.pic),ok,images/Race/Back2.png,"640x420, raw, palette Sprite/1940.col",268832
+Race/Bar.spr,sprite (.spr),ok,images/Race/Bar.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",15819
+Race/End.pic,image (.pic),ok,images/Race/End.png,"17x299, rle, palette Sprite/1940.col",5713
+Race/Fbar1.pic,image (.pic),ok,images/Race/Fbar1.png,"640x8, rle, palette Sprite/1940.col",5316
+Race/Fbar2.pic,image (.pic),ok,images/Race/Fbar2.png,"640x60, raw, palette Sprite/1940.col",38432
+Race/H1.spr,sprite (.spr),ok,images/Race/H1.png,"2 group(s), 13 frame(s), palette Sprite/1940.col",64065
+Race/H2.spr,sprite (.spr),ok,images/Race/H2.png,"2 group(s), 13 frame(s), palette Sprite/1940.col",64692
+Race/H3.spr,sprite (.spr),ok,images/Race/H3.png,"2 group(s), 13 frame(s), palette Sprite/1940.col",64611
+Race/H4.spr,sprite (.spr),ok,images/Race/H4.png,"2 group(s), 13 frame(s), palette Sprite/1940.col",64913
+Race/H5.spr,sprite (.spr),ok,images/Race/H5.png,"2 group(s), 13 frame(s), palette Sprite/1940.col",64065
+Race/H6.spr,sprite (.spr),ok,images/Race/H6.png,"2 group(s), 13 frame(s), palette Sprite/1940.col",64692
+Race/Indicate.spr,sprite (.spr),ok,images/Race/Indicate.png,"1 group(s), 2 frame(s), palette Sprite/1940.col",813
+Race/Lamp.spr,sprite (.spr),ok,images/Race/Lamp.png,"1 group(s), 2 frame(s), palette Sprite/1940.col",1448
+Race/Mark.spr,sprite (.spr),ok,images/Race/Mark.png,"1 group(s), 6 frame(s), palette Sprite/1940.col",763
+Save/Save.txt,empty save list,not extracted,,,0
+Screen/Bar.pic,image (.pic),ok,images/Screen/Bar.png,"640x480, rle, palette Sprite/1940.col",82912
+Screen/Bar1.pic,image (.pic),ok,images/Screen/Bar1.png,"640x480, rle, palette Sprite/1940.col",83244
+Screen/Bie_sbtn.spr,sprite (.spr),ok,images/Screen/Bie_sbtn.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",37493
+Screen/Build.spr,sprite (.spr),ok,images/Screen/Build.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4964
+Screen/Build1.spr,sprite (.spr),ok,images/Screen/Build1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4846
+Screen/Cun_kuan.spr,sprite (.spr),ok,images/Screen/Cun_kuan.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",17574
+Screen/Dang_pbt.spr,sprite (.spr),ok,images/Screen/Dang_pbt.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",10596
+Screen/Date.spr,sprite (.spr),ok,images/Screen/Date.png,"1 group(s), 14 frame(s), palette Sprite/1940.col",2406
+Screen/Describe.spr,sprite (.spr),ok,images/Screen/Describe.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",3906
+Screen/Dialog.spr,sprite (.spr),ok,images/Screen/Dialog.png,"3 group(s), 9 frame(s), palette Sprite/1940.col",34437
+Screen/Dialog1.spr,sprite (.spr),ok,images/Screen/Dialog1.png,"3 group(s), 9 frame(s), palette Sprite/1940.col",34664
+Screen/Exit.spr,sprite (.spr),ok,images/Screen/Exit.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",3949
+Screen/Fang_qi.spr,sprite (.spr),ok,images/Screen/Fang_qi.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",17574
+Screen/Fang_qi1.spr,sprite (.spr),ok,images/Screen/Fang_qi1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",17916
+Screen/Gong_ybt.spr,sprite (.spr),ok,images/Screen/Gong_ybt.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",25812
+Screen/Hei_bbtn.spr,sprite (.spr),ok,images/Screen/Hei_bbtn.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",10580
+Screen/Load.spr,sprite (.spr),ok,images/Screen/Load.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4007
+Screen/Mortgage.spr,sprite (.spr),ok,images/Screen/Mortgage.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4752
+Screen/Move.spr,sprite (.spr),ok,images/Screen/Move.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",26352
+Screen/Move1.spr,sprite (.spr),ok,images/Screen/Move1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",9240
+Screen/Music.spr,sprite (.spr),ok,images/Screen/Music.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",2013
+Screen/No.spr,sprite (.spr),ok,images/Screen/No.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18357
+Screen/No1.spr,sprite (.spr),ok,images/Screen/No1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18861
+Screen/Num_ok.spr,sprite (.spr),ok,images/Screen/Num_ok.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",6910
+Screen/Numinput.pic,image (.pic),ok,images/Screen/Numinput.png,"244x248, rle, palette Sprite/1940.col",41459
+Screen/Person.spr,sprite (.spr),ok,images/Screen/Person.png,"1 group(s), 8 frame(s), palette Sprite/1940.col",7376
+Screen/Ping_fbt.spr,sprite (.spr),ok,images/Screen/Ping_fbt.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",16542
+Screen/Portrait.spr,sprite (.spr),ok,images/Screen/Portrait.png,"1 group(s), 8 frame(s), palette Sprite/1940.col",68002
+Screen/Pubsell.spr,sprite (.spr),ok,images/Screen/Pubsell.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",6678
+Screen/Pubsell1.spr,sprite (.spr),ok,images/Screen/Pubsell1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",6668
+Screen/Qu_kuan.spr,sprite (.spr),ok,images/Screen/Qu_kuan.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",15522
+Screen/Qu_kuan1.spr,sprite (.spr),ok,images/Screen/Qu_kuan1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",15792
+Screen/Remove.spr,sprite (.spr),ok,images/Screen/Remove.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4406
+Screen/Remove1.spr,sprite (.spr),ok,images/Screen/Remove1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4079
+Screen/Restart.spr,sprite (.spr),ok,images/Screen/Restart.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",3937
+Screen/Save.spr,sprite (.spr),ok,images/Screen/Save.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",3946
+Screen/Savegame.pic,image (.pic),ok,images/Screen/Savegame.png,"640x480, raw, palette Sprite/1940.col",307232
+Screen/Selectho.pic,image (.pic),ok,images/Screen/Selectho.png,"371x351, rle, palette Sprite/1940.col",129776
+Screen/Sheng_jb.spr,sprite (.spr),ok,images/Screen/Sheng_jb.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",11962
+Screen/Sound.spr,sprite (.spr),ok,images/Screen/Sound.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",1999
+Screen/Speed.spr,sprite (.spr),ok,images/Screen/Speed.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",2135
+Screen/State.spr,sprite (.spr),ok,images/Screen/State.png,"1 group(s), 13 frame(s), palette Sprite/1940.col",5330
+Screen/Suan_mbt.spr,sprite (.spr),ok,images/Screen/Suan_mbt.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",10583
+Screen/Sysinfo.spr,sprite (.spr),ok,images/Screen/Sysinfo.png,"1 group(s), 5 frame(s), palette Sprite/1940.col",2086
+Screen/System.spr,sprite (.spr),ok,images/Screen/System.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",3906
+Screen/System1.spr,sprite (.spr),ok,images/Screen/System1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",3906
+Screen/Te_xbtn.spr,sprite (.spr),ok,images/Screen/Te_xbtn.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",11940
+Screen/Trade.spr,sprite (.spr),ok,images/Screen/Trade.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",5780
+Screen/Trade1.spr,sprite (.spr),ok,images/Screen/Trade1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",5529
+Screen/Unmort.spr,sprite (.spr),ok,images/Screen/Unmort.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4688
+Screen/Unmort1.spr,sprite (.spr),ok,images/Screen/Unmort1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4688
+Screen/Xiao_ybt.spr,sprite (.spr),ok,images/Screen/Xiao_ybt.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",29671
+Screen/Xitong.pic,image (.pic),ok,images/Screen/Xitong.png,"132x333, rle, palette Sprite/1940.col",44654
+Screen/Xitong1.pic,image (.pic),ok,images/Screen/Xitong1.png,"137x338, rle, palette Sprite/1940.col",45340
+Screen/Yes.spr,sprite (.spr),ok,images/Screen/Yes.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18357
+Screen/Yes1.spr,sprite (.spr),ok,images/Screen/Yes1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18393
+Screen/Zuzi.pic,image (.pic),ok,images/Screen/Zuzi.png,"23x12, rle, palette Sprite/1940.col",294
+Sentence/Bdl_f.spr,sprite (.spr),ok,images/Sentence/Bdl_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",113778
+Sentence/Bdl_j.spr,sprite (.spr),ok,images/Sentence/Bdl_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",113218
+Sentence/Cml_f.spr,sprite (.spr),ok,images/Sentence/Cml_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",112323
+Sentence/Cml_j.spr,sprite (.spr),ok,images/Sentence/Cml_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",112225
+Sentence/Dyy_f.spr,sprite (.spr),ok,images/Sentence/Dyy_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",112603
+Sentence/Dyy_j.spr,sprite (.spr),ok,images/Sentence/Dyy_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",112560
+Sentence/Fdr_f.spr,sprite (.spr),ok,images/Sentence/Fdr_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",111999
+Sentence/Fdr_j.spr,sprite (.spr),ok,images/Sentence/Fdr_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",111999
+Sentence/Fqm_f.spr,sprite (.spr),ok,images/Sentence/Fqm_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",113688
+Sentence/Fqm_j.spr,sprite (.spr),ok,images/Sentence/Fqm_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",113671
+Sentence/Jrs_f.spr,sprite (.spr),ok,images/Sentence/Jrs_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",114793
+Sentence/Jrs_j.spr,sprite (.spr),ok,images/Sentence/Jrs_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",114793
+Sentence/Sm_f.spr,sprite (.spr),ok,images/Sentence/Sm_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",111329
+Sentence/Sm_j.spr,sprite (.spr),ok,images/Sentence/Sm_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",111263
+Sentence/Szz_f.spr,sprite (.spr),ok,images/Sentence/Szz_f.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",113113
+Sentence/Szz_j.spr,sprite (.spr),ok,images/Sentence/Szz_j.png;text/speech_lines.json,"1 group(s), 12 frame(s), palette Sprite/1940.col",112752
+Sound/Aj1.wav,audio,ok (copied),audio/aj1.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.15s",3418
+Sound/Aj3.wav,audio,ok (copied),audio/aj3.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.19s",4158
+Sound/Bad1.wav,audio,ok (copied),audio/bad1.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.72s",31644
+Sound/Bad2.wav,audio,ok (copied),audio/bad2.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.86s",18954
+Sound/Bad3.wav,audio,ok (copied),audio/bad3.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.75s",77314
+Sound/Bad4.wav,audio,ok (copied),audio/bad4.wav,"PCM 16-bit, 1 ch, 22050 Hz, 2.99s",131934
+Sound/Bad5.wav,audio,ok (copied),audio/bad5.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.76s",33390
+Sound/Bad6.wav,audio,ok (copied),audio/bad6.wav,"PCM 8-bit, 1 ch, 22050 Hz, 3.56s",78578
+Sound/Bankrupt.wav,audio,ok (copied),audio/bankrupt.wav,"PCM 8-bit, 1 ch, 22050 Hz, 4.07s",89936
+Sound/Blg.wav,audio,ok (copied),audio/blg.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.45s",19818
+Sound/Buyutil.wav,audio,ok (copied),audio/buyutil.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.92s",20568
+Sound/Cf.wav,audio,ok (copied),audio/cf.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.63s",71948
+Sound/Cf1.wav,audio,ok (copied),audio/cf1.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.19s",52702
+Sound/Chance05.wav,audio,ok (copied),audio/chance05.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.47s",64864
+Sound/Click.wav,audio,ok (copied),audio/click.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.59s",12984
+Sound/D1.wav,audio,ok (copied),audio/d1.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.67s",29666
+Sound/D11.wav,audio,ok (copied),audio/d11.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.67s",29668
+Sound/D2.wav,audio,ok (copied),audio/d2.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.35s",15410
+Sound/D3.wav,audio,ok (copied),audio/d3.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.35s",15410
+Sound/Dc.wav,audio,ok (copied),audio/dc.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.59s",57218
+Sound/Dcgs.wav,audio,ok (copied),audio/dcgs.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.00s",44194
+Sound/Dice.wav,audio,ok (copied),audio/dice.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.76s",33540
+Sound/Dy.wav,audio,ok (copied),audio/dy.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.92s",40412
+Sound/Err.wav,audio,ok (copied),audio/err.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.40s",8924
+Sound/Err1.wav,audio,ok (copied),audio/err1.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.63s",13962
+Sound/Err2.wav,audio,ok (copied),audio/err2.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.32s",13988
+Sound/Err3.wav,audio,ok (copied),audio/err3.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.69s",30318
+Sound/Fdr.wav,audio,ok (copied),audio/fdr.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.33s",51456
+Sound/Fxj.wav,audio,ok (copied),audio/fxj.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.64s",58206
+Sound/Game1.mid,audio,ok (copied),audio/game1.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),29672
+Sound/Game2-ba.mid,audio,ok (copied),audio/game2-ba.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),20547
+Sound/Game2.mid,audio,ok (copied),audio/game2.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),19931
+Sound/Game3.mid,audio,ok (copied),audio/game3.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),46968
+Sound/Game4.mid,audio,ok (copied),audio/game4.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),7243
+Sound/Game5.mid,audio,ok (copied),audio/game5.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),8952
+Sound/Good.wav,audio,ok (copied),audio/good.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.52s",67194
+Sound/Good1.wav,audio,ok (copied),audio/good1.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.72s",31908
+Sound/Good2.wav,audio,ok (copied),audio/good2.wav,"PCM 16-bit, 1 ch, 22050 Hz, 2.83s",124780
+Sound/Good3.wav,audio,ok (copied),audio/good3.wav,"PCM 16-bit, 1 ch, 22050 Hz, 2.05s",90654
+Sound/Good4.wav,audio,ok (copied),audio/good4.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.40s",61708
+Sound/Good5.wav,audio,ok (copied),audio/good5.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.33s",51438
+Sound/Good6.wav,audio,ok (copied),audio/good6.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.09s",46168
+Sound/Good7.wav,audio,ok (copied),audio/good7.wav,"PCM 8-bit, 1 ch, 22050 Hz, 1.67s",36868
+Sound/Good8.wav,audio,ok (copied),audio/good8.wav,"PCM 8-bit, 1 ch, 22050 Hz, 1.50s",33202
+Sound/Goonce.wav,audio,ok (copied),audio/goonce.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.79s",35182
+Sound/Gy.wav,audio,ok (copied),audio/gy.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.36s",52146
+Sound/H17.wav,audio,ok (copied),audio/h17.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.48s",54730
+Sound/Hb.wav,audio,ok (copied),audio/hb.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.19s",48320
+Sound/Hcz.wav,audio,ok (copied),audio/hcz.wav,"PCM 16-bit, 1 ch, 22050 Hz, 2.19s",96554
+Sound/Intro.mid,audio,ok (copied),audio/intro.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),46968
+Sound/Intro2.mid,audio,ok (copied),audio/intro2.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),25597
+Sound/Jeishu.mid,audio,ok (copied),audio/jeishu.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),6708
+Sound/Jf.wav,audio,ok (copied),audio/jf.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.65s",72748
+Sound/Jiaoyi.mid,audio,ok (copied),audio/jiaoyi.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),6520
+Sound/Jjh.wav,audio,ok (copied),audio/jjh.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.14s",47222
+Sound/Jt.wav,audio,ok (copied),audio/jt.wav,"PCM 8-bit, 1 ch, 22050 Hz, 3.78s",83496
+Sound/Llr.wav,audio,ok (copied),audio/llr.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.58s",56860
+Sound/Mb.wav,audio,ok (copied),audio/mb.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.48s",54648
+Sound/Md.wav,audio,ok (copied),audio/md.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.80s",79572
+Sound/Message.wav,audio,ok (copied),audio/message.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.51s",11490
+Sound/Mt.wav,audio,ok (copied),audio/mt.wav,"PCM 8-bit, 1 ch, 22050 Hz, 1.77s",39030
+Sound/Nxs.wav,audio,ok (copied),audio/nxs.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.11s",46540
+Sound/Paimai.mid,audio,ok (copied),audio/paimai.mid,Standard MIDI (Godot 4 has no built-in MIDI playback),8030
+Sound/Piecemov.wav,audio,ok (copied),audio/piecemov.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.27s",50274
+Sound/Pm.wav,audio,ok (copied),audio/pm.wav,"PCM 16-bit, 1 ch, 22050 Hz, 2.39s",105326
+Sound/Pubsell.wav,audio,ok (copied),audio/pubsell.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.78s",61548
+Sound/Qj.wav,audio,ok (copied),audio/qj.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.46s",54178
+Sound/Rentec1.wav,audio,ok (copied),audio/rentec1.wav,"PCM 16-bit, 1 ch, 22050 Hz, 2.80s",123694
+Sound/Sd.wav,audio,ok (copied),audio/sd.wav,"PCM 8-bit, 1 ch, 22050 Hz, 1.56s",34342
+Sound/Sj.wav,audio,ok (copied),audio/sj.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.32s",58200
+Sound/Sj1.wav,audio,ok (copied),audio/sj1.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.94s",41714
+Sound/Sm.wav,audio,ok (copied),audio/sm.wav,"PCM 16-bit, 1 ch, 22050 Hz, 10.42s",459546
+Sound/Sm2.wav,audio,ok (copied),audio/sm2.wav,"PCM 8-bit, 1 ch, 22050 Hz, 3.98s",87898
+Sound/Szf.wav,audio,ok (copied),audio/szf.wav,"PCM 8-bit, 1 ch, 22050 Hz, 1.66s",36578
+Sound/Tcz.wav,audio,ok (copied),audio/tcz.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.66s",58740
+Sound/Tradectr.wav,audio,ok (copied),audio/tradectr.wav,"PCM 16-bit, 1 ch, 22050 Hz, 0.84s",36984
+Sound/Tradeno.wav,audio,ok (copied),audio/tradeno.wav,"PCM 8-bit, 1 ch, 22050 Hz, 0.76s",16910
+Sound/Tradeok.wav,audio,ok (copied),audio/tradeok.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.08s",46062
+Sound/Trncanon.wav,audio,ok (copied),audio/trncanon.wav,"PCM 16-bit, 1 ch, 22050 Hz, 1.69s",74868
+Sound/Xbf.wav,audio,ok (copied),audio/xbf.wav,"PCM 16-bit, 1 ch, 22050 Hz, 2.47s",109134
+Sound/Yh.wav,audio,ok (copied),audio/yh.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.17s",47824
+Sound/Youwin.wav,audio,ok (copied),audio/youwin.wav,"PCM 8-bit, 1 ch, 22050 Hz, 10.41s",229894
+Sound/Yzh.wav,audio,ok (copied),audio/yzh.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.22s",48962
+Sound/Zh.wav,audio,ok (copied),audio/zh.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.26s",49882
+Sound/Zls.wav,audio,ok (copied),audio/zls.wav,"PCM 8-bit, 1 ch, 22050 Hz, 2.27s",50136
+Sprite/1940.col,palette,ok,palettes/Sprite_1940.png;palettes/Sprite_1940.json,"256 colours, 8-bit RGB after an 8-byte header",776
+Sprite/1940_bak.col,palette,ok,palettes/Sprite_1940_bak.png;palettes/Sprite_1940_bak.json,"256 colours, 8-bit RGB after an 8-byte header",776
+Sprite/1940_org.col,palette,ok,palettes/Sprite_1940_org.png;palettes/Sprite_1940_org.json,"256 colours, 8-bit RGB after an 8-byte header",776
+Sprite/Arrow.spr,sprite (.spr),ok,images/Sprite/Arrow.png,"1 group(s), 4 frame(s), palette Sprite/1940.col",1959
+Sprite/Bars.spr,sprite (.spr),ok,images/Sprite/Bars.png,"1 group(s), 2 frame(s), palette Sprite/1940.col",1386
+Sprite/Base.spr,sprite (.spr),ok,images/Sprite/Base.png,"1 group(s), 11 frame(s), palette Sprite/1940.col",8386
+Sprite/Base2.spr,sprite (.spr),ok,images/Sprite/Base2.png,"1 group(s), 11 frame(s), palette Sprite/1940.col",8386
+Sprite/Bdl_f.pic,image (.pic),ok,images/Sprite/Bdl_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Bdl_w.pic,image (.pic),ok,images/Sprite/Bdl_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Chance1.pic,image (.pic),ok,images/Sprite/Chance1.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance10.pic,image (.pic),ok,images/Sprite/Chance10.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance11.pic,image (.pic),ok,images/Sprite/Chance11.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance12.pic,image (.pic),ok,images/Sprite/Chance12.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance13.pic,image (.pic),ok,images/Sprite/Chance13.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance14.pic,image (.pic),ok,images/Sprite/Chance14.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance15.pic,image (.pic),ok,images/Sprite/Chance15.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance16.pic,image (.pic),ok,images/Sprite/Chance16.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310115
+Sprite/Chance17.pic,image (.pic),ok,images/Sprite/Chance17.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance18.pic,image (.pic),ok,images/Sprite/Chance18.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance19.pic,image (.pic),ok,images/Sprite/Chance19.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance2.pic,image (.pic),ok,images/Sprite/Chance2.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance20.pic,image (.pic),ok,images/Sprite/Chance20.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance21.pic,image (.pic),ok,images/Sprite/Chance21.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance22.pic,image (.pic),ok,images/Sprite/Chance22.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance23.pic,image (.pic),ok,images/Sprite/Chance23.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance24.pic,image (.pic),ok,images/Sprite/Chance24.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance25.pic,image (.pic),ok,images/Sprite/Chance25.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance26.pic,image (.pic),ok,images/Sprite/Chance26.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance27.pic,image (.pic),ok,images/Sprite/Chance27.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance28.pic,image (.pic),ok,images/Sprite/Chance28.png;text/chance_cards.json,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Chance29.pic,image (.pic),ok,images/Sprite/Chance29.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance3.pic,image (.pic),ok,images/Sprite/Chance3.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance30.pic,image (.pic),ok,images/Sprite/Chance30.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance31.pic,image (.pic),ok,images/Sprite/Chance31.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance32.pic,image (.pic),ok,images/Sprite/Chance32.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance33.pic,image (.pic),ok,images/Sprite/Chance33.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance34.pic,image (.pic),ok,images/Sprite/Chance34.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance4.pic,image (.pic),ok,images/Sprite/Chance4.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance5.pic,image (.pic),ok,images/Sprite/Chance5.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance6.pic,image (.pic),ok,images/Sprite/Chance6.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance7.pic,image (.pic),ok,images/Sprite/Chance7.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance8.pic,image (.pic),ok,images/Sprite/Chance8.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Chance9.pic,image (.pic),ok,images/Sprite/Chance9.png;text/chance_cards.json,"640x480, rle, palette Sprite/1940.col",310112
+Sprite/Cml_f.pic,image (.pic),ok,images/Sprite/Cml_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Cml_w.pic,image (.pic),ok,images/Sprite/Cml_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Color.idx,palette remap,ok,palettes/Color_idx_owner_recolor.json,9 x 256-byte colour remap tables,2304
+Sprite/Cursor.spr,sprite (.spr),ok,images/Sprite/Cursor.png,"16 group(s), 16 frame(s), palette Sprite/1940.col",8146
+Sprite/Dang.pic,image (.pic),ok,images/Sprite/Dang.png,"235x197, raw, palette Sprite/1940.col",46327
+Sprite/Decorate.spr,sprite (.spr),ok,images/Sprite/Decorate.png,"10 group(s), 50 frame(s), palette Sprite/1940.col",116803
+Sprite/Dyy_f.pic,image (.pic),ok,images/Sprite/Dyy_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Dyy_w.pic,image (.pic),ok,images/Sprite/Dyy_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Fdr_f.pic,image (.pic),ok,images/Sprite/Fdr_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Fdr_w.pic,image (.pic),ok,images/Sprite/Fdr_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Flag.spr,sprite (.spr),ok,images/Sprite/Flag.png,"1 group(s), 6 frame(s), palette Sprite/1940.col",6700
+Sprite/Fqm_f.pic,image (.pic),ok,images/Sprite/Fqm_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Fqm_w.pic,image (.pic),ok,images/Sprite/Fqm_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Fu_j.spr,sprite (.spr),ok,images/Sprite/Fu_j.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",48819
+Sprite/Hei.pic,image (.pic),ok,images/Sprite/Hei.png,"235x197, raw, palette Sprite/1940.col",46327
+Sprite/Hei_b.spr,sprite (.spr),ok,images/Sprite/Hei_b.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",66828
+Sprite/Indicate.spr,sprite (.spr),ok,images/Sprite/Indicate.png,"1 group(s), 2 frame(s), palette Sprite/1940.col",813
+Sprite/Itr_bdl.pic,image (.pic),ok,images/Sprite/Itr_bdl.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Itr_cml.pic,image (.pic),ok,images/Sprite/Itr_cml.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Itr_dyy.pic,image (.pic),ok,images/Sprite/Itr_dyy.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Itr_fdr.pic,image (.pic),ok,images/Sprite/Itr_fdr.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Itr_fqm.pic,image (.pic),ok,images/Sprite/Itr_fqm.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Itr_jrs.pic,image (.pic),ok,images/Sprite/Itr_jrs.png,"639x477, raw, palette Sprite/1940.col",304835
+Sprite/Itr_sm.pic,image (.pic),ok,images/Sprite/Itr_sm.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Itr_szz.pic,image (.pic),ok,images/Sprite/Itr_szz.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Jao_j.spr,sprite (.spr),ok,images/Sprite/Jao_j.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",52458
+Sprite/Jrs_f.pic,image (.pic),ok,images/Sprite/Jrs_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Jrs_w.pic,image (.pic),ok,images/Sprite/Jrs_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Liu_l.spr,sprite (.spr),ok,images/Sprite/Liu_l.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",46538
+Sprite/Mai_b.spr,sprite (.spr),ok,images/Sprite/Mai_b.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",58433
+Sprite/North.avi,video (Cinepak AVI),ok (converted),video/North.ogv,"Cinepak + PCM in AVI, converted to Ogg Theora for Godot VideoStreamPlayer",1533740
+Sprite/Nu_x.spr,sprite (.spr),ok,images/Sprite/Nu_x.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",51093
+Sprite/Pt.avi,video (Cinepak AVI),ok (converted),video/Pt.ogv,"Cinepak + PCM in AVI, converted to Ogg Theora for Godot VideoStreamPlayer",6056632
+Sprite/Road.spr,sprite (.spr),ok,images/Sprite/Road.png,"1 group(s), 11 frame(s), palette Sprite/1940.col",20611
+Sprite/Saizi.spr,sprite (.spr),ok,images/Sprite/Saizi.png,"2 group(s), 33 frame(s), palette Sprite/1940.col",164775
+Sprite/Sm_f.pic,image (.pic),ok,images/Sprite/Sm_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Sm_w.pic,image (.pic),ok,images/Sprite/Sm_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Suan.pic,image (.pic),ok,images/Sprite/Suan.png,"249x213, raw, palette Sprite/1940.col",53069
+Sprite/Surface.spr,sprite (.spr),ok,images/Sprite/Surface.png,"1 group(s), 36 frame(s), palette Sprite/1940.col",67416
+Sprite/Surface1.spr,sprite (.spr),ok,images/Sprite/Surface1.png,"1 group(s), 36 frame(s), palette Sprite/1940.col",67416
+Sprite/Szz_f.pic,image (.pic),ok,images/Sprite/Szz_f.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Szz_w.pic,image (.pic),ok,images/Sprite/Szz_w.png,"640x480, raw, palette Sprite/1940.col",307232
+Sprite/Tu_c.spr,sprite (.spr),ok,images/Sprite/Tu_c.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",59946
+Sprite/Wai_g.spr,sprite (.spr),ok,images/Sprite/Wai_g.png,"4 group(s), 32 frame(s), palette Sprite/1940.col",62902
+Sub/Btn1_f.spr,sprite (.spr),ok,images/Sub/Btn1_f.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn1_j.spr,sprite (.spr),ok,images/Sub/Btn1_j.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn2_f.spr,sprite (.spr),ok,images/Sub/Btn2_f.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn2_j.spr,sprite (.spr),ok,images/Sub/Btn2_j.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn3_f.spr,sprite (.spr),ok,images/Sub/Btn3_f.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn3_j.spr,sprite (.spr),ok,images/Sub/Btn3_j.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn4_f.spr,sprite (.spr),ok,images/Sub/Btn4_f.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn4_j.spr,sprite (.spr),ok,images/Sub/Btn4_j.png,"1 group(s), 3 frame(s), palette Sub/Main.col",20292
+Sub/Btn5_f.spr,sprite (.spr),ok,images/Sub/Btn5_f.png,"1 group(s), 3 frame(s), palette Sub/Main.col",19812
+Sub/Btn5_j.spr,sprite (.spr),ok,images/Sub/Btn5_j.png,"1 group(s), 3 frame(s), palette Sub/Main.col",19812
+Sub/Dyy_ns.pic,image (.pic),ok,images/Sub/Dyy_ns.png,"640x480, raw, palette Sprite/1940.col",307232
+Sub/Fqm_ns.pic,image (.pic),ok,images/Sub/Fqm_ns.png,"640x480, raw, palette Sprite/1940.col",307232
+Sub/Jinxian.pic,image (.pic),ok,images/Sub/Jinxian.png,"640x480, raw, palette Sprite/1940.col",307232
+Sub/Main.col,palette,ok,palettes/Sub_Main.png;palettes/Sub_Main.json,"256 colours, 8-bit RGB after an 8-byte header",776
+Sub/Mainbase.pic,image (.pic),ok,images/Sub/Mainbase.png,"172x223, raw, palette Sub/Main.col",38388
+Sub/Menu_f.pic,image (.pic),ok,images/Sub/Menu_f.png,"640x480, raw, palette Sub/Main.col",307232
+Sub/Menu_j.pic,image (.pic),ok,images/Sub/Menu_j.png,"640x480, raw, palette Sub/Main.col",307232
+Sub/Person.spr,sprite (.spr),ok,images/Sub/Person.png,"1 group(s), 8 frame(s), palette Sprite/1940.col",121584
+Sub/Select.spr,sprite (.spr),ok,images/Sub/Select.png,"1 group(s), 20 frame(s), palette Sub/Main.col",545506
+Sub/Sh1.pic,image (.pic),ok,images/Sub/Sh1.png,"640x480, rle, palette Sprite/1940.col",310112
+Sub/Sh2.pic,image (.pic),ok,images/Sub/Sh2.png,"640x480, rle, palette Sprite/1940.col",310112
+Sub/Sh3.pic,image (.pic),ok,images/Sub/Sh3.png,"640x480, rle, palette Sprite/1940.col",310112
+Sub/Sh4.pic,image (.pic),ok,images/Sub/Sh4.png,"640x480, rle, palette Sprite/1940.col",310112
+Sub/Story11.cit,city map,ok,data/cities/Sub_Story11.json;data/cities/Sub_Story11_lands.csv;data/cities/Sub_Story11_buildings.csv;data/cities/Sub_Story11_map.png;data/cities/Sub_Story11_iso.jpg,"金县: 27x27 grid, 21 lands, 5 buildings, 3 players",10091
+Sub/Story12.cit,city map,ok,data/cities/Sub_Story12.json;data/cities/Sub_Story12_lands.csv;data/cities/Sub_Story12_buildings.csv;data/cities/Sub_Story12_map.png;data/cities/Sub_Story12_iso.jpg,"金县: 33x33 grid, 29 lands, 9 buildings, 3 players",14584
+Sub/Story13.cit,city map,ok,data/cities/Sub_Story13.json;data/cities/Sub_Story13_lands.csv;data/cities/Sub_Story13_buildings.csv;data/cities/Sub_Story13_map.png;data/cities/Sub_Story13_iso.jpg,"银城: 40x40 grid, 38 lands, 11 buildings, 4 players",20599
+Sub/Story14.cit,city map,ok,data/cities/Sub_Story14.json;data/cities/Sub_Story14_lands.csv;data/cities/Sub_Story14_buildings.csv;data/cities/Sub_Story14_map.png;data/cities/Sub_Story14_iso.jpg,"银城: 40x40 grid, 38 lands, 11 buildings, 4 players",20599
+Sub/Story15.cit,city map,ok,data/cities/Sub_Story15.json;data/cities/Sub_Story15_lands.csv;data/cities/Sub_Story15_buildings.csv;data/cities/Sub_Story15_map.png;data/cities/Sub_Story15_iso.jpg,"上海闸北: 46x46 grid, 44 lands, 11 buildings, 5 players",26418
+Sub/Story16.cit,city map,ok,data/cities/Sub_Story16.json;data/cities/Sub_Story16_lands.csv;data/cities/Sub_Story16_buildings.csv;data/cities/Sub_Story16_map.png;data/cities/Sub_Story16_iso.jpg,"上海: 50x50 grid, 48 lands, 25 buildings, 5 players",32081
+Sub/Story17.cit,city map,ok,data/cities/Sub_Story17.json;data/cities/Sub_Story17_lands.csv;data/cities/Sub_Story17_buildings.csv;data/cities/Sub_Story17_map.png;data/cities/Sub_Story17_iso.jpg,"上海: 54x54 grid, 64 lands, 26 buildings, 5 players",37456
+Sub/Story21.cit,city map,ok,data/cities/Sub_Story21.json;data/cities/Sub_Story21_lands.csv;data/cities/Sub_Story21_buildings.csv;data/cities/Sub_Story21_map.png;data/cities/Sub_Story21_iso.jpg,"金县: 27x27 grid, 21 lands, 5 buildings, 3 players",10091
+Sub/Story22.cit,city map,ok,data/cities/Sub_Story22.json;data/cities/Sub_Story22_lands.csv;data/cities/Sub_Story22_buildings.csv;data/cities/Sub_Story22_map.png;data/cities/Sub_Story22_iso.jpg,"元宝山: 32x32 grid, 26 lands, 6 buildings, 3 players",13459
+Sub/Story23.cit,city map,ok,data/cities/Sub_Story23.json;data/cities/Sub_Story23_lands.csv;data/cities/Sub_Story23_buildings.csv;data/cities/Sub_Story23_map.png;data/cities/Sub_Story23_iso.jpg,"溪口镇: 36x36 grid, 29 lands, 6 buildings, 4 players",16651
+Sub/Story24.cit,city map,ok,data/cities/Sub_Story24.json;data/cities/Sub_Story24_lands.csv;data/cities/Sub_Story24_buildings.csv;data/cities/Sub_Story24_map.png;data/cities/Sub_Story24_iso.jpg,"银城: 40x40 grid, 38 lands, 11 buildings, 4 players",20599
+Sub/Story25.cit,city map,ok,data/cities/Sub_Story25.json;data/cities/Sub_Story25_lands.csv;data/cities/Sub_Story25_buildings.csv;data/cities/Sub_Story25_map.png;data/cities/Sub_Story25_iso.jpg,"上海南浦: 46x46 grid, 38 lands, 10 buildings, 4 players",26027
+Sub/Story26.cit,city map,ok,data/cities/Sub_Story26.json;data/cities/Sub_Story26_lands.csv;data/cities/Sub_Story26_buildings.csv;data/cities/Sub_Story26_map.png;data/cities/Sub_Story26_iso.jpg,"上海: 50x50 grid, 48 lands, 20 buildings, 5 players",31679
+Sub/Story27.cit,city map,ok,data/cities/Sub_Story27.json;data/cities/Sub_Story27_lands.csv;data/cities/Sub_Story27_buildings.csv;data/cities/Sub_Story27_map.png;data/cities/Sub_Story27_iso.jpg,"上海: 54x54 grid, 64 lands, 26 buildings, 6 players",37565
+Sub/Story31.cit,city map,ok,data/cities/Sub_Story31.json;data/cities/Sub_Story31_lands.csv;data/cities/Sub_Story31_buildings.csv;data/cities/Sub_Story31_map.png;data/cities/Sub_Story31_iso.jpg,"溪口镇: 27x27 grid, 16 lands, 3 buildings, 3 players",9640
+Sub/Story32.cit,city map,ok,data/cities/Sub_Story32.json;data/cities/Sub_Story32_lands.csv;data/cities/Sub_Story32_buildings.csv;data/cities/Sub_Story32_map.png;data/cities/Sub_Story32_iso.jpg,"溪口镇: 36x36 grid, 29 lands, 6 buildings, 3 players",16594
+Sub/Story33.cit,city map,ok,data/cities/Sub_Story33.json;data/cities/Sub_Story33_lands.csv;data/cities/Sub_Story33_buildings.csv;data/cities/Sub_Story33_map.png;data/cities/Sub_Story33_iso.jpg,"银城: 40x40 grid, 38 lands, 11 buildings, 4 players",20599
+Sub/Story34.cit,city map,ok,data/cities/Sub_Story34.json;data/cities/Sub_Story34_lands.csv;data/cities/Sub_Story34_buildings.csv;data/cities/Sub_Story34_map.png;data/cities/Sub_Story34_iso.jpg,"上海西区: 46x46 grid, 44 lands, 11 buildings, 5 players",26389
+Sub/Story35.cit,city map,ok,data/cities/Sub_Story35.json;data/cities/Sub_Story35_lands.csv;data/cities/Sub_Story35_buildings.csv;data/cities/Sub_Story35_map.png;data/cities/Sub_Story35_iso.jpg,"上海: 50x50 grid, 48 lands, 20 buildings, 5 players",31679
+Sub/Story36.cit,city map,ok,data/cities/Sub_Story36.json;data/cities/Sub_Story36_lands.csv;data/cities/Sub_Story36_buildings.csv;data/cities/Sub_Story36_map.png;data/cities/Sub_Story36_iso.jpg,"上海: 54x54 grid, 64 lands, 26 buildings, 6 players",37565
+Sub/Szz_ns.pic,image (.pic),ok,images/Sub/Szz_ns.png,"640x480, rle, palette Sprite/1940.col",310112
+Sub/Xi_kou.pic,image (.pic),ok,images/Sub/Xi_kou.png,"640x480, raw, palette Sprite/1940.col",307232
+Sub/Yin_chen.pic,image (.pic),ok,images/Sub/Yin_chen.png,"640x480, raw, palette Sprite/1940.col",307232
+Trade/Bar.spr,sprite (.spr),ok,images/Trade/Bar.png,"1 group(s), 12 frame(s), palette Sprite/1940.col",47224
+Trade/Bar1.spr,sprite (.spr),ok,images/Trade/Bar1.png,"1 group(s), 12 frame(s), palette Sprite/1940.col",46592
+Trade/Bdl.spr,sprite (.spr),ok,images/Trade/Bdl.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Bdl1.spr,sprite (.spr),ok,images/Trade/Bdl1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19176
+Trade/Bsp.pic,image (.pic),ok,images/Trade/Bsp.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Cml.spr,sprite (.spr),ok,images/Trade/Cml.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Cml1.spr,sprite (.spr),ok,images/Trade/Cml1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19176
+Trade/Dyy.spr,sprite (.spr),ok,images/Trade/Dyy.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Dyy1.spr,sprite (.spr),ok,images/Trade/Dyy1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19176
+Trade/Fdr.pic,image (.pic),ok,images/Trade/Fdr.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Fdr.spr,sprite (.spr),ok,images/Trade/Fdr.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Fdr1.spr,sprite (.spr),ok,images/Trade/Fdr1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19176
+Trade/Fqm.spr,sprite (.spr),ok,images/Trade/Fqm.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Fqm1.spr,sprite (.spr),ok,images/Trade/Fqm1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19176
+Trade/Fxj.pic,image (.pic),ok,images/Trade/Fxj.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Hb.pic,image (.pic),ok,images/Trade/Hb.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Huan_ja.spr,sprite (.spr),ok,images/Trade/Huan_ja.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",15522
+Trade/Huan_ja1.spr,sprite (.spr),ok,images/Trade/Huan_ja1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",15792
+Trade/Jiao_yi.spr,sprite (.spr),ok,images/Trade/Jiao_yi.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4785
+Trade/Jiao_yi1.spr,sprite (.spr),ok,images/Trade/Jiao_yi1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",4587
+Trade/Jiaoyi_k.pic,image (.pic),ok,images/Trade/Jiaoyi_k.png,"640x480, rle, palette Sprite/1940.col",157952
+Trade/Jjh.pic,image (.pic),ok,images/Trade/Jjh.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Jrs.spr,sprite (.spr),ok,images/Trade/Jrs.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Jrs1.spr,sprite (.spr),ok,images/Trade/Jrs1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19178
+Trade/Ju_jue.spr,sprite (.spr),ok,images/Trade/Ju_jue.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",17574
+Trade/Ju_jue1.spr,sprite (.spr),ok,images/Trade/Ju_jue1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",17916
+Trade/Mb.pic,image (.pic),ok,images/Trade/Mb.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Name.spr,sprite (.spr),ok,images/Trade/Name.png,"1 group(s), 8 frame(s), palette Sprite/1940.col",6600
+Trade/Nxs.pic,image (.pic),ok,images/Trade/Nxs.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Sm.pic,image (.pic),ok,images/Trade/Sm.png,"300x260, raw, palette Sprite/1940.col",78032
+Trade/Sm.spr,sprite (.spr),ok,images/Trade/Sm.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Sm1.spr,sprite (.spr),ok,images/Trade/Sm1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19176
+Trade/Szz.spr,sprite (.spr),ok,images/Trade/Szz.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",18876
+Trade/Szz1.spr,sprite (.spr),ok,images/Trade/Szz1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",19176
+Trade/Tong_yi.spr,sprite (.spr),ok,images/Trade/Tong_yi.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",17574
+Trade/Tong_yi1.spr,sprite (.spr),ok,images/Trade/Tong_yi1.png,"1 group(s), 3 frame(s), palette Sprite/1940.col",17268
+WP/A1.PCC,Photoshop PSD,ok,wp/A1.png,"640x480 RGBA, layers: none",791055
+WP/A2.PCC,Photoshop PSD,ok,wp/A2.png,"640x480 RGB, layers: none",532046
+WP/B1.PCC,Photoshop PSD,ok,wp/B1.png,"640x480 RGB, layers: none",856183
+WP/B2.PCC,Photoshop PSD,ok,wp/B2.png,"640x480 RGBA, layers: none",909012
+WP/C1.PCC,Photoshop PSD,ok,wp/C1.png,"640x480 RGB, layers: none",878782
+WP/C2.PCC,Photoshop PSD,ok,wp/C2.png,"640x480 RGBA, layers: none",888546
+WP/D1.PCC,Photoshop PSD,ok,wp/D1.png,"640x480 RGBA, layers: none",927255
+WP/D2.PCC,Photoshop PSD,ok,wp/D2.png,"640x480 RGBA, layers: none",917322
+WP/DW.PCC,Photoshop PSD,ok,wp/DW.png,"640x480 RGB, layers: Background, Layer 2",352747
+WP/E1.PCC,Photoshop PSD,ok,wp/E1.png,"640x480 RGBA, layers: none",908442
+WP/E2.PCC,Photoshop PSD,ok,wp/E2.png,"640x480 RGBA, layers: none",889733
+WP/F1.PCC,Photoshop PSD,ok,wp/F1.png,"640x480 RGBA, layers: none",925690
+WP/F2.PCC,Photoshop PSD,ok,wp/F2.png,"640x480 RGBA, layers: none",917281
+WP/G1.PCC,Photoshop PSD,ok,wp/G1.png,"640x480 RGBA, layers: Layer 8",1855733
+WP/G2.PCC,Photoshop PSD,ok,wp/G2.png,"640x480 RGB, layers: none",918457
+WP/H1.PCC,Photoshop PSD,ok,wp/H1.png,"640x480 RGBA, layers: none",900486
+WP/H2.PCC,Photoshop PSD,ok,wp/H2.png,"640x480 RGBA, layers: Layer 0",1298507
+WP/J1.PCC,Photoshop PSD,ok,wp/J1.png,"640x480 RGBA, layers: Background",1857711
+WP/J10.PCC,Photoshop PSD,ok,wp/J10.png,"640x480 RGB, layers: none",925647
+WP/J11.PCC,Photoshop PSD,ok,wp/J11.png,"640x480 RGB, layers: none",927010
+WP/J12.PCC,Photoshop PSD,ok,wp/J12.png,"640x480 RGB, layers: none",926432
+WP/J13.PCC,Photoshop PSD,ok,wp/J13.png,"640x480 RGBA, layers: Background",1864131
+WP/J14.PCC,Photoshop PSD,ok,wp/J14.png,"640x480 RGB, layers: none",926026
+WP/J15.PCC,Photoshop PSD,ok,wp/J15.png,"640x480 RGBA, layers: Layer 1",1865969
+WP/J16.PCC,Photoshop PSD,ok,wp/J16.png,"640x480 RGBA, layers: Background",1869249
+WP/J17.PCC,Photoshop PSD,ok,wp/J17.png,"640x480 RGBA, layers: Layer 1",1866516
+WP/J18.PCC,Photoshop PSD,ok,wp/J18.png,"640x480 RGB, layers: none",926664
+WP/J19.PCC,Photoshop PSD,ok,wp/J19.png,"640x480 RGB, layers: none",925806
+WP/J2.PCC,Photoshop PSD,ok,wp/J2.png,"640x480 RGB, layers: none",926910
+WP/J20.PCC,Photoshop PSD,ok,wp/J20.png,"640x480 RGB, layers: none",926312
+WP/J21.PCC,Photoshop PSD,ok,wp/J21.png,"640x480 RGB, layers: none",926264
+WP/J22.PCC,Photoshop PSD,ok,wp/J22.png,"640x480 RGB, layers: none",926806
+WP/J23.PCC,Photoshop PSD,ok,wp/J23.png,"640x480 RGB, layers: none",926784
+WP/J24.PCC,Photoshop PSD,ok,wp/J24.png,"640x480 RGBA, layers: Layer 1",1970827
+WP/J25.PCC,Photoshop PSD,ok,wp/J25.png,"640x480 RGBA, layers: Background",1867417
+WP/J26.PCC,Photoshop PSD,ok,wp/J26.png,"640x480 RGB, layers: none",926640
+WP/J27.PCC,Photoshop PSD,ok,wp/J27.png,"640x480 RGB, layers: none",926834
+WP/J28.PCC,Photoshop PSD,ok,wp/J28.png,"640x480 P, layers: none",297682
+WP/J29.PCC,Photoshop PSD,ok,wp/J29.png,"640x480 RGB, layers: none",926456
+WP/J3.PCC,Photoshop PSD,ok,wp/J3.png,"640x480 RGB, layers: none",926682
+WP/J30.PCC,Photoshop PSD,ok,wp/J30.png,"640x480 RGB, layers: none",922737
+WP/J4.PCC,Photoshop PSD,ok,wp/J4.png,"640x480 RGB, layers: Background, Layer 1",1856116
+WP/J5.PCC,Photoshop PSD,ok,wp/J5.png,"640x480 RGB, layers: none",925976
+WP/J6.PCC,Photoshop PSD,ok,wp/J6.png,"640x480 RGB, layers: none",926768
+WP/J7.PCC,Photoshop PSD,ok,wp/J7.png,"640x480 RGB, layers: none",926892
+WP/J8.PCC,Photoshop PSD,ok,wp/J8.png,"640x480 P, layers: none",299445
+WP/J9.PCC,Photoshop PSD,ok,wp/J9.png,"640x480 RGB, layers: none",926392
+WP/Y1.PCC,Photoshop PSD,ok,wp/Y1.png,"640x480 RGBA, layers: Background",1867269
+WP/Y2.PCC,Photoshop PSD,ok,wp/Y2.png,"640x480 RGBA, layers: none",940761
+WP/Y3.PCC,Photoshop PSD,ok,wp/Y3.png,"640x480 RGB, layers: none",925972
+WP/Y4.PCC,Photoshop PSD,ok,wp/Y4.png,"640x480 RGB, layers: none",918496
+ddraw.dll,"DirectDraw wrapper DLL (DDrawCompat, modern add-on)",not extracted,,,2824704

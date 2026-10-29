@@ -1,0 +1,17 @@
+{
+ "source": "Describe/Hb.pic",
+ "width": 282,
+ "height": 418,
+ "screen_pos": [
+  428,
+  391
+ ],
+ "anchor": [
+  281,
+  417
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

@@ -1,0 +1,23 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,CHURCH,望海楼教堂,CHURCH,,,,3,8,
+1,COMPANY,天津火车站,RAIL_ROAD,TRANSPORT 运输业,420,100,3,8,陆路远途之首选
+2,CHANCE,运气,CHANCE,,,,1,8,
+3,COMPANY,美靓电灯公司,LAMP_COM,PUBLIC 公共事业,380,90,2,8,电力充足，决无停电现象
+4,COMPANY,狗不理包子铺,FOOD_COM,FOOD 饮食业,380,90,1,8,倍儿香
+5,COMPANY,劝业场,SHOP,SHOP 商业,480,120,3,8,专营各种洋货
+6,WATCH_MAN_HOUSE,巡捕房,WATCHMAN_HOUSE,,,,3,8,
+7,CHANCE,运气,CHANCE,,,,1,8,
+8,RACE_COURSE,赛马场,RACE_COURSE,,,,3,8,
+9,GOVERNMENT,市政厅,GOVERMENT,,,,3,8,
+10,COMPANY,和平百货,SHOP,SHOP 商业,450,110,3,8,"地处闹市,交通便捷,价格公道"
+11,COMPANY,多来多百货,SHOP,SHOP 商业,450,110,3,8,货物花样之繁多令您眼花缭乱
+12,BANK,银行,BANK,,,,0,8,
+13,COMPANY,省力煤球公司,COAL_COM,PUBLIC 公共事业,380,90,3,8,您不必再费力煽火
+14,BANK,银行,BANK,,,,2,8,
+15,COMPANY,甘荷水厂,WATER_COM,PUBLIC 公共事业,410,100,0,8,永不干涸
+16,COMPANY,东北角码头,YARD,TRANSPORT 运输业,380,90,2,8,横渡海河只需半小时
+17,COMPANY,新兴电车公司,ELECTRIC_BUS_COM,TRANSPORT 运输业,380,90,1,8,欢迎踊跃搭乘
+19,PARK,公园,PARK,,,,3,8,
+20,COMPANY,桂发祥麻花店,FOOD_COM,FOOD 饮食业,380,80,1,8,倍儿脆
+21,COMPANY,耳朵眼儿炸糕铺,FOOD_COM,FOOD 饮食业,380,80,2,8,倍儿软
+22,COMPANY,悟升电话公司,TELEPHONE_COM,PUBLIC 公共事业,420,100,3,8,声音近在咫尺清晰可辨

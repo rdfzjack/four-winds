@@ -1,0 +1,157 @@
+{
+ "source": "Pubsell/Person.spr",
+ "palette": "Sprite/1940.col",
+ "default_group": 0,
+ "group_params": [
+  0
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     74,
+     90
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     89
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     102,
+     0,
+     78,
+     82
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     81
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     204,
+     0,
+     89,
+     90
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     89
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     306,
+     0,
+     73,
+     90
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     89
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     408,
+     0,
+     81,
+     90
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     88
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     510,
+     0,
+     83,
+     80
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     79
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     612,
+     0,
+     79,
+     90
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     89
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     714,
+     0,
+     82,
+     80
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     79
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     816,
+     0,
+     102,
+     93
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     92
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}

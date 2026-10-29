@@ -1,0 +1,5 @@
+{
+ "Asc16": "8x16 ASCII bitmap, 1 bit per pixel, MSB = left",
+ "H16_j": "HZK16-style 16x16 simplified Chinese, GB2312 order; glyph index = (b1-0xA1)*94 + (b2-0xA1)",
+ "H16_f": "same layout but traditional glyph shapes (e.g. 币 drawn as 幣)"
+}

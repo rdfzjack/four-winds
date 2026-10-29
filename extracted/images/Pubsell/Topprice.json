@@ -1,0 +1,17 @@
+{
+ "source": "Pubsell/Topprice.pic",
+ "width": 253,
+ "height": 53,
+ "screen_pos": [
+  226,
+  119
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

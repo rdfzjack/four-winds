@@ -1,0 +1,17 @@
+{
+ "source": "Describe/Bsp.pic",
+ "width": 368,
+ "height": 384,
+ "screen_pos": [
+  428,
+  391
+ ],
+ "anchor": [
+  367,
+  383
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

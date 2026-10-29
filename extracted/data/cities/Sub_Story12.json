@@ -1,0 +1,7028 @@
+{
+ "file": "Story12.cit",
+ "name": "金县",
+ "ai_file": "jianxian.ai",
+ "property": {
+  "uCost_FLAT_HOUSE": 30,
+  "uCost_HOTEL_HOUSE": 80,
+  "uCost_FLOOR_HOUSE": 100,
+  "uCost_VILLA_HOUSE": 120,
+  "uCost_UPDATE": 30,
+  "uCost_FUNCTION_HOUSE": 50,
+  "uRent_BLANK_LAND": 10,
+  "uRent_FLAT_HOUSE": 20,
+  "uRent_HOTEL_HOUSE": 30,
+  "uRent_SUPER_HOTEL_HOUSE": 40,
+  "uRent_FLOOR_HOUSE": 40,
+  "uRent_SUPER_FLOOR_HOUSE": 50,
+  "uRent_VILLA_HOUSE": 80,
+  "uPrice_BLANK_LAND": 50
+ },
+ "origin_x": -18,
+ "size": 33,
+ "blocks": [
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -18,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -18,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -17,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -17,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -17,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -17,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -16,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -16,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -16,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -16,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -16,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -16,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 5
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -15,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 5
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 5
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -14,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 2
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 5
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -13,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -12,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -11,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 34
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 8
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 9
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": -10,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 26
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -9,
+   "y": 11,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "西马路1号",
+   "base_value_pct": 80,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "LAND",
+   "x": -9,
+   "y": 12,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "西马路2号",
+   "base_value_pct": 80,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "LAND",
+   "x": -9,
+   "y": 13,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "西马路3号",
+   "base_value_pct": 80,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -9,
+   "y": 17,
+   "building_index": 1,
+   "frame": 0,
+   "owner": 7,
+   "land_flag": 0,
+   "name": "金家西院儿",
+   "base_value_pct": 500,
+   "value_pct": 200,
+   "price": 100,
+   "rent_blank": 20
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 26
+  },
+  {
+   "class": "SURFACE",
+   "x": -9,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 10,
+   "road_frame": 2,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 11,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 12,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 13,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "CROSS_ROAD",
+   "x": -8,
+   "y": 14,
+   "road_frame": 8,
+   "road_1": 0,
+   "arrow_dir": 0,
+   "arrow_prefer": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 15,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 16,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 17,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -8,
+   "y": 18,
+   "road_frame": 4,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 26
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -8,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -7,
+   "y": 8,
+   "building_index": 3,
+   "frame": 0,
+   "owner": 8
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -7,
+   "y": 9,
+   "building_index": 3,
+   "frame": 2,
+   "owner": 8
+  },
+  {
+   "class": "ROAD",
+   "x": -7,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -7,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -7,
+   "y": 15,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "里巷1号",
+   "base_value_pct": 100,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "LAND",
+   "x": -7,
+   "y": 16,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "里巷2号",
+   "base_value_pct": 100,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -7,
+   "y": 18,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -7,
+   "y": 19,
+   "building_index": 8,
+   "frame": 0,
+   "owner": 8
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -7,
+   "y": 20,
+   "building_index": 8,
+   "frame": 2,
+   "owner": 8
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 34
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 21
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 26
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -7,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -6,
+   "y": 8,
+   "building_index": 3,
+   "frame": 1,
+   "owner": 8
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -6,
+   "y": 9,
+   "building_index": 3,
+   "frame": 3,
+   "owner": 8
+  },
+  {
+   "class": "ROAD",
+   "x": -6,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -6,
+   "y": 12,
+   "building_index": 0,
+   "frame": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -6,
+   "y": 13,
+   "building_index": 0,
+   "frame": 2
+  },
+  {
+   "class": "ROAD",
+   "x": -6,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -6,
+   "y": 18,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -6,
+   "y": 19,
+   "building_index": 8,
+   "frame": 1,
+   "owner": 8
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": -6,
+   "y": 20,
+   "building_index": 8,
+   "frame": 3,
+   "owner": 8
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -6,
+   "y": 30,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -5,
+   "y": 9,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "正阳街6号",
+   "base_value_pct": 120,
+   "value_pct": 120,
+   "price": 60,
+   "rent_blank": 12
+  },
+  {
+   "class": "ROAD",
+   "x": -5,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -5,
+   "y": 12,
+   "building_index": 0,
+   "frame": 1
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -5,
+   "y": 13,
+   "building_index": 0,
+   "frame": 3
+  },
+  {
+   "class": "ROAD",
+   "x": -5,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -5,
+   "y": 17,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "三岔口3号",
+   "base_value_pct": 180,
+   "value_pct": 150,
+   "price": 75,
+   "rent_blank": 15
+  },
+  {
+   "class": "CROSS_ROAD",
+   "x": -5,
+   "y": 18,
+   "road_frame": 9,
+   "road_1": 0,
+   "arrow_dir": 2,
+   "arrow_prefer": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -5,
+   "y": 19,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -5,
+   "y": 20,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -5,
+   "y": 21,
+   "road_frame": 4,
+   "road_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -5,
+   "y": 22,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "临河街3号",
+   "base_value_pct": 60,
+   "value_pct": 60,
+   "price": 30,
+   "rent_blank": 6
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 30,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -5,
+   "y": 31,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -4,
+   "y": 9,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "正阳街5号",
+   "base_value_pct": 120,
+   "value_pct": 120,
+   "price": 60,
+   "rent_blank": 12
+  },
+  {
+   "class": "ROAD",
+   "x": -4,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -4,
+   "y": 13,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "钱行街4号",
+   "base_value_pct": 120,
+   "value_pct": 150,
+   "price": 75,
+   "rent_blank": 15
+  },
+  {
+   "class": "ROAD",
+   "x": -4,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -4,
+   "y": 17,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "三岔口2号",
+   "base_value_pct": 180,
+   "value_pct": 150,
+   "price": 75,
+   "rent_blank": 15
+  },
+  {
+   "class": "ROAD",
+   "x": -4,
+   "y": 18,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 6
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 6
+  },
+  {
+   "class": "ROAD",
+   "x": -4,
+   "y": 21,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -4,
+   "y": 22,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "临河街2号",
+   "base_value_pct": 60,
+   "value_pct": 60,
+   "price": 30,
+   "rent_blank": 6
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 22
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 25
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 30
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 30,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 31,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -4,
+   "y": 32,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 2,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -3,
+   "y": 9,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "正阳街4号",
+   "base_value_pct": 120,
+   "value_pct": 120,
+   "price": 60,
+   "rent_blank": 12
+  },
+  {
+   "class": "ROAD",
+   "x": -3,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -3,
+   "y": 13,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "钱行街3号",
+   "base_value_pct": 120,
+   "value_pct": 150,
+   "price": 75,
+   "rent_blank": 15
+  },
+  {
+   "class": "ROAD",
+   "x": -3,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -3,
+   "y": 17,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "三岔口1号",
+   "base_value_pct": 180,
+   "value_pct": 150,
+   "price": 75,
+   "rent_blank": 15
+  },
+  {
+   "class": "ROAD",
+   "x": -3,
+   "y": 18,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -3,
+   "y": 21,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -3,
+   "y": 22,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "临河街1号",
+   "base_value_pct": 60,
+   "value_pct": 60,
+   "price": 30,
+   "rent_blank": 6
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 22
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 30,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 31,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -3,
+   "y": 32,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 1,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 2,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -2,
+   "y": 8,
+   "building_index": 5,
+   "frame": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -2,
+   "y": 9,
+   "building_index": 5,
+   "frame": 2
+  },
+  {
+   "class": "ROAD",
+   "x": -2,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -2,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -2,
+   "y": 15,
+   "building_index": 6,
+   "frame": 0,
+   "owner": 7,
+   "land_flag": 0,
+   "name": "金家北院儿",
+   "base_value_pct": 500,
+   "value_pct": 200,
+   "price": 100,
+   "rent_blank": 20
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -2,
+   "y": 18,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -2,
+   "y": 19,
+   "building_index": 2,
+   "frame": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -2,
+   "y": 20,
+   "building_index": 2,
+   "frame": 2
+  },
+  {
+   "class": "ROAD",
+   "x": -2,
+   "y": 21,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 34
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 20
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 21
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 30,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -2,
+   "y": 31,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 0,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 1,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 2,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -1,
+   "y": 8,
+   "building_index": 5,
+   "frame": 1
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -1,
+   "y": 9,
+   "building_index": 5,
+   "frame": 3
+  },
+  {
+   "class": "ROAD",
+   "x": -1,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": -1,
+   "y": 13,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "钱行街2号",
+   "base_value_pct": 120,
+   "value_pct": 150,
+   "price": 75,
+   "rent_blank": 15
+  },
+  {
+   "class": "ROAD",
+   "x": -1,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": -1,
+   "y": 18,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -1,
+   "y": 19,
+   "building_index": 2,
+   "frame": 1
+  },
+  {
+   "class": "PUBLIC_BASE",
+   "x": -1,
+   "y": 20,
+   "building_index": 2,
+   "frame": 3
+  },
+  {
+   "class": "ROAD",
+   "x": -1,
+   "y": 21,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 25
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": -1,
+   "y": 30,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 0,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 1,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 2,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": 0,
+   "y": 9,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "正阳街3号",
+   "base_value_pct": 120,
+   "value_pct": 120,
+   "price": 60,
+   "rent_blank": 12
+  },
+  {
+   "class": "ROAD",
+   "x": 0,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": 0,
+   "y": 13,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "钱行街1号",
+   "base_value_pct": 120,
+   "value_pct": 150,
+   "price": 75,
+   "rent_blank": 15
+  },
+  {
+   "class": "CROSS_ROAD",
+   "x": 0,
+   "y": 14,
+   "road_frame": 9,
+   "road_1": 0,
+   "arrow_dir": 1,
+   "arrow_prefer": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 0,
+   "y": 15,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 0,
+   "y": 16,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 0,
+   "y": 17,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "CROSS_ROAD",
+   "x": 0,
+   "y": 18,
+   "road_frame": 10,
+   "road_1": 0,
+   "arrow_dir": 0,
+   "arrow_prefer": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 0,
+   "y": 19,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 0,
+   "y": 20,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 0,
+   "y": 21,
+   "road_frame": 3,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 22
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 25
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 30
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 29,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 1,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 2,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": 1,
+   "y": 9,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "正阳街2号",
+   "base_value_pct": 120,
+   "value_pct": 120,
+   "price": 60,
+   "rent_blank": 12
+  },
+  {
+   "class": "ROAD",
+   "x": 1,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 1,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": 1,
+   "y": 15,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "东马路1号",
+   "base_value_pct": 100,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "LAND",
+   "x": 1,
+   "y": 16,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "东马路2号",
+   "base_value_pct": 100,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "LAND",
+   "x": 1,
+   "y": 17,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "东马路3号",
+   "base_value_pct": 100,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": 1,
+   "y": 21,
+   "building_index": 7,
+   "frame": 0,
+   "owner": 7,
+   "land_flag": 0,
+   "name": "金家东院儿",
+   "base_value_pct": 500,
+   "value_pct": 200,
+   "price": 100,
+   "rent_blank": 20
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 22
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 1,
+   "y": 28,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 2,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": 2,
+   "y": 9,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "正阳街1号",
+   "base_value_pct": 120,
+   "value_pct": 120,
+   "price": 60,
+   "rent_blank": 12
+  },
+  {
+   "class": "ROAD",
+   "x": 2,
+   "y": 10,
+   "road_frame": 0,
+   "road_1": 2
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "LAND",
+   "x": 2,
+   "y": 12,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "新开巷1号",
+   "base_value_pct": 100,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "LAND",
+   "x": 2,
+   "y": 13,
+   "building_index": -1,
+   "frame": 0,
+   "owner": 8,
+   "land_flag": 0,
+   "name": "新开巷2号",
+   "base_value_pct": 100,
+   "value_pct": 100,
+   "price": 50,
+   "rent_blank": 10
+  },
+  {
+   "class": "ROAD",
+   "x": 2,
+   "y": 14,
+   "road_frame": 0,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 34
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 33
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 21
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 2,
+   "y": 27,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 3,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 3,
+   "y": 10,
+   "road_frame": 5,
+   "road_1": 4
+  },
+  {
+   "class": "ROAD",
+   "x": 3,
+   "y": 11,
+   "road_frame": 1,
+   "road_1": 1
+  },
+  {
+   "class": "ROAD",
+   "x": 3,
+   "y": 12,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 3,
+   "y": 13,
+   "road_frame": 1,
+   "road_1": 0
+  },
+  {
+   "class": "ROAD",
+   "x": 3,
+   "y": 14,
+   "road_frame": 3,
+   "road_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 34
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 21
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 25
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 29
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 30
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 3,
+   "y": 26,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 4,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": 4,
+   "y": 10,
+   "building_index": 4,
+   "frame": 0,
+   "owner": 8
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": 4,
+   "y": 11,
+   "building_index": 4,
+   "frame": 2,
+   "owner": 8
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 26
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 4,
+   "y": 25,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 5,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": 5,
+   "y": 10,
+   "building_index": 4,
+   "frame": 1,
+   "owner": 8
+  },
+  {
+   "class": "COMPANY_BASE",
+   "x": 5,
+   "y": 11,
+   "building_index": 4,
+   "frame": 3,
+   "owner": 8
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 25
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 30
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 5,
+   "y": 24,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 6,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 34
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 21
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 6,
+   "y": 23,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 7,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 3
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 3
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 22
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 31
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 7,
+   "y": 22,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 8,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0,
+   "decorate": 3
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 34
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 21
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 25
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 30
+  },
+  {
+   "class": "SURFACE",
+   "x": 8,
+   "y": 21,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 9,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 26
+  },
+  {
+   "class": "SURFACE",
+   "x": 9,
+   "y": 20,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 10,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 35
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "SURFACE",
+   "x": 10,
+   "y": 19,
+   "surface_frame": 0,
+   "surface_1": 26
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 11,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 21
+  },
+  {
+   "class": "SURFACE",
+   "x": 11,
+   "y": 18,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 0,
+   "y": 0,
+   "surface_frame": 0,
+   "surface_1": 1
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 12,
+   "y": 12,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 12,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 12,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 12,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 12,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 22
+  },
+  {
+   "class": "SURFACE",
+   "x": 12,
+   "y": 17,
+   "surface_frame": 0,
+   "surface_1": 27
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 13,
+   "y": 13,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 13,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 13,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 13,
+   "y": 16,
+   "surface_frame": 0,
+   "surface_1": 28
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 14,
+   "y": 14,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "SURFACE",
+   "x": 14,
+   "y": 15,
+   "surface_frame": 0,
+   "surface_1": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  },
+  {
+   "class": "NULL_BLOCK",
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "buildings": [
+  {
+   "class": "BANK",
+   "class_id": 1,
+   "direction": 2,
+   "owner": 8,
+   "sprite_kind": 25,
+   "name": "惠发钱行",
+   "slot": 0,
+   "sprite_kind_name": "BANK"
+  },
+  {
+   "class": "HOUSE",
+   "class_id": 10,
+   "house_level": 0,
+   "line_value": 1,
+   "direction": 1,
+   "owner": 7,
+   "sprite_kind": 0,
+   "name": "民宅",
+   "slot": 1,
+   "sprite_kind_name": "FLAT_HOUSE"
+  },
+  {
+   "class": "CHANCE",
+   "class_id": 4,
+   "direction": 1,
+   "owner": 8,
+   "sprite_kind": 24,
+   "name": "运气",
+   "slot": 2,
+   "sprite_kind_name": "CHANCE"
+  },
+  {
+   "class": "COMPANY",
+   "class_id": 6,
+   "company_flag": 0,
+   "company_group": 2,
+   "describe": "",
+   "price": 200,
+   "rent": 50,
+   "direction": 2,
+   "owner": 8,
+   "sprite_kind": 17,
+   "name": "快活林酒家",
+   "slot": 3,
+   "sprite_kind_name": "FOOD_COM",
+   "company_group_name": "FOOD 饮食业"
+  },
+  {
+   "class": "COMPANY",
+   "class_id": 6,
+   "company_flag": 0,
+   "company_group": 2,
+   "describe": "",
+   "price": 180,
+   "rent": 40,
+   "direction": 3,
+   "owner": 8,
+   "sprite_kind": 17,
+   "name": "同茂菜馆",
+   "slot": 4,
+   "sprite_kind_name": "FOOD_COM",
+   "company_group_name": "FOOD 饮食业"
+  },
+  {
+   "class": "WATCH_MAN_HOUSE",
+   "class_id": 19,
+   "direction": 2,
+   "owner": 8,
+   "sprite_kind": 27,
+   "name": "巡捕房",
+   "slot": 5,
+   "sprite_kind_name": "WATCHMAN_HOUSE"
+  },
+  {
+   "class": "HOUSE",
+   "class_id": 10,
+   "house_level": 0,
+   "line_value": 1,
+   "direction": 0,
+   "owner": 7,
+   "sprite_kind": 0,
+   "name": "民宅",
+   "slot": 6,
+   "sprite_kind_name": "FLAT_HOUSE"
+  },
+  {
+   "class": "HOUSE",
+   "class_id": 10,
+   "house_level": 0,
+   "line_value": 1,
+   "direction": 3,
+   "owner": 7,
+   "sprite_kind": 0,
+   "name": "民宅",
+   "slot": 7,
+   "sprite_kind_name": "FLAT_HOUSE"
+  },
+  {
+   "class": "COMPANY",
+   "class_id": 6,
+   "company_flag": 0,
+   "company_group": 2,
+   "describe": "",
+   "price": 160,
+   "rent": 40,
+   "direction": 0,
+   "owner": 8,
+   "sprite_kind": 17,
+   "name": "丰盛饭庄",
+   "slot": 8,
+   "sprite_kind_name": "FOOD_COM",
+   "company_group_name": "FOOD 饮食业"
+  }
+ ],
+ "persons": [
+  {
+   "ai": 1,
+   "cards": [],
+   "value_9c": 2,
+   "person_id": 5,
+   "grid": [
+    3,
+    11
+   ],
+   "name": "冯全篾",
+   "value_88": 1,
+   "money_98": 500,
+   "money_94": 1000,
+   "value_84": 0,
+   "value_80": 0,
+   "slot": 0,
+   "person_name": "HEI_B 冯全篾"
+  },
+  {
+   "ai": 1,
+   "cards": [],
+   "value_9c": 3,
+   "person_id": 7,
+   "grid": [
+    2,
+    10
+   ],
+   "name": "金如山",
+   "value_88": 1,
+   "money_98": 500,
+   "money_94": 500,
+   "value_84": 0,
+   "value_80": 0,
+   "slot": 1,
+   "person_name": "BAO_SP 金如山"
+  },
+  {
+   "ai": 0,
+   "cards": [],
+   "value_9c": 2,
+   "person_id": 1,
+   "grid": [
+    3,
+    10
+   ],
+   "name": "四毛",
+   "value_88": 1,
+   "money_98": 500,
+   "money_94": 800,
+   "value_84": 0,
+   "value_80": 0,
+   "slot": 2,
+   "person_name": "LIU_LE 四毛"
+  }
+ ],
+ "_bytes_read": 14584,
+ "_bytes_total": 14584,
+ "source": "Sub/Story12.cit"
+}

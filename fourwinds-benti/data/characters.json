@@ -1,0 +1,69 @@
+{
+ "_comment": "4 个可选角色，同时也是 AI 对手。abilities 是设计文档里的特殊能力，复刻阶段不启用。ai_base_profile 指向原版 Ai/Standard.ai 里的一套参数，作为 AI 性格的起点，第 4 步再细调。",
+ "characters": [
+  {
+   "id": "david",
+   "name": "史德斐",
+   "nickname": "斐斐",
+   "name_en": "David Silberschild",
+   "identity": "英国犹太银行世家",
+   "color": "#2e7d32",
+   "ability": {
+    "id": "banker",
+    "name": "银行家",
+    "desc": "能向其他玩家放贷收利息，别人缺钱只能找他借",
+    "enabled": false
+   },
+   "ai_style": "冷静估价，谈判时让对方先开口",
+   "ai_base_profile": "包德利"
+  },
+  {
+   "id": "giorgio",
+   "name": "葛乔玖",
+   "nickname": "小九",
+   "name_en": "Giorgio / George Gent",
+   "identity": "那不勒斯走私商",
+   "color": "#c62828",
+   "ability": {
+    "id": "smuggler",
+    "name": "走私犯",
+    "desc": "能绕过某些收费或封锁，偶尔走一次“黑路”",
+    "enabled": false
+   },
+   "ai_style": "讲义气，对某个玩家特别好说话",
+   "ai_base_profile": "冯全篾"
+  },
+  {
+   "id": "marcel",
+   "name": "杜玛瑟",
+   "nickname": "孔雀",
+   "name_en": "Marcel Duvernois",
+   "identity": "巴黎教授，吐火罗语专家",
+   "color": "#6a1b9a",
+   "ability": {
+    "id": "scholar",
+    "name": "学者",
+    "desc": "懂文物和语言，事件卡对他有额外收益，能看懂别人看不懂的线索",
+    "enabled": false
+   },
+   "ai_style": "精明但爱面子",
+   "ai_base_profile": "董莺雨"
+  },
+  {
+   "id": "eric",
+   "name": "任厄理",
+   "nickname": "理理",
+   "name_en": "Eric Richardson",
+   "identity": "德裔美国政客、投资人",
+   "color": "#1565c0",
+   "ability": {
+    "id": "intel",
+    "name": "情报",
+    "desc": "能偷看别人手牌或下一张事件，投机赚钱最狠",
+    "enabled": false
+   },
+   "ai_style": "永远比你快半步",
+   "ai_base_profile": "发达而"
+  }
+ ]
+}

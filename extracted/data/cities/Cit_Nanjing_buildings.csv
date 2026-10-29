@@ -1,0 +1,21 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,PARK,玄武湖公园,PARK,,,,1,8,
+1,COMPANY,南京火车站,RAIL_ROAD,TRANSPORT 运输业,450,100,2,8,拥有机车2.5辆
+2,CHANCE,运气,CHANCE,,,,3,8,
+3,CHANCE,运气,CHANCE,,,,1,8,
+4,CHANCE,运气,CHANCE,,,,0,8,
+5,GOVERNMENT,市政厅,GOVERMENT,,,,1,8,
+6,COMPANY,黑且亮供水公司,WATER_COM,PUBLIC 公共事业,420,90,0,8,水质绝对清洁可靠
+7,COMPANY,中原丝厂,WEAVING_COM,WEAVING 纺织业,400,100,1,8,"国货精粹,无与伦比"
+8,COMPANY,中山码头,YARD,TRANSPORT 运输业,500,120,2,8,实乃长江航运之枢纽
+9,COMPANY,看得见电灯公司,LAMP_COM,PUBLIC 公共事业,430,100,2,8,本电灯公司保证你黑天看得见东西
+10,COMPANY,多能煤球公司,COAL_COM,PUBLIC 公共事业,360,80,3,8,本公司煤球不但能取暖还能用来煮饭
+11,COMPANY,1100公交公司,ELECTRIC_BUS_COM,TRANSPORT 运输业,450,110,0,8,拥有人力黄包车300余辆
+12,COMPANY,悦耳电话公司,TELEPHONE_COM,PUBLIC 公共事业,380,80,3,8,传递之声音比原来更加悦耳动听
+13,WATCH_MAN_HOUSE,巡捕房,WATCHMAN_HOUSE,,,,1,8,
+14,RACE_COURSE,准赢赛马场,RACE_COURSE,,,,3,8,
+15,CHURCH,教堂,CHURCH,,,,2,8,
+16,COMPANY,西洋色布厂,WEAVING_COM,WEAVING 纺织业,420,100,2,8,"花样繁多,永不退色"
+18,BANK,银行,BANK,,,,0,8,
+19,BANK,银行,BANK,,,,1,8,
+20,COMPANY,东瀛纱厂,WEAVING_COM,WEAVING 纺织业,440,120,1,8,出产金刚砂牌超薄棉纱

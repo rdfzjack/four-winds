@@ -1,0 +1,534 @@
+{
+ "source": "Sprite/Hei_b.spr",
+ "palette": "Sprite/1940.col",
+ "default_group": 3,
+ "group_params": [
+  7,
+  0,
+  3,
+  3
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     80,
+     86
+    ],
+    "header_x": -5,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     88,
+     0,
+     80,
+     86
+    ],
+    "header_x": -6,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     176,
+     0,
+     80,
+     86
+    ],
+    "header_x": -5,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     264,
+     0,
+     80,
+     86
+    ],
+    "header_x": -6,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     352,
+     0,
+     80,
+     86
+    ],
+    "header_x": -5,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     440,
+     0,
+     80,
+     86
+    ],
+    "header_x": -6,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     528,
+     0,
+     80,
+     86
+    ],
+    "header_x": -5,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     616,
+     0,
+     80,
+     86
+    ],
+    "header_x": -6,
+    "header_y": 0,
+    "anchor": [
+     33,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     88,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 6,
+    "mode": 2
+   },
+   {
+    "rect": [
+     176,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     264,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 6,
+    "mode": 2
+   },
+   {
+    "rect": [
+     352,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     440,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 6,
+    "mode": 2
+   },
+   {
+    "rect": [
+     528,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     616,
+     86,
+     80,
+     86
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     76
+    ],
+    "prefix": 6,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     172,
+     88,
+     85
+    ],
+    "header_x": 5,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     88,
+     172,
+     88,
+     85
+    ],
+    "header_x": 6,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     176,
+     172,
+     88,
+     85
+    ],
+    "header_x": 5,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     264,
+     172,
+     88,
+     85
+    ],
+    "header_x": 6,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     352,
+     172,
+     88,
+     85
+    ],
+    "header_x": 5,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     440,
+     172,
+     88,
+     85
+    ],
+    "header_x": 6,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     528,
+     172,
+     88,
+     85
+    ],
+    "header_x": 5,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     616,
+     172,
+     88,
+     85
+    ],
+    "header_x": 6,
+    "header_y": 0,
+    "anchor": [
+     50,
+     76
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     88,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -6,
+    "mode": 2
+   },
+   {
+    "rect": [
+     176,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     264,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -6,
+    "mode": 2
+   },
+   {
+    "rect": [
+     352,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     440,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -6,
+    "mode": 2
+   },
+   {
+    "rect": [
+     528,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -5,
+    "mode": 2
+   },
+   {
+    "rect": [
+     616,
+     258,
+     88,
+     85
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     35,
+     76
+    ],
+    "prefix": -6,
+    "mode": 2
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}
