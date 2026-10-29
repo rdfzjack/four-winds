@@ -1,0 +1,17 @@
+{
+ "source": "Sub/Mainbase.pic",
+ "width": 172,
+ "height": 223,
+ "screen_pos": [
+  0,
+  0
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "raw",
+ "palette": "Sub/Main.col",
+ "has_transparency": false,
+ "has_shadow": false
+}

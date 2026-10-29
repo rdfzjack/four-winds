@@ -1,0 +1,17 @@
+{
+ "source": "Race/Back2.pic",
+ "width": 640,
+ "height": 420,
+ "screen_pos": [
+  0,
+  0
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "raw",
+ "palette": "Sprite/1940.col",
+ "has_transparency": false,
+ "has_shadow": false
+}

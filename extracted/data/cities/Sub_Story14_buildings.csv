@@ -1,0 +1,12 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,WATCH_MAN_HOUSE,巡捕房,WATCHMAN_HOUSE,,,,3,8,
+1,COMPANY,石围塘码头,YARD,TRANSPORT 运输业,300,60,2,1,
+2,COMPANY,朱张渡码头,YARD,TRANSPORT 运输业,300,60,2,1,
+3,BANK,银行,BANK,,,,2,8,
+4,CHANCE,运气,CHANCE,,,,3,8,
+5,PARK,公园,PARK,,,,3,8,
+6,COMPANY,鹦鹉洲码头,YARD,TRANSPORT 运输业,300,60,0,1,
+7,COMPANY,浦口码头,YARD,TRANSPORT 运输业,300,60,2,1,
+8,GOVERNMENT,银城市政厅,GOVERMENT,,,,1,8,
+9,RACE_COURSE,赛马场,RACE_COURSE,,,,0,8,
+11,COMPANY,,FOOD_COM,FOOD 饮食业,100,20,2,8,

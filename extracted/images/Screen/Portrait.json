@@ -1,0 +1,141 @@
+{
+ "source": "Screen/Portrait.spr",
+ "palette": "Sprite/1940.col",
+ "default_group": 0,
+ "group_params": [
+  4
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     97,
+     147
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     51,
+     135
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     135,
+     0,
+     115,
+     141
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     53,
+     127
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     270,
+     0,
+     135,
+     157
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     70,
+     140
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     405,
+     0,
+     102,
+     150
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     56,
+     124
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     540,
+     0,
+     103,
+     138
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     43,
+     120
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     675,
+     0,
+     120,
+     129
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     63,
+     119
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     810,
+     0,
+     119,
+     143
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     57,
+     135
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     945,
+     0,
+     125,
+     128
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     63,
+     111
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}

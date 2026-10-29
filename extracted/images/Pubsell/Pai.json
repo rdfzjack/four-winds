@@ -1,0 +1,17 @@
+{
+ "source": "Pubsell/Pai.pic",
+ "width": 29,
+ "height": 48,
+ "screen_pos": [
+  185,
+  209
+ ],
+ "anchor": [
+  14,
+  48
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

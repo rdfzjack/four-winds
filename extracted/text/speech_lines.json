@@ -1,0 +1,212 @@
+{
+ "source": "Sentence/<Code>_j.spr (simplified) and Sentence/<Code>_f.spr (traditional); frame N of the sprite = condition N",
+ "note": "Hand transcription of the speech-bubble pictures (simplified set), spelled as drawn (e.g. 付注东流, 这才象). Frame order matches the SENTENCE_CONDITION enum in the developer's const.h, and every line fits its condition.",
+ "conditions": [
+  {
+   "index": 0,
+   "id": "GIVE_MUCH_MONEY",
+   "meaning": "付了很多钱（高额租金）"
+  },
+  {
+   "index": 1,
+   "id": "GIVE_LITTLE_MONEY",
+   "meaning": "付了很少的钱"
+  },
+  {
+   "index": 2,
+   "id": "GOOD_LUCK",
+   "meaning": "交好运"
+  },
+  {
+   "index": 3,
+   "id": "BAD_LUCK",
+   "meaning": "倒霉"
+  },
+  {
+   "index": 4,
+   "id": "TO_JAIL",
+   "meaning": "进巡捕房"
+  },
+  {
+   "index": 5,
+   "id": "BUILD_VILLA",
+   "meaning": "建成别墅"
+  },
+  {
+   "index": 6,
+   "id": "TRADE_OK",
+   "meaning": "交易成功"
+  },
+  {
+   "index": 7,
+   "id": "TRADE_NOT_OK",
+   "meaning": "交易被拒"
+  },
+  {
+   "index": 8,
+   "id": "GET_CHARITY",
+   "meaning": "得到施舍"
+  },
+  {
+   "index": 9,
+   "id": "BEEN_STOLEN",
+   "meaning": "被偷"
+  },
+  {
+   "index": 10,
+   "id": "STEAL",
+   "meaning": "偷到钱"
+  },
+  {
+   "index": 11,
+   "id": "AFTER_DANGER",
+   "meaning": "脱险"
+  }
+ ],
+ "characters": {
+  "sm": {
+   "name": "四毛",
+   "sprite": "Sentence/Sm_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "咋这贵哩？",
+    "GIVE_LITTLE_MONEY": "咋这贱哩？",
+    "GOOD_LUCK": "好人好报",
+    "BAD_LUCK": "穷人穷命",
+    "TO_JAIL": "凭啥哩？",
+    "BUILD_VILLA": "我也有今天",
+    "TRADE_OK": "够爽快哩！",
+    "TRADE_NOT_OK": "咋这贵哩？",
+    "GET_CHARITY": "活菩萨",
+    "BEEN_STOLEN": "穷人穷命",
+    "STEAL": "生活所迫",
+    "AFTER_DANGER": "好人好报"
+   }
+  },
+  "jrs": {
+   "name": "金如山",
+   "sprite": "Sentence/Jrs_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "打死我吧！",
+    "GIVE_LITTLE_MONEY": "不交才好！",
+    "GOOD_LUCK": "祖上有德",
+    "BAD_LUCK": "霉运当头",
+    "TO_JAIL": "我儿子是保长！",
+    "BUILD_VILLA": "财大气大抵不上房大地大！",
+    "TRADE_OK": "买卖公平",
+    "TRADE_NOT_OK": "贪得无厌",
+    "GET_CHARITY": "活菩萨",
+    "BEEN_STOLEN": "我的命啊！",
+    "STEAL": "人无歪财不富",
+    "AFTER_DANGER": "祖上有德"
+   }
+  },
+  "fdr": {
+   "name": "发达而",
+   "sprite": "Sentence/Fdr_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "MY GOD！",
+    "GIVE_LITTLE_MONEY": "Piece of cake",
+    "GOOD_LUCK": "Is it true？",
+    "BAD_LUCK": "Shit！",
+    "TO_JAIL": "WHY？",
+    "BUILD_VILLA": "Wonderful！",
+    "TRADE_OK": "Good！",
+    "TRADE_NOT_OK": "FOOL",
+    "GET_CHARITY": "God bless you",
+    "BEEN_STOLEN": "？",
+    "STEAL": "……",
+    "AFTER_DANGER": "Thanks my god"
+   }
+  },
+  "dyy": {
+   "name": "董莺雨",
+   "sprite": "Sentence/Dyy_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "天 啊！",
+    "GIVE_LITTLE_MONEY": "拿去买糖吧！",
+    "GOOD_LUCK": "书中自有gold屋",
+    "BAD_LUCK": "商海无涯苦做boat",
+    "TO_JAIL": "黑白不分",
+    "BUILD_VILLA": "安得此厦千万间？",
+    "TRADE_OK": "知识是成功之本",
+    "TRADE_NOT_OK": "fish和熊掌不可兼得",
+    "GET_CHARITY": "你就是“主”",
+    "BEEN_STOLEN": "世态炎凉",
+    "STEAL": "生活所迫",
+    "AFTER_DANGER": "有惊无险"
+   }
+  },
+  "bdl": {
+   "name": "包德利",
+   "sprite": "Sentence/Bdl_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "无商不奸",
+    "GIVE_LITTLE_MONEY": "小意思",
+    "GOOD_LUCK": "时来运转",
+    "BAD_LUCK": "真倒霉",
+    "TO_JAIL": "我要找律师",
+    "BUILD_VILLA": "我真是天才",
+    "TRADE_OK": "合作愉快",
+    "TRADE_NOT_OK": "贪得无厌",
+    "GET_CHARITY": "雪中送炭",
+    "BEEN_STOLEN": "真倒霉",
+    "STEAL": "人无歪财不富",
+    "AFTER_DANGER": "有惊无险"
+   }
+  },
+  "szz": {
+   "name": "赛珍珠",
+   "sprite": "Sentence/Szz_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "呜——我不活了！",
+    "GIVE_LITTLE_MONEY": "也好意思要",
+    "GOOD_LUCK": "是因为我有魅力吗？",
+    "BAD_LUCK": "天生苦命",
+    "TO_JAIL": "一身清白付注东流",
+    "BUILD_VILLA": "豪宅美女",
+    "TRADE_OK": "英雄难过美人关",
+    "TRADE_NOT_OK": "德行",
+    "GET_CHARITY": "林子大，什么鸟都有",
+    "BEEN_STOLEN": "挨千刀的",
+    "STEAL": "人无歪财不富",
+    "AFTER_DANGER": "有惊无险"
+   }
+  },
+  "fqm": {
+   "name": "冯全篾",
+   "sprite": "Sentence/Fqm_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "我也敢宰？",
+    "GIVE_LITTLE_MONEY": "拿去",
+    "GOOD_LUCK": "有福不用忙",
+    "BAD_LUCK": "江湖险恶",
+    "TO_JAIL": "常来常往",
+    "BUILD_VILLA": "这才象龙头老大",
+    "TRADE_OK": "爽快",
+    "TRADE_NOT_OK": "话不投机",
+    "GET_CHARITY": "不要白不要",
+    "BEEN_STOLEN": "我非砍死他",
+    "STEAL": "哈哈哈",
+    "AFTER_DANGER": "福大命大"
+   }
+  },
+  "cml": {
+   "name": "陈玛丽",
+   "sprite": "Sentence/Cml_j.spr",
+   "lines": {
+    "GIVE_MUCH_MONEY": "人家不干",
+    "GIVE_LITTLE_MONEY": "小意思",
+    "GOOD_LUCK": "这是真的吗",
+    "BAD_LUCK": "真倒霉",
+    "TO_JAIL": "我要回家",
+    "BUILD_VILLA": "梦想成真",
+    "TRADE_OK": "成功",
+    "TRADE_NOT_OK": "讨厌",
+    "GET_CHARITY": "当我是什么人",
+    "BEEN_STOLEN": "真倒霉",
+    "STEAL": "咦！哪来的钱",
+    "AFTER_DANGER": "好险啊！"
+   }
+  }
+ }
+}

@@ -1,0 +1,333 @@
+{
+ "source": "Sub/Select.spr",
+ "palette": "Sub/Main.col",
+ "default_group": 0,
+ "group_params": [
+  9
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     126,
+     130
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     640,
+     0,
+     126,
+     130
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     1280,
+     0,
+     101,
+     92
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     1920,
+     0,
+     101,
+     92
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     2560,
+     0,
+     127,
+     128
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     3200,
+     0,
+     127,
+     128
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     3840,
+     0,
+     101,
+     127
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     4480,
+     0,
+     101,
+     127
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     5120,
+     0,
+     129,
+     119
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     5760,
+     0,
+     129,
+     119
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     6400,
+     0,
+     150,
+     121
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     7040,
+     0,
+     150,
+     121
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     7680,
+     0,
+     100,
+     134
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     8320,
+     0,
+     100,
+     134
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     8960,
+     0,
+     115,
+     142
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     9600,
+     0,
+     115,
+     142
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   },
+   {
+    "rect": [
+     10240,
+     0,
+     21,
+     21
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     10880,
+     0,
+     32,
+     32
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     31,
+     14
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     11520,
+     0,
+     32,
+     32
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     15
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     12160,
+     0,
+     640,
+     480
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     0
+    ],
+    "prefix": 0,
+    "mode": 0
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}

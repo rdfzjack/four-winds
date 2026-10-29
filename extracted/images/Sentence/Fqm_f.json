@@ -1,0 +1,205 @@
+{
+ "source": "Sentence/Fqm_f.spr",
+ "palette": "Sprite/1940.col",
+ "default_group": 0,
+ "group_params": [
+  0
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     144,
+     125
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     2,
+     121
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     169,
+     0,
+     144,
+     97
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     32,
+     94
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     338,
+     0,
+     143,
+     101
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     15,
+     94
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     507,
+     0,
+     142,
+     96
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     45,
+     92
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     676,
+     0,
+     142,
+     97
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     32,
+     94
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     845,
+     0,
+     169,
+     112
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     38,
+     102
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     1014,
+     0,
+     144,
+     101
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     17,
+     96
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     1183,
+     0,
+     144,
+     96
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     34,
+     94
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     1352,
+     0,
+     143,
+     97
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     33,
+     94
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     1521,
+     0,
+     145,
+     126
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     3,
+     121
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     1690,
+     0,
+     168,
+     111
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     37,
+     103
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     1859,
+     0,
+     142,
+     106
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     16,
+     101
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}

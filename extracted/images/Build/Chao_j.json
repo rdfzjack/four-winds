@@ -1,0 +1,150 @@
+{
+ "source": "Build/Chao_j.spr",
+ "palette": "Sprite/1940.col",
+ "default_group": 3,
+ "group_params": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     80,
+     107
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     85
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     0,
+     64,
+     107
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     65
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     108,
+     80,
+     102
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     62
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     108,
+     66,
+     102
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     82
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     216,
+     80,
+     108
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     87
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     216,
+     61,
+     108
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     67
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     324,
+     80,
+     103
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     63
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     324,
+     64,
+     103
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     83
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}

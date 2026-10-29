@@ -1,0 +1,17 @@
+{
+ "source": "Pubsell/Describe.pic",
+ "width": 174,
+ "height": 104,
+ "screen_pos": [
+  185,
+  209
+ ],
+ "anchor": [
+  173,
+  102
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": false
+}

@@ -1,0 +1,17 @@
+{
+ "source": "Screen/Xitong1.pic",
+ "width": 137,
+ "height": 338,
+ "screen_pos": [
+  0,
+  0
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

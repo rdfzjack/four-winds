@@ -1,0 +1,328 @@
+{
+ "note": "Story-mode stage briefings from 1940.exe, matched to Sub/Story*.cit by order and place name. Dialogue lines for each stage are in exe_strings.json (stored next to each briefing, last line first).",
+ "stages": [
+  {
+   "campaign_lead": "四毛",
+   "map_file": "Sub/Story11.cit",
+   "stage": 1,
+   "place": "金县",
+   "characters": [
+    "四毛",
+    "金如山",
+    "冯全篾"
+   ],
+   "win": "建起一所旅馆",
+   "lose": "破产",
+   "exe_offset": "0x05ecb8",
+   "raw": "地点：金县　　　　　　　　　　出场人物：四毛、金如山、冯全篾胜利条件：建起一所旅馆        失败条件：破产"
+  },
+  {
+   "campaign_lead": "四毛",
+   "map_file": "Sub/Story12.cit",
+   "stage": 2,
+   "place": "金县",
+   "characters": [
+    "四毛",
+    "金如山",
+    "冯全篾"
+   ],
+   "win": "金如山破产",
+   "lose": "破产",
+   "exe_offset": "0x05ebe4",
+   "raw": "地点：金县　　　　　　　　　　出场人物：四毛、金如山、冯全篾胜利条件：金如山破产　　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "四毛",
+   "map_file": "Sub/Story13.cit",
+   "stage": 3,
+   "place": "银城",
+   "characters": [
+    "四毛",
+    "发达而",
+    "董莺雨陈玛丽"
+   ],
+   "win": "控制所有码头",
+   "lose": "破产",
+   "exe_offset": "0x05e9e4",
+   "raw": "地点：银城　　　　　　　　　　出场人物：四毛、发达而、董莺雨　　　　　陈玛丽　　　　　　　胜利条件：控制所有码头　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "四毛",
+   "map_file": "Sub/Story14.cit",
+   "stage": 4,
+   "place": "银城",
+   "characters": [
+    "四毛",
+    "发达而",
+    "董莺雨",
+    "包德利"
+   ],
+   "win": "保证董莺雨不破产而击败其他人",
+   "lose": "四毛或董莺雨破产",
+   "exe_offset": "0x05e790",
+   "raw": "地点：银城　　　　　　　　　　出场人物：四毛、发达而、董莺　　　　　　雨、包德利　　　　　胜利条件：保证董莺雨不破产而　　　　　　击败其他人　　　　　失败条件：四毛或董莺雨破产"
+  },
+  {
+   "campaign_lead": "四毛",
+   "map_file": "Sub/Story15.cit",
+   "stage": 5,
+   "place": "上海闸北",
+   "characters": [
+    "四毛",
+    "发达而",
+    "包德利",
+    "董莺雨",
+    "赛珍珠"
+   ],
+   "win": "一月内建成一座别墅",
+   "lose": "破产或超出一月",
+   "exe_offset": "0x05e558",
+   "raw": "地点：上海闸北　　　　　　　　出场人物：四毛、发达而、包德　　　　　　利、董莺雨、赛珍珠　胜利条件：一月内建成一座别墅　失败条件：破产或超出一月"
+  },
+  {
+   "campaign_lead": "四毛",
+   "map_file": "Sub/Story16.cit",
+   "stage": 6,
+   "place": "上海",
+   "characters": [
+    "四毛",
+    "发达而",
+    "包德利",
+    "冯全篾",
+    "陈玛丽"
+   ],
+   "win": "三个月击败发达而",
+   "lose": "四毛破产或超过三个月",
+   "exe_offset": "0x05e420",
+   "raw": "地点：上海　　　　　　　　　　出场人物：四毛、发达而、包德　　　　　　利、冯全篾、陈玛丽　胜利条件：三个月击败发达而　　失败条件：四毛破产或超过三个　　　　　　月"
+  },
+  {
+   "campaign_lead": "四毛",
+   "map_file": "Sub/Story17.cit",
+   "stage": 7,
+   "place": "上海",
+   "characters": [
+    "四毛",
+    "冯全篾",
+    "金如山",
+    "陈玛丽",
+    "赛珍珠"
+   ],
+   "win": "击败所有对手",
+   "lose": "破产",
+   "exe_offset": "0x05e22c",
+   "raw": "地点：上海　　　　　　　　　　出场人物：四毛、冯全篾、金如　　　　　　山、陈玛丽、赛珍珠　胜利条件：击败所有对手　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "冯全篾",
+   "map_file": "Sub/Story21.cit",
+   "stage": 1,
+   "place": "金县",
+   "characters": [
+    "金如山",
+    "冯全篾",
+    "四毛"
+   ],
+   "win": "击败金如山",
+   "lose": "破产",
+   "exe_offset": "0x05fd00",
+   "raw": "地点：金县　　　　　　　　　　出场人物：金如山、冯全篾、四毛胜利条件：击败金如山　　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "冯全篾",
+   "map_file": "Sub/Story22.cit",
+   "stage": 2,
+   "place": "元宝山",
+   "characters": [
+    "冯全篾",
+    "包德利",
+    "发达而"
+   ],
+   "win": "一个月击败发达而和包德利",
+   "lose": "超过一个月或破产",
+   "exe_offset": "0x05f978",
+   "raw": "地点：元宝山　　　　　　　　　出场人物：冯全篾、包德利、发达　　　　　而　　　　　　　　　胜利条件：一个月击败发达而和包　　　　　德利　　　　　　　　失败条件：超过一个月或破产"
+  },
+  {
+   "campaign_lead": "冯全篾",
+   "map_file": "Sub/Story23.cit",
+   "stage": 3,
+   "place": "溪口镇",
+   "characters": [
+    "冯全篾",
+    "赛珍珠",
+    "董莹雨",
+    "陈玛丽"
+   ],
+   "win": "保证赛珍珠不破产击败其他人",
+   "lose": "赛珍珠或冯全篾破产",
+   "exe_offset": "0x05f684",
+   "raw": "地点：溪口镇　　　　　　　　　出场人物：冯全篾、赛珍珠、董莹　　　　　雨、陈玛丽　　　　　胜利条件：保证赛珍珠不破产击败　　　　　其他人　　　　　　　失败条件：赛珍珠或冯全篾破产"
+  },
+  {
+   "campaign_lead": "冯全篾",
+   "map_file": "Sub/Story24.cit",
+   "stage": 4,
+   "place": "银城",
+   "characters": [
+    "冯全篾",
+    "董莹雨",
+    "金如山",
+    "包德利"
+   ],
+   "win": "积攒4000万圆资产",
+   "lose": "破产",
+   "exe_offset": "0x05f410",
+   "raw": "地点：银城　　　　　　　　　　出场人物：冯全篾、董莹雨、金如　　　　　山、包德利　　　　　胜利条件：积攒4000万圆资产　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "冯全篾",
+   "map_file": "Sub/Story25.cit",
+   "stage": 5,
+   "place": "上海南浦",
+   "characters": [
+    "冯全篾",
+    "陈玛丽",
+    "金如山",
+    "董莹雨"
+   ],
+   "win": "首先建起别墅",
+   "lose": "未能首先建起别墅或破产",
+   "exe_offset": "0x05f2dc",
+   "raw": "地点：上海南浦　　　　　　　　出场人物：冯全篾，陈玛丽，金如　　　　　山，董莹雨　　　　　胜利条件：首先建起别墅　　　　失败条件：未能首先建起别墅或破　　　　　产"
+  },
+  {
+   "campaign_lead": "冯全篾",
+   "map_file": "Sub/Story26.cit",
+   "stage": 6,
+   "place": "上海",
+   "characters": [
+    "冯全篾",
+    "四毛",
+    "包德利",
+    "发达而",
+    "陈玛丽"
+   ],
+   "win": "控制所有娱乐业",
+   "lose": "破产",
+   "exe_offset": "0x05f1a8",
+   "raw": "地点：上海　　　　　　　　　　出场人物：冯全篾、四毛、　包德　　　　　利、发达而、陈玛丽　胜利条件：控制所有娱乐业　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "冯全篾",
+   "map_file": "Sub/Story27.cit",
+   "stage": 7,
+   "place": "上海",
+   "characters": [
+    "冯全篾",
+    "赛珍珠",
+    "包德利",
+    "四毛",
+    "金如山",
+    "陈玛丽"
+   ],
+   "win": "击败赛珍珠",
+   "lose": "破产",
+   "exe_offset": "0x05eef0",
+   "raw": "地点：上海　　　　　　　　　　出场人物：冯全篾、赛珍珠、包德　　　　　利、四毛、金如山、陈　　　　　玛丽　　　　　　　　胜利条件：击败赛珍珠　　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "董莺雨",
+   "map_file": "Sub/Story31.cit",
+   "stage": 1,
+   "place": "溪口镇",
+   "characters": [
+    "董莺雨",
+    "冯全篾",
+    "包德利"
+   ],
+   "win": "一个月内资产总额达到一千万圆",
+   "lose": "破产",
+   "exe_offset": "0x060888",
+   "raw": "地点：溪口镇　　　　　　　　　出场人物：董莺雨、冯全篾、包德　　　　　利　　　　　　　　　胜利条件：一个月内资产总额达到　　　　　一千万圆　　　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "董莺雨",
+   "map_file": "Sub/Story32.cit",
+   "stage": 2,
+   "place": "溪口镇",
+   "characters": [
+    "董莹雨",
+    "冯全篾",
+    "金如山"
+   ],
+   "win": "控制所有书局",
+   "lose": "破产",
+   "exe_offset": "0x060758",
+   "raw": "地点：溪口镇　　　　　　　　　出场人物：董莹雨、冯全篾、金如　　　　　山　　　　　　　　　胜利条件：控制所有书局　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "董莺雨",
+   "map_file": "Sub/Story33.cit",
+   "stage": 3,
+   "place": "银城",
+   "characters": [
+    "董莹雨",
+    "四毛",
+    "发达而",
+    "陈玛丽"
+   ],
+   "win": "控制所有码头",
+   "lose": "破产",
+   "exe_offset": "0x06058c",
+   "raw": "地点：银城　　　　　　　　　　出场人物：董莹雨、四毛、发达　　　　　　而、陈玛丽　　　　　胜利条件：控制所有码头　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "董莺雨",
+   "map_file": "Sub/Story34.cit",
+   "stage": 4,
+   "place": "上海西区",
+   "characters": [
+    "董莺雨",
+    "金如山",
+    "包德利",
+    "赛珍珠",
+    "陈玛丽"
+   ],
+   "win": "控制上海西区",
+   "lose": "破产",
+   "exe_offset": "0x060234",
+   "raw": "地点：上海西区　　　　　　　　出场人物：董莺雨、金如山、包德　　　　　利、赛珍珠、陈玛丽　胜利条件：控制上海西区　　　　失败条件：破产"
+  },
+  {
+   "campaign_lead": "董莺雨",
+   "map_file": "Sub/Story35.cit",
+   "stage": 5,
+   "place": "上海",
+   "characters": [
+    "董莺雨",
+    "四毛",
+    "发达而",
+    "包德利",
+    "冯全篾"
+   ],
+   "win": "三个月击败发达而",
+   "lose": "董莺雨或四毛破产",
+   "exe_offset": "0x06009c",
+   "raw": "地点：上海　　　　　　　　　　出场人物：董莺雨、四毛、发达而　　　　　、包德利、冯全篾　　胜利条件：三个月击败发达而　　失败条件：董莺雨或四毛破产"
+  },
+  {
+   "campaign_lead": "董莺雨",
+   "map_file": "Sub/Story36.cit",
+   "stage": 6,
+   "place": "上海",
+   "characters": [
+    "董莺雨",
+    "四毛",
+    "金如山",
+    "陈玛丽",
+    "冯全篾",
+    "包德利"
+   ],
+   "win": "击败所有对手",
+   "lose": "破产",
+   "exe_offset": "0x05ff24",
+   "raw": "地点：上海　　　　　　　　　　出场人物：董莺雨、四毛、金如山　　　　　、陈玛丽、冯全篾、包　　　　　德利　　　　　　　　胜利条件：击败所有对手　　　　失败条件：破产"
+  }
+ ]
+}

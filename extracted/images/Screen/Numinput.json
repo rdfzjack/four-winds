@@ -1,0 +1,17 @@
+{
+ "source": "Screen/Numinput.pic",
+ "width": 244,
+ "height": 248,
+ "screen_pos": [
+  143,
+  132
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

@@ -1,0 +1,17 @@
+{
+ "source": "Sprite/Chance22.pic",
+ "width": 640,
+ "height": 480,
+ "screen_pos": [
+  0,
+  0
+ ],
+ "anchor": [
+  0,
+  0
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": false,
+ "has_shadow": false
+}

@@ -1,0 +1,10 @@
+﻿slot,class,name,sprite_kind_name,company_group_name,price,rent,direction,owner,describe
+0,BANK,惠发钱行,BANK,,,,2,8,
+1,HOUSE,民宅,FLAT_HOUSE,,,,1,7,
+2,CHANCE,运气,CHANCE,,,,1,8,
+3,COMPANY,快活林酒家,FOOD_COM,FOOD 饮食业,200,50,2,8,
+4,COMPANY,同茂菜馆,FOOD_COM,FOOD 饮食业,180,40,3,8,
+5,WATCH_MAN_HOUSE,巡捕房,WATCHMAN_HOUSE,,,,2,8,
+6,HOUSE,民宅,FLAT_HOUSE,,,,0,7,
+7,HOUSE,民宅,FLAT_HOUSE,,,,3,7,
+8,COMPANY,丰盛饭庄,FOOD_COM,FOOD 饮食业,160,40,0,8,

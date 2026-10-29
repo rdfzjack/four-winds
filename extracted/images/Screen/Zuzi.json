@@ -1,0 +1,17 @@
+{
+ "source": "Screen/Zuzi.pic",
+ "width": 23,
+ "height": 12,
+ "screen_pos": [
+  143,
+  132
+ ],
+ "anchor": [
+  1,
+  1
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

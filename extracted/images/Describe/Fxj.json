@@ -1,0 +1,17 @@
+{
+ "source": "Describe/Fxj.pic",
+ "width": 294,
+ "height": 410,
+ "screen_pos": [
+  263,
+  537
+ ],
+ "anchor": [
+  293,
+  409
+ ],
+ "compression": "rle",
+ "palette": "Sprite/1940.col",
+ "has_transparency": true,
+ "has_shadow": true
+}

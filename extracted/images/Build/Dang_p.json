@@ -1,0 +1,150 @@
+{
+ "source": "Build/Dang_p.spr",
+ "palette": "Sprite/1940.col",
+ "default_group": 3,
+ "group_params": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "groups": [
+  [
+   {
+    "rect": [
+     0,
+     0,
+     80,
+     102
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     81
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     0,
+     50,
+     102
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     61
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     112,
+     80,
+     102
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     61
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     112,
+     60,
+     102
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     81
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     224,
+     80,
+     112
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     70
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     224,
+     55,
+     112
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     50
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ],
+  [
+   {
+    "rect": [
+     0,
+     336,
+     80,
+     94
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     0,
+     52
+    ],
+    "prefix": 0,
+    "mode": 2
+   },
+   {
+    "rect": [
+     80,
+     336,
+     43,
+     94
+    ],
+    "header_x": 0,
+    "header_y": 0,
+    "anchor": [
+     -40,
+     72
+    ],
+    "prefix": 0,
+    "mode": 2
+   }
+  ]
+ ],
+ "note": "Sheet layout: one row per group (animation / facing), one column per frame. 'rect' = x, y, w, h in the sheet. 'anchor' = header fields 2-3 (draw offset). For walking characters header_x and prefix hold the per-frame step in pixels."
+}
