@@ -7,12 +7,16 @@ extends RefCounted
 ##   var game := Game.new()
 ##   game.setup(board, rules, cards_file, characters, [{"character": "david", "human": true}, ...])
 ##   game.start()
-##   轮到某人时 game.phase == "pre_roll"：可以 build / upgrade / remove_house，然后 roll()。
+##   轮到某人时 game.phase == "pre_roll"：可以 build / upgrade / remove_house / mortgage / unmortgage /
+##   start_auction / propose_trade，然后 roll()。拍卖、交易要别的玩家回答，这时 phase == "pending"，
+##   该谁做决定看 actor()（其余时候就是 current）。
 ##   走到需要选择的地方 game.phase == "pending"，看 game.pending["type"]：
 ##     choose_direction → choose_direction(tile)   十字路口选方向
 ##     bank             → bank_deposit / bank_withdraw，最后 bank_done()（路过或停在银行都会弹）
 ##     buy_land / buy_company → buy() 或 decline()
 ##     bail             → bail(true) 交保释金，bail(false) 坐牢
+##     auction          → auction_bid(加价档) 或 auction_pass()（actor() 是出价人）
+##     trade            → trade_answer(true / false)，或 trade_counter(新条件) 还价一次（actor() 是回答的人）
 ##   每个选择做完，游戏会自己往下走，直到轮到下一个人（phase 回到 "pre_roll"）或结束（"over"）。
 ##   发生的事记在 events 里（drain_events() 取走），画面和台词靠它。
 ##
@@ -52,6 +56,7 @@ var _house_defs: Dictionary = {}  ## 房屋 id -> rules.houses.levels 里的条�
 var _jail_tile: int = -1
 var _next_house_id: int = 1
 var _move: Dictionary = {}        ## 正在走的路：{remaining, pick}
+var _trade_refused: Dictionary = {}  ## 这回合拒绝过当前玩家交易的人 -> true
 
 
 ## 整数百分比计算：value × pct ÷ 100，向下取整
@@ -129,6 +134,18 @@ func drain_events() -> Array:
 
 func player() -> Player:
 	return players[current]
+
+
+## 现在该谁做决定：拍卖时是轮到出价的人，交易时是要回答的一方，其余时候是 current。
+func actor() -> int:
+	if phase == "pending":
+		match str(pending.get("type", "")):
+			"auction":
+				return int(pending["bidders"][int(pending["turn"])])
+			"trade":
+				var o: Dictionary = pending["offer"]
+				return int(o["to"]) if pending["stage"] == "offer" else int(o["from"])
+	return current
 
 
 # ───────────────────────── 查询 ─────────────────────────
@@ -440,6 +457,334 @@ func _special_event_amount(event_id: String, fallback: int) -> int:
 				if fx.get("op", "") == "money":
 					return int(fx["amount"])
 	return fallback
+
+
+# ───────────────────────── 掷骰前：抵押、赎回 ─────────────────────────
+
+## 抵押能拿到的钱：价格的 payout_pct%
+func mortgage_value(tile: int) -> int:
+	return pct_of(property_price(tile), int(rules["mortgage"]["payout_pct"]))
+
+
+## 赎回要付的钱：价格的 unmortgage_cost_pct%
+func unmortgage_cost(tile: int) -> int:
+	return pct_of(property_price(tile), int(rules["mortgage"]["unmortgage_cost_pct"]))
+
+
+## 掷骰前的操作通用检查：是不是这个人掷骰前、这块地产是不是他的
+func _why_not_own_turn(pi: int, tile: int) -> String:
+	if phase != "pre_roll" or current != pi:
+		return "现在不是你掷骰前的时间"
+	if not props.has(tile) or owner_of(tile) != pi:
+		return "这不是你的地产"
+	return ""
+
+
+func why_cannot_mortgage(pi: int, tile: int) -> String:
+	var why := _why_not_own_turn(pi, tile)
+	if why != "":
+		return why
+	if props[tile]["mortgaged"]:
+		return "已经在抵押中"
+	if house_at(tile) != 0:
+		return "盖了房子的地不能抵押"
+	return ""
+
+
+## 抵押：得到价格的 50%。每次有 1/seize_chance 的概率被银行扣留：地照样抵押，钱一分不给。
+## 成功返回 ""。
+func mortgage(pi: int, tile: int) -> String:
+	var why := why_cannot_mortgage(pi, tile)
+	if why != "":
+		return why
+	props[tile]["mortgaged"] = true
+	var amount := mortgage_value(tile)
+	var seized := rng.randi() % int(rules["mortgage"]["seize_chance"]) == 0
+	if seized:
+		amount = 0
+	players[pi].cash += amount
+	_emit("mortgaged", {"player": pi, "tile": tile, "amount": amount, "seized": seized})
+	return ""
+
+
+func why_cannot_unmortgage(pi: int, tile: int) -> String:
+	var why := _why_not_own_turn(pi, tile)
+	if why != "":
+		return why
+	if not props[tile]["mortgaged"]:
+		return "没有在抵押"
+	if players[pi].cash < unmortgage_cost(tile):
+		return "现金不够（赎回只能用现金）"
+	return ""
+
+
+## 赎回：付价格的 60%，只能用现金。成功返回 ""。
+func unmortgage(pi: int, tile: int) -> String:
+	var why := why_cannot_unmortgage(pi, tile)
+	if why != "":
+		return why
+	var cost := unmortgage_cost(tile)
+	players[pi].cash -= cost
+	props[tile]["mortgaged"] = false
+	_emit("unmortgaged", {"player": pi, "tile": tile, "cost": cost})
+	return ""
+
+
+## 玩家名下的地产（地块编号从小到大）
+func properties_of(pi: int) -> Array:
+	var out: Array = []
+	for tile in props:
+		if owner_of(tile) == pi:
+			out.append(tile)
+	out.sort()
+	return out
+
+
+# ───────────────────────── 掷骰前：拍卖 ─────────────────────────
+## 卖家掷骰前发起。其他没破产的玩家按座位顺序轮流：加价（bid_steps 里的一档）或放弃，
+## 放弃了就退出。只剩出价最高的人时成交，卖家拿到最高价；没人出价时政府按起拍价收回，地变成无主。
+## 拍卖进行中 phase == "pending"，
+## pending = {type: "auction", tile, seller, start, price, top, bidders, turn}，该谁出价看 actor()。
+## 出价只能用现金。
+
+func auction_start_price(tile: int) -> int:
+	return pct_of(property_price(tile), int(rules["auction"]["start_price_pct"]))
+
+
+func why_cannot_auction(pi: int, tile: int) -> String:
+	var why := _why_not_own_turn(pi, tile)
+	if why != "":
+		return why
+	if house_at(tile) != 0:
+		return "盖了房子的地不能拍卖"
+	if props[tile]["mortgaged"]:
+		return "抵押中的地产不能拍卖（先赎回）"
+	return ""
+
+
+## 开始拍卖。成功返回 ""。
+func start_auction(pi: int, tile: int) -> String:
+	var why := why_cannot_auction(pi, tile)
+	if why != "":
+		return why
+	var bidders: Array = []
+	for k in range(1, players.size()):
+		var q: Player = players[(pi + k) % players.size()]
+		if not q.bankrupt:
+			bidders.append(q.index)
+	var start := auction_start_price(tile)
+	_set_pending({"type": "auction", "tile": tile, "seller": pi, "start": start, "price": start,
+			"top": -1, "bidders": bidders, "turn": 0})
+	_emit("auction_start", {"player": pi, "tile": tile, "price": start})
+	_auction_next()
+	return ""
+
+
+## 加价档位（从小到大）
+func bid_steps() -> Array:
+	var out: Array = []
+	for s in rules["auction"]["bid_steps"]:
+		out.append(int(s))
+	out.sort()
+	return out
+
+
+## 当前出价人加价 step（必须是 bid_steps 里的一档，现金要够）。
+func auction_bid(step: int) -> bool:
+	if pending.get("type", "") != "auction" or not bid_steps().has(step):
+		return false
+	var bidder := actor()
+	var price := int(pending["price"]) + step
+	if players[bidder].cash < price:
+		return false
+	pending["price"] = price
+	pending["top"] = bidder
+	_emit("auction_bid", {"player": bidder, "tile": pending["tile"], "price": price})
+	pending["turn"] = int(pending["turn"]) + 1
+	_auction_next()
+	return true
+
+
+## 当前出价人放弃（退出这次拍卖）。
+func auction_pass() -> bool:
+	if pending.get("type", "") != "auction":
+		return false
+	var bidder := actor()
+	pending["bidders"].remove_at(int(pending["turn"]))
+	_emit("auction_pass", {"player": bidder, "tile": pending["tile"]})
+	_auction_next()
+	return true
+
+
+## 轮到下一个还能出价的人；现金连最小一档都加不起的自动放弃；只剩最高出价者时结束。
+func _auction_next() -> void:
+	var min_step: int = bid_steps()[0]
+	while true:
+		var bidders: Array = pending["bidders"]
+		var top := int(pending["top"])
+		var others := bidders.filter(func(b: int) -> bool: return b != top)
+		if others.is_empty():
+			_auction_end()
+			return
+		if int(pending["turn"]) >= bidders.size():
+			pending["turn"] = 0
+		var b: int = bidders[int(pending["turn"])]
+		if b == top:
+			pending["turn"] = int(pending["turn"]) + 1
+			continue
+		if players[b].cash < int(pending["price"]) + min_step:
+			bidders.remove_at(int(pending["turn"]))
+			_emit("auction_pass", {"player": b, "tile": pending["tile"], "auto": true})
+			continue
+		return
+
+
+func _auction_end() -> void:
+	var tile := int(pending["tile"])
+	var seller := int(pending["seller"])
+	var top := int(pending["top"])
+	if top >= 0:
+		var price := int(pending["price"])
+		players[top].cash -= price
+		players[seller].cash += price
+		props[tile]["owner"] = top
+		_emit("auction_sold", {"player": top, "seller": seller, "tile": tile, "price": price})
+	else:
+		var start := int(pending["start"])
+		players[seller].cash += start
+		_release_property(tile)
+		_emit("auction_government", {"player": seller, "tile": tile, "price": start})
+	_clear_pending()
+
+
+# ───────────────────────── 掷骰前：交易 ─────────────────────────
+## 【作者定】双方可以拿出地、企业和现金（只能用现金）；盖了房子的地连房子一起转手（整栋房子占的地
+## 要一起给）；抵押中的地产照样能交易，抵押状态跟过去，新主人自己赎回。
+## 被提议的一方可以同意、拒绝或还价一次；还价后发起人只能同意或拒绝。
+## 被拒绝后，这回合不能再向同一个人提议。
+##
+## offer = {from: 发起人, to: 对方, give: [发起人给出的地块], get: [发起人要的地块],
+##          give_cash: 发起人付的现金, get_cash: 对方付的现金}
+## 进行中 phase == "pending"，pending = {type: "trade", offer, stage: "offer" / "counter"}，
+## 该谁回答看 actor()。
+
+## 整理成标准格式（数字转整数、地块去重排序）
+static func normalize_offer(offer: Dictionary) -> Dictionary:
+	var out := {
+		"from": int(offer.get("from", -1)), "to": int(offer.get("to", -1)),
+		"give": [], "get": [],
+		"give_cash": int(offer.get("give_cash", 0)), "get_cash": int(offer.get("get_cash", 0)),
+	}
+	for key in ["give", "get"]:
+		for t in offer.get(key, []):
+			if not out[key].has(int(t)):
+				out[key].append(int(t))
+		out[key].sort()
+	return out
+
+
+## 这个交易本身合不合格（不管是不是掷骰前）。空字符串 = 合格。
+func why_bad_trade(offer: Dictionary) -> String:
+	var o := normalize_offer(offer)
+	var a: int = o["from"]
+	var b: int = o["to"]
+	var why := ""
+	if a < 0 or b < 0 or a >= players.size() or b >= players.size() or a == b:
+		why = "交易对象不对"
+	elif players[a].bankrupt or players[b].bankrupt:
+		why = "破产的玩家不能交易"
+	elif o["give"].is_empty() and o["get"].is_empty():
+		why = "交易里至少要有一块地产"
+	elif o["give_cash"] < 0 or o["get_cash"] < 0:
+		why = "钱数不能是负数"
+	elif o["give_cash"] > players[a].cash or o["get_cash"] > players[b].cash:
+		why = "现金不够（交易只能用现金）"
+	else:
+		why = _why_bad_trade_tiles(o["give"], a)
+		if why == "":
+			why = _why_bad_trade_tiles(o["get"], b)
+	return why
+
+
+## 交易一方拿出的地块：都要是他的；有房子的，房子占的地要一起给
+func _why_bad_trade_tiles(tiles: Array, pi: int) -> String:
+	for t in tiles:
+		if not props.has(t):
+			return "%s 不是地产" % str(t)
+		if owner_of(t) != pi:
+			return "%s 不是%s的地产" % [str(board.get_tile(t).get("name", t)), players[pi].display_name]
+		var hid := house_at(t)
+		if hid != 0:
+			for ht in houses[hid]["tiles"]:
+				if not tiles.has(ht):
+					return "房子占的几块地要一起交易"
+	return ""
+
+
+func why_cannot_propose(offer: Dictionary) -> String:
+	var o := normalize_offer(offer)
+	if phase != "pre_roll" or current != o["from"]:
+		return "现在不是你掷骰前的时间"
+	if _trade_refused.has(o["to"]):
+		return "这回合对方已经拒绝过你了"
+	return why_bad_trade(o)
+
+
+## 发起交易。成功返回 ""，然后等对方回答（actor() 是对方）。
+func propose_trade(offer: Dictionary) -> String:
+	var why := why_cannot_propose(offer)
+	if why != "":
+		return why
+	var o := normalize_offer(offer)
+	_set_pending({"type": "trade", "offer": o, "stage": "offer"})
+	_emit("trade_proposed", {"player": o["from"], "offer": o})
+	return ""
+
+
+## 对方还价（只能一次）：offer 的 from / to 不变，内容可以全改。成功返回 ""。
+func trade_counter(offer: Dictionary) -> String:
+	if pending.get("type", "") != "trade" or pending["stage"] != "offer":
+		return "现在不能还价"
+	var o := normalize_offer(offer)
+	var old: Dictionary = pending["offer"]
+	if o["from"] != old["from"] or o["to"] != old["to"]:
+		return "还价不能换交易对象"
+	var why := why_bad_trade(o)
+	if why != "":
+		return why
+	pending["offer"] = o
+	pending["stage"] = "counter"
+	_emit("trade_countered", {"player": o["to"], "offer": o})
+	return ""
+
+
+## 回答交易：accept = true 同意（成交），false 拒绝。
+func trade_answer(accept: bool) -> bool:
+	if pending.get("type", "") != "trade":
+		return false
+	var o: Dictionary = pending["offer"]
+	var who := actor()
+	_clear_pending()
+	if accept and why_bad_trade(o) == "":
+		_do_trade(o)
+	else:
+		_trade_refused[o["to"]] = true
+		_emit("trade_rejected", {"player": who, "offer": o})
+	return true
+
+
+func _do_trade(o: Dictionary) -> void:
+	var a: int = o["from"]
+	var b: int = o["to"]
+	for side in [["give", b], ["get", a]]:
+		for t in o[side[0]]:
+			props[t]["owner"] = side[1]
+			var hid := house_at(t)
+			if hid != 0:
+				houses[hid]["owner"] = side[1]
+	players[a].cash += o["get_cash"] - o["give_cash"]
+	players[b].cash += o["give_cash"] - o["get_cash"]
+	_emit("trade_done", {"player": a, "offer": o})
 
 
 # ───────────────────────── 掷骰和移动 ─────────────────────────
@@ -950,6 +1295,7 @@ func _begin_turn() -> bool:
 			_emit("status_end", {"player": p.index, "kind": kind})
 			p.status = {}
 	phase = "pre_roll"
+	_trade_refused = {}
 	_emit("turn_start", {"player": p.index, "day": day})
 	return true
 
