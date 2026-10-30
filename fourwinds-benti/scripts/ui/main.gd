@@ -1,9 +1,12 @@
 extends Control
-## 主界面：选座位（每个位置选人类 / AI / 空，再选角色），然后开始热座对局。
+## 主界面：选座位（每个位置选人类 / 新 AI / 原版 AI / 空，再选角色），然后开始热座对局。
 ## 同时显示数据检查结果，数据读取有问题时在这里能看到。
 
 const SEAT_COUNT := 4
-const SEAT_KINDS := ["人类", "AI", "空"]
+const SEAT_KINDS := ["人类", "新 AI", "原版 AI", "空"]
+## 每种座位对应的 AI 版本（见 scripts/core/ai.gd）
+const SEAT_AI := ["", "new", "original", ""]
+const EMPTY_KIND := 3
 const DEFAULT_KINDS := [0, 1, 1, 1]
 const BACKGROUND := Color("#1e2a24")
 
@@ -30,7 +33,8 @@ func _ready() -> void:
 
 	_label(box, "四方来财 Four Winds", 36, Color.WHITE)
 	_add_map_choice(box)
-	_label(box, "热座：每个位置选人类或 AI", 15, Color("#b0bec5"))
+	_label(box, "热座：每个位置选人类或 AI（新 AI 是正在做的角色 AI；原版 AI 的名字后面带“·旧”）", 15,
+			Color("#b0bec5"))
 	box.add_child(HSeparator.new())
 
 	for i in range(SEAT_COUNT):
@@ -84,14 +88,14 @@ func _add_seat(parent: Node, i: int) -> void:
 	for k in SEAT_KINDS:
 		kind.add_item(k)
 	kind.select(DEFAULT_KINDS[i])
-	kind.custom_minimum_size = Vector2(110, 40)
+	kind.custom_minimum_size = Vector2(130, 40)
 	row.add_child(kind)
 
 	var who := OptionButton.new()
 	for c in Data.characters:
 		who.add_item("%s（%s）· %s" % [c.get("nickname", "?"), c.get("name", ""), c.get("identity", "")])
 	who.select(mini(i, Data.characters.size() - 1))
-	who.custom_minimum_size = Vector2(400, 40)
+	who.custom_minimum_size = Vector2(380, 40)
 	row.add_child(who)
 	_kind_boxes.append(kind)
 	_char_boxes.append(who)
@@ -112,14 +116,20 @@ func _on_start() -> void:
 	var used := {}
 	for i in range(SEAT_COUNT):
 		var kind: int = _kind_boxes[i].selected
-		if kind == 2:
+		if kind == EMPTY_KIND:
 			continue
 		var cid := str(Data.characters[_char_boxes[i].selected].get("id", ""))
 		if used.has(cid):
 			_hint.text = "同一个角色不能坐两个位置，请换一个。"
 			return
 		used[cid] = true
-		specs.append({"character": cid, "human": kind == 0})
+		var spec := {"character": cid, "human": kind == 0}
+		if SEAT_AI[kind] != "":
+			spec["ai"] = SEAT_AI[kind]
+		# 原版 AI 名字后面加标记，对局里分得清
+		if SEAT_AI[kind] == "original":
+			spec["name_suffix"] = "·旧"
+		specs.append(spec)
 	if specs.size() < 2:
 		_hint.text = "至少要 2 个玩家。"
 		return

@@ -11,6 +11,7 @@ extends SceneTree
 ##   seed=1        第一局的随机种子（第 k 局用 seed + k，同样的选项结果完全一样）
 ##   rel=0         初始好感：一个数 = 所有人之间；“a>b:数”= 座位 a 对座位 b（座位从 0 数），逗号分隔
 ##                 例：rel=0,0>1:-30,1>0:20
+##   set=键:值,...  临时改所有角色、所有形态的 AI 参数（不改 profiles.json），调参用。例：set=value_horizon_days:60
 ##   json=路径     另存一份原始计数（JSON），方便以后对比
 ## 每局座位顺序轮转（谁先走轮着来），统计按座位记。指标说明见 docs/ai_design.md 的 E 节。
 
@@ -45,6 +46,11 @@ func _init() -> void:
 						ev.default_relation = int(item)
 			"json":
 				json_path = value
+			"set":
+				for item in value.split(","):
+					var kv2 := item.split(":")
+					if kv2.size() == 2:
+						ev.overrides[kv2[0]] = float(kv2[1])
 			_:
 				printerr("不认识的选项：%s（用法见 tools/ai_eval.gd 开头）" % arg)
 				quit(1)

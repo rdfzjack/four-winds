@@ -20,6 +20,7 @@ var map_id := "shanghai"
 var seats: Array = []           ## [{character, form, ai}]
 var default_relation := 0       ## 所有人之间的初始好感
 var pair_relations: Dictionary = {}  ## Vector2i(座位 a, 座位 b) -> a 对 b 的初始好感
+var overrides: Dictionary = {}  ## 临时改的 AI 参数：参数名 -> 值（所有角色、所有形态）
 
 var board := Board.new()
 var rules: Dictionary = {}
@@ -46,6 +47,10 @@ func prepare() -> Array:
 			errors.append("没有形态 %s（可选：%s）" % [s["form"], ", ".join(AiProfiles.FORMS)])
 		if not AI.READY.has(s["ai"]):
 			errors.append("AI 版本 %s 还没实现（现在能用：%s）" % [s["ai"], ", ".join(AI.READY)])
+	AiProfiles.ensure_loaded()
+	for k in AiProfiles.table:
+		for name in overrides:
+			AiProfiles.table[k][name] = overrides[name]
 	_groups.clear()
 	for t in board.tiles:
 		if t["type"] == "land" and not t.has("site"):
@@ -244,9 +249,10 @@ static func _pct(a: int, b: int) -> String:
 func format_report(report: Dictionary) -> String:
 	var t: Dictionary = report["totals"]
 	var lines: Array = []
-	lines.append("地图 %s · %d 局 · 每局最多 %d 天 · 种子 %d 起 · 初始好感 %d%s" % [
+	lines.append("地图 %s · %d 局 · 每局最多 %d 天 · 种子 %d 起 · 初始好感 %d%s%s" % [
 		map_id, t["games"], max_days, seed_start, default_relation,
-		"" if pair_relations.is_empty() else "（另有 %d 对单独配置）" % pair_relations.size()])
+		"" if pair_relations.is_empty() else "（另有 %d 对单独配置）" % pair_relations.size(),
+		"" if overrides.is_empty() else " · 临时参数 %s" % str(overrides)])
 	lines.append("打完 %d/%d 局，平均第 %s 天打完；第一次破产平均第 %s 天（%d 局有人破产）；第一次有人凑齐整条街平均第 %s 天（%d 局）" % [
 		t["finished"], t["games"], _avg(t["finish_days"], t["finished"]),
 		_avg(t["first_bankrupt_days"], t["first_bankrupt_games"]), t["first_bankrupt_games"],
