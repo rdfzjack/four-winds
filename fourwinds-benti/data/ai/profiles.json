@@ -98,6 +98,9 @@
   }
  },
  "scoring": {
+  "_switch_note": "【作者定】ai_mortgage / ai_auction：AI 自己抵押、发起拍卖（1 = 开，0 = 关）。暂时关掉，第 6a 步也先不写；人类的按钮留着，人类发起的拍卖 AI 照样出价",
+  "ai_mortgage": 0,
+  "ai_auction": 0,
   "_comment": "原版 AI 的打分表（exe 里写死的，所有角色共用）。money_score_*：现金或存款低于第 1 个数得 0 分，低于第 2 个数得 10 分……都不低于得 90 分。路面格多于 big_map_roads 的地图用 big 表。",
   "big_map_roads": 80,
   "money_score_big": [

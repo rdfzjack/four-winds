@@ -165,6 +165,8 @@ static func _cash_factor(game, pi: int) -> float:
 ## 掷骰前做一件事，做了返回 true（调用者会再来一次）。原版的顺序（0x4073f0）：
 ## 交易 → 建房 → 升级 → 抵押 → 赎回 → 拍卖 → 为建房拆房，做过任何一件就从建房重新来。
 ## 为建房拆房在 _build_step 里（how = remove）。交易、拍卖每回合最多发起一次。
+## 【作者定】AI 自己抵押、发起拍卖暂时关掉（profiles.json 的 scoring.ai_mortgage / ai_auction，1 = 开）。
+## 人类发起的拍卖 AI 照样出价。
 static func _improve(game) -> bool:
 	if _trade_step(game):
 		return true
@@ -172,11 +174,11 @@ static func _improve(game) -> bool:
 		return true
 	if _upgrade_step(game):
 		return true
-	if _mortgage_step(game):
+	if _scoring("ai_mortgage", 1) == 1 and _mortgage_step(game):
 		return true
 	if _unmortgage_step(game):
 		return true
-	return _auction_step(game)
+	return _scoring("ai_auction", 1) == 1 and _auction_step(game)
 
 
 ## 建房（0x4086d0）。每次重新打分：
