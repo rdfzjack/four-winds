@@ -135,8 +135,11 @@ def main() -> int:
     lines = load(proj / "data/lines/speech.json", errors) or {}
     conditions = lines.get("conditions", {})
     for c in chars:
-        if c.get("ai_profile") not in ai.get("profiles", {}):
+        prof = ai.get("profiles", {}).get(c.get("ai_profile"))
+        if prof is None:
             errors.append(f"角色 {c.get('id')} 的 AI 参数 {c.get('ai_profile')!r} 不存在")
+        elif not isinstance(prof.get("front"), dict):
+            errors.append(f"角色 {c.get('id')} 的 AI 参数缺少 front（表形态）")
         lset = lines.get("characters", {}).get(c.get("lines"))
         if lset is None:
             errors.append(f"角色 {c.get('id')} 的台词 {c.get('lines')!r} 不存在")

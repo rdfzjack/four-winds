@@ -24,7 +24,7 @@ const CARD_STATES := [
 	"thief", "arsonist", "robber", "free_rent", "double_rent", "half_rent", "charity",
 ]
 
-## AI 的 12 个原版参数
+## AI 的 12 个原版参数（表形态 front 里必须有；里形态没写的沿用表形态）
 const AI_PARAMS := [
 	"buyLandExpect",
 	"buyCompanyExpect",
@@ -56,10 +56,12 @@ static func check_characters(characters: Array, ai: Dictionary, lines: Dictionar
 		var pid := str(c.get("ai_profile", ""))
 		if not profiles.has(pid):
 			errors.append("%s 的 AI 参数 \"%s\" 在 ai/profiles.json 里找不到" % [label, pid])
+		elif not (profiles[pid].get("front") is Dictionary):
+			errors.append("%s 的 AI 参数缺少 front（表形态）" % label)
 		else:
 			for p in AI_PARAMS:
-				if not profiles[pid].has(p):
-					errors.append("%s 的 AI 参数缺少 %s" % [label, p])
+				if not profiles[pid]["front"].has(p):
+					errors.append("%s 的 AI 参数（表形态）缺少 %s" % [label, p])
 		var lid := str(c.get("lines", ""))
 		if not line_sets.has(lid):
 			errors.append("%s 的台词 \"%s\" 在 lines/speech.json 里找不到" % [label, lid])

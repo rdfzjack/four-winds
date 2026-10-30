@@ -1,6 +1,7 @@
 extends RefCounted
 ## 原版 AI：照 1940.exe 里 Brain.cpp 的算法（反汇编读出，函数地址写在各函数的注释里）。
-## 参数是 data/ai/profiles.json 里每个角色的 12 个阈值；打分表也在那个文件的 scoring 里。
+## 参数是 data/ai/profiles.json 里每个角色的 12 个阈值（按角色 + 形态取，见 ai_profiles.gd）；
+## 打分表也在那个文件的 scoring 里。画面和评测不直接调这里，走 ai.gd 的 AI.step(game)。
 ##
 ## 用法：轮到 AI 时反复调用 Brain.step(game)，每次做一个决定；
 ## 返回 false 表示现在没有要 AI 做的事（游戏结束，或轮到人类）。
@@ -15,16 +16,11 @@ extends RefCounted
 ## 第 6a 步重写 AI 时换掉：见 _holdings_value。
 ## mortgageExpect 和 removeExpect 在 Brain.cpp 里没有被读到（已读完 23 个函数）。
 
-const JsonUtil = preload("res://scripts/core/json_util.gd")
+const AiProfiles = preload("res://scripts/core/ai_profiles.gd")
 
-const PROFILES_PATH := "res://data/ai/profiles.json"
-const CHARACTERS_PATH := "res://data/characters.json"
 ## 原版网格的四个方向（地分看这四个方向上 1–3 格）
 const DIRS := [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
 
-## 角色 id -> 参数（测试可以直接改这个字典，换别的参数）
-static var profiles: Dictionary = {}
-static var scoring: Dictionary = {}
 static var _geo: Dictionary = {}  ## Board 实例 id -> 网格信息（见 _geometry）
 
 
@@ -74,29 +70,11 @@ static func step(game) -> bool:
 # ───────────────────────── 参数 ─────────────────────────
 
 static func profile_of(game, pi: int) -> Dictionary:
-	ensure_loaded()
-	var c: String = game.players[pi].character
-	return profiles.get(c, profiles.get("", {}))
+	return AiProfiles.of(game.players[pi].character, game.players[pi].form)
 
 
 static func param(game, pi: int, key: String) -> int:
 	return int(profile_of(game, pi).get(key, 0))
-
-
-## 读 profiles.json，按 characters.json 的 ai_profile 对到角色 id。"" 是找不到时用的 standard。
-static func ensure_loaded() -> void:
-	if not profiles.is_empty():
-		return
-	var errors: Array = []
-	var file := JsonUtil.load_dict(PROFILES_PATH, errors)
-	var chars := JsonUtil.load_dict(CHARACTERS_PATH, errors)
-	if not errors.is_empty():
-		push_error("原版 AI 读不到参数：%s" % str(errors))
-	var by_id: Dictionary = file.get("profiles", {})
-	scoring = file.get("scoring", {})
-	profiles[""] = by_id.get("standard", {})
-	for c in chars.get("characters", []):
-		profiles[str(c["id"])] = by_id.get(str(c.get("ai_profile", "standard")), profiles[""])
 
 
 # ───────────────────────── 被动决定：买、银行、保释 ─────────────────────────
@@ -697,9 +675,8 @@ static func _company_score(game, pi: int, tile: int) -> int:
 ## 现金分 / 存款分（0x407ec0 / 0x4080d0）：按金额分档，0–90。
 ## 路面格多于 big_map_roads 的地图用 big 档，否则 small 档。
 static func _money_score(game, amount: int) -> int:
-	ensure_loaded()
 	var big: bool = _geometry(game.board)["road_count"] > int(_scoring("big_map_roads", 80))
-	var table: Array = scoring.get("money_score_big" if big else "money_score_small", [])
+	var table: Array = AiProfiles.scoring.get("money_score_big" if big else "money_score_small", [])
 	var score := 0
 	for step_limit in table:
 		if amount < int(step_limit):
@@ -718,8 +695,8 @@ static func _free_pct(game) -> int:
 
 
 static func _scoring(key: String, fallback: int) -> int:
-	ensure_loaded()
-	return int(scoring.get(key, fallback))
+	AiProfiles.ensure_loaded()
+	return int(AiProfiles.scoring.get(key, fallback))
 
 
 ## 地图的网格信息（只算一次）：

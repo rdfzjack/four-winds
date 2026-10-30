@@ -3,12 +3,13 @@ extends "res://tests/game_tests.gd"
 ## 借用 game_tests.gd 的开局和造数据的小函数（40 格简化图）。
 
 const Brain = preload("res://scripts/core/brain.gd")
+const AiProfiles = preload("res://scripts/core/ai_profiles.gd")
 
 
 func run(p_runner: Object) -> void:
 	if not load_data(p_runner):
 		return
-	Brain.ensure_loaded()
+	AiProfiles.ensure_loaded()
 	test_mortgage()
 	test_unmortgage()
 	test_auction()

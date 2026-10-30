@@ -5,6 +5,9 @@ const JsonUtil = preload("res://scripts/core/json_util.gd")
 const Board = preload("res://scripts/core/board.gd")
 const Game = preload("res://scripts/core/game.gd")
 const Brain = preload("res://scripts/core/brain.gd")
+const AiProfiles = preload("res://scripts/core/ai_profiles.gd")
+const AI = preload("res://scripts/core/ai.gd")
+const EvalLib = preload("res://tools/ai_eval_lib.gd")
 
 ## 每局最多跑几天（再长的局只是重复，测试太慢）
 const MAX_DAYS := 120
@@ -27,11 +30,13 @@ func run(p_runner: Object) -> void:
 	errors.append_array(shanghai.load_from(JsonUtil.load_dict(maps_dir + "shanghai.json", errors)))
 	errors.append_array(loop.load_from(JsonUtil.load_dict(maps_dir + "shanghai_loop.json", errors)))
 	check(errors.is_empty(), "AI 测试需要的数据能读取 %s" % str(errors))
-	Brain.ensure_loaded()
+	AiProfiles.ensure_loaded()
 	test_scores()
 	test_games(shanghai, 12, "原版上海")
 	test_games(loop, 6, "40 格简化图")
 	test_profile_differences()
+	test_interface()
+	test_eval_tool()
 
 
 func check(ok: bool, what: String) -> void:
@@ -91,7 +96,7 @@ func test_scores() -> void:
 	var low := ""
 	var high := ""
 	for id in ids:
-		var f := int(Brain.profiles[id].get("bailFactor", 100))
+		var f := int(AiProfiles.of(id).get("bailFactor", 100))
 		if f < 100:
 			low = id
 		elif f >= 100:
@@ -242,7 +247,7 @@ func play(g: Game) -> Dictionary:
 
 ## 同样的对局，只改一个参数，行为要有可测的差别
 func test_profile_differences() -> void:
-	var saved := Brain.profiles.duplicate(true)
+	var saved := AiProfiles.table.duplicate(true)
 	var ids := char_ids()
 	var low_buy := _run_with({"buyLandExpect": 20}, ids)
 	var high_buy := _run_with({"buyLandExpect": 45}, ids)
@@ -262,15 +267,15 @@ func test_profile_differences() -> void:
 	var b_high := int(high_build.get("built", 0))
 	print("buildHouseExpect 30 / 70：建房 %d / %d" % [b_low, b_high])
 	check(b_low > b_high, "原版 AI：buildHouseExpect 越小越爱建房")
-	Brain.profiles = saved
+	AiProfiles.table = saved
 
 
 ## 4 个角色都换成同一组参数（标准参数 + changes），在原版上海跑几局，返回所有人加起来的计数
 func _run_with(changes: Dictionary, ids: Array) -> Dictionary:
-	var base: Dictionary = Brain.profiles[""].duplicate()
+	var base: Dictionary = AiProfiles.table[""].duplicate()
 	base.merge(changes, true)
 	for id in ids:
-		Brain.profiles[id] = base
+		AiProfiles.table[AiProfiles.key(id, "front")] = base
 	var total := {}
 	for seed_value in range(1, 7):
 		var r := play(new_game(shanghai, ids, 100 + seed_value))
@@ -282,3 +287,52 @@ func _run_with(changes: Dictionary, ids: Array) -> Dictionary:
 
 func _ratio(d: Dictionary, a: String, b: String) -> float:
 	return float(d.get(a, 0)) / maxf(1.0, float(d.get(b, 0)))
+
+
+## AI 接口：按角色 + 形态取参数、AI 版本、关系值
+func test_interface() -> void:
+	var front := AiProfiles.of("david", "front")
+	var back := AiProfiles.of("david", "back")
+	check(int(front.get("buyLandExpect", -1)) == int(back.get("buyLandExpect", -2))
+			and not back.has("_todo"), "AI 参数：里形态没写的数沿用表形态")
+	var group := {"front": {"a": 1, "b": 2}, "back": {"b": 3, "_note": "x"}}
+	var merged := AiProfiles.merged(group, "back")
+	check(merged == {"a": 1, "b": 3}, "AI 参数：里形态写了的数覆盖表形态")
+	var g := Game.new()
+	g.setup(loop, rules, cards_file, characters, [
+		{"character": "david", "form": "back", "relations": {1: -30}},
+		{"character": "david"},
+	], 1)
+	g.start()
+	var p1 = g.players[1]
+	check(g.players[0].form == "back" and p1.form == "front" and p1.ai == "original",
+			"开局 specs 能指定形态和 AI 版本（同一角色表、里可以同局）")
+	check(g.relation(0, 1) == -30 and g.relation(1, 0) == 0, "关系值是单向的，能配置初始值")
+	g.change_relation(1, 0, 5)
+	var ev: Array = g.drain_events().filter(
+			func(e: Dictionary) -> bool: return e["type"] == "relation")
+	check(g.relation(1, 0) == 5 and ev.size() == 1, "改关系值会记一条 relation 事件")
+	check(AI.step(g), "AI.step 能驱动原版 AI")
+
+
+## 评测工具：小规模跑通，能拒绝还没实现的 AI 版本
+func test_eval_tool() -> void:
+	var ev := EvalLib.new()
+	ev.map_id = "shanghai_loop"
+	ev.games = 2
+	ev.max_days = 15
+	ev.default_relation = 7
+	for s in ["david", "giorgio:front", "marcel::original", "eric"]:
+		ev.seats.append(EvalLib.parse_seat(s))
+	var errors := ev.prepare()
+	check(errors.is_empty(), "评测工具读得到数据 %s" % str(errors))
+	var report := ev.run()
+	var seat0: Dictionary = report["per_seat"][0]
+	check(report["totals"]["games"] == 2 and report["totals"]["bad"].is_empty()
+			and int(seat0.get("games", 0)) == 2 and int(seat0.get("offer_land", 0)) > 0
+			and int(seat0.get("rel_given", 0)) == 7 * 3 * 2,
+			"评测工具跑通 2 局并统计到每个座位 %s" % str(report["totals"]["bad"]))
+	check(ev.format_report(report).contains("david/front/original"), "评测工具能出报告")
+	var bad := EvalLib.new()
+	bad.seats = [EvalLib.parse_seat("david:back:new"), EvalLib.parse_seat("eric")]
+	check(not bad.prepare().is_empty(), "评测工具拒绝还没实现的 AI 版本")

@@ -20,10 +20,10 @@ var characters: Array = []
 var maps: Dictionary = {}  ## 地图 id -> Board
 var cards: Array = []  ## 机会卡列表
 var special_events: Array = []  ## 不在牌堆里的特殊事件（古董、倒塌等）
-var ai_profiles: Dictionary = {}  ## AI 参数 id -> {参数名: 数值}
+var ai_profiles: Dictionary = {}  ## AI 参数组 id -> {形态: {参数名: 数值}}（AI 自己用 ai_profiles.gd 读）
 var lines: Dictionary = {}  ## 整个 lines/speech.json
 var errors: Array = []  ## 读取或校验时发现的问题，主界面会显示出来
-## 主界面选好的座位，开局时交给棋盘画面：[{character: 角色 id, human: bool}, ...]
+## 主界面选好的座位，开局时交给棋盘画面：[{character: 角色 id, human: bool}, ...]（格式见 Game.setup）
 var start_specs: Array = []
 var start_map: String = ""   ## 主界面选的地图 id；空 = 默认地图
 
