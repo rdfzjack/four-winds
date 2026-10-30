@@ -42,6 +42,8 @@ const GRASS_MARGIN := 4                 ## 地图四周多铺几圈草地
 const DRAG_THRESHOLD := 6.0             ## 按下后移动超过这么多像素算拖动，不算点击
 ## 同一格站了几个人时，各自往哪边挪一点（像素）
 const TOKEN_SLOTS := [Vector2(0, -2), Vector2(-16, 2), Vector2(16, 2), Vector2(0, 8)]
+## 路口选方向时各个方向的路用的颜色（界面按钮也用同样的颜色）
+const ROUTE_COLORS := [Color("#4fc3f7"), Color("#ffb74d"), Color("#ce93d8"), Color("#a5d6a7")]
 ## Flag 图里 4 个箭头的顺序
 const ARROW_FRAMES := {"up_left": 0, "up_right": 1, "down_right": 2, "down_left": 3}
 
@@ -51,6 +53,7 @@ var camera: Camera2D = null
 var player_colors: Array = []
 
 var highlight: Array = []           ## 要高亮的格子（选方向）
+var routes: Array = []              ## 路口每个方向要走的路（Game.direction_routes()）
 var hover_highlight: Array = []     ## 鼠标停在建房按钮上时要占的地
 var info_tile: int = -1             ## 点中的格子
 
@@ -165,12 +168,15 @@ func _layout() -> void:
 	_grass = Rect2i(lo - Vector2i.ONE * GRASS_MARGIN, hi - lo + Vector2i.ONE * (2 * GRASS_MARGIN + 1))
 
 
-## 直路上的格子：取垂直于路、离地图中心更远的那一格；拐角返回 null
+## 直路上的格子：取垂直于路、离地图中心更远的那一格。
+## 拐角：空地按走进拐角的那段路算（排在同一排地的末尾），别的类型返回 null（画在路面上）
 func _outside_cell(id: int, from: int, to: int, centre: Vector2):
 	var here: Vector2 = _road_cell[id]
 	var d_in: Vector2 = here - _road_cell[from]
 	var d_out: Vector2 = _road_cell[to] - here
-	if not d_in.is_equal_approx(d_out) or absf(d_in.x) + absf(d_in.y) != 1.0:
+	if absf(d_in.x) + absf(d_in.y) != 1.0:
+		return null
+	if not d_in.is_equal_approx(d_out) and str(board.get_tile(id)["type"]) != "land":
 		return null
 	var n := Vector2(d_in.y, -d_in.x)
 	if n.dot(here - centre) < 0.0:
@@ -219,6 +225,8 @@ func _draw() -> void:
 		_draw_road(id)
 	for id in _lot_cell:
 		_draw_lot(id)
+	for i in routes.size():
+		_draw_route(routes[i], ROUTE_COLORS[i % ROUTE_COLORS.size()])
 	for id in highlight:
 		_draw_choice(int(id))
 	for id in hover_highlight + [info_tile]:
@@ -229,7 +237,7 @@ func _draw() -> void:
 	for id in _lot_cell:
 		items.append([Iso.depth(_lot_cell[id]), 0, id])
 	for t in board.tiles:
-		if not _lot_cell.has(int(t["id"])) and str(t["type"]) != "land":
+		if not _lot_cell.has(int(t["id"])) and not _is_bare_road(t):
 			items.append([Iso.depth(_road_cell[int(t["id"])]) - 0.01, 0, int(t["id"])])
 	var slots := {}
 	for p in game.players:
@@ -310,17 +318,27 @@ func _draw_choice(id: int) -> void:
 		_draw_frame("arrow", cell, int(ARROW_FRAMES.get(Iso.facing(cell - _road_cell[from]), 0)))
 
 
+## 一个方向要走的路：路面铺一层颜色，最后一格画圈（落点）或描边（下一个路口）
+func _draw_route(r: Dictionary, color: Color) -> void:
+	var tiles: Array = r["tiles"]
+	for t in tiles:
+		draw_colored_polygon(Iso.diamond(_road_cell[int(t)], 0.75), Color(color, 0.45))
+	var last: Vector2 = _road_cell[int(tiles[-1])]
+	draw_polyline(_closed(Iso.diamond(last, 1.0)), color, 4.0 if r["ends"] else 2.0)
+	_text("落点" if r["ends"] else "路口", Iso.to_world(last) + Vector2(0, 26), 13, color)
+
+
 func _draw_select(cell: Vector2) -> void:
 	if not _draw_frame("select", cell):
 		draw_polyline(_closed(Iso.diamond(cell, 0.95)), Color("#fff176"), 3.0)
 
 
-## 路边格上的公共建筑 / 房子画成方块；拐角上的特殊格不画方块
+## 路边格上的公共建筑 / 房子画成方块；拐角上的特殊格不画方块，拐角上的地把房子画在路面上
 func _draw_structure(id: int) -> void:
 	var t := board.get_tile(id)
-	if not _lot_cell.has(id):
+	if not _lot_cell.has(id) and str(t["type"]) != "land":
 		return
-	var cell: Vector2 = _lot_cell[id]
+	var cell: Vector2 = _lot_cell.get(id, _road_cell[id])
 	if str(t["type"]) == "land":
 		var hid := game.house_at(id)
 		if hid != 0:
@@ -368,6 +386,9 @@ func _draw_label(t: Dictionary) -> void:
 	_text(name_text, pos + Vector2(0, -2), 12, Color.WHITE)
 	if game.props.has(id):
 		var sub := "%d" % game.property_price(id) if game.owner_of(id) < 0 else "租 %d" % game.rent_of(id)
+		var hid := game.house_at(id)
+		if hid != 0:
+			sub = "%s · %s" % [house_name(str(game.houses[hid]["kind"])), sub]
 		if game.props[id]["mortgaged"]:
 			sub = "抵押中"
 		_text(sub, pos + Vector2(0, 11), 10, Color("#fff59d"))
@@ -409,6 +430,14 @@ func _text(text: String, centre: Vector2, size: int, color: Color) -> void:
 
 func _type_color(t: Dictionary, darken: float) -> Color:
 	return (TYPE_COLORS.get(str(t["type"]), Color.MAGENTA) as Color).darkened(darken)
+
+
+## 房子种类的中文名（rules.json 的 houses.levels）
+func house_name(kind: String) -> String:
+	for lv in Data.rules["houses"]["levels"]:
+		if str(lv["id"]) == kind:
+			return str(lv["name"])
+	return kind
 
 
 func _house_level(kind: String) -> int:

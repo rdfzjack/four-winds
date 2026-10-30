@@ -318,15 +318,12 @@ func _pname(i: int) -> String:
 
 
 func _tname(i: int) -> String:
-	var t: Dictionary = board.get_tile(i)
+	var t: Dictionary = board.get_tile(board.site(i))  # 分身格用它代表的那块地 / 建筑的名字
 	return str(t.get("name", MapView.TYPE_NAMES.get(str(t["type"]), "")))
 
 
 func _house_name(kind: String) -> String:
-	for lv in Data.rules["houses"]["levels"]:
-		if str(lv["id"]) == kind:
-			return str(lv["name"])
-	return kind
+	return _map.house_name(kind)
 
 
 # gdlint: disable=max-returns
@@ -394,15 +391,14 @@ func _describe(ev: Dictionary) -> String:
 		"house_smashed":
 			return "%s 的一栋房子被砸了" % _pname(pi)
 		"built":
-			return "%s 建成%s，花了 %d 万" % [_pname(pi), _house_name(str(ev["kind"])), int(ev["cost"])]
+			return "%s %s%s，花了 %d 万" % [_pname(pi), "改建成" if ev.get("rebuild", false) else "建成",
+					_house_name(str(ev["kind"])), int(ev["cost"])]
 		"antique":
 			return "%s 挖到古董，得 %d 万" % [_pname(pi), int(ev["amount"])]
 		"collapse":
 			return "%s 刚盖的房子倒塌了！" % _pname(pi)
 		"upgraded":
 			return "%s 的房子升级成%s" % [_pname(pi), _house_name(str(ev["kind"]))]
-		"merged":
-			return "%s 把平房合并成%s，花了 %d 万" % [_pname(pi), _house_name(str(ev["kind"])), int(ev["cost"])]
 		"removed":
 			return "%s 拆了房子，退回 %d 万" % [_pname(pi), int(ev["refund"])]
 		"bankrupt":
@@ -461,7 +457,7 @@ func _speak(ev: Dictionary) -> void:
 		"jailed":
 			who = int(ev["player"])
 			cond = "TO_JAIL"
-		"built", "merged":
+		"built":
 			if str(ev["kind"]) == "villa":
 				who = int(ev["player"])
 				cond = "BUILD_VILLA"
@@ -552,6 +548,7 @@ func _refresh() -> void:
 
 func _clear_controls() -> void:
 	_map.highlight = []
+	_map.routes = []
 	for c in _controls.get_children():
 		c.queue_free()
 	_map.queue_redraw()
@@ -582,12 +579,16 @@ func _show_controls() -> void:
 		return
 	match str(game.pending["type"]):
 		"choose_direction":
-			_make_label(_controls, "前面是十字路口，往哪边走？", 14, Color("#fff59d"))
+			_make_label(_controls, "前面是十字路口，点地图上的路或这里的按钮选方向", 14, Color("#fff59d"))
 			_map.highlight = game.pending["options"].duplicate()
-			for tile in game.pending["options"]:
-				var t: int = tile
-				_button("往 %s" % _tname(t), func() -> void: _do(func() -> void:
-						game.choose_direction(t)))
+			_map.routes = game.direction_routes()
+			for i in _map.routes.size():
+				var r: Dictionary = _map.routes[i]
+				var t: int = r["option"]
+				var last: int = r["tiles"][-1]
+				var where := "落在 %s" % _tname(last) if r["ends"] else "走到 %s 的路口再选" % _tname(last)
+				var b := _button(where, func() -> void: _do(func() -> void: game.choose_direction(t)))
+				b.modulate = MapView.ROUTE_COLORS[i % MapView.ROUTE_COLORS.size()]
 		"bank":
 			_show_bank_controls(p)
 		"buy_land", "buy_company":
@@ -744,22 +745,16 @@ func _rebuild_house_dialog(message: String) -> void:
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(list)
 
-	var options: Array = game.build_options(p.index)
-	_section(list, "建房", options.size())
-	for o in options:
+	# 建房（含改建）：钱不够、抵押、有人站着的也列出来，按钮变灰并写原因
+	var choices: Array = game.build_choices(p.index)
+	_section(list, "建房（地上有自己的小房子就是改建，只付差价）", choices.size())
+	for o in choices:
 		var tiles: Array = o["tiles"]
-		var text := "建%s · %s · 造价 %d" % [_house_name(str(o["kind"])), _tiles_text(tiles), int(o["cost"])]
-		_dialog_button(list, text, tiles, func() -> void:
-				_house_action(game.build(p.index, str(o["kind"]), tiles)))
-
-	var merges: Array = game.build_options(p.index, true)
-	_section(list, "合并平房", merges.size())
-	for o in merges:
-		var tiles: Array = o["tiles"]
-		var text := "合并成%s · %s · 付 %d" % [_house_name(str(o["kind"])), _tiles_text(tiles),
+		var verb := "改建成" if not game.replaced_houses(tiles).is_empty() else "建"
+		var text := "%s%s · %s · 付 %d" % [verb, _house_name(str(o["kind"])), _tiles_text(tiles),
 				int(o["cost"])]
 		_dialog_button(list, text, tiles, func() -> void:
-				_house_action(game.merge(p.index, str(o["kind"]), tiles)))
+				_house_action(game.build(p.index, str(o["kind"]), tiles)), str(o["why"]))
 
 	var upgradable: Array = []
 	var mine: Array = []
@@ -768,7 +763,7 @@ func _rebuild_house_dialog(message: String) -> void:
 		if h["owner"] != p.index:
 			continue
 		mine.append(hid)
-		if game.why_cannot_upgrade(p.index, hid) == "":
+		if game.can_ever_upgrade(hid):
 			upgradable.append(hid)
 	_section(list, "升级", upgradable.size())
 	for hid in upgradable:
@@ -777,7 +772,7 @@ func _rebuild_house_dialog(message: String) -> void:
 		var text := "%s 升级 · %s · 费用 %d" % [_house_name(str(h["kind"])), _tiles_text(h["tiles"]),
 				game.upgrade_fee(h["tiles"])]
 		_dialog_button(list, text, h["tiles"], func() -> void:
-				_house_action(game.upgrade(p.index, id)))
+				_house_action(game.upgrade(p.index, id)), game.why_cannot_upgrade(p.index, id))
 
 	_section(list, "拆房", mine.size())
 	for hid in mine:
@@ -789,8 +784,8 @@ func _rebuild_house_dialog(message: String) -> void:
 		_dialog_button(list, text, h["tiles"], func() -> void:
 				_house_action(game.remove_house(p.index, id)))
 
-	if options.size() + merges.size() + upgradable.size() + mine.size() == 0:
-		_make_label(list, "现在没有能建、能合并、能升级或能拆的房子", 13, Color("#90a4ae"))
+	if choices.size() + upgradable.size() + mine.size() == 0:
+		_make_label(list, "还没有能建房的地", 13, Color("#90a4ae"))
 
 	var close := Button.new()
 	close.text = "关闭"
@@ -811,9 +806,12 @@ func _tiles_text(tiles: Array) -> String:
 	return "%s ~ %s" % [_tname(int(tiles[0])), _tname(int(tiles[tiles.size() - 1]))]
 
 
-func _dialog_button(parent: Node, text: String, tiles: Array, on_press: Callable) -> void:
+## why 不为空时按钮变灰，后面写上为什么不能点
+func _dialog_button(parent: Node, text: String, tiles: Array, on_press: Callable,
+		why: String = "") -> void:
 	var b := Button.new()
-	b.text = text
+	b.text = text if why == "" else "%s（%s）" % [text, why]
+	b.disabled = why != ""
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.pressed.connect(on_press)
 	b.mouse_entered.connect(func() -> void:
@@ -881,7 +879,8 @@ func _rebuild_mortgage_dialog(message: String) -> void:
 	for t in mortgaged:
 		var tile: int = t
 		_dialog_button(list, "赎回 %s · 付 %d" % [_tname(tile), game.unmortgage_cost(tile)], [tile],
-				func() -> void: _mortgage_action(game.unmortgage(pi, tile)))
+				func() -> void: _mortgage_action(game.unmortgage(pi, tile)),
+				game.why_cannot_unmortgage(pi, tile))
 	if can_mortgage.is_empty() and mortgaged.is_empty():
 		_make_label(list, "现在没有能抵押或赎回的地产", 13, Color("#90a4ae"))
 	_add_close_button()
@@ -1058,11 +1057,31 @@ func _show_game_over() -> void:
 # ───────────────────────── 点格子看详情 ─────────────────────────
 
 func _on_tile_clicked(tile: int) -> void:
+	if _pick_direction_by_click(tile):
+		return
 	if tile >= 0:
 		tile = board.site(tile)  # 点到分身格，显示它代表的那块地 / 建筑
 	_map.info_tile = tile
 	_info_label.text = _tile_info(tile)
 	_map.queue_redraw()
+
+
+## 路口选方向时点地图：点中哪个方向要走的路（或路边的地）就往哪边走。点中了返回 true
+func _pick_direction_by_click(tile: int) -> bool:
+	if tile < 0 or _busy or game.pending.get("type", "") != "choose_direction" \
+			or not game.players[game.actor()].human:
+		return false
+	var best := -1
+	var best_at := 1 << 30
+	for r in game.direction_routes():
+		for i in r["tiles"].size():
+			if board.site(int(r["tiles"][i])) == board.site(tile) and i < best_at:
+				best = int(r["option"])
+				best_at = i
+	if best < 0:
+		return false
+	_do(func() -> void: game.choose_direction(best))
+	return true
 
 
 func _tile_info(i: int) -> String:

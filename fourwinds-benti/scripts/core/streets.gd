@@ -4,8 +4,8 @@ extends RefCounted
 ## 每条街的情况（玩家在上面有地的街才列出）：凑大房子还差什么。AI 和建房界面都用它。
 ## 用法：Streets.progress(game, 玩家编号)
 ## 返回 [{group, name, total: 这条街几块地, mine: 自己有几块, free: 还没主人的几块,
-##         others: 别人有几块, run: 自己的空地或平房（没抵押）沿路最多连着几块}]
-## 平房也算进 run：并排的平房可以合并成大房子（Game.merge）
+##         others: 别人有几块, run: 自己没抵押、不是别墅的地沿路最多连着几块}]
+## 有小房子的地也算进 run：可以改建成更大的房子（Game.build，rules.json 的 houses.rebuild）
 static func progress(game, pi: int) -> Array:
 	var out: Array = []
 	var by_group := {}
@@ -37,12 +37,12 @@ static func progress(game, pi: int) -> Array:
 	return out
 
 
-## 自己的、没抵押、空着或只有一栋平房的地
+## 自己的、没抵押、空着或房子不到 4 块地的地
 static func _is_free_lot(game, pi: int, tile: int) -> bool:
 	if game.owner_of(tile) != pi or game.props[tile]["mortgaged"]:
 		return false
 	var hid: int = game.house_at(tile)
-	return hid == 0 or str(game.houses[hid]["kind"]) == "flat"
+	return hid == 0 or game.houses[hid]["tiles"].size() < 4
 
 
 static func _free_chain_exists(game, pi: int, start: int, n: int) -> bool:

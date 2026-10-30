@@ -220,7 +220,7 @@ func play(g: Game) -> Dictionary:
 				"bought":
 					var kind := "land" if g.board.get_tile(int(ev["tile"]))["type"] == "land" else "company"
 					e["bought_" + kind] = int(e.get("bought_" + kind, 0)) + 1
-				"built", "merged":
+				"built":
 					e["built"] = int(e.get("built", 0)) + 1
 					if str(ev["kind"]) != "flat":
 						e["big"] = int(e.get("big", 0)) + 1
