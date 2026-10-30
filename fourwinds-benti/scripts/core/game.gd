@@ -843,6 +843,11 @@ func roll() -> Dictionary:
 	return {"dice": dice, "steps": steps}
 
 
+## 这次移动已经路过、触发过效果的建筑（正格 -> true），AI 估路口时用。返回副本。
+func passed_this_move() -> Dictionary:
+	return _move.get("passed", {}).duplicate()
+
+
 ## 十字路口选方向。tile 是 pending["options"] 里的一个格子编号。
 func choose_direction(tile: int) -> bool:
 	if pending.get("type", "") != "choose_direction" or not pending["options"].has(tile):
