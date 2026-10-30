@@ -1,5 +1,5 @@
 {
- "_comment": "AI 参数，按“参数组 → 形态”分条目：每个参数组有 front（表形态）和 back（里形态），characters.json 的 ai_profile 指向参数组。取参数走 scripts/core/ai.gd 的 AI.profile(角色, 形态)：先拿 front，再用该形态里写了的数覆盖（里形态只写和表形态不同的数）。front 现在是原版 12 项阈值 + 保释系数（来源 shanghai1940/Ai/Standard.ai，based_on = 借用的原版角色），给原版 AI（brain.gd）用；第 6a 步新 AI 的参数（估价、交易区间等）以后加在同一个形态里。back 第 8 步再填。设计见 docs/ai_design.md。",
+ "_comment": "AI 参数，按“参数组 → 形态”分条目：每个参数组有 front（表形态）和 back（里形态），characters.json 的 ai_profile 指向参数组。取参数走 scripts/core/ai_profiles.gd 的 AiProfiles.of(角色, 形态)：standard 的 front 打底（新 AI 的共用参数写在那里），叠上该角色参数组的 front，再用该形态里写了的数覆盖（里形态只写和表形态不同的数）。front 现在是原版 12 项阈值 + 保释系数（来源 shanghai1940/Ai/Standard.ai，based_on = 借用的原版角色），给原版 AI（brain.gd）用；第 6a 步新 AI 的参数（估价、交易区间等）以后加在同一个形态里。back 第 8 步再填。设计见 docs/ai_design.md。",
  "params": {
   "buyLandExpect": "越小，越喜欢买土地",
   "buyCompanyExpect": "越小，越喜欢买企业",
@@ -13,7 +13,14 @@
   "acceptableDiffenceInTrade": "交易中能接受的价值差（百分比，负数 = 愿意吃亏）",
   "tradeCycle": "平均几回合主动找人交易一次",
   "maxInvestment": "资金低于 总资产 × 此值 ÷ 100 时不再投资",
-  "bailFactor": "越小，越愿意交保释金：现金因子 × 此值 < 100 就交。不在 .ai 文件里，原版按人物写死在 exe 中（董莺雨 100、四毛 140、包德利 100、陈玛丽 70、赛珍珠 100、冯全篾 120、发达而 60、金如山 160）"
+  "bailFactor": "越小，越愿意交保释金：现金因子 × 此值 < 100 就交。不在 .ai 文件里，原版按人物写死在 exe 中（董莺雨 100、四毛 140、包德利 100、陈玛丽 70、赛珍珠 100、冯全篾 120、发达而 60、金如山 160）",
+  "value_horizon_days": "【新 AI】估价看多少天：地产值多少 = 价格 + 这么多天的预计租金（越大越看长线）",
+  "skip_day_value": "【新 AI】少走一天（坐牢、游览）折合多少万圆",
+  "chance_value": "【新 AI】停在机会格折合多少万圆（机会卡估价以后做，先用固定分）",
+  "bank_pass_value": "【新 AI】路过银行（能存取款）折合多少万圆",
+  "bank_stop_value": "【新 AI】停在银行折合多少万圆",
+  "believer_value": "【新 AI】停在教堂当信徒折合多少万圆（路上碰到人要施舍）",
+  "bankrupt_penalty": "【新 AI】破产（出局）在失去全部资产之外再折合多少万圆的损失"
  },
  "profiles": {
   "standard": {
@@ -31,7 +38,15 @@
     "acceptableDiffenceInTrade": -20,
     "tradeCycle": 1,
     "maxInvestment": 10,
-    "bailFactor": 100
+    "bailFactor": 100,
+    "_new_ai": "以下是新 AI（scripts/core/valuer.gd 等）的共用参数，所有角色都从这里继承，角色要不同就在自己的参数组里写",
+    "value_horizon_days": 30,
+    "skip_day_value": 30,
+    "chance_value": 0,
+    "bank_pass_value": 10,
+    "bank_stop_value": 0,
+    "believer_value": -10,
+    "bankrupt_penalty": 1000
    }
   },
   "david": {

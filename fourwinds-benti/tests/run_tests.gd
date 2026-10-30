@@ -12,6 +12,7 @@ const AiTests = preload("res://tests/ai_tests.gd")
 const StreetTests = preload("res://tests/street_tests.gd")
 const OriginalMapTests = preload("res://tests/original_map_tests.gd")
 const TradeTests = preload("res://tests/trade_tests.gd")
+const ValuerTests = preload("res://tests/valuer_tests.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
 const Art = preload("res://scripts/ui/art.gd")
 
@@ -55,6 +56,7 @@ func run_logic_tests() -> void:
 	OriginalMapTests.new().run(self)
 	TradeTests.new().run(self)
 	AiTests.new().run(self)
+	ValuerTests.new().run(self)
 
 
 func check(ok: bool, what: String) -> void:

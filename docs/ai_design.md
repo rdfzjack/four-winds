@@ -156,10 +156,39 @@ godot --headless --script res://tools/ai_eval.gd -- seats=david,giorgio,marcel,e
 
 | 东西 | 在哪 | 说明 |
 |---|---|---|
-| AI 入口 | `scripts/core/ai.gd` 的 `AI.step(game)` | 和 `Brain.step(game)` 一样：轮到 AI 时反复调用，每次做一个决定，返回 false = 没有要 AI 做的事。按玩家的 `ai` 字段分给对应版本；`VERSIONS` 列出 `original` / `new` / `standard`，`READY` 是已实现的（现在只有 `original`）。画面（`table.gd`）已改成调它 |
+| AI 入口 | `scripts/core/ai.gd` 的 `AI.step(game)` | 和 `Brain.step(game)` 一样：轮到 AI 时反复调用，每次做一个决定，返回 false = 没有要 AI 做的事。按玩家的 `ai` 字段分给对应版本；`VERSIONS` 列出 `original` / `new` / `standard`，`READY` 是能用的（现在是 `original`、`new`）。画面（`table.gd`）已改成调它 |
+| 新 AI | `scripts/core/new_ai.gd` 的 `NewAi.step(game)` | 做完的模块接管对应的决定，还没做的交给原版 AI。估价在 `valuer.gd` |
 | 形态、AI 版本 | `Player.form`（`front` / `back`）、`Player.ai` | 开局 specs 里写 `"form"`、`"ai"`，默认 `front`、`original`。同一角色的表和里可以同局 |
 | 参数 | `scripts/core/ai_profiles.gd` 的 `AiProfiles.of(角色, 形态)`，或 `AI.profile(game, 玩家)` | 读 `data/ai/profiles.json` |
-| 参数文件结构 | `data/ai/profiles.json` 的 `profiles` | `参数组 → {front: {...}, back: {...}}`，`characters.json` 的 `ai_profile` 指向参数组。取 back 时先拿 front，再用 back 里写了的数覆盖（以 `_` 开头的键是说明）。现在 front = 原版 12 项 + 保释系数（给 `brain.gd` 用），back 只有 `_todo`。新 AI 的参数（估价、F 节的交易区间等）实现时加在同一个形态里，键名实现时定 |
+| 参数文件结构 | `data/ai/profiles.json` 的 `profiles` | `参数组 → {front: {...}, back: {...}}`，`characters.json` 的 `ai_profile` 指向参数组。取 back 时先拿 front，再用 back 里写了的数覆盖（以 `_` 开头的键是说明）。现在 front = 原版 12 项 + 保释系数（给 `brain.gd` 用），back 只有 `_todo`。**standard 的 front 给所有角色打底**：新 AI 的共用参数（`value_horizon_days` 等）只写在那里，角色要不同就在自己的参数组里写。新 AI 的参数（估价、F 节的交易区间等）实现时加在同一个形态里，键名实现时定 |
 | 关系值 | `Player.relations`：对手玩家编号 → 好感 | 每对玩家单向一份，没有记录 = 0。用玩家编号不用角色 id（表和里可以同局）。读写走 `game.relation(a, b)` / `game.change_relation(a, b, 变化)`（会记一条 `relation` 事件）。开局 specs 的 `"relations": {对手编号: 初始值}`。**第 7 步存档要存**（JSON 读回后键是字符串，要 `int()`）。范围、初始值、怎么涨跌第 6a 步交易模块再定 |
 | 性格动作计数 | `game.ai_note(玩家, kind)` | 记一条 `ai_note` 事件给评测数：`slip` = 按错，`mercy` = 放水；以后要数别的再加 kind |
 | AI 临时记忆 | `Player.ai_memory` | 原版 AI 已在用；第 7 步存档要存 |
+
+## 实现记录（第 6a 步 ②）
+
+### 估价（`scripts/core/valuer.gd`，已完成）
+
+结果都折合成万圆，正数 = 对自己有利。参数在 `profiles.json` 的 standard 表形态（`value_horizon_days`、`skip_day_value`、`chance_value`、`bank_pass_value`、`bank_stop_value`、`believer_value`、`bankrupt_penalty`），说明在同一文件的 `params`。
+
+- **停下概率**：按地图算一次每格被停下的概率（两颗骰子、路口平均分岔，不算机会卡传送和坐牢）。原版上海、一圈图都加起来等于 1（测试验证）。
+- **地产值多少** = 价格 + `value_horizon_days`（默认 30）天 × 每天预计收入。每天预计收入 = 活着的对手人数 × 停下概率 × 预计租金。
+  - 地的预计租金 = max(现在的租金, 发展后租金)。发展后租金 = 平房单价 + (这条街能盖的最大房子的单价 − 平房单价) × (自己占这条街的比例)²，再乘地价系数。不扣造价（买地和建房模块再算）。草案，可改。
+  - 企业：按归自己后同行业的家数算租金。
+- **停在某格的得失**：别人的地产 = −实付租金（抵押、主人坐牢 / 游览、自己的免租 / 双倍 / 半价、纵火犯、强盗都算进去）；付不起 = −(租金 + 自己全部资产 + `bankrupt_penalty`)；买得起的空地 = 值多少 − 价格；巡捕房 = −平均保释金（现金不够时按坐牢天数算）；公园 = −少走的天数；赛马场 = 平均奖金；机会格、银行、教堂用固定分。
+- **路上**：路过银行（固定分，一次移动里同一栋建筑只算一次）、路过教堂（这次会不会轮到捐钱）、碰到别人（自己是小偷 / 信徒时）。
+- **路口**：自己能选的路口取最好的方向，随机路口取平均；选完还有路口的，接着往下算（最多 12 步）。
+- **掷一次的风险** `roll_outcomes`：2–12 点每种结果的得失，给期望和最坏。下一个模块（留钱防破产）用。
+
+新 AI 现在只用估价做一件事：**路口选得失最好的方向**（原版 AI 是随机走）。其余决定还交给原版 AI。
+
+**效果**（已验证，原版上海，每局最多 300 天，种子 1 起，各 200 局）：
+
+| 对局 | 斐斐 | 小九 | 孔雀 | 理理 | 平均第几天打完 |
+|---|---|---|---|---|---|
+| 全原版（基线） | 29% | 28% | 23% | 19% | 113.5 |
+| 斐斐、小九新 AI，另两人原版 | **31%** | **46%** | 7% | 13% | 120.0 |
+| 孔雀、理理新 AI，另两人原版 | 13% | 13% | **36%** | **37%** | 117.4 |
+| 全新 AI | 25% | 22% | 25% | 25% | 126.5 |
+
+（数字是胜率，粗体 = 用新 AI 的座位。）同样的角色和参数，只是路口会选方向，两个新 AI 合计胜率从 57% / 42% 升到 77% / 73%。全新 AI 时四人又回到差不多。原版上海有 7 个路口，路口选择对胜负影响很大；一圈图没有路口，这个模块在那里不起作用。
