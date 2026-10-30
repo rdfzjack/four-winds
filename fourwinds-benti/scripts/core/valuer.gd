@@ -13,7 +13,7 @@ extends RefCounted
 ##
 ## 用到的参数在 profiles.json 的 standard 表形态里（value_horizon_days 等，见那里的 params 说明），
 ## 角色可以在自己的参数组里覆盖。
-## 简化（草案，可改）：地的“发展后租金”按整条街能盖的最大房子算，乘上自己占这条街的比例的
+## 简化（草案，可改）：地的“发展后租金”按这一段街（同名、沿路连在一起的地）能盖的最大房子算，乘上自己占这条街的比例的
 ## street_share_power 次方，
 ## 不扣造价（建房模块再算）；机会卡、银行用固定分；路口在别的玩家那里按平均算。
 
@@ -21,6 +21,7 @@ const AiProfiles = preload("res://scripts/core/ai_profiles.gd")
 const Game = preload("res://scripts/core/game.gd")
 
 static var _freq: Dictionary = {}  ## Board 实例 id -> {正格: 停下概率}
+static var _segments: Dictionary = {}  ## Board 实例 id -> {正格: 这一段街的地块}
 
 
 static func param(game, pi: int, key: String, fallback: float = 0.0) -> float:
@@ -108,20 +109,58 @@ static func visit_freq(game) -> Dictionary:
 
 # ───────────────────────── 地产值多少 ─────────────────────────
 
-## 这条街（group）的地块和能盖的最大房子每块地的租金单价
+## 这块地所在的“一段街”：同一条街（group）里沿路连在一起的地（正格），能盖多大的房子只看这一段。
+## 同名的街被别的格子隔开时是几段（例如一圈图的河南中路是 3 段各 1 块，只能盖平房）。
+## 返回这一段的地块和能盖的最大房子每块地的租金单价。
 static func _street(game, tile: int) -> Dictionary:
-	var group := str(game.board.get_tile(tile).get("group", ""))
-	var tiles: Array = []
-	for t in game.props:
-		var tt: Dictionary = game.board.get_tile(t)
-		if tt["type"] == "land" and str(tt.get("group", "")) == group:
-			tiles.append(t)
+	var tiles: Array = segment_of(game, tile)
 	var rents: Dictionary = game.prices()["rent"]
 	var best := int(rents.get("flat", 0))
 	for lv in game.rules.get("houses", {}).get("levels", []):
 		if int(lv["lots"]) <= tiles.size():
 			best = maxi(best, int(rents.get(str(lv["rent"]), 0)))
 	return {"tiles": tiles, "best_unit": best, "flat_unit": int(rents.get("flat", 0))}
+
+
+## 这块地所在的一段街（正格列表，按地图算一次）
+static func segment_of(game, tile: int) -> Array:
+	var board = game.board
+	var key: int = board.get_instance_id()
+	if not _segments.has(key):
+		_segments[key] = _build_segments(board)
+	return _segments[key].get(tile, [tile])
+
+
+## 同一条街、沿路相邻（一格的 next 是另一格）的地连成一段。分身格换成正格。
+static func _build_segments(board) -> Dictionary:
+	var link := {}
+	for t in board.tiles:
+		var a: int = board.site(int(t["id"]))
+		if board.get_tile(a)["type"] != "land":
+			continue
+		link.get_or_add(a, {})
+		for nx in board.next_tiles(int(t["id"])):
+			var b: int = board.site(int(nx))
+			var tb: Dictionary = board.get_tile(b)
+			if b != a and tb["type"] == "land" \
+					and str(tb.get("group", "")) == str(board.get_tile(a).get("group", "")):
+				link[a][b] = true
+				link.get_or_add(b, {})[a] = true
+	var out := {}
+	for start in link:
+		if out.has(start):
+			continue
+		var seg: Array = [start]
+		var i := 0
+		while i < seg.size():
+			for nb in link[seg[i]]:
+				if not seg.has(nb):
+					seg.append(nb)
+			i += 1
+		seg.sort()
+		for t in seg:
+			out[t] = seg
+	return out
 
 
 ## 地产归 owner 时每块地预计的租金（一次停下）。

@@ -3,7 +3,7 @@ extends RefCounted
 ## 只通过 Game 的公开方法操作；估价时会临时改地产主人再改回来（_with_owners），算完局面不变。
 ##
 ## 一笔交易对玩家 x 的“得分”（百分比）：
-##   得失 = 交易后 x 在相关街 / 行业上的地产价值 − 交易前 + 收到的现金 − 付出的现金
+##   得失 = 交易后 x 在相关街（同名的整条街，估价按连在一起的一段算）/ 行业上的地产价值 − 交易前 + 收到的现金 − 付出的现金
 ##          − 对方因此多出来的价值 × trade_harm_pct% ÷ 对手人数（帮对手变强也是损失；
 ##            4 人局里一个对手变强，损失由 3 个对手分担，所以按人数平摊）
 ##   得分 = 得失 ÷ 交出去的东西值多少 × 100（关系值以后再接，作者定先不做）
@@ -286,42 +286,41 @@ static func _note_last_result(game, pi: int) -> void:
 		refusals[key] = int(refusals.get(key, 0)) + 1
 
 
-## 想要的地：自己在这条街至少有一块，对手手里这条街的地（没盖房子）。[{owner, tiles}]
+## 想要的地：自己在这一段街至少有一块，对手手里这一段的地（没盖房子）。[{owner, tiles}]
 static func _wants(game, pi: int) -> Array:
-	var groups := {}
-	for t in game.props:
-		var tile: Dictionary = game.board.get_tile(t)
-		if tile["type"] != "land":
-			continue
-		var g: Dictionary = groups.get_or_add(str(tile.get("group", "")), {"mine": 0, "by": {}})
-		var o: int = game.owner_of(t)
-		if o == pi:
-			g["mine"] += 1
-		elif o >= 0 and game.house_at(t) == 0 and not game.players[o].bankrupt:
-			g["by"].get_or_add(o, []).append(t)
+	var seen := {}
 	var out: Array = []
-	for g in groups.values():
-		if g["mine"] == 0:
+	for t in game.props:
+		if game.board.get_tile(t)["type"] != "land":
 			continue
-		for q in g["by"]:
-			out.append({"owner": q, "tiles": g["by"][q]})
+		var seg: Array = Valuer.segment_of(game, t)
+		if seen.has(seg[0]):
+			continue
+		seen[seg[0]] = true
+		var mine := 0
+		var by := {}
+		for s in seg:
+			var o: int = game.owner_of(s)
+			if o == pi:
+				mine += 1
+			elif o >= 0 and game.house_at(s) == 0 and not game.players[o].bankrupt:
+				by.get_or_add(o, []).append(s)
+		if mine == 0:
+			continue
+		for q in by:
+			out.append({"owner": q, "tiles": by[q]})
 	return out
 
 
-## 自己用不上、对 q 有用的地：这条街自己只有这一块、q 也有地，地上没房子
+## 自己用不上、对 q 有用的地：这一段街自己只有这一块、q 也有地，地上没房子
 static func _spare_for(game, pi: int, q: int) -> Array:
 	var out: Array = []
 	for t in game.properties_of(pi):
-		var tile: Dictionary = game.board.get_tile(t)
-		if tile["type"] != "land" or game.house_at(t) != 0:
+		if game.board.get_tile(t)["type"] != "land" or game.house_at(t) != 0:
 			continue
-		var group := str(tile.get("group", ""))
 		var mine := 0
 		var theirs := 0
-		for s in game.props:
-			if str(game.board.get_tile(s).get("group", "")) != group \
-					or game.board.get_tile(s)["type"] != "land":
-				continue
+		for s in Valuer.segment_of(game, t):
 			if game.owner_of(s) == pi:
 				mine += 1
 			elif game.owner_of(s) == q:

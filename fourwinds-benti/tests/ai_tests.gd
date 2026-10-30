@@ -334,5 +334,5 @@ func test_eval_tool() -> void:
 			"评测工具跑通 2 局并统计到每个座位 %s" % str(report["totals"]["bad"]))
 	check(ev.format_report(report).contains("david/front/original"), "评测工具能出报告")
 	var bad := EvalLib.new()
-	bad.seats = [EvalLib.parse_seat("david:back:standard"), EvalLib.parse_seat("eric")]
+	bad.seats = [EvalLib.parse_seat("david:back:no_such_ai"), EvalLib.parse_seat("eric")]
 	check(not bad.prepare().is_empty(), "评测工具拒绝还没实现的 AI 版本")
