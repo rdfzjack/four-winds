@@ -3,11 +3,13 @@ extends RefCounted
 ## 已经做的模块接管对应的决定，还没做的先交给原版 AI（brain.gd）：
 ##   估价（valuer.gd）：路口选得失最好的方向
 ##   买地和建房：买不买地 / 企业、建房、升级（看值不值，再看付完钱后留不留得够防破产的钱）
-## 还交给原版 AI 的：交易、银行存取、保释、赎回、拍卖出价（抵押、发起拍卖按 scoring 的开关，现在关着）。
-## 后面的模块（交易和拍卖 → 性格差异）做完一个就在这里接一个。
+##   交易和拍卖出价（trader.gd）：发起交易、回答交易（三个区间）、拍卖出价（关系值作者定先不做）
+## 还交给原版 AI 的：银行存取、保释、赎回（抵押、发起拍卖按 scoring 的开关，现在关着）。
+## 下一个模块（性格差异）做完在这里接。
 
 const Brain = preload("res://scripts/core/brain.gd")
 const Valuer = preload("res://scripts/core/valuer.gd")
+const Trader = preload("res://scripts/core/trader.gd")
 
 
 static func step(game) -> bool:
@@ -23,6 +25,12 @@ static func step(game) -> bool:
 			"choose_direction":
 				game.choose_direction(best_direction(game, pi))
 				return true
+			"trade":
+				Trader.answer(game, pi)
+				return true
+			"auction":
+				Trader.auction_turn(game, pi)
+				return true
 			"buy_land", "buy_company":
 				if wants_property(game, pi, int(game.pending["tile"])):
 					game.buy()
@@ -34,7 +42,7 @@ static func step(game) -> bool:
 
 ## 掷骰前做一件事，做了返回 true（调用者会再来一次）。顺序照原版：交易 → 建房 → 升级 → 抵押 → 赎回 → 拍卖。
 static func _improve(game) -> bool:
-	if Brain._trade_step(game):
+	if Trader.propose_step(game):
 		return true
 	if _build_step(game):
 		return true

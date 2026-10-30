@@ -330,7 +330,7 @@ func test_eval_tool() -> void:
 	var seat0: Dictionary = report["per_seat"][0]
 	check(report["totals"]["games"] == 2 and report["totals"]["bad"].is_empty()
 			and int(seat0.get("games", 0)) == 2 and int(seat0.get("offer_land", 0)) > 0
-			and int(seat0.get("rel_given", 0)) == 7 * 3 * 2,
+			and int(seat0.get("rel_pairs", 0)) == 3 * 2,
 			"评测工具跑通 2 局并统计到每个座位 %s" % str(report["totals"]["bad"]))
 	check(ev.format_report(report).contains("david/front/original"), "评测工具能出报告")
 	var bad := EvalLib.new()

@@ -13,7 +13,8 @@ extends RefCounted
 ##
 ## 用到的参数在 profiles.json 的 standard 表形态里（value_horizon_days 等，见那里的 params 说明），
 ## 角色可以在自己的参数组里覆盖。
-## 简化（草案，可改）：地的“发展后租金”按整条街能盖的最大房子算，乘上自己占这条街的比例的平方，
+## 简化（草案，可改）：地的“发展后租金”按整条街能盖的最大房子算，乘上自己占这条街的比例的
+## street_share_power 次方，
 ## 不扣造价（建房模块再算）；机会卡、银行用固定分；路口在别的玩家那里按平均算。
 
 const AiProfiles = preload("res://scripts/core/ai_profiles.gd")
@@ -150,7 +151,9 @@ static func expected_rent(game, tile: int, owner: int) -> float:
 		if s == tile or game.owner_of(s) == owner:
 			mine += 1
 	var share := float(mine) / maxi(1, st["tiles"].size())
-	var unit: float = st["flat_unit"] + (st["best_unit"] - st["flat_unit"]) * share * share
+	var power := float(AiProfiles.of(game.players[owner].character, game.players[owner].form)
+			.get("street_share_power", 2)) if owner >= 0 else 2.0
+	var unit: float = st["flat_unit"] + (st["best_unit"] - st["flat_unit"]) * pow(share, power)
 	return maxf(now, unit * pct / 100.0)
 
 

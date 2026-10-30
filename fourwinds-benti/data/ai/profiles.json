@@ -22,7 +22,14 @@
   "believer_value": "【新 AI】停在教堂当信徒折合多少万圆（路上碰到人要施舍）",
   "bankrupt_penalty": "【新 AI】破产（出局）在失去全部资产之外再折合多少万圆的损失",
   "reserve_pct": "【新 AI】买地、建房后，现金 + 存款至少留下“下一次掷骰最多可能付的租”的百分之几（越大越保守）",
-  "block_pct": "【新 AI】买地时，“不让对手拿到”算进价值的百分比（对手拿到这块比价格多值的部分 × 此值%）"
+  "block_pct": "【新 AI】买地时，“不让对手拿到”算进价值的百分比（对手拿到这块比价格多值的部分 × 此值%）",
+  "trade_reject_pct": "【新 AI】回答交易：得分（得失 ÷ 交出去的 × 100）低于这个就绝对不接受（F 节三个区间的下线）",
+  "trade_accept_pct": "【新 AI】回答交易：得分到这个就一定接受；两条线之间按比例的概率接受",
+  "trade_counter_pct": "【新 AI】不接受但得分不低于这个时，还价一次（要对方多付现金到“一定接受”线）",
+  "trade_harm_pct": "【新 AI】对方因交易多出来的价值，算作自己损失的百分比，再按对手人数平摊（帮对手变强也是损失）",
+  "trade_guess_accept_pct": "【新 AI】发起交易时猜对方的“一定接受”线，按它定给多少现金（发起人不知道对方真实的区间）",
+  "trade_retry_days": "【新 AI】同一个提议隔几天才再提",
+  "street_share_power": "【新 AI】地的发展价值按“自己占这条街的比例”的几次方算：2 = 快凑齐才值钱，1 = 占一块就按比例算（越小越早重视好街）"
  },
  "profiles": {
   "standard": {
@@ -50,7 +57,14 @@
     "believer_value": -10,
     "bankrupt_penalty": 1000,
     "reserve_pct": 100,
-    "block_pct": 50
+    "block_pct": 50,
+    "trade_reject_pct": 0,
+    "trade_accept_pct": 10,
+    "trade_counter_pct": -30,
+    "trade_harm_pct": 100,
+    "trade_guess_accept_pct": 50,
+    "trade_retry_days": 5,
+    "street_share_power": 2
    }
   },
   "david": {

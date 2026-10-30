@@ -26,6 +26,7 @@ var board := Board.new()
 var rules: Dictionary = {}
 var cards_file: Dictionary = {}
 var characters: Array = []
+var top_street := ""  ## 最值钱的街（地价系数之和 × 能盖的最大房子的租金单价最大），统计谁凑齐了它
 var _groups: Dictionary = {}  ## 街（group）-> [地块]
 
 
@@ -52,9 +53,21 @@ func prepare() -> Array:
 		for name in overrides:
 			AiProfiles.table[k][name] = overrides[name]
 	_groups.clear()
+	var pct_sum := {}
 	for t in board.tiles:
 		if t["type"] == "land" and not t.has("site"):
-			_groups.get_or_add(str(t.get("group", "")), []).append(int(t["id"]))
+			var key := str(t.get("group", ""))
+			_groups.get_or_add(key, []).append(int(t["id"]))
+			pct_sum[key] = int(pct_sum.get(key, 0)) + int(t.get("price_pct", 100))
+	var best_value := -1
+	for key in _groups:
+		var unit := 0
+		for lv in rules.get("houses", {}).get("levels", []):
+			if int(lv["lots"]) <= _groups[key].size():
+				unit = maxi(unit, int(board.prices.get("rent", {}).get(str(lv["rent"]), 0)))
+		if int(pct_sum[key]) * unit > best_value:
+			best_value = int(pct_sum[key]) * unit
+			top_street = key
 	return errors
 
 
@@ -191,6 +204,8 @@ func _play_one(k: int, per_seat: Array, totals: Dictionary) -> void:
 			_add(s, "bankrupt")
 			_add(s, "bankrupt_days", int(mine["bankrupt_day"]))
 		_add(s, "streets", mine["streets"].size())
+		if mine["streets"].has(top_street):
+			_add(s, "top_street")
 		for key in mine:
 			if key != "streets" and key != "bankrupt_day":
 				_add(s, key, int(mine[key]))
@@ -260,16 +275,17 @@ func format_report(report: Dictionary) -> String:
 	for b in t["bad"]:
 		lines.append("问题：" + str(b))
 	lines.append("")
-	lines.append("| 座位 | 胜 | 超时领先 | 破产（平均天） | 整条街/局 | 买地率 | 买企业率 | 建房/局 | 平均现金 / 存款 |")
-	lines.append("|---|---|---|---|---|---|---|---|---|")
+	lines.append("| 座位 | 胜 | 超时领先 | 破产（平均天） | 整条街/局 | 凑齐%s | 买地率 | 买企业率 "
+			% top_street + "| 建房/局 | 平均现金 / 存款 |")
+	lines.append("|---|---|---|---|---|---|---|---|---|---|")
 	for i in range(seats.size()):
 		var s: Dictionary = report["per_seat"][i]
 		var n := int(s.get("games", 0))
 		var turns := int(s.get("turns", 0))
-		lines.append("| %s | %s | %s | %d（%s） | %s | %s | %s | %s | %d / %d |" % [
+		lines.append("| %s | %s | %s | %d（%s） | %s | %s | %s | %s | %s | %d / %d |" % [
 			seat_label(seats[i]), _pct(s.get("wins", 0), n), _pct(s.get("leads", 0), n),
 			s.get("bankrupt", 0), _avg(s.get("bankrupt_days", 0), s.get("bankrupt", 0)),
-			_avg(s.get("streets", 0), n),
+			_avg(s.get("streets", 0), n), _pct(s.get("top_street", 0), n),
 			_pct(s.get("bought_land", 0), s.get("offer_land", 0)),
 			_pct(s.get("bought_company", 0), s.get("offer_company", 0)),
 			_avg(s.get("built", 0), n),
