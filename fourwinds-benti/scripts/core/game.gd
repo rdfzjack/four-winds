@@ -67,7 +67,7 @@ static func pct_of(value: int, pct: int) -> int:
 
 ## 开一局。specs 是每个玩家一项：{"character": 角色 id, "human": 是不是人类}，可选：
 ## "form"（front 表 / back 里，默认 front）、"ai"（AI 版本，默认 original）、
-## "relations"（{对手玩家编号: 初始好感}）。
+## "relations"（{对手玩家编号: 初始好感}）、"name_suffix"（名字后面加的标记，例如区分新旧 AI）。
 ## 返回错误列表，空表示没问题。seed_value >= 0 时随机数可复现。
 func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characters: Array,
 		specs: Array, seed_value: int = -1) -> Array:
@@ -99,7 +99,7 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 		var p := Player.new()
 		p.index = i
 		p.character = str(specs[i].get("character", ""))
-		p.display_name = str(names.get(p.character, p.character))
+		p.display_name = str(names.get(p.character, p.character)) + str(specs[i].get("name_suffix", ""))
 		p.human = bool(specs[i].get("human", false))
 		p.form = str(specs[i].get("form", "front"))
 		p.ai = str(specs[i].get("ai", "original"))
@@ -229,8 +229,18 @@ func upgrade_fee(tiles: Array) -> int:
 ## 房子的租金：所占各块地的现价系数之和 × 租金表 ÷ 100
 func house_rent(house_id: int) -> int:
 	var h: Dictionary = houses[house_id]
-	var unit := int(prices()["rent"][_house_defs[h["kind"]]["rent"]])
-	return pct_of(_sum_field(h["tiles"], "price_pct"), unit)
+	return rent_for(h["kind"], h["tiles"])
+
+
+## kind 这种房子盖在 tiles 上的租金（AI 估算建房、升级用）
+func rent_for(kind: String, tiles: Array) -> int:
+	var unit := int(prices()["rent"][_house_defs[kind]["rent"]])
+	return pct_of(_sum_field(tiles, "price_pct"), unit)
+
+
+## 房子升级后变成哪种，不能升级返回 ""
+func upgrade_kind(kind: String) -> String:
+	return str(_house_defs[kind].get("upgrade_to", ""))
 
 
 ## 站在这块地 / 企业上要付给主人的租金（不考虑状态减免）

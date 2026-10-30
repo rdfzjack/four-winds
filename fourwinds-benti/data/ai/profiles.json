@@ -20,7 +20,9 @@
   "bank_pass_value": "【新 AI】路过银行（能存取款）折合多少万圆",
   "bank_stop_value": "【新 AI】停在银行折合多少万圆",
   "believer_value": "【新 AI】停在教堂当信徒折合多少万圆（路上碰到人要施舍）",
-  "bankrupt_penalty": "【新 AI】破产（出局）在失去全部资产之外再折合多少万圆的损失"
+  "bankrupt_penalty": "【新 AI】破产（出局）在失去全部资产之外再折合多少万圆的损失",
+  "reserve_pct": "【新 AI】买地、建房后，现金 + 存款至少留下“下一次掷骰最多可能付的租”的百分之几（越大越保守）",
+  "block_pct": "【新 AI】买地时，“不让对手拿到”算进价值的百分比（对手拿到这块比价格多值的部分 × 此值%）"
  },
  "profiles": {
   "standard": {
@@ -40,13 +42,15 @@
     "maxInvestment": 10,
     "bailFactor": 100,
     "_new_ai": "以下是新 AI（scripts/core/valuer.gd 等）的共用参数，所有角色都从这里继承，角色要不同就在自己的参数组里写",
-    "value_horizon_days": 30,
+    "value_horizon_days": 60,
     "skip_day_value": 30,
     "chance_value": 0,
     "bank_pass_value": 10,
     "bank_stop_value": 0,
     "believer_value": -10,
-    "bankrupt_penalty": 1000
+    "bankrupt_penalty": 1000,
+    "reserve_pct": 100,
+    "block_pct": 50
    }
   },
   "david": {

@@ -29,6 +29,7 @@ func run(p_runner: Object) -> void:
 	test_stop_values()
 	test_street_worth()
 	test_direction_choice()
+	test_buy_and_build()
 
 
 func new_game(board: Board) -> Game:
@@ -141,3 +142,39 @@ func test_direction_choice() -> void:
 					"新 AI 路口避开高租金（路口 %d，第 %d 个方向贵）" % [c, bad + 1])
 		break
 	runner.check(found, "原版上海图里找得到测试用的路口")
+
+
+## 新 AI 买地、建房：值得且留得够钱才做
+func test_buy_and_build() -> void:
+	var g := new_game(shanghai)
+	var t := first_land(g)
+	runner.check(NewAi.wants_property(g, 0, t), "新 AI：开局钱多时买空地")
+	# 对手在附近每块地都有高租金：付完钱留不够防破产的钱，就不买
+	var g2 := new_game(shanghai)
+	for x in g2.props:
+		if x != t:
+			g2.props[x]["owner"] = 1
+			g2.props[x]["pct"] = 2000
+	g2.players[0].cash = g2.property_price(t) + 10
+	g2.players[0].deposit = 0
+	runner.check(Valuer.reserve(g2, 0) > 100 and not NewAi.wants_property(g2, 0, t),
+			"新 AI：买了就留不够付租金的钱时不买")
+	# 全图的地都是自己的、钱很多：会建房，而且挑大房子
+	var g3 := new_game(shanghai)
+	for x in g3.props:
+		g3.props[x]["owner"] = 0
+	g3.players[0].cash = 100000
+	g3.players[1].pos = g3.board.start_tile
+	g3.players[0].pos = g3.board.start_tile
+	var built := NewAi._build_step(g3)
+	var kinds: Array = []
+	for h in g3.houses.values():
+		kinds.append(h["kind"])
+	runner.check(built and kinds.size() == 1 and int(g3.houses.values()[0]["tiles"].size()) >= 3,
+			"新 AI：钱多时先盖大房子 %s" % str(kinds))
+	var g4 := new_game(shanghai)
+	for x in g4.props:
+		g4.props[x]["owner"] = 0
+	g4.players[0].cash = 0
+	g4.players[0].deposit = 0
+	runner.check(not NewAi._build_step(g4) and g4.houses.is_empty(), "新 AI：没钱不建房")

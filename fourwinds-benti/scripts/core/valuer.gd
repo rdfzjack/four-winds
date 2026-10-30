@@ -7,7 +7,9 @@ extends RefCounted
 ## - property_worth(game, pi, tile)：这块地产对 pi 值多少 = 价格 + 估价天数 × 每天预计收入
 ## - stop_value(game, pi, tile)：pi 停在这格的得失（付租、买地机会、坐牢、税……）
 ## - direction_values(game, pi)：路口每个方向的得失（AI 选方向用）
-## - roll_outcomes(game, pi)：从现在的位置掷一次骰子，期望得失和最坏得失（留钱防破产用）
+## - roll_outcomes(game, pi)：从现在的位置掷一次骰子，期望得失和最坏得失
+## - rent_risk(game, pi)：从现在的位置掷一次，最多可能要付多少租（留钱防破产用）
+## - build_gain / upgrade_gain：建房、升级值不值（估价天数里多收的租 − 要付的钱）
 ##
 ## 用到的参数在 profiles.json 的 standard 表形态里（value_horizon_days 等，见那里的 params 说明），
 ## 角色可以在自己的参数组里覆盖。
@@ -154,11 +156,8 @@ static func expected_rent(game, tile: int, owner: int) -> float:
 
 ## 地产归 owner 时每天预计收的租：还活着的对手每人每天掷一次
 static func income_per_day(game, tile: int, owner: int) -> float:
-	var opponents := 0
-	for p in game.alive_players():
-		if p.index != owner:
-			opponents += 1
-	return expected_rent(game, tile, owner) * float(visit_freq(game).get(tile, 0.0)) * opponents
+	return expected_rent(game, tile, owner) * float(visit_freq(game).get(tile, 0.0)) \
+			* _opponents(game, owner)
 
 
 ## 这块地产对 pi 值多少（万圆）：价格 + 估价天数 × 归 pi 后每天预计收入
@@ -213,20 +212,12 @@ static func stop_value(game, pi: int, tile: int) -> float:
 ## 停在别人的地产上实际要付的（考虑状态减免）；付不起 = 破产，按失去全部资产再加破产罚分算
 static func _rent_cost(game, pi: int, site: int) -> float:
 	var p = game.players[pi]
-	var owner: int = game.owner_of(site)
 	var kind: String = p.status_kind()
-	if game.props[site]["mortgaged"] or Game.NO_RENT_STATES.has(game.players[owner].status_kind()) \
-			or kind == "free_rent":
-		return 0.0
 	if kind == "arsonist" and game.house_at(site) != 0:
 		return 0.0
 	if kind == "robber" and game.board.get_tile(site)["type"] == "company":
 		return -property_worth(game, pi, site)
-	var rent := float(game.rent_of(site))
-	if kind == "double_rent":
-		rent *= 2
-	elif kind == "half_rent":
-		rent *= 0.5
+	var rent := _plain_rent(game, pi, site)
 	if rent > p.cash + p.deposit:
 		return rent + game.total_assets(pi) + param(game, pi, "bankrupt_penalty", 1000)
 	return rent
@@ -316,3 +307,94 @@ static func roll_outcomes(game, pi: int) -> Dictionary:
 		expected += v * dice[d]
 		worst = minf(worst, v)
 	return {"expected": expected, "worst": worst}
+
+
+# ───────────────────────── 留钱、建房 ─────────────────────────
+
+## 从 pi 现在的位置掷一次骰子，所有可能停下的格子里最多要付多少租（路口每个方向都算，不考虑付不付得起）
+static func rent_risk(game, pi: int) -> float:
+	var stops := {}
+	var dice := dice_distribution(game)
+	for d in dice:
+		_collect_stops(game.board, game.players[pi].pos, int(d), stops)
+	var worst := 0.0
+	for t in stops:
+		var site: int = game.board.site(t)
+		var t_type: String = game.board.get_tile(site)["type"]
+		if (t_type == "land" or t_type == "company") and game.owner_of(site) >= 0 \
+				and game.owner_of(site) != pi:
+			worst = maxf(worst, _plain_rent(game, pi, site))
+	return worst
+
+
+static func _collect_stops(board, pos: int, steps: int, out: Dictionary) -> void:
+	if steps == 0:
+		out[pos] = true
+		return
+	for o in board.next_tiles(pos):
+		_collect_stops(board, int(o), steps - 1, out)
+
+
+## 停在别人地产上要付的租（考虑状态减免，不考虑付不付得起）
+static func _plain_rent(game, pi: int, site: int) -> float:
+	var p = game.players[pi]
+	var kind: String = p.status_kind()
+	if game.props[site]["mortgaged"] or Game.NO_RENT_STATES.has(
+			game.players[game.owner_of(site)].status_kind()) or kind == "free_rent":
+		return 0.0
+	var rent := float(game.rent_of(site))
+	if kind == "double_rent":
+		rent *= 2
+	elif kind == "half_rent":
+		rent *= 0.5
+	return rent
+
+
+## 想留下的钱（现金 + 存款）：下一次掷骰最多可能付的租 × reserve_pct%
+static func reserve(game, pi: int) -> float:
+	return rent_risk(game, pi) * param(game, pi, "reserve_pct", 100) / 100.0
+
+
+static func _opponents(game, owner: int) -> int:
+	var n := 0
+	for p in game.alive_players():
+		if p.index != owner:
+			n += 1
+	return n
+
+
+## 这几块地连在一起每天被停下几次（一栋房子任何一块被停到都收整栋的租）
+static func _landings_per_day(game, owner: int, tiles: Array) -> float:
+	var freq := visit_freq(game)
+	var f := 0.0
+	for t in tiles:
+		f += float(freq.get(t, 0.0))
+	return f * _opponents(game, owner)
+
+
+## 这几块地现在每天预计收的租（地上可能有好几栋小房子或空地，按每块地各自的租金算）
+static func _tiles_income(game, owner: int, tiles: Array) -> float:
+	var freq := visit_freq(game)
+	var total := 0.0
+	for t in tiles:
+		total += game.rent_of(t) * float(freq.get(t, 0.0))
+	return total * _opponents(game, owner)
+
+
+## 在 tiles 上盖 kind 值不值：估价天数 × (新房子每天的租 − 这些地现在每天的租) − 要付的钱
+static func build_gain(game, pi: int, kind: String, tiles: Array) -> float:
+	var after: float = game.rent_for(kind, tiles) * _landings_per_day(game, pi, tiles)
+	var before := _tiles_income(game, pi, tiles)
+	return param(game, pi, "value_horizon_days", 30) * (after - before) \
+			- game.build_price(kind, tiles)
+
+
+## 升级房子 hid 值不值
+static func upgrade_gain(game, pi: int, hid: int) -> float:
+	var h: Dictionary = game.houses[hid]
+	var to: String = game.upgrade_kind(h["kind"])
+	if to == "":
+		return -INF
+	var more: float = (game.rent_for(to, h["tiles"]) - game.house_rent(hid)) \
+			* _landings_per_day(game, pi, h["tiles"])
+	return param(game, pi, "value_horizon_days", 30) * more - game.upgrade_fee(h["tiles"])
