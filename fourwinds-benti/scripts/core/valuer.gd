@@ -24,7 +24,7 @@ static var _freq: Dictionary = {}  ## Board 实例 id -> {正格: 停下概率}
 
 
 static func param(game, pi: int, key: String, fallback: float = 0.0) -> float:
-	return float(AiProfiles.of(game.players[pi].character, game.players[pi].form).get(key, fallback))
+	return float(AiProfiles.for_player(game.players[pi]).get(key, fallback))
 
 
 # ───────────────────────── 骰子和停下概率 ─────────────────────────
@@ -151,8 +151,7 @@ static func expected_rent(game, tile: int, owner: int) -> float:
 		if s == tile or game.owner_of(s) == owner:
 			mine += 1
 	var share := float(mine) / maxi(1, st["tiles"].size())
-	var power := float(AiProfiles.of(game.players[owner].character, game.players[owner].form)
-			.get("street_share_power", 2)) if owner >= 0 else 2.0
+	var power := param(game, owner, "street_share_power", 2) if owner >= 0 else 2.0
 	var unit: float = st["flat_unit"] + (st["best_unit"] - st["flat_unit"]) * pow(share, power)
 	return maxf(now, unit * pct / 100.0)
 
@@ -163,10 +162,48 @@ static func income_per_day(game, tile: int, owner: int) -> float:
 			* _opponents(game, owner)
 
 
-## 这块地产对 pi 值多少（万圆）：价格 + 估价天数 × 归 pi 后每天预计收入
+## 这块地产对 pi 值多少（万圆）：价格 + 估价天数 × 归 pi 后每天预计收入，再乘上 pi 这局的估价误差
 static func property_worth(game, pi: int, tile: int) -> float:
-	return game.property_price(tile) + param(game, pi, "value_horizon_days", 30) \
+	var worth: float = game.property_price(tile) + param(game, pi, "value_horizon_days", 30) \
 			* income_per_day(game, tile, pi)
+	return worth * (1.0 + noise(game, pi, tile))
+
+
+# ───────────────────────── 性格：估价误差、喜欢的地 ─────────────────────────
+## 每局开局后第一次用到时随机定好，存在 Player.ai_memory 里（存档时一起存），这局不变。
+
+## pi 对这块地产的估价误差（−value_noise_pct% 到 +value_noise_pct%，小数）。
+## 简化：别人估 pi 的价值时也用 pi 自己的误差。
+static func noise(game, pi: int, tile: int) -> float:
+	var pct := param(game, pi, "value_noise_pct", 0)
+	if pct <= 0.0:
+		return 0.0
+	var table: Dictionary = game.players[pi].ai_memory.get_or_add("value_noise", {})
+	var key := str(tile)
+	if not table.has(key):
+		table[key] = game.rng.randf_range(-pct, pct) / 100.0
+	return float(table[key])
+
+
+## pi 这局“喜欢的地”（favorite_count 块，随机挑）：见到就买，任何交易都不卖
+static func favorites(game, pi: int) -> Array:
+	var count := int(param(game, pi, "favorite_count", 0))
+	if count <= 0:
+		return []
+	var memory: Dictionary = game.players[pi].ai_memory
+	if not memory.has("favorites"):
+		var lands: Array = []
+		for t in game.props:
+			if game.board.get_tile(t)["type"] == "land":
+				lands.append(t)
+		lands.sort()
+		var picked: Array = []
+		while picked.size() < mini(count, lands.size()):
+			var t: int = lands[game.rng.randi() % lands.size()]
+			if not picked.has(t):
+				picked.append(t)
+		memory["favorites"] = picked
+	return memory["favorites"]
 
 
 # ───────────────────────── 停在某格 ─────────────────────────

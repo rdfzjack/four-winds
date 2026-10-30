@@ -73,10 +73,15 @@ static func can_spend(game, pi: int, cost: int) -> bool:
 
 
 ## 买地 / 企业：对自己值的 − 价格，加上不让对手拿到的价值（对手拿到它多值的 × block_pct%），大于 0 才买；
-## 付完钱还要留得够防破产的钱。
+## 付完钱还要留得够防破产的钱。“喜欢的地”（性格）现金够就买，不管留不留得够钱。
 static func wants_property(game, pi: int, tile: int) -> bool:
 	var price: int = game.property_price(tile)
-	if game.players[pi].cash < price or not can_spend(game, pi, price):
+	if game.players[pi].cash < price:
+		return false
+	if Valuer.favorites(game, pi).has(tile):
+		game.ai_note(pi, "favorite_buy")
+		return true
+	if not can_spend(game, pi, price):
 		return false
 	return buy_gain(game, pi, tile) > 0.0
 
