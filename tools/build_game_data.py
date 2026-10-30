@@ -294,9 +294,10 @@ AI_PARAM_DOC = {
 
 def build_ai() -> dict:
     src = json.loads((EXTRACTED / "text/ai/Standard.json").read_text("utf-8"))["profiles"]
-    profiles = {"standard": {"based_on": "标准", **src["标准"]}}
+    # 每个参数组分形态：front = 表形态（原版参数），back = 里形态（待定，没写的数沿用 front）
+    profiles = {"standard": {"front": {"based_on": "标准", **src["标准"]}}}
     for cid, c in CHARACTERS.items():
-        profiles[cid] = {"based_on": c["original"], **src[c["original"]]}
+        profiles[cid] = {"front": {"based_on": c["original"], **src[c["original"]]}, "back": {}}
     return {
         "_comment": "AI 性格参数（原版 12 项阈值）。4 个角色暂时借用原版角色的参数（based_on），"
                     "来源 shanghai1940/Ai/Standard.ai。第 4 步再按人设细调。",

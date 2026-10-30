@@ -65,7 +65,9 @@ static func pct_of(value: int, pct: int) -> int:
 	return value * pct / 100
 
 
-## 开一局。specs 是每个玩家一项：{"character": 角色 id, "human": 是不是人类}。
+## 开一局。specs 是每个玩家一项：{"character": 角色 id, "human": 是不是人类}，可选：
+## "form"（front 表 / back 里，默认 front）、"ai"（AI 版本，默认 original）、
+## "relations"（{对手玩家编号: 初始好感}）。
 ## 返回错误列表，空表示没问题。seed_value >= 0 时随机数可复现。
 func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characters: Array,
 		specs: Array, seed_value: int = -1) -> Array:
@@ -99,6 +101,10 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 		p.character = str(specs[i].get("character", ""))
 		p.display_name = str(names.get(p.character, p.character))
 		p.human = bool(specs[i].get("human", false))
+		p.form = str(specs[i].get("form", "front"))
+		p.ai = str(specs[i].get("ai", "original"))
+		for other in specs[i].get("relations", {}):
+			p.relations[int(other)] = int(specs[i]["relations"][other])
 		p.cash = int(rules.get("starting_cash", 0))
 		p.deposit = int(rules.get("starting_deposit", 0))
 		p.pos = board.start_tile
@@ -124,6 +130,24 @@ func start() -> void:
 	current = 0
 	if not _begin_turn():
 		_next_turn()
+
+
+## 关系值：a 对 b 的好感（单向）
+func relation(a: int, b: int) -> int:
+	return int(players[a].relations.get(b, 0))
+
+
+## a 对 b 的好感加 delta（可以是负数），记一条 relation 事件
+func change_relation(a: int, b: int, delta: int) -> void:
+	if a == b or delta == 0:
+		return
+	players[a].relations[b] = relation(a, b) + delta
+	_emit("relation", {"player": a, "other": b, "delta": delta, "value": relation(a, b)})
+
+
+## AI 记一笔“性格动作”，评测工具统计用：kind = slip（按错）、mercy（放水）等，见 docs/ai_design.md
+func ai_note(pi: int, kind: String) -> void:
+	_emit("ai_note", {"player": pi, "kind": kind})
 
 
 func drain_events() -> Array:
