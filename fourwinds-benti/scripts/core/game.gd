@@ -11,7 +11,7 @@ extends RefCounted
 ##   start_auction / propose_trade，然后 roll()。拍卖、交易要别的玩家回答，这时 phase == "pending"，
 ##   该谁做决定看 actor()（其余时候就是 current）。
 ##   走到需要选择的地方 game.phase == "pending"，看 game.pending["type"]：
-##     choose_direction → choose_direction(tile)   十字路口选方向
+##     choose_direction → choose_direction(tile)   十字路口选方向（direction_routes() 是每个方向要走的路）
 ##     bank             → bank_deposit / bank_withdraw，最后 bank_done()（路过或停在银行都会弹）
 ##     buy_land / buy_company → buy() 或 decline()
 ##     bail             → bail(true) 交保释金，bail(false) 坐牢
@@ -256,36 +256,27 @@ func alive_players() -> Array:
 # ───────────────────────── 掷骰前：建房、升级、拆房 ─────────────────────────
 
 ## 为什么现在不能建？返回原因，空字符串表示可以。
-## merging = 合并平房：占的地里可以有自己的平房（至少一块），见 merge()。
-# gdlint: disable=max-returns
-func why_cannot_build(pi: int, kind: String, tiles: Array, merging: bool = false) -> String:
+## 占的地上可以有自己的房子（改建）：每栋都要整栋落在这几块地里、占的地比新房子少，
+## 建好后旧房子拆掉，按 build_price() 只付差价（rules.json 的 houses.rebuild）。
+func why_cannot_build(pi: int, kind: String, tiles: Array) -> String:
 	if phase != "pre_roll" or current != pi:
 		return "现在不是你掷骰前的时间"
 	if not _house_defs.has(kind) or _house_defs[kind].get("build_directly", true) == false:
 		return "这种房子不能直接建"
-	var lots := int(_house_defs[kind]["lots"])
-	if tiles.size() != lots:
-		return "这种房子要占 %d 块地" % lots
-	if merging:
-		if not rules["houses"].get("merge_flats", {}).get("enabled", false):
-			return "规则里没有开合并平房"
-		if lots < 2 or _flats_in(tiles).is_empty():
-			return "合并要占到自己的平房"
-	var why := _why_lots_invalid(pi, tiles, merging)
-	if why != "":
-		return why
-	var min_lots_no_player := int(rules["houses"]["placement"].get("no_player_on_lots_from", 99))
-	if lots >= min_lots_no_player:
-		for p in alive_players():
-			if tiles.has(board.site(p.pos)):
-				return "有人站在要建房的地上"
-	if players[pi].cash < (merge_cost(kind, tiles) if merging else house_cost(kind, tiles)):
-		return "现金不够（建房只能用现金）"
-	return ""
+	if tiles.size() != int(_house_defs[kind]["lots"]):
+		return "这种房子要占 %d 块地" % int(_house_defs[kind]["lots"])
+	var why := _why_lots_invalid(pi, tiles)
+	if why == "":
+		why = _why_lots_blocked(pi, tiles)
+	if why == "" and players[pi].cash < build_price(kind, tiles):
+		why = "现金不够"
+	return why
 
 
-## 占的几块地合不合格：都是自己的空地，同一条街，沿路连成一排。
-func _why_lots_invalid(pi: int, tiles: Array, allow_flats: bool = false) -> String:
+## 占的几块地本身合不合格（和钱、抵押、有没有人站着无关）：
+## 都是自己的地，同一条街，沿路连成一排；上面已有的房子能被改建掉。
+# gdlint: disable=max-returns
+func _why_lots_invalid(pi: int, tiles: Array) -> String:
 	var same_street: bool = rules["houses"]["placement"].get("same_street", true)
 	var group := ""
 	for i in range(tiles.size()):
@@ -300,19 +291,55 @@ func _why_lots_invalid(pi: int, tiles: Array, allow_flats: bool = false) -> Stri
 			return "占的地要在同一条街上"
 		if owner_of(t) != pi:
 			return "占的地都要是自己的"
-		if props[t]["mortgaged"]:
-			return "抵押中的地不能建房"
-		if house_at(t) != 0 and not (allow_flats and _flats_in([t]).size() == 1):
-			return "这块地上已经有房子"
+	var old := replaced_houses(tiles)
+	if not old.is_empty() and not rules["houses"].get("rebuild", {}).get("enabled", false):
+		return "这块地上已经有房子"
+	for hid in old:
+		for t in houses[hid]["tiles"]:
+			if not tiles.has(t):
+				return "旧房子要整栋包在新房子里"
+		if houses[hid]["tiles"].size() >= tiles.size():
+			return "新房子要比旧房子大"
 	return ""
 
 
 # gdlint: enable=max-returns
 
 
-## 所有现在能建的房子：[{kind, tiles, cost}]。AI 和建房界面都用它。
-## merging = true 时列出“合并平房”的选项（cost 是合并要付的钱）
-func build_options(pi: int, merging: bool = false) -> Array:
+## 能改的条件没满足：抵押中、有人站在大房子的地上
+func _why_lots_blocked(pi: int, tiles: Array) -> String:
+	for t in tiles:
+		if props[int(t)]["mortgaged"]:
+			return "有地在抵押中"
+	if tiles.size() >= int(rules["houses"]["placement"].get("no_player_on_lots_from", 99)):
+		for p in alive_players():
+			if tiles.has(board.site(p.pos)):
+				return "%s站在要建房的地上" % ("你" if p.index == pi else p.display_name)
+	return ""
+
+
+## 这几块地上已有的房子（改建时要拆掉的）
+func replaced_houses(tiles: Array) -> Array:
+	var out: Array = []
+	for t in tiles:
+		var hid := house_at(int(t))
+		if hid != 0 and not out.has(hid):
+			out.append(hid)
+	return out
+
+
+## 建房要付的钱：新房子造价 − 拆掉的旧房子造价（含升级费）× credit_pct%，不少于 0
+func build_price(kind: String, tiles: Array) -> int:
+	var credit := 0
+	for hid in replaced_houses(tiles):
+		credit += house_cost(houses[hid]["kind"], houses[hid]["tiles"])
+	var pct := int(rules["houses"].get("rebuild", {}).get("credit_pct", 100))
+	return maxi(0, house_cost(kind, tiles) - pct_of(credit, pct))
+
+
+## 建房界面和 AI 用的候选：[{kind, tiles, cost, why}]，why 为空表示现在能建。
+## 只列地本身合格的（自己的、连成一排、旧房子能改建）；钱不够、抵押、有人站着的也列出来，why 写原因。
+func build_choices(pi: int) -> Array:
 	var out: Array = []
 	var seen := {}
 	for kind in _house_defs:
@@ -326,28 +353,42 @@ func build_options(pi: int, merging: bool = false) -> Array:
 				var sorted: Array = chain.duplicate()
 				sorted.sort()
 				var key := "%s:%s" % [kind, str(sorted)]
-				if seen.has(key):
+				if seen.has(key) or _why_lots_invalid(pi, chain) != "":
 					continue
 				seen[key] = true
-				if why_cannot_build(pi, kind, chain, merging) == "":
-					var cost := merge_cost(kind, chain) if merging else house_cost(kind, chain)
-					out.append({"kind": kind, "tiles": chain, "cost": cost})
+				out.append({"kind": kind, "tiles": chain, "cost": build_price(kind, chain),
+						"why": why_cannot_build(pi, kind, chain)})
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if a["tiles"][0] != b["tiles"][0]:
+			return int(a["tiles"][0]) < int(b["tiles"][0])
+		return a["tiles"].size() < b["tiles"].size())
 	return out
 
 
-## 建房。成功返回 ""，否则返回原因。tiles 按沿路的顺序给。
+## 现在能建的房子：[{kind, tiles, cost}]
+func build_options(pi: int) -> Array:
+	return build_choices(pi).filter(func(o: Dictionary) -> bool: return o["why"] == "")
+
+
+## 建房（占的地上有自己的小房子时就是改建，只付差价，不触发古董 / 倒塌）。
+## 成功返回 ""，否则返回原因。tiles 按沿路的顺序给。
 func build(pi: int, kind: String, tiles: Array) -> String:
 	var why := why_cannot_build(pi, kind, tiles)
 	if why != "":
 		return why
-	var cost := house_cost(kind, tiles)
+	var cost := build_price(kind, tiles)
+	var old := replaced_houses(tiles)
 	players[pi].cash -= cost
+	for h in old:
+		_demolish(h)
 	var hid := _place_house(pi, kind, tiles)
 	var tile_list: Array = houses[hid]["tiles"]
-	_emit("built", {"player": pi, "house": hid, "kind": kind, "tiles": tile_list, "cost": cost})
-	# 建房后的随机事件：挖到古董；没挖到时房子可能倒塌
-	var lots := tile_list.size()
-	var antique_odds := int(rules["houses"]["antique_chance_by_lots"][str(lots)])
+	_emit("built", {"player": pi, "house": hid, "kind": kind, "tiles": tile_list, "cost": cost,
+			"rebuild": not old.is_empty()})
+	if not old.is_empty():
+		return ""
+	# 新建房子后的随机事件：挖到古董；没挖到时房子可能倒塌
+	var antique_odds := int(rules["houses"]["antique_chance_by_lots"][str(tile_list.size())])
 	if rng.randi() % antique_odds == 0:
 		var amount := _special_event_amount("antique", 1000)
 		players[pi].cash += amount
@@ -369,39 +410,9 @@ func _place_house(pi: int, kind: String, tiles: Array) -> int:
 	return hid
 
 
-## 这几块地上的平房（每块地一栋）的房屋编号
-func _flats_in(tiles: Array) -> Array:
-	var out: Array = []
-	for t in tiles:
-		var hid := house_at(int(t))
-		if hid != 0 and str(houses[hid]["kind"]) == "flat" and houses[hid]["tiles"].size() == 1:
-			out.append(hid)
-	return out
-
-
-## 合并平房要付的钱：新房子造价 − 拆掉的平房造价 × credit_flat_cost_pct%（不少于 0）
-func merge_cost(kind: String, tiles: Array) -> int:
-	var credit := 0
-	for hid in _flats_in(tiles):
-		credit += house_cost("flat", houses[hid]["tiles"])
-	var pct := int(rules["houses"].get("merge_flats", {}).get("credit_flat_cost_pct", 100))
-	return maxi(0, house_cost(kind, tiles) - pct_of(credit, pct))
-
-
-## 【作者定】同一条街上并排的自己的平房（可以夹着自己的空地）直接合并成旅社 / 小洋楼 / 别墅。
-## 不触发古董和倒塌（和升级一样）。成功返回 ""。
-func merge(pi: int, kind: String, tiles: Array) -> String:
-	var why := why_cannot_build(pi, kind, tiles, true)
-	if why != "":
-		return why
-	var cost := merge_cost(kind, tiles)
-	players[pi].cash -= cost
-	for hid in _flats_in(tiles):
-		_demolish(hid)
-	var hid := _place_house(pi, kind, tiles)
-	_emit("merged", {"player": pi, "house": hid, "kind": kind, "tiles": houses[hid]["tiles"],
-			"cost": cost})
-	return ""
+## 这栋房子是不是能升级的种类（旅社、小洋楼），不看钱
+func can_ever_upgrade(hid: int) -> bool:
+	return houses.has(hid) and _house_defs[houses[hid]["kind"]].has("upgrade_to")
 
 
 func why_cannot_upgrade(pi: int, hid: int) -> String:
@@ -818,6 +829,22 @@ func choose_direction(tile: int) -> bool:
 	return true
 
 
+## 十字路口每个方向接下来要走的路（画面高亮、点地块选方向用）：
+## [{option: 方向格, tiles: 沿这个方向会走过的格子, ends: 最后一格是不是落点}]。
+## 走到下一个路口就停（那里还要再选），ends = false。
+func direction_routes() -> Array:
+	var out: Array = []
+	if pending.get("type", "") != "choose_direction":
+		return out
+	for opt in pending["options"]:
+		var tiles: Array = [int(opt)]
+		while tiles.size() < int(pending["steps"]) and not board.is_crossroad(tiles[-1]):
+			tiles.append(int(board.next_tiles(tiles[-1])[0]))
+		out.append({"option": int(opt), "tiles": tiles,
+				"ends": tiles.size() == int(pending["steps"])})
+	return out
+
+
 func _continue_move() -> void:
 	var p: Player = player()
 	while int(_move["remaining"]) > 0:
@@ -828,7 +855,8 @@ func _continue_move() -> void:
 				dest = int(_move["pick"])
 				_move["pick"] = -1
 			elif _may_choose_direction(p, p.pos):
-				_set_pending({"type": "choose_direction", "from": p.pos, "options": options.duplicate()})
+				_set_pending({"type": "choose_direction", "from": p.pos, "options": options.duplicate(),
+						"steps": int(_move["remaining"])})
 				return
 			else:
 				dest = options[rng.randi() % options.size()]

@@ -1,4 +1,5 @@
 # gdlint: ignore=max-public-methods
+# gdlint: disable=max-file-lines
 extends RefCounted
 ## 第 2 步核心规则的测试（由 run_tests.gd 调用）。
 
@@ -490,6 +491,9 @@ func test_tax_and_crossroad() -> void:
 	h.roll()
 	check(h.phase == "pending" and h.pending["type"] == "choose_direction", "走过路口要选方向")
 	check(h.pending["options"] == [4, 5], "路口有两个方向")
+	var r := h.direction_routes()
+	check(r.size() == 2 and r[0]["tiles"] == [4, 6] and r[1]["tiles"] == [5, 6] and r[1]["ends"],
+			"每个方向要走的路：4 → 6、5 → 6，6 是落点 %s" % str(r))
 	check(h.player().pos == 3 and not h.choose_direction(6), "选了不存在的方向无效")
 	check(h.choose_direction(5), "选择方向")
 	check(h.player().pos == 6 and h.pending["type"] == "bail", "选完继续走：2 → 3 → 5 → 6（巡捕房）")

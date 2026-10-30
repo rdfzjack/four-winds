@@ -216,8 +216,6 @@ static func _build_step(game) -> bool:
 		"remove":
 			p.ai_memory["plan_waiting"] = true
 			why = game.remove_house(pi, int(best["remove"]))
-		"merge":
-			why = game.merge(pi, str(best["kind"]), best["tiles"])
 		_:
 			why = game.build(pi, str(best["kind"]), best["tiles"])
 	return why == ""
@@ -233,13 +231,13 @@ static func _can_invest(game, pi: int, cost: int) -> bool:
 
 
 ## 最好的建房位置（0x409770 + 0x4086d0 的挑选）。返回
-## {score, kind, tiles, cost, how: build / merge / remove, remove: 要先拆的房子}，没有返回 {}。
+## {score, kind, tiles, cost, how: build / remove, remove: 要先拆的房子}，没有返回 {}。
 ## 位置分 = 每块地 min(100, 50 × 地价系数 ÷ 建房系数) ÷ 2 之和，地越多分越高，所以总是挑最大的房子。
 ## 原版在网格上从每块地往两个方向延伸；这里用 Board.lot_chains（沿路、同一条街），效果相同。
 static func _best_site(game, pi: int) -> Dictionary:
 	var kinds := _kinds_by_lots(game)
 	var no_player_from := int(game.rules["houses"]["placement"].get("no_player_on_lots_from", 99))
-	var can_merge: bool = game.rules["houses"].get("merge_flats", {}).get("enabled", false)
+	var can_rebuild: bool = game.rules["houses"].get("rebuild", {}).get("enabled", false)
 	var standing := {}
 	for q in game.alive_players():
 		standing[game.board.site(q.pos)] = true
@@ -254,7 +252,7 @@ static func _best_site(game, pi: int) -> Dictionary:
 				if seen.has(key):
 					continue
 				seen[key] = true
-				var plan := _plan_for(game, pi, chain, str(kinds[n]), can_merge)
+				var plan := _plan_for(game, pi, chain, str(kinds[n]), can_rebuild)
 				if plan.is_empty():
 					continue
 				if n >= no_player_from and chain.any(func(t): return standing.has(t)):
@@ -264,13 +262,12 @@ static func _best_site(game, pi: int) -> Dictionary:
 	return best
 
 
-## 这几块地能不能盖成 kind（可能要先拆 / 合并），能就返回计划，不能返回 {}。
+## 这几块地能不能盖成 kind（可能要先拆 / 改建），能就返回计划，不能返回 {}。
 ## 原版：占到的地上已有的房子比新房子小才行（4 块的别墅不动），有房子就先拆掉。
-## 作者的规则可以把平房直接合并，所以只有平房时用合并代替拆。
-static func _plan_for(game, pi: int, chain: Array, kind: String, can_merge: bool) -> Dictionary:
+## 作者的改建规则（rules.json 的 houses.rebuild）可以直接盖在小房子上只付差价，开着时不用先拆。
+static func _plan_for(game, pi: int, chain: Array, kind: String, can_rebuild: bool) -> Dictionary:
 	var score := 0
-	var others: Array = []  ## 要拆的房子（平房以外）
-	var flats := 0
+	var old: Array = []  ## 占到的地上已有的房子
 	for t in chain:
 		if not _usable_lot(game, pi, t):
 			return {}
@@ -282,20 +279,14 @@ static func _plan_for(game, pi: int, chain: Array, kind: String, can_merge: bool
 			for ht in h["tiles"]:
 				if not chain.has(ht):
 					return {}
-			if str(h["kind"]) == "flat" and can_merge:
-				flats += 1
-			elif not others.has(hid):
-				others.append(hid)
+			if not old.has(hid):
+				old.append(hid)
 		score += _lot_value(game, t)
-	var plan := {"score": score, "kind": kind, "tiles": chain, "how": "build"}
-	if not others.is_empty():
+	var plan := {"score": score, "kind": kind, "tiles": chain, "how": "build",
+			"cost": game.build_price(kind, chain)}
+	if not old.is_empty() and not can_rebuild:
 		plan["how"] = "remove"
-		plan["remove"] = others[0]
-		plan["cost"] = game.house_cost(kind, chain)
-	elif flats > 0:
-		plan["how"] = "merge"
-		plan["cost"] = game.merge_cost(kind, chain)
-	else:
+		plan["remove"] = old[0]
 		plan["cost"] = game.house_cost(kind, chain)
 	return plan
 
