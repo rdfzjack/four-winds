@@ -13,7 +13,7 @@ extends RefCounted
 ##
 ## 用到的参数在 profiles.json 的 standard 表形态里（value_horizon_days 等，见那里的 params 说明），
 ## 角色可以在自己的参数组里覆盖。
-## 简化（草案，可改）：地的“发展后租金”按整条街能盖的最大房子算，乘上自己占这条街的比例的
+## 简化（草案，可改）：地的“发展后租金”按这一段街（同名、沿路连在一起的地）能盖的最大房子算，乘上自己占这条街的比例的
 ## street_share_power 次方，
 ## 不扣造价（建房模块再算）；机会卡、银行用固定分；路口在别的玩家那里按平均算。
 
@@ -21,10 +21,11 @@ const AiProfiles = preload("res://scripts/core/ai_profiles.gd")
 const Game = preload("res://scripts/core/game.gd")
 
 static var _freq: Dictionary = {}  ## Board 实例 id -> {正格: 停下概率}
+static var _segments: Dictionary = {}  ## Board 实例 id -> {正格: 这一段街的地块}
 
 
 static func param(game, pi: int, key: String, fallback: float = 0.0) -> float:
-	return float(AiProfiles.of(game.players[pi].character, game.players[pi].form).get(key, fallback))
+	return float(AiProfiles.for_player(game.players[pi]).get(key, fallback))
 
 
 # ───────────────────────── 骰子和停下概率 ─────────────────────────
@@ -108,20 +109,58 @@ static func visit_freq(game) -> Dictionary:
 
 # ───────────────────────── 地产值多少 ─────────────────────────
 
-## 这条街（group）的地块和能盖的最大房子每块地的租金单价
+## 这块地所在的“一段街”：同一条街（group）里沿路连在一起的地（正格），能盖多大的房子只看这一段。
+## 同名的街被别的格子隔开时是几段（例如一圈图的河南中路是 3 段各 1 块，只能盖平房）。
+## 返回这一段的地块和能盖的最大房子每块地的租金单价。
 static func _street(game, tile: int) -> Dictionary:
-	var group := str(game.board.get_tile(tile).get("group", ""))
-	var tiles: Array = []
-	for t in game.props:
-		var tt: Dictionary = game.board.get_tile(t)
-		if tt["type"] == "land" and str(tt.get("group", "")) == group:
-			tiles.append(t)
+	var tiles: Array = segment_of(game, tile)
 	var rents: Dictionary = game.prices()["rent"]
 	var best := int(rents.get("flat", 0))
 	for lv in game.rules.get("houses", {}).get("levels", []):
 		if int(lv["lots"]) <= tiles.size():
 			best = maxi(best, int(rents.get(str(lv["rent"]), 0)))
 	return {"tiles": tiles, "best_unit": best, "flat_unit": int(rents.get("flat", 0))}
+
+
+## 这块地所在的一段街（正格列表，按地图算一次）
+static func segment_of(game, tile: int) -> Array:
+	var board = game.board
+	var key: int = board.get_instance_id()
+	if not _segments.has(key):
+		_segments[key] = _build_segments(board)
+	return _segments[key].get(tile, [tile])
+
+
+## 同一条街、沿路相邻（一格的 next 是另一格）的地连成一段。分身格换成正格。
+static func _build_segments(board) -> Dictionary:
+	var link := {}
+	for t in board.tiles:
+		var a: int = board.site(int(t["id"]))
+		if board.get_tile(a)["type"] != "land":
+			continue
+		link.get_or_add(a, {})
+		for nx in board.next_tiles(int(t["id"])):
+			var b: int = board.site(int(nx))
+			var tb: Dictionary = board.get_tile(b)
+			if b != a and tb["type"] == "land" \
+					and str(tb.get("group", "")) == str(board.get_tile(a).get("group", "")):
+				link[a][b] = true
+				link.get_or_add(b, {})[a] = true
+	var out := {}
+	for start in link:
+		if out.has(start):
+			continue
+		var seg: Array = [start]
+		var i := 0
+		while i < seg.size():
+			for nb in link[seg[i]]:
+				if not seg.has(nb):
+					seg.append(nb)
+			i += 1
+		seg.sort()
+		for t in seg:
+			out[t] = seg
+	return out
 
 
 ## 地产归 owner 时每块地预计的租金（一次停下）。
@@ -151,8 +190,7 @@ static func expected_rent(game, tile: int, owner: int) -> float:
 		if s == tile or game.owner_of(s) == owner:
 			mine += 1
 	var share := float(mine) / maxi(1, st["tiles"].size())
-	var power := float(AiProfiles.of(game.players[owner].character, game.players[owner].form)
-			.get("street_share_power", 2)) if owner >= 0 else 2.0
+	var power := param(game, owner, "street_share_power", 2) if owner >= 0 else 2.0
 	var unit: float = st["flat_unit"] + (st["best_unit"] - st["flat_unit"]) * pow(share, power)
 	return maxf(now, unit * pct / 100.0)
 
@@ -163,10 +201,48 @@ static func income_per_day(game, tile: int, owner: int) -> float:
 			* _opponents(game, owner)
 
 
-## 这块地产对 pi 值多少（万圆）：价格 + 估价天数 × 归 pi 后每天预计收入
+## 这块地产对 pi 值多少（万圆）：价格 + 估价天数 × 归 pi 后每天预计收入，再乘上 pi 这局的估价误差
 static func property_worth(game, pi: int, tile: int) -> float:
-	return game.property_price(tile) + param(game, pi, "value_horizon_days", 30) \
+	var worth: float = game.property_price(tile) + param(game, pi, "value_horizon_days", 30) \
 			* income_per_day(game, tile, pi)
+	return worth * (1.0 + noise(game, pi, tile))
+
+
+# ───────────────────────── 性格：估价误差、喜欢的地 ─────────────────────────
+## 每局开局后第一次用到时随机定好，存在 Player.ai_memory 里（存档时一起存），这局不变。
+
+## pi 对这块地产的估价误差（−value_noise_pct% 到 +value_noise_pct%，小数）。
+## 简化：别人估 pi 的价值时也用 pi 自己的误差。
+static func noise(game, pi: int, tile: int) -> float:
+	var pct := param(game, pi, "value_noise_pct", 0)
+	if pct <= 0.0:
+		return 0.0
+	var table: Dictionary = game.players[pi].ai_memory.get_or_add("value_noise", {})
+	var key := str(tile)
+	if not table.has(key):
+		table[key] = game.rng.randf_range(-pct, pct) / 100.0
+	return float(table[key])
+
+
+## pi 这局“喜欢的地”（favorite_count 块，随机挑）：见到就买，任何交易都不卖
+static func favorites(game, pi: int) -> Array:
+	var count := int(param(game, pi, "favorite_count", 0))
+	if count <= 0:
+		return []
+	var memory: Dictionary = game.players[pi].ai_memory
+	if not memory.has("favorites"):
+		var lands: Array = []
+		for t in game.props:
+			if game.board.get_tile(t)["type"] == "land":
+				lands.append(t)
+		lands.sort()
+		var picked: Array = []
+		while picked.size() < mini(count, lands.size()):
+			var t: int = lands[game.rng.randi() % lands.size()]
+			if not picked.has(t):
+				picked.append(t)
+		memory["favorites"] = picked
+	return memory["favorites"]
 
 
 # ───────────────────────── 停在某格 ─────────────────────────

@@ -14,7 +14,7 @@
   "tradeCycle": "平均几回合主动找人交易一次",
   "maxInvestment": "资金低于 总资产 × 此值 ÷ 100 时不再投资",
   "bailFactor": "越小，越愿意交保释金：现金因子 × 此值 < 100 就交。不在 .ai 文件里，原版按人物写死在 exe 中（董莺雨 100、四毛 140、包德利 100、陈玛丽 70、赛珍珠 100、冯全篾 120、发达而 60、金如山 160）",
-  "value_horizon_days": "【新 AI】估价看多少天：地产值多少 = 价格 + 这么多天的预计租金（越大越看长线）",
+  "value_horizon_days": "【新 AI】估价看多少天：地产值多少 = 价格 + 这么多天的预计租金（越大越看长线）。性格：小 = 只看短期收益、没长远规划",
   "skip_day_value": "【新 AI】少走一天（坐牢、游览）折合多少万圆",
   "chance_value": "【新 AI】停在机会格折合多少万圆（机会卡估价以后做，先用固定分）",
   "bank_pass_value": "【新 AI】路过银行（能存取款）折合多少万圆",
@@ -29,7 +29,19 @@
   "trade_harm_pct": "【新 AI】对方因交易多出来的价值，算作自己损失的百分比，再按对手人数平摊（帮对手变强也是损失）",
   "trade_guess_accept_pct": "【新 AI】发起交易时猜对方的“一定接受”线，按它定给多少现金（发起人不知道对方真实的区间）",
   "trade_retry_days": "【新 AI】同一个提议隔几天才再提",
-  "street_share_power": "【新 AI】地的发展价值按“自己占这条街的比例”的几次方算：2 = 快凑齐才值钱，1 = 占一块就按比例算（越小越早重视好街）"
+  "street_share_power": "【新 AI】地的发展价值按“自己占这条街的比例”的几次方算：2 = 快凑齐才值钱，1 = 占一块就按比例算（越小越早重视好街）。性格：大 = 不提前为凑街布局",
+  "value_noise_pct": "【新 AI·性格】估价误差：每块地产这局随机偏 ±这么多 %（0 = 估得准）",
+  "favorite_count": "【新 AI·性格】每局随机挑几块“喜欢的地”：现金够就买（不管留钱），交易里绝不交出，拍卖出到现金为止",
+  "trade_accept_floor_pct": "【新 AI·性格】再离谱的交易也有这么大概率同意（“按错”，0 = 低于下线一定拒绝）",
+  "mercy_behind_pct": "【新 AI·性格】对手总资产不到自己的这个百分比时算“输了”（0 = 不手下留情）",
+  "mercy_pct": "【新 AI·性格】回答“输了”的对手的交易时，得分加这么多（让价）",
+  "holdup_pct": "【新 AI·性格】对方靠这笔交易多赚的部分，要分走几成（敲竹杠：对方差一块凑街时开天价；表形态一般 0）",
+  "counter_tile_pct": "【新 AI·性格】还价时有多大概率不要钱、改要对方的一块地（专挑让自己得分最高的，常常是对方凑街的关键地）",
+  "distress_discount_pct": "【新 AI·性格】对方现金不够防破产时，发起交易时出价压低几个百分点（趁火打劫；0 = 不趁火打劫）",
+  "trade_propose_pct": "【新 AI·性格】每回合有多大概率主动找人交易（100 = 有合适的就提）",
+  "trade_cooldown_days": "【新 AI·性格】被某人拒绝后，多少天内不再向他提任何交易",
+  "trade_give_up_after": "【新 AI·性格】同一块地被同一个人拒绝几次后，这局不再为它找他（0 = 不放弃）",
+  "trade_raise_pct": "【新 AI·性格】同一块地每被拒一次，下次出价时“猜对方的线”多加几个百分点（多给钱）"
  },
  "profiles": {
   "standard": {
@@ -64,7 +76,20 @@
     "trade_harm_pct": 100,
     "trade_guess_accept_pct": 50,
     "trade_retry_days": 5,
-    "street_share_power": 2
+    "street_share_power": 2,
+    "value_noise_pct": 0,
+    "favorite_count": 0,
+    "trade_accept_floor_pct": 0,
+    "mercy_behind_pct": 0,
+    "mercy_pct": 0,
+    "holdup_pct": 0,
+    "counter_tile_pct": 0,
+    "distress_discount_pct": 0,
+    "trade_propose_pct": 100,
+    "trade_cooldown_days": 5,
+    "trade_give_up_after": 2,
+    "trade_raise_pct": 10,
+    "_personality": "以上新 AI 参数是“标准 AI”（ai 版本 standard，没有性格）用的值，也是各角色没写时的默认值。各角色的性格写在自己参数组的 front 里"
    }
   },
   "david": {
@@ -82,7 +107,16 @@
     "acceptableDiffenceInTrade": -20,
     "tradeCycle": 1,
     "maxInvestment": 20,
-    "bailFactor": 100
+    "bailFactor": 100,
+    "_personality": "斐斐表：伦敦金融城继承人，守规矩、认真、果断、公平，表形态里最强。估价准；交易区间窄（公平就成交）；被拒就不纠缠；不趁火打劫、不放水、不敲竹杠",
+    "value_noise_pct": 0,
+    "trade_reject_pct": 0,
+    "trade_accept_pct": 5,
+    "trade_counter_pct": -20,
+    "trade_guess_accept_pct": 30,
+    "trade_cooldown_days": 10,
+    "trade_give_up_after": 1,
+    "trade_raise_pct": 0
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
@@ -103,7 +137,18 @@
     "acceptableDiffenceInTrade": 0,
     "tradeCycle": 3,
     "maxInvestment": 10,
-    "bailFactor": 120
+    "bailFactor": 120,
+    "_personality": "小九表：说话柔、可爱，玩得不认真。没有一定会拒绝的交易（按错）；对落后的人让价；很少主动交易，没什么攻击性；估价随意",
+    "value_noise_pct": 20,
+    "trade_accept_floor_pct": 10,
+    "mercy_behind_pct": 70,
+    "mercy_pct": 30,
+    "trade_propose_pct": 30,
+    "trade_accept_pct": 5,
+    "block_pct": 20,
+    "reserve_pct": 80,
+    "trade_cooldown_days": 10,
+    "trade_give_up_after": 1
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
@@ -124,7 +169,16 @@
     "acceptableDiffenceInTrade": -10,
     "tradeCycle": 2,
     "maxInvestment": 15,
-    "bailFactor": 100
+    "bailFactor": 100,
+    "_personality": "孔雀表：完全不会理财，骄傲，眼光高。每局有几块喜欢的地（见到就买、绝不卖）；估价误差大；钱乱花（留钱少）；要价高、被压价不还价；被拒很久不理人",
+    "favorite_count": 4,
+    "value_noise_pct": 40,
+    "reserve_pct": 30,
+    "trade_accept_pct": 30,
+    "trade_counter_pct": 0,
+    "trade_cooldown_days": 20,
+    "trade_give_up_after": 1,
+    "trade_propose_pct": 60
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
@@ -145,7 +199,15 @@
     "acceptableDiffenceInTrade": -10,
     "tradeCycle": 2,
     "maxInvestment": 15,
-    "bailFactor": 60
+    "bailFactor": 60,
+    "_personality": "理理表：傻白甜小镇青年，贪小便宜，没长远规划，不是故意输而是没算到。只看短期收益（估价天数短、不为凑街布局）；估价有误差；出价抠门；话多爱缠（被拒后冷却短、多次才放弃）",
+    "value_horizon_days": 25,
+    "street_share_power": 3,
+    "value_noise_pct": 25,
+    "trade_guess_accept_pct": 20,
+    "trade_cooldown_days": 3,
+    "trade_give_up_after": 3,
+    "trade_raise_pct": 5
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"

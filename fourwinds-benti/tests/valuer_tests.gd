@@ -30,6 +30,7 @@ func run(p_runner: Object) -> void:
 	test_street_worth()
 	test_direction_choice()
 	test_buy_and_build()
+	test_split_streets()
 
 
 func new_game(board: Board) -> Game:
@@ -178,3 +179,26 @@ func test_buy_and_build() -> void:
 	g4.players[0].cash = 0
 	g4.players[0].deposit = 0
 	runner.check(not NewAi._build_step(g4) and g4.houses.is_empty(), "新 AI：没钱不建房")
+
+
+## 同名但被隔开的街按段估价：一圈图的河南中路 3 块各自隔开，只能盖平房；北京路 4 块连着
+func test_split_streets() -> void:
+	var g := new_game(loop)
+	var river: Array = []
+	var beijing: Array = []
+	for t in g.props:
+		var group := str(g.board.get_tile(t).get("group", ""))
+		if group == "河南中路":
+			river.append(t)
+		elif group == "北京路":
+			beijing.append(t)
+	runner.check(river.size() == 3 and Valuer.segment_of(g, river[0]).size() == 1
+			and Valuer.segment_of(g, beijing[0]).size() == 4, "估价：同名的街被隔开时分成几段")
+	var before := Valuer.property_worth(g, 0, river[0])
+	g.props[river[1]]["owner"] = 0
+	g.props[river[2]]["owner"] = 0
+	runner.check(is_equal_approx(Valuer.property_worth(g, 0, river[0]), before),
+			"估价：隔开的同名地不让这块地更值钱")
+	var b0 := Valuer.property_worth(g, 0, beijing[0])
+	g.props[beijing[1]]["owner"] = 0
+	runner.check(Valuer.property_worth(g, 0, beijing[0]) > b0, "估价：连着的同名地让这块地更值钱")

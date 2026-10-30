@@ -13,6 +13,9 @@ const Game = preload("res://scripts/core/game.gd")
 const AI = preload("res://scripts/core/ai.gd")
 const AiProfiles = preload("res://scripts/core/ai_profiles.gd")
 
+## 被某人拒绝后几天内又向他提议，算一次“纠缠”
+const PESTER_DAYS := 5
+
 var games := 40
 var max_days := 300
 var seed_start := 1
@@ -20,7 +23,7 @@ var map_id := "shanghai"
 var seats: Array = []           ## [{character, form, ai}]
 var default_relation := 0       ## 所有人之间的初始好感
 var pair_relations: Dictionary = {}  ## Vector2i(座位 a, 座位 b) -> a 对 b 的初始好感
-var overrides: Dictionary = {}  ## 临时改的 AI 参数：参数名 -> 值（所有角色、所有形态）
+var overrides: Dictionary = {}  ## 临时改的 AI 参数：参数名（或“角色/形态:参数名”）-> 值
 
 var board := Board.new()
 var rules: Dictionary = {}
@@ -51,7 +54,13 @@ func prepare() -> Array:
 	AiProfiles.ensure_loaded()
 	for k in AiProfiles.table:
 		for name in overrides:
-			AiProfiles.table[k][name] = overrides[name]
+			# "角色/形态:参数" 只改这一个条目（例如 eric/front:value_horizon_days），否则改全部
+			var parts := str(name).split(":")
+			if parts.size() == 2:
+				if parts[0] == k or (parts[0] == "standard" and k == ""):
+					AiProfiles.table[k][parts[1]] = overrides[name]
+			else:
+				AiProfiles.table[k][name] = overrides[name]
 	_groups.clear()
 	var pct_sum := {}
 	for t in board.tiles:
@@ -131,6 +140,7 @@ func _play_one(k: int, per_seat: Array, totals: Dictionary) -> void:
 		st.append({"streets": {}})
 	var first_bankrupt := -1
 	var first_street := -1
+	var last_refusal := {}  ## Vector2i(被拒的人, 拒绝的人) -> 第几天
 	var steps := 0
 	while g.phase != "over" and g.day <= max_days:
 		steps += 1
@@ -154,10 +164,17 @@ func _play_one(k: int, per_seat: Array, totals: Dictionary) -> void:
 					_add(st[who], "built")
 				"trade_proposed":
 					_add(st[who], "trade_proposed")
+					# 被这个人拒绝后 PESTER_DAYS 天内又向他提议 = 纠缠
+					var to := int(ev["offer"]["to"])
+					if g.day - int(last_refusal.get(Vector2i(who, to), -9999)) <= PESTER_DAYS:
+						_add(st[who], "pester")
 				"trade_countered":
 					_add(st[who], "trade_countered")
 				"trade_rejected":
 					_add(st[who], "trade_rejected")
+					var o: Dictionary = ev["offer"]
+					var refused: int = o["from"] if who == int(o["to"]) else o["to"]
+					last_refusal[Vector2i(refused, who)] = g.day
 				"trade_done":
 					# who 是发起人；接受的人是这一步做决定的人
 					_add(st[who], "trade_proposed_done")
@@ -306,4 +323,15 @@ func format_report(report: Dictionary) -> String:
 			s.get("auction_won", 0), _avg(s.get("note_mercy", 0), n), _avg(s.get("note_slip", 0), n),
 			_avg(s.get("rel_given", 0), s.get("rel_pairs", 0)),
 			_avg(s.get("rel_got", 0), s.get("rel_pairs", 0))])
+	lines.append("")
+	lines.append("性格动作（每局次数）：")
+	for i in range(seats.size()):
+		var s: Dictionary = report["per_seat"][i]
+		var n := int(s.get("games", 0))
+		var parts: Array = ["被拒后 %d 天内又找同一人 %s" % [PESTER_DAYS, _avg(s.get("pester", 0), n)]]
+		var keys: Array = s.keys().filter(func(k: String) -> bool: return k.begins_with("note_"))
+		keys.sort()
+		for k in keys:
+			parts.append("%s %s" % [k.trim_prefix("note_"), _avg(s[k], n)])
+		lines.append("- %s：%s" % [seat_label(seats[i]), "，".join(parts)])
 	return "\n".join(lines)

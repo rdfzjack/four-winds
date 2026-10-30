@@ -3,7 +3,7 @@ extends RefCounted
 ## 只通过 Game 的公开方法操作；估价时会临时改地产主人再改回来（_with_owners），算完局面不变。
 ##
 ## 一笔交易对玩家 x 的“得分”（百分比）：
-##   得失 = 交易后 x 在相关街 / 行业上的地产价值 − 交易前 + 收到的现金 − 付出的现金
+##   得失 = 交易后 x 在相关街（同名的整条街，估价按连在一起的一段算）/ 行业上的地产价值 − 交易前 + 收到的现金 − 付出的现金
 ##          − 对方因此多出来的价值 × trade_harm_pct% ÷ 对手人数（帮对手变强也是损失；
 ##            4 人局里一个对手变强，损失由 3 个对手分担，所以按人数平摊）
 ##   得分 = 得失 ÷ 交出去的东西值多少 × 100（关系值以后再接，作者定先不做）
@@ -13,6 +13,17 @@ extends RefCounted
 ## （trade_guess_accept_pct，发起人不知道对方真实的区间）算，自己得失要为正、付完要留得够钱。
 ## 能拿自己用不上的地（别人凑街要的）去换，就先试换地。
 ## 拍卖：出价上限 = 拿到这块对自己多值的 + 不让对手拿到的价值，不超过付完还留得够钱的现金。
+##
+## 性格参数（profiles.json，都是通用的，表 / 里形态按人设填，说明见那里的 params）：
+##   trade_accept_floor_pct  再离谱的交易也有这么大概率同意（小九表的“按错”，记 slip）
+##   favorite_count          喜欢的地：见到就买，交易里绝不交出，拍卖出到现金为止（记 favorite_refuse）
+##   mercy_behind_pct / mercy_pct  对手总资产不到自己的 mercy_behind_pct% 时，回答他的交易得分加 mercy_pct（记 mercy）
+##   holdup_pct              对方靠这笔交易多赚的部分，要分走几成（敲竹杠；对方差一块凑街时开天价）
+##   counter_tile_pct        还价时有多大概率不要钱、改要对方街上的关键地
+##   distress_discount_pct   对方现金不够防破产时，发起交易出价压低几个百分点（趁火打劫）
+##   trade_propose_pct       每回合有多大概率主动找人交易
+##   trade_cooldown_days / trade_give_up_after / trade_raise_pct  被拒后收敛：多少天不再找这个人、
+##                           同一块地被同一人拒几次就放弃、每被拒一次下次出价多给几个百分点
 
 const Valuer = preload("res://scripts/core/valuer.gd")
 
@@ -94,17 +105,42 @@ static func harm(game, x: int, other: float) -> float:
 	return maxf(0.0, other) * param(game, x, "trade_harm_pct", 100) / 100.0 / opponents
 
 
-## x 看这笔交易的得分（百分比，见文件开头）
+## x 看这笔交易的得分（百分比，见文件开头）。x 是回答的一方时算上敲竹杠和手下留情。
+## 交易里要 x 交出“喜欢的地”时得分是 -INF（绝不接受）。
 static func trade_score(game, x: int, offer: Dictionary) -> float:
+	var giving: Array = offer["give"] if x == int(offer["from"]) else offer["get"]
+	for t in giving:
+		if Valuer.favorites(game, x).has(t):
+			return -INF
 	var e := trade_effect(game, x, offer)
-	return 100.0 * (e["net"] - harm(game, x, e["other"])) / maxf(1.0, e["lost"])
+	var lost := maxf(1.0, e["lost"])
+	var score: float = 100.0 * (e["net"] - harm(game, x, e["other"])) / lost
+	if x == int(offer["to"]):
+		score -= param(game, x, "holdup_pct", 0) * maxf(0.0, e["other"]) / lost
+		score += mercy_bonus(game, x, int(offer["from"]))
+	return score
 
 
-## 按得分决定接不接受（中间区间按概率）
+## 对 other 手下留情加的分：他的总资产不到自己的 mercy_behind_pct% 时加 mercy_pct
+static func mercy_bonus(game, x: int, other: int) -> float:
+	var behind := param(game, x, "mercy_behind_pct", 0)
+	if behind <= 0.0 or game.total_assets(other) * 100.0 >= game.total_assets(x) * behind:
+		return 0.0
+	return param(game, x, "mercy_pct", 0)
+
+
+## 按得分决定接不接受（中间区间按概率）。得分 -INF（喜欢的地）一定不接受。
+## 低于下线时还有 trade_accept_floor_pct% 的概率“按错”同意。
 static func accepts(game, x: int, score: float) -> bool:
+	if score == -INF:
+		game.ai_note(x, "favorite_refuse")
+		return false
 	var low := param(game, x, "trade_reject_pct", 0)
 	var high := param(game, x, "trade_accept_pct", 10)
 	if score < low:
+		if game.rng.randf() * 100.0 < param(game, x, "trade_accept_floor_pct", 0):
+			game.ai_note(x, "slip")
+			return true
 		return false
 	if score >= high:
 		return true
@@ -121,17 +157,50 @@ static func answer(game, pi: int) -> void:
 		game.trade_answer(accepts(game, pi, score))
 		return
 	if accepts(game, pi, score):
+		var bonus := mercy_bonus(game, pi, int(offer["from"]))
+		if bonus > 0.0 and score - bonus < param(game, pi, "trade_accept_pct", 10):
+			game.ai_note(pi, "mercy")
 		game.trade_answer(true)
 		return
-	if score >= param(game, pi, "trade_counter_pct", -30):
+	if score != -INF and score >= param(game, pi, "trade_counter_pct", -30):
 		var counter := _counter(game, pi, offer)
 		if not counter.is_empty() and game.trade_counter(counter) == "":
 			return
 	game.trade_answer(false)
 
 
-## 还价：发起人再多付多少现金，自己的得分才到“一定接受”线。付不起返回 {}。
+## 还价：有 counter_tile_pct% 的概率先试“改要对方的一块关键地”（不要钱）；
+## 否则（或要地也不够）要发起人再多付现金，到自己的“一定接受”线。付不起返回 {}。
 static func _counter(game, pi: int, offer: Dictionary) -> Dictionary:
+	if game.rng.randf() * 100.0 < param(game, pi, "counter_tile_pct", 0):
+		var with_tile := _counter_with_tile(game, pi, offer)
+		if not with_tile.is_empty():
+			return with_tile
+	return _counter_cash(game, pi, offer)
+
+
+## 改要发起人的一块地（没房子的），挑加进来以后自己得分最高、而且到“一定接受”线的那块
+static func _counter_with_tile(game, pi: int, offer: Dictionary) -> Dictionary:
+	var high := param(game, pi, "trade_accept_pct", 10)
+	var from := int(offer["from"])
+	var best := {}
+	var best_score := -INF
+	for t in game.properties_of(from):
+		if offer["give"].has(t) or game.house_at(t) != 0:
+			continue
+		var c: Dictionary = offer.duplicate(true)
+		c["give"].append(t)
+		c["give_cash"] = 0
+		if game.why_bad_trade(c) != "":
+			continue
+		var sc := trade_score(game, pi, c)
+		if sc >= high and sc > best_score:
+			best = c
+			best_score = sc
+	return best
+
+
+static func _counter_cash(game, pi: int, offer: Dictionary) -> Dictionary:
 	var counter: Dictionary = offer.duplicate(true)
 	var high := param(game, pi, "trade_accept_pct", 10)
 	for _i in range(4):
@@ -148,22 +217,39 @@ static func _counter(game, pi: int, offer: Dictionary) -> Dictionary:
 
 # ───────────────────────── 发起 ─────────────────────────
 
-## 掷骰前发起一笔交易（每回合最多一次）。发起了返回 true。
+## 掷骰前发起一笔交易（每回合最多一次，有 trade_propose_pct% 的概率想找人）。发起了返回 true。
+## 被拒后收敛：trade_cooldown_days 天内不再找这个人；同一块地被同一人拒 trade_give_up_after 次就不再为它找他；
+## 同一个提议隔 trade_retry_days 天才再提，每被拒一次出价多给 trade_raise_pct 个百分点。
 static func propose_step(game) -> bool:
 	var pi: int = game.current
 	var p = game.players[pi]
 	if int(p.ai_memory.get("trade_day", -1)) == game.day:
 		return false
 	p.ai_memory["trade_day"] = game.day
+	_note_last_result(game, pi)
+	if game.rng.randf() * 100.0 >= param(game, pi, "trade_propose_pct", 100):
+		return false
 	var asked: Dictionary = p.ai_memory.get_or_add("trade_asked", {})
+	var refused_by: Dictionary = p.ai_memory.get_or_add("trade_refused_by", {})
+	var refusals: Dictionary = p.ai_memory.get_or_add("trade_refusals", {})
 	var retry := int(param(game, pi, "trade_retry_days", 5))
+	var cooldown := int(param(game, pi, "trade_cooldown_days", 0))
+	var give_up := int(param(game, pi, "trade_give_up_after", 0))
 	var best := {}
 	var best_net := 0.0
 	for want in _wants(game, pi):
-		var key := "%d:%s" % [int(want["owner"]), str(want["tiles"])]
+		var q := int(want["owner"])
+		if game.day - int(refused_by.get(str(q), -9999)) < cooldown:
+			continue
+		var key := "%d:%s" % [q, str(want["tiles"])]
 		if game.day - int(asked.get(key, -9999)) < retry:
 			continue
-		var offer := _make_offer(game, pi, int(want["owner"]), want["tiles"])
+		var times := 0
+		for t in want["tiles"]:
+			times = maxi(times, int(refusals.get("%d:%d" % [q, t], 0)))
+		if give_up > 0 and times >= give_up:
+			continue
+		var offer := _make_offer(game, pi, q, want["tiles"], times)
 		if offer.is_empty():
 			continue
 		var net: float = trade_effect(game, pi, offer)["net"]
@@ -175,45 +261,66 @@ static func propose_step(game) -> bool:
 		return false
 	asked[best["_key"]] = game.day
 	best.erase("_key")
+	p.ai_memory["trade_last"] = {"to": best["to"], "get": best["get"].duplicate(), "day": game.day}
 	return game.propose_trade(best) == ""
 
 
-## 想要的地：自己在这条街至少有一块，对手手里这条街的地（没盖房子）。[{owner, tiles}]
+## 上一次自己发起的交易成了没有：要的地还不是自己的 = 被拒（或对方还价被自己拒），记下来
+static func _note_last_result(game, pi: int) -> void:
+	var memory: Dictionary = game.players[pi].ai_memory
+	var last: Dictionary = memory.get("trade_last", {})
+	if last.is_empty():
+		return
+	memory.erase("trade_last")
+	var q := int(last["to"])
+	var done := true
+	for t in last["get"]:
+		if game.owner_of(int(t)) != pi:
+			done = false
+	if done:
+		return
+	memory.get_or_add("trade_refused_by", {})[str(q)] = int(last["day"])
+	var refusals: Dictionary = memory.get_or_add("trade_refusals", {})
+	for t in last["get"]:
+		var key := "%d:%d" % [q, int(t)]
+		refusals[key] = int(refusals.get(key, 0)) + 1
+
+
+## 想要的地：自己在这一段街至少有一块，对手手里这一段的地（没盖房子）。[{owner, tiles}]
 static func _wants(game, pi: int) -> Array:
-	var groups := {}
-	for t in game.props:
-		var tile: Dictionary = game.board.get_tile(t)
-		if tile["type"] != "land":
-			continue
-		var g: Dictionary = groups.get_or_add(str(tile.get("group", "")), {"mine": 0, "by": {}})
-		var o: int = game.owner_of(t)
-		if o == pi:
-			g["mine"] += 1
-		elif o >= 0 and game.house_at(t) == 0 and not game.players[o].bankrupt:
-			g["by"].get_or_add(o, []).append(t)
+	var seen := {}
 	var out: Array = []
-	for g in groups.values():
-		if g["mine"] == 0:
+	for t in game.props:
+		if game.board.get_tile(t)["type"] != "land":
 			continue
-		for q in g["by"]:
-			out.append({"owner": q, "tiles": g["by"][q]})
+		var seg: Array = Valuer.segment_of(game, t)
+		if seen.has(seg[0]):
+			continue
+		seen[seg[0]] = true
+		var mine := 0
+		var by := {}
+		for s in seg:
+			var o: int = game.owner_of(s)
+			if o == pi:
+				mine += 1
+			elif o >= 0 and game.house_at(s) == 0 and not game.players[o].bankrupt:
+				by.get_or_add(o, []).append(s)
+		if mine == 0:
+			continue
+		for q in by:
+			out.append({"owner": q, "tiles": by[q]})
 	return out
 
 
-## 自己用不上、对 q 有用的地：这条街自己只有这一块、q 也有地，地上没房子
+## 自己用不上、对 q 有用的地：这一段街自己只有这一块、q 也有地，地上没房子
 static func _spare_for(game, pi: int, q: int) -> Array:
 	var out: Array = []
 	for t in game.properties_of(pi):
-		var tile: Dictionary = game.board.get_tile(t)
-		if tile["type"] != "land" or game.house_at(t) != 0:
+		if game.board.get_tile(t)["type"] != "land" or game.house_at(t) != 0:
 			continue
-		var group := str(tile.get("group", ""))
 		var mine := 0
 		var theirs := 0
-		for s in game.props:
-			if str(game.board.get_tile(s).get("group", "")) != group \
-					or game.board.get_tile(s)["type"] != "land":
-				continue
+		for s in Valuer.segment_of(game, t):
 			if game.owner_of(s) == pi:
 				mine += 1
 			elif game.owner_of(s) == q:
@@ -225,12 +332,18 @@ static func _spare_for(game, pi: int, q: int) -> Array:
 
 ## 给对手 q 开条件：先试拿一块用不上的地换，再试纯现金。现金 = 猜对方“一定接受”要的数。
 ## 自己得失要为正（扣掉帮对手变强的部分），付完现金要留得够钱。开不出返回 {}。
-static func _make_offer(game, pi: int, q: int, tiles: Array) -> Dictionary:
+## times = 这几块地被 q 拒过几次（每次出价多给 trade_raise_pct）；q 现金不够防破产时压价 distress_discount_pct。
+static func _make_offer(game, pi: int, q: int, tiles: Array, times: int = 0) -> Dictionary:
 	var swaps: Array = []
 	for t in _spare_for(game, pi, q):
-		swaps.append([t])
+		if not Valuer.favorites(game, pi).has(t):
+			swaps.append([t])
 	swaps.append([])
-	var guess := param(game, pi, "trade_guess_accept_pct", 50)
+	var guess := param(game, pi, "trade_guess_accept_pct", 50) \
+			+ times * param(game, pi, "trade_raise_pct", 0)
+	var qp = game.players[q]
+	if qp.cash + qp.deposit < Valuer.reserve(game, q):
+		guess -= param(game, pi, "distress_discount_pct", 0)
 	var best := {}
 	var best_net := 0.0
 	for give in swaps:
@@ -269,8 +382,11 @@ static func _round_up(amount: int) -> int:
 
 # ───────────────────────── 拍卖出价 ─────────────────────────
 
-## 出价上限：拿到这块对自己多值的 + 不让对手拿到的价值 × block_pct%，不超过付完还留得够钱的现金
+## 出价上限：拿到这块对自己多值的 + 不让对手拿到的价值 × block_pct%，不超过付完还留得够钱的现金。
+## 喜欢的地出到现金为止。
 static func auction_limit(game, pi: int, tile: int) -> int:
+	if Valuer.favorites(game, pi).has(tile):
+		return game.players[pi].cash
 	var scope := _scope(game, [tile])
 	var before := _value(game, pi, scope)
 	var gain: float = _with_owners(game, {tile: pi}, func() -> float:

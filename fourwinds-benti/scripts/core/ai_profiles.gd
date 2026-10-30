@@ -29,6 +29,15 @@ static func of(character: String, form: String = "front") -> Dictionary:
 	return table.get(key(character, form), table.get("", {}))
 
 
+## 玩家 p 用的参数：AI 版本是 standard（“认真玩家”替身，没有性格）时一律用 standard 表形态，
+## 否则按他的角色和形态
+static func for_player(p) -> Dictionary:
+	if p.ai == "standard":
+		ensure_loaded()
+		return table.get("", {})
+	return of(p.character, p.form)
+
+
 static func ensure_loaded() -> void:
 	if not table.is_empty():
 		return
