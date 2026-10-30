@@ -69,8 +69,9 @@ static func step(game) -> bool:
 
 # ───────────────────────── 参数 ─────────────────────────
 
+## 按玩家取参数：标准 AI（ai 版本 standard）一律用 standard 参数，其余按角色和形态
 static func profile_of(game, pi: int) -> Dictionary:
-	return AiProfiles.of(game.players[pi].character, game.players[pi].form)
+	return AiProfiles.for_player(game.players[pi])
 
 
 static func param(game, pi: int, key: String) -> int:
