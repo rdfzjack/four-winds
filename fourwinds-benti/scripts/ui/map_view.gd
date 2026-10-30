@@ -168,12 +168,15 @@ func _layout() -> void:
 	_grass = Rect2i(lo - Vector2i.ONE * GRASS_MARGIN, hi - lo + Vector2i.ONE * (2 * GRASS_MARGIN + 1))
 
 
-## 直路上的格子：取垂直于路、离地图中心更远的那一格；拐角返回 null
+## 直路上的格子：取垂直于路、离地图中心更远的那一格。
+## 拐角：空地按走进拐角的那段路算（排在同一排地的末尾），别的类型返回 null（画在路面上）
 func _outside_cell(id: int, from: int, to: int, centre: Vector2):
 	var here: Vector2 = _road_cell[id]
 	var d_in: Vector2 = here - _road_cell[from]
 	var d_out: Vector2 = _road_cell[to] - here
-	if not d_in.is_equal_approx(d_out) or absf(d_in.x) + absf(d_in.y) != 1.0:
+	if absf(d_in.x) + absf(d_in.y) != 1.0:
+		return null
+	if not d_in.is_equal_approx(d_out) and str(board.get_tile(id)["type"]) != "land":
 		return null
 	var n := Vector2(d_in.y, -d_in.x)
 	if n.dot(here - centre) < 0.0:

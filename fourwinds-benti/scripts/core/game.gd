@@ -1353,6 +1353,9 @@ func _new_day() -> void:
 	if day % every == 0:
 		for p in alive_players():
 			var interest := pct_of(p.deposit, int(rules["bank"]["interest_pct"]))
+			var cap := int(rules["bank"].get("interest_max", -1))
+			if cap >= 0:
+				interest = mini(interest, cap)
 			p.cash += interest
 			_emit("payday", {"player": p.index, "amount": interest})
 

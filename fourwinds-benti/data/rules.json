@@ -30,6 +30,8 @@
  "bank": {
   "interest_pct": 10,
   "payday_every_days": 7,
+  "interest_max": 500,
+  "_interest_max_note": "【作者定】每次派息最多给这么多（原版不封顶）。-1 = 不封顶",
   "_note": "原版每逢星期六派息：存款 × 10% 加进现金。经过银行时可以存款或取款",
   "_payday_note": "日期从第 1 天开始，每过 payday_every_days 天（第 7、14、21… 天开始时）派一次息；原版是星期六，这里的星期几是假设的，可以改"
  },

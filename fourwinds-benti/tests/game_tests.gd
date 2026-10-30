@@ -927,6 +927,13 @@ func test_payday() -> void:
 			break
 	check(g.day >= 7, "过了 7 天以上")
 	check(g.events.filter(func(e): return e["type"] == "payday").size() >= 4, "第 7 天开始派息")
+	var c := new_game()
+	c.day = 6
+	c.players[0].deposit = 10000
+	c.current = 3
+	c._finish_turn()
+	var pays := c.events.filter(func(e): return e["type"] == "payday" and e["player"] == 0)
+	check(pays.size() == 1 and int(pays[0]["amount"]) == 500, "存款 10000，利息封顶 500")
 	var d := new_game()
 	d.day = 6
 	d.players[0].deposit = 1000
