@@ -74,7 +74,8 @@ static func _improve(game) -> bool:
 
 # ───────────────────────── 买地 ─────────────────────────
 
-## 买下 vs 不买。不买时：每个对手各有 1 / 活着的人数 的可能以后买走它，剩下的可能还没人买。
+## 买下 vs 不买。不买时：每个对手各有 1 / 活着的人数 的可能以后买走它（只算买了对他有利的对手），
+## 剩下的可能还没人买。
 static func wants_property(game, pi: int, tile: int) -> bool:
 	var price: int = game.property_price(tile)
 	if game.players[pi].cash < price:
@@ -87,9 +88,13 @@ static func wants_property(game, pi: int, tile: int) -> bool:
 	var share := 1.0 / alive.size()
 	var skip := now * share
 	for q in alive:
-		if q.index != pi:
-			var pos := Ledger.positions(game, pi, {tile: q.index}, {q.index: -price})
-			skip += share * Ledger.score_of(game, pi, pos)
+		if q.index == pi:
+			continue
+		# 对手买了对他自己有利（按标准的账猜）、而且付得起，才算他会买走；否则还是没人买
+		var pos := Ledger.positions(game, pi, {tile: q.index}, {q.index: -price})
+		var wants: bool = q.cash >= price \
+				and Ledger.score_of(game, q.index, pos, 1.0) > Ledger.score_of(game, q.index, base, 1.0)
+		skip += share * (Ledger.score_of(game, pi, pos) if wants else now)
 	var buy := bought > skip
 	if game.record_history:
 		var p = game.players[pi]
@@ -185,7 +190,8 @@ static func _effect(offer: Dictionary) -> Dictionary:
 
 
 ## x 看这笔交易：得分涨多少，换算成钱（加上对交易对象的态度），calm 见 Ledger.positions
-static func trade_gain(game, x: int, offer: Dictionary, base: Array = [], calm: Dictionary = {}) -> float:
+static func trade_gain(game, x: int, offer: Dictionary, base: Array = [],
+		calm: Dictionary = {}) -> float:
 	if base.is_empty():
 		base = Ledger.positions(game, x, {}, {}, calm)
 	var e := _effect(offer)
@@ -338,7 +344,8 @@ static func _swaps(game, pi: int, q: int) -> Array:
 
 ## 定价：我最多肯付 most（再多我就不赚），猜对方最少要 least（用我的估价、我对他的看法）。
 ## 出价 = least + (most − least) ÷ 活着的人数 − 讨价空间 + 被拒次数 × 加价，不超过 most。谈不成返回 {}。
-static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int, base: Array) -> Dictionary:
+static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int,
+		base: Array) -> Dictionary:
 	var offer := {"from": pi, "to": q, "give": give.duplicate(), "get": tiles.duplicate(),
 			"give_cash": 0, "get_cash": 0}
 	if game.why_bad_trade(offer) != "":
@@ -374,7 +381,8 @@ static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int,
 
 
 ## pi 猜 q 怎么看这笔交易：用 pi 的估价，按标准的得分算（不知道 q 的性格），换算成钱
-static func _gain_seen_as(game, pi: int, q: int, offer: Dictionary, base: Array, calm: Dictionary) -> float:
+static func _gain_seen_as(game, pi: int, q: int, offer: Dictionary, base: Array,
+		calm: Dictionary) -> float:
 	var e := _effect(offer)
 	var after := Ledger.positions(game, pi, e["change"], e["money"], calm)
 	return Ledger.money_gain(game, q, base, after, 1.0)

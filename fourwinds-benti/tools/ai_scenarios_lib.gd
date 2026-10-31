@@ -1,3 +1,4 @@
+# gdlint: ignore=max-public-methods
 extends RefCounted
 ## AI 评测场景：在原版上海图上摆固定局面，看 AI 怎么决定，和“应该怎么做”比。
 ## 场景和期望是作者确认过的（docs/ai_design.md 的 H 节），这里只检查，**不要为了让场景过关去加参数**：
@@ -44,9 +45,9 @@ func run(p_version: String) -> Array:
 	for s in [
 		["1", "开局钱多，停在河南南路 1 号（很多人路过）", "买", s1_buy_busy],
 		["2", "开局钱多，停在衡山路 1 号（很少有人停）", "不买", s2_skip_quiet],
-		["3", "现金 200、没存款，停在河南南路 1 号（地价 80），下一把可能停到对手的房子", "不买", s3_no_buy_broke],
+		["3", "大家钱都不多；我停在河南南路 1 号，不买付得起下一把最大的租，买了就付不起", "不买", s3_no_buy_broke],
 		["4", "同 3，但存款 1000", "买", s4_buy_with_deposit],
-		["5", "只剩 100、下一把可能停到对手的房子；对手出地价七成，买我一块凑不成街的地", "卖", s5_sell_to_survive],
+		["5", "大家钱都不多，我的钱比下一把最大的租少一点；对手出地价七成，买我一块凑不成街的地（卖了就付得起）", "卖", s5_sell_to_survive],
 		["6a", "同 5，但对方要的是让他凑齐中山路的那块（凑齐后租上千），我前面那些租也是他的", "卖", s6a_sell_key_to_creditor],
 		["6b", "同 6a，但我前面那些租是别的对手的", "待作者定", s6b_sell_key_other_creditor],
 		["7", "钱多（3000），对手出两倍地价，买让他凑齐中山路的那块", "不卖", s7_keep_key_rich],
@@ -55,7 +56,9 @@ func run(p_version: String) -> Array:
 		["9b", "互换：我凑齐衡山路，对手凑齐河南南路（他的街好得多）", "不换", s9b_swap_bad],
 		["11", "刚凑齐中山路，现金刚够盖别墅，下一把可能停到对手的房子", "盖完还留得够付下一把最大的租", s11_no_overbuild],
 		["12", "凑齐中山路，现金 5000", "盖别墅", s12_build_rich],
-		["13", "我有河南南路 2 块，第 3 块在对手手里，我主动去买", "出价不低于地价，对方按标准账也不亏", s13_fair_offer],
+		["13a", "我有河南南路 2 块，第 3 块在一个比我弱的对手手里（现金 + 存款 1000），我主动去买",
+				"开价，不低于地价，对方按标准账也不亏", s13a_offer_weaker],
+		["13b", "同 13a，但那个对手和我差不多强", "不开价，或者开价也公道", s13b_offer_rival],
 	]:
 		var got: Dictionary = s[3].call()
 		out.append({"id": s[0], "what": s[1], "expect": s[2], "got": got["got"], "ok": got["ok"]})
@@ -84,6 +87,12 @@ func own(g: Game, pi: int, tiles: Array) -> void:
 func money(g: Game, pi: int, cash: int, deposit: int) -> void:
 	g.players[pi].cash = cash
 	g.players[pi].deposit = deposit
+
+
+## 测“留钱”时让所有人钱都差不多（否则我一开始就远远落后，测到的是“落后时冒险”）
+func everyone_money(g: Game, cash: int, deposit: int) -> void:
+	for p in g.players:
+		money(g, p.index, cash, deposit)
 
 
 ## 玩家 pi 从现在的位置掷一次可能停下的地和企业（除了 keep 里的）都归对手 by：
@@ -126,11 +135,11 @@ func _house_on(g: Game, by: int, tiles: Array) -> void:
 				return
 
 
-func offer_to_me(g: Game, from: int, get: Array, cash: int) -> void:
+func offer_to_me(g: Game, from: int, wanted: Array, cash: int) -> void:
 	g.current = from
 	g.phase = "pending"
 	g.pending = {"type": "trade", "stage": "offer", "offer": Game.normalize_offer(
-			{"from": from, "to": 0, "give": [], "get": get, "give_cash": cash, "get_cash": 0})}
+			{"from": from, "to": 0, "give": [], "get": wanted, "give_cash": cash, "get_cash": 0})}
 
 
 ## 让玩家 0 回答，返回 "成交" / "拒绝" / "还价"
@@ -197,18 +206,19 @@ func s2_skip_quiet() -> Dictionary:
 
 func s3_no_buy_broke() -> Dictionary:
 	var g := new_game()
-	money(g, 0, 200, 0)
 	g.players[0].pos = HENAN_S[0]
 	var worst := threaten(g, 0, 2, HENAN_S)
+	# 不买付得起下一把最大的租，买了就付不起
+	everyone_money(g, worst + g.property_price(HENAN_S[0]) - 10, 0)
 	var b := offer_buy(g, HENAN_S[0])
 	return result(not b, ("买" if b else "不买") + "（前面最大租 %d）" % worst)
 
 
 func s4_buy_with_deposit() -> Dictionary:
 	var g := new_game()
-	money(g, 0, 200, 1000)
 	g.players[0].pos = HENAN_S[0]
 	var worst := threaten(g, 0, 2, HENAN_S)
+	everyone_money(g, worst + g.property_price(HENAN_S[0]) - 10, 1000)
 	var b := offer_buy(g, HENAN_S[0])
 	return result(b, ("买" if b else "不买") + "（前面最大租 %d）" % worst)
 
@@ -218,8 +228,9 @@ func s5_sell_to_survive() -> Dictionary:
 	own(g, 0, [HENAN_S[0]])
 	own(g, 2, [HENAN_S[1]])
 	own(g, 3, [HENAN_S[2]])
-	money(g, 0, 100, 0)
 	var worst := threaten(g, 0, 2, HENAN_S)
+	# 钱比下一把最大的租少一点，卖了就付得起
+	everyone_money(g, worst - 20, 0)
 	offer_to_me(g, 1, [HENAN_S[0]], int(g.property_price(HENAN_S[0]) * 0.7))
 	var r := answer(g, [HENAN_S[0]])
 	return result(r == "成交", r + "（前面最大租 %d）" % worst)
@@ -238,9 +249,9 @@ func _key_to_survive(creditor: int, expect_sell: Variant) -> Dictionary:
 	var g := new_game()
 	own(g, 1, ZHONGSHAN.slice(1))
 	own(g, 0, [ZHONGSHAN[0]])
-	money(g, 0, 100, 0)
 	g.players[0].pos = HENAN_S[0]
 	var worst := threaten(g, 0, creditor, ZHONGSHAN)
+	everyone_money(g, worst - 20, 0)
 	offer_to_me(g, 1, [ZHONGSHAN[0]], int(g.property_price(ZHONGSHAN[0]) * 0.7))
 	var r := answer(g, [ZHONGSHAN[0]]) + "（前面最大租 %d）" % worst
 	if expect_sell == null:
@@ -290,8 +301,9 @@ func s11_no_overbuild() -> Dictionary:
 	g.players[0].pos = HENAN_S[0]
 	var worst := threaten(g, 0, 2, ZHONGSHAN)
 	var built := pre_roll_builds(g)
-	var left := g.players[0].cash
-	var text := ("盖了 %s" % str(built) if not built.is_empty() else "没盖") + "，剩 %d（前面最大租 %d）" % [left, worst]
+	var left: int = g.players[0].cash
+	var text := "盖了 %s" % str(built) if not built.is_empty() else "没盖"
+	text += "，剩 %d（前面最大租 %d）" % [left, worst]
 	return result(left >= worst, text)
 
 
@@ -303,17 +315,28 @@ func s12_build_rich() -> Dictionary:
 	return result(built.has("villa"), "盖了 %s" % str(built) if not built.is_empty() else "没盖")
 
 
-func s13_fair_offer() -> Dictionary:
+func s13a_offer_weaker() -> Dictionary:
+	return _offer_for_third(500, false)
+
+
+func s13b_offer_rival() -> Dictionary:
+	return _offer_for_third(2000, true)
+
+
+## 我有河南南路 2 块，对手 1（现金、存款各 seller_money）有第 3 块，看我主动开的价。
+## may_skip = 不开价也算对（两人差不多强时谁都不肯让对方凑街）
+func _offer_for_third(seller_money: int, may_skip: bool) -> Dictionary:
 	var g := new_game()
 	own(g, 0, [HENAN_S[0], HENAN_S[1]])
 	own(g, 1, [HENAN_S[2]])
+	money(g, 1, seller_money, seller_money)
 	g.phase = "pre_roll"
 	for _i in range(5):
 		AI.step(g)
 		if g.phase == "pending" and str(g.pending.get("type", "")) == "trade":
 			break
 	if g.phase != "pending" or str(g.pending.get("type", "")) != "trade":
-		return result(false, "没有提议")
+		return result(may_skip, "没有提议")
 	var o: Dictionary = g.pending["offer"]
 	var cash := int(o["give_cash"])
 	var price: int = g.property_price(HENAN_S[2])
