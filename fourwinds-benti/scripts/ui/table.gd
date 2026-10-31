@@ -67,7 +67,7 @@ func _ready() -> void:
 	_specs = Data.start_specs
 	if _specs.is_empty():
 		for i in range(mini(4, Data.characters.size())):
-			_specs.append({"character": str(Data.characters[i]["id"]), "human": i == 0, "ai": "new"})
+			_specs.append({"character": str(Data.characters[i]["id"]), "human": i == 0, "ai": "standard_v2"})
 	game = Game.new()
 	var cards_file := {"cards": Data.cards, "special_events": Data.special_events}
 	var errors := game.setup(board, Data.rules, cards_file, Data.characters, _specs)
