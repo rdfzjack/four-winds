@@ -41,7 +41,8 @@
   "partner_attitude_behind_pct": "【新框架·性格】⑥ 自己比交易对象落后时（落后 100% 算 −1），乘上它加到上一项（正 = 落后时变刻薄）",
   "counter_range_pct": "【新框架·性格】⑧b 差多远还肯还价：要对方多给的钱超过自己交出去的东西的这么多 %，直接拒绝",
   "decision_band_pct": "【新框架·性格】决定的随机范围：交易得失在交出去的东西的 ± 这么多 % 以内时按概率答应",
-  "haggle_pct": "【新框架·性格】⑧a 虚报多少：别人找我时好处不到交出去的东西的这么多 % 就先还价往上要；我找别人时开价比公道价压低这么多 %，被拒一次加 trade_raise_pct%",
+  "ask_up_pct": "【新框架·性格】⑧a 要价虚高：别人找我时，好处不到自己交出去的东西的这么多 % 就先还价往上要（标准 AI 为 0）",
+  "bid_down_pct": "【新框架·性格】⑧a' 开价压低：我找别人时先开 公道价 ÷ (1 + 这么多 %)，被拒一次加 trade_raise_pct%（标准 AI 为 0）",
   "distress_use_pct": "【新框架·性格】⑩ 看不看缺钱：100 看（对方缺钱就压价，自己缺钱就肯贱卖）；小于 100 不看（对缺钱的人也出公道价，自己缺钱也不贱卖）",
   "value_noise_pct": "【新 AI·性格】估价误差：每块地产这局随机偏 ±这么多 %（0 = 估得准）",
   "favorite_count": "【新 AI·性格】每局随机挑几块“喜欢的地”：现金够就买（不管留钱），交易里绝不交出，拍卖出到现金为止",
@@ -114,7 +115,8 @@
     "partner_attitude_behind_pct": 0,
     "counter_range_pct": 100,
     "decision_band_pct": 5,
-    "haggle_pct": 0,
+    "ask_up_pct": 0,
+    "bid_down_pct": 0,
     "distress_use_pct": 100,
     "_personality": "以上新 AI 参数是“标准 AI”（ai 版本 standard，没有性格）用的值，也是各角色没写时的默认值。各角色的性格写在自己参数组的 front 里"
    }
@@ -228,7 +230,7 @@
     "street_obsession_pct": 300,
     "safety_rolls": 5,
     "partner_attitude_behind_pct": 100,
-    "haggle_pct": 100,
+    "ask_up_pct": 100,
     "counter_range_pct": 50
    },
    "back": {
@@ -265,7 +267,8 @@
     "value_noise_pct": 10,
     "street_obsession_pct": 50,
     "safety_rolls": 8,
-    "haggle_pct": 40,
+    "ask_up_pct": 40,
+    "bid_down_pct": 40,
     "counter_range_pct": 400,
     "trade_propose_pct": 100,
     "trade_cooldown_days": 2,

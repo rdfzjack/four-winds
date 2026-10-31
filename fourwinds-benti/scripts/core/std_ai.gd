@@ -14,8 +14,8 @@ extends RefCounted
 ##                         负 = 对方多赚的部分算成自己额外的损失（损人不利己）
 ##   partner_attitude_ahead_pct / partner_attitude_behind_pct  ⑥ 自己比交易对象领先 / 落后时，上一项随差距怎么变
 ##   decision_band_pct  ⑦ 决定的随机范围（交易得失在 ± 这么多 % 以内按概率答应；主动做的事好处要够大）
-##   haggle_pct         ⑧a 虚报多少：别人找我时，好处不到交出去的东西的这么多 % 就先还价往上要；
-##                      我找别人时开价比公道价压低这么多 %，被拒一次加 trade_raise_pct%
+##   ask_up_pct         ⑧a 要价虚高：别人找我时，好处不到交出去的东西的这么多 % 就先还价往上要
+##   bid_down_pct       ⑧a' 开价压低：我找别人时开 公道价 ÷ (1 + 这么多 %)，被拒一次加 trade_raise_pct%
 ##   counter_range_pct  ⑧b 差多远还肯还价：要对方多给的钱超过交出去的东西的这么多 %，直接拒绝
 ##   trade_propose_pct  ⑨ 主动找人交易的概率
 ##   distress_use_pct   ⑩ 看不看缺钱：小于 100 时，出价不压缺钱的对方，回答时也不因为自己缺钱就贱卖
@@ -279,8 +279,8 @@ static func answer(game, pi: int) -> void:
 	var yes := _accepts(game, pi, g, given)
 	var first: bool = game.pending["stage"] == "offer"
 	var counter := {}
-	var haggle := param(game, pi, "haggle_pct", 0) / 100.0
-	# ⑧a：好处不够“虚报”的那么多时先还价往上要（能答应的也先要）；不能答应的也试着还价
+	var haggle := param(game, pi, "ask_up_pct", 0) / 100.0
+	# ⑧a 要价虚高：好处不够这么多时先还价往上要（能答应的也先要）；不能答应的也试着还价
 	if first and (not yes or (haggle > 0.0 and g < haggle * given)):
 		counter = _counter(game, pi, offer, base, calm)
 	_note_answer(game, pi, parts, yes, counter)
@@ -316,7 +316,7 @@ static func _counter(game, pi: int, offer: Dictionary, base: Array, calm: Dictio
 	var from := int(offer["from"])
 	var room: int = game.players[from].cash - int(offer["give_cash"]) + int(offer["get_cash"])
 	var given := _given(game, pi, offer)
-	var want := (param(game, pi, "decision_band_pct", 0) + param(game, pi, "haggle_pct", 0)) / 100.0
+	var want := (param(game, pi, "decision_band_pct", 0) + param(game, pi, "ask_up_pct", 0)) / 100.0
 	var need := func(extra: int) -> float:
 		var c := _with_cash_to_responder(offer, extra)
 		return trade_gain(game, pi, c, base, calm) - want * _given(game, pi, c)
@@ -423,7 +423,8 @@ static func _swaps(game, pi: int, q: int) -> Array:
 
 
 ## 定价：我最多肯付 most（再多我就不赚），猜对方最少要 least（用我的估价、我对他的看法）。
-## 出价 = 公道价 × (1 − 讨价空间 + 被拒次数 × 加价)，公道价 = least + (most − least) ÷ 活着的人数，不超过 most。谈不成返回 {}。
+## 出价 = 公道价 ÷ (1 + 开价压低) × (1 + 被拒次数 × 加价)，公道价 = least + (most − least) ÷ 活着的人数，
+## 不超过 most。谈不成返回 {}。
 static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int,
 		base: Array) -> Dictionary:
 	var offer := {"from": pi, "to": q, "give": give.duplicate(), "get": tiles.duplicate(),
@@ -451,11 +452,11 @@ static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int,
 	var least := _first_true(func(x: int) -> bool: return theirs.call(x) >= 0.0, 0, most)
 	var alive: int = game.alive_players().size()
 	var room := float(most - least)
-	# 公道价 = 对方最少要的 + 多出来的好处 ÷ 人数；爱讨价还价的先压低 haggle_pct%（可以比对方最少要的还低），
-	# 每被拒一次加 trade_raise_pct%
+	# 公道价 = 对方最少要的 + 多出来的好处 ÷ 人数；爱压价的先开 公道价 ÷ (1 + bid_down_pct%)
+	# （可以比对方最少要的还低，但不会压到 0），每被拒一次加 trade_raise_pct%
 	var fair := least + room / alive
-	var x := fair * (1.0 - param(game, pi, "haggle_pct", 0) / 100.0
-			+ times * param(game, pi, "trade_raise_pct", 10) / 100.0)
+	var x := fair / (1.0 + param(game, pi, "bid_down_pct", 0) / 100.0) \
+			* (1.0 + times * param(game, pi, "trade_raise_pct", 10) / 100.0)
 	var pay := mini(most, Trader._round_up(int(clampf(x, 0.0, float(most)))))
 	if pay > cash:
 		return {}
