@@ -336,6 +336,18 @@ static func _wants(game, pi: int) -> Array:
 			continue
 		for q in by:
 			out.append({"owner": q, "tiles": by[q]})
+	# 企业：自己已经有这个行业的企业，对手手里同行业的企业也想要
+	var industries := {}
+	for t in game.props:
+		var tile: Dictionary = game.board.get_tile(t)
+		if tile["type"] == "company" and game.owner_of(t) == pi:
+			industries[str(tile.get("industry", ""))] = true
+	for t in game.props:
+		var tile: Dictionary = game.board.get_tile(t)
+		var o: int = game.owner_of(t)
+		if tile["type"] == "company" and industries.has(str(tile.get("industry", ""))) \
+				and o >= 0 and o != pi and not game.players[o].bankrupt:
+			out.append({"owner": o, "tiles": [t]})
 	return out
 
 

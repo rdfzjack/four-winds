@@ -424,47 +424,10 @@ static func _gain_if_owned(game, pi: int, tile: int) -> int:
 	return _total(_holdings_value(game, pi, {tile: pi})) - _total(_holdings_value(game, pi, {}))
 
 
-## 一笔交易对玩家 x（发起人或对方）的影响：
-## gain = 交易后估价 + 收到的现金 − 交易前估价 − 付出的现金；
-## lost = 交出去的地产估价 + 付出的现金；other_bonus = 对方因此多出来的整条街 / 同行业加成
-static func _trade_effect(game, x: int, offer: Dictionary) -> Dictionary:
-	var a: int = offer["from"]
-	var b: int = offer["to"]
-	var other := b if x == a else a
-	var change := {}
-	var leaving := {}
-	for t in offer["give"]:
-		change[t] = b
-	for t in offer["get"]:
-		change[t] = a
-	for t in (offer["give"] if x == a else offer["get"]):
-		leaving[t] = other
-	var cash_out: int = offer["give_cash"] if x == a else offer["get_cash"]
-	var cash_in: int = offer["get_cash"] if x == a else offer["give_cash"]
-	var before := _total(_holdings_value(game, x, {}))
-	var after := _total(_holdings_value(game, x, change))
-	var without := _total(_holdings_value(game, x, leaving))
-	var other_before := int(_holdings_value(game, other, {})["bonus"])
-	var other_after := int(_holdings_value(game, other, change)["bonus"])
-	return {"gain": after - before + cash_in - cash_out, "lost": before - without + cash_out,
-			"other_bonus": maxi(0, other_after - other_before)}
-
-
-## 回答的一方 x 还差多少才肯答应（≤ 0 = 肯）。肯的条件：
-## 得到的 ≥ (付出的 + 对方多出的加成 ÷ 2) × (100 + margin) ÷ 100
-## 让对方凑齐整条街要多收一半加成，这就是“能凑齐一条街就加价”。
-static func _trade_shortfall(game, x: int, offer: Dictionary, margin: int) -> int:
-	var e := _trade_effect(game, x, offer)
-	var got: int = int(e["gain"]) + int(e["lost"])
-	var want: int = (int(e["lost"]) + int(e["other_bonus"]) / 2) * (100 + margin) / 100
-	return want - got
-
-
-## 交易提议（每回合最多一次，平均 tradeCycle 回合一次）：
-## 找“除了某一个对手的几块地，整条街都是自己的”街，向那个对手要这几块地（地上不能有房子）。
-## 自己有一块空地正好能让对方也凑齐一条街，就拿它去换；差价用现金补，
-## 现金 = 对方估的差额 × (100 + trade_offer_margin_pct)%，但交易后自己的估价不能变少。
-## 同一个提议 trade_retry_days 天内不重复。
+## 交易提议（每回合最多一次，平均 tradeCycle 回合一次）。照原版（docs/original_rules.md“交易”）的“购买”：
+## 在别人的地 / 企业里挑“我的分 − 主人的分”最大的（> 0），开价 = (按我的分的价钱 + 按主人的分的价钱) ÷ 2，
+## 手头宽时再除以宽裕系数（最多出两倍），现金够才提。原版另外两种（交换、出售）还没读，先不做。
+## 简化：盖了房子的地不要（我们的规则要整栋一起交易）。同一块 trade_retry_days 天内不重复提。
 static func _trade_step(game) -> bool:
 	var p = game.players[game.current]
 	var pi: int = p.index
@@ -474,91 +437,82 @@ static func _trade_step(game) -> bool:
 	if game.rng.randi() % maxi(1, param(game, pi, "tradeCycle")) != 0:
 		return false
 	var asked: Dictionary = p.ai_memory.get_or_add("trade_asked", {})
-	for want in _missing_streets(game, pi):
-		var key := "%d:%s" % [int(want["owner"]), str(want["tiles"])]
-		if game.day - int(asked.get(key, -9999)) < _scoring("trade_retry_days", 5):
-			continue
-		var offer := _make_offer(game, pi, int(want["owner"]), want["tiles"])
-		if offer.is_empty():
-			continue
-		asked[key] = game.day
-		return game.propose_trade(offer) == ""
-	return false
-
-
-## 玩家 pi 只差一个对手的地就能凑齐的街：[{owner, tiles}]，差的块数少的在前。
-## 要求：这条街自己至少有一块，没有无主的地，缺的地全在同一个对手手里，而且没盖房子。
-static func _missing_streets(game, pi: int) -> Array:
-	var groups := {}
+	var best := -1
+	var best_diff := 0
+	var best_price := 0
 	for t in game.props:
-		var tile: Dictionary = game.board.get_tile(t)
-		if tile["type"] != "land":
-			continue
-		var g: Dictionary = groups.get_or_add(str(tile.get("group", "")),
-				{"mine": 0, "free": 0, "by": {}, "house": false})
 		var o: int = game.owner_of(t)
-		if o == pi:
-			g["mine"] += 1
-		elif o < 0:
-			g["free"] += 1
-		else:
-			g["by"].get_or_add(o, []).append(t)
-			if game.house_at(t) != 0:
-				g["house"] = true
-	var out: Array = []
-	for g in groups.values():
-		if g["mine"] == 0 or g["free"] > 0 or g["by"].size() != 1 or g["house"]:
+		if o < 0 or o == pi or game.players[o].bankrupt or game.house_at(t) != 0:
 			continue
-		var q: int = g["by"].keys()[0]
-		out.append({"owner": q, "tiles": g["by"][q]})
-	out.sort_custom(func(x: Dictionary, y: Dictionary) -> bool:
-		return x["tiles"].size() < y["tiles"].size())
-	return out
-
-
-## 给对手 q 开条件：先试换地，不行再纯用现金买。开不出返回 {}。
-static func _make_offer(game, pi: int, q: int, tiles: Array) -> Dictionary:
-	var swaps: Array = []
-	for s in _missing_streets(game, q):
-		if int(s["owner"]) == pi and s["tiles"].size() == 1:
-			swaps.append(s["tiles"])
-	swaps.append([])
-	var margin := _scoring("trade_offer_margin_pct", 10)
-	for give in swaps:
-		var offer := {"from": pi, "to": q, "give": give, "get": tiles.duplicate(),
-				"give_cash": 0, "get_cash": 0}
-		var short := _trade_shortfall(game, q, offer, margin)
-		if short > 0:
-			offer["give_cash"] = _round_up(short)
-		if int(offer["give_cash"]) > game.players[pi].cash:
+		if game.day - int(asked.get(str(t), -9999)) < _scoring("trade_retry_days", 5):
 			continue
-		if int(_trade_effect(game, pi, offer)["gain"]) < 0:
-			continue
-		if game.why_bad_trade(offer) == "":
-			return offer
-	return {}
+		var mine := _property_score(game, pi, t)
+		var theirs := _property_score(game, o, t)
+		if mine - theirs > best_diff:
+			best = t
+			best_diff = mine - theirs
+			best_price = (_orig_price(game, t, theirs) + _orig_price(game, t, mine)) / 2
+	if best < 0:
+		return false
+	var f := _liquidity(game, pi)
+	if f < 1.0:
+		best_price = roundi(best_price / f)
+	if best_price <= 0 or p.cash < best_price:
+		return false
+	asked[str(best)] = game.day
+	return game.propose_trade({"from": pi, "to": game.owner_of(best), "give": [], "get": [best],
+			"give_cash": best_price, "get_cash": 0}) == ""
 
 
-## 回答交易：
-## - 自己是被提议的一方：差额 ≤ 0（按 acceptableDiffenceInTrade）就同意；
-##   否则还价一次：差多少就要发起人多付多少现金（他现金不够就拒绝）。
-## - 自己是发起人、对方还了价：交易后自己的估价不变少就同意。
+## 原版的“分数换价钱”（0x40b340）：分数 × 价格 ÷ 20，抵押中的再减赎回价（0.6 × 价格）
+static func _orig_price(game, t: int, score: int) -> int:
+	var price: int = game.property_price(t)
+	var v: int = score * price / 20
+	if game.props[t]["mortgaged"]:
+		v = roundi(v - price * 0.6)
+	return v
+
+
+## 原版的宽裕系数（0x40b670）：2 ÷ ((现金 + 存款) ÷ (总资产 ÷ 3) + 1)，括号里是整数除法
+static func _liquidity(game, pi: int) -> float:
+	var p = game.players[pi]
+	var third: int = maxi(1, game.total_assets(pi) / 3)
+	return 2.0 / (float((p.cash + p.deposit) / third) + 1.0)
+
+
+## 回答交易，照原版（0x409ff0，原版不还价）：
+## 拿到的 = 每样按自己的分算的价钱 + 拿到的现金 × 宽裕系数；
+## 交出去的 = 每样按自己的分算（盖了房子加上房子造价，按占的地平分），对方的分更高时取两者平均，
+##            再加交出去的现金 × 宽裕系数；
+## 拿到的 > (100 − d)% × 交出去的 就答应。d：发起人是人类时用 acceptableDiffenceInTrade，是 AI 时固定 10。
 static func _trade_turn(game, pi: int) -> void:
-	var offer: Dictionary = game.pending["offer"]
-	if game.pending["stage"] == "counter":
-		game.trade_answer(int(_trade_effect(game, pi, offer)["gain"]) >= 0)
-		return
-	var short := _trade_shortfall(game, pi, offer, param(game, pi, "acceptableDiffenceInTrade"))
-	if short <= 0:
-		game.trade_answer(true)
-		return
-	var counter: Dictionary = offer.duplicate(true)
-	var extra := _round_up(short)
-	var cut := mini(extra, int(counter["get_cash"]))
-	counter["get_cash"] = int(counter["get_cash"]) - cut
-	counter["give_cash"] = int(counter["give_cash"]) + extra - cut
-	if game.trade_counter(counter) != "":
-		game.trade_answer(false)
+	game.trade_answer(_orig_accepts(game, pi, game.pending["offer"]))
+
+
+static func _orig_accepts(game, pi: int, offer: Dictionary) -> bool:
+	var mine_is_from: bool = pi == int(offer["from"])
+	var other := int(offer["to"]) if mine_is_from else int(offer["from"])
+	var gets: Array = offer["get"] if mine_is_from else offer["give"]
+	var gives: Array = offer["give"] if mine_is_from else offer["get"]
+	var f := _liquidity(game, pi)
+	var got := 0
+	for t in gets:
+		got += _orig_price(game, t, _property_score(game, pi, t))
+	var gave := 0
+	for t in gives:
+		var me := _orig_price(game, t, _property_score(game, pi, t))
+		var hid: int = game.house_at(t)
+		if hid != 0:
+			var h: Dictionary = game.houses[hid]
+			me += game.house_cost(str(h["kind"]), h["tiles"]) / maxi(1, h["tiles"].size())
+		var he := _orig_price(game, t, _property_score(game, other, t))
+		gave += me if me > he else (me + he) / 2
+	var cash_in: int = offer["get_cash"] if mine_is_from else offer["give_cash"]
+	var cash_out: int = offer["give_cash"] if mine_is_from else offer["get_cash"]
+	var get_total := roundi(got + f * cash_in)
+	var give_total := roundi(gave + f * cash_out)
+	var d := 10 if not game.players[other].human else param(game, pi, "acceptableDiffenceInTrade")
+	return get_total > (100 - d) * give_total / 100
 
 
 ## 拍卖出价：估价 = 拿到这块地产后自己名下估价的增加（能凑齐整条街的高很多）。
