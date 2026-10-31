@@ -1160,8 +1160,13 @@ func _thought_text(e: Dictionary) -> String:
 			var text := "%s 算这笔交易：对他折合 %+.0f" % [who, g]
 			if e.has("gain_by_books"):
 				text += "（按账 %+.0f，态度 %+.0f）" % [float(e["gain_by_books"]), float(e["attitude"])]
-			if int(o["to"]) == int(e["player"]) and o["give"].is_empty() and int(o["get_cash"]) == 0:
-				text += "，卖这些地的底价约 %d" % int(int(o["give_cash"]) - g)
+			if e.has("land_worth"):
+				text += "；交出去的地它自己估 %.0f" % float(e["land_worth"])
+			if e.has("break_even"):
+				var be := int(e["break_even"])
+				text += "，按账你要出到 %s 它才不亏" % (str(be) if be >= 0 else "多少都不够")
+				if be > float(e.get("land_worth", 0.0)) * 1.3:
+					text += "（多出来的是怕你因此变强）"
 			var c: Dictionary = e.get("counter", {})
 			var verdict := "答应" if e.get("accept", false) else "不答应"
 			if not c.is_empty():

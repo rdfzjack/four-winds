@@ -342,15 +342,36 @@ static func answer(game, pi: int) -> void:
 	_note_answer(game, pi, parts, yes, counter)
 	if game.record_history:
 		var p = game.players[pi]
-		game.ai_think(pi, "trade_answer", {"offer": offer.duplicate(true),
+		var think := {"offer": offer.duplicate(true),
 				"stage": str(game.pending["stage"]), "gain": g, "gain_by_books": parts[0],
 				"attitude": parts[1], "given": given, "accept": yes, "counter": counter,
 				"cash": p.cash, "deposit": p.deposit,
-				"survival": Ledger.survival(game, pi, pi, p.cash + p.deposit)})
+				"survival": Ledger.survival(game, pi, pi, p.cash + p.deposit)}
+		_explain_price(game, pi, offer, base, calm, think)
+		game.ai_think(pi, "trade_answer", think)
 	Ledger.begin()
 	if not counter.is_empty() and game.trade_counter(counter) == "":
 		return
 	game.trade_answer(yes)
+
+
+## 对局记录 / 调试用：交出去的地它自己估值多少（land_worth），以及对方现金要出到多少它才不亏（break_even，
+## 真的搜出来；搜不到记 -1）。两者差得多 = 它怕对方因此变强，不是地本身贵。
+static func _explain_price(game, pi: int, offer: Dictionary, base: Array, calm: Dictionary,
+		think: Dictionary) -> void:
+	var gives: Array = offer["get"] if pi == int(offer["to"]) else offer["give"]
+	var worth := 0.0
+	for t in gives:
+		worth += Ledger.property_worth(game, pi, pi, int(t))
+	think["land_worth"] = worth
+	if pi != int(offer["to"]) or int(offer["get_cash"]) > 0:
+		return
+	var bare: Dictionary = offer.duplicate(true)
+	bare["give_cash"] = 0
+	var ok := func(x: int) -> bool:
+		return trade_gain(game, pi, _with_cash_to_responder(bare, x), base, calm) >= 0.0
+	var top := 50000
+	think["break_even"] = _first_true(ok, 0, top) if ok.call(top) else -1
 
 
 ## 评测统计性格动作：grace（态度让我答应了按账不划算的）、spite（态度让我拒绝了按账划算的）、
