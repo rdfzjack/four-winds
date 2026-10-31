@@ -28,6 +28,8 @@ var start_specs: Array = []
 var start_map: String = ""   ## 主界面选的地图 id；空 = 默认地图
 ## 调试：交易时在按钮上面显示 AI 心里算的账（底价、得失、开价），主界面勾选。正式玩时关着
 var debug_ai: bool = false
+## 路口全部随机（像原版），主界面勾选；不勾 = 按地图（现在的地图都是能选方向）
+var crossroads_random: bool = false
 
 
 func _ready() -> void:

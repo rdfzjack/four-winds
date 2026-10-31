@@ -43,6 +43,12 @@ func _ready() -> void:
 	for i in range(SEAT_COUNT):
 		_add_seat(box, i)
 
+	var cross := CheckBox.new()
+	cross.text = "路口全部随机（像原版；不勾 = 走到路口自己选方向）"
+	cross.button_pressed = Data.crossroads_random
+	cross.toggled.connect(func(on: bool) -> void: Data.crossroads_random = on)
+	box.add_child(cross)
+
 	var debug := CheckBox.new()
 	debug.text = "调试：交易时显示 AI 心里算的账（底价、得失、开价）"
 	debug.button_pressed = Data.debug_ai

@@ -148,7 +148,7 @@ static func _best_level(game, lots: int) -> Dictionary:
 
 ## owner 最后凑齐这段街的可能性：自己的算 1；缺的每块按还活着的人数平分（4 个人就是 1/4）；
 ## 在对手手里、而且他在这段街也有两块以上（他也在收）的，再减半。
-static func _street_chance(game, viewer: int, owner: int, seg: Array) -> float:
+static func _street_chance(game, _viewer: int, owner: int, seg: Array) -> float:
 	var base := 1.0 / maxi(1, game.alive_players().size())
 	var count := {}
 	for s in seg:

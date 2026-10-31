@@ -6,7 +6,8 @@ extends RefCounted
 ##   回答交易：成交 vs 不成交；差一点时还价一次，要对方多给现金
 ##   发起交易：向对手要凑街的地（能拿用不上的地换就先试换地）。算出“我最多肯给”和“猜对方最少要”，
 ##            出价 = 对方最少要的 + 两者之差 ÷ 还活着的人数（多出来的好处按人数分给对方）
-## 还没改、照旧的：路口（valuer.gd）、拍卖出价（trader.gd，作者定先不改）、银行存取 / 保释 / 赎回（原版 AI）。
+## 路口：见 best_direction（参数 direction_by_ledger 可以切回旧选法）。
+## 还没改、照旧的：拍卖出价（trader.gd，作者定先不改）、银行存取 / 保释 / 赎回（原版 AI）。
 ## 被拒后收敛（几天不找同一人、被拒几次放弃、被拒一次加价）照 trader.gd 的做法。
 ##
 ## 性格用的数（标准 AI 都是“不偏”的值，角色以后在自己的参数组里改，见 H 节）：
@@ -44,7 +45,7 @@ static func step(game) -> bool:
 	if game.phase == "pending":
 		match str(game.pending.get("type", "")):
 			"choose_direction":
-				game.choose_direction(NewAi.best_direction(game, pi))
+				game.choose_direction(best_direction(game, pi))
 				return true
 			"trade":
 				answer(game, pi)
@@ -74,6 +75,61 @@ static func _improve(game) -> bool:
 	if Brain._unmortgage_step(game):
 		return true
 	return Brain._scoring("ai_auction", 1) == 1 and Brain._auction_step(game)
+
+
+# ───────────────────────── 路口 ─────────────────────────
+
+## 路口选方向：每个方向一步步走完，算停下（和路过）的得失，选最好的。direction_by_ledger = 0 时用旧框架的
+## 选法（valuer.gd，空地估得偏高，会被能买地的方向吸引）。新选法只把“停到没人买的地上”换成三本账的估价，
+## 付租、坐牢、机会卡等照 valuer.gd。后面的路口：能选的取最好，随机的取平均。
+static func best_direction(game, pi: int) -> int:
+	if param(game, pi, "direction_by_ledger", 1) < 1:
+		return NewAi.best_direction(game, pi)
+	Ledger.begin()
+	var best := -1
+	var best_value := -INF
+	var ctx := {"passed": game.passed_this_move()}
+	for o in game.pending["options"]:
+		var v := _enter(game, pi, int(o), int(game.pending["steps"]), ctx.duplicate(true))
+		if v > best_value:
+			best = int(o)
+			best_value = v
+	return best
+
+
+static func _walk(game, pi: int, pos: int, steps: int, ctx: Dictionary) -> float:
+	var opts: Array = game.board.next_tiles(pos)
+	if opts.size() == 1:
+		return _enter(game, pi, int(opts[0]), steps, ctx)
+	var vals: Array = []
+	for o in opts:
+		vals.append(_enter(game, pi, int(o), steps, ctx.duplicate(true)))
+	if game.crossroad_mode(pos) == "choice":
+		return vals.max()
+	var sum := 0.0
+	for v in vals:
+		sum += v
+	return sum / vals.size()
+
+
+static func _enter(game, pi: int, tile: int, steps: int, ctx: Dictionary) -> float:
+	var v := Valuer._meet_value(game, pi, tile)
+	if steps <= 1:
+		return v + _stop_value(game, pi, tile)
+	v += Valuer._pass_value(game, pi, tile, ctx)
+	return v + _walk(game, pi, tile, steps - 1, ctx)
+
+
+## 停在这格的得失：没人买的地 / 企业按三本账（值多少 − 价格，买不起算 0），其余照 valuer.gd
+static func _stop_value(game, pi: int, tile: int) -> float:
+	var site: int = game.board.site(tile)
+	var t: Dictionary = game.board.get_tile(site)
+	if (t["type"] == "land" or t["type"] == "company") and game.owner_of(site) < 0:
+		var price: int = game.property_price(site)
+		if game.players[pi].cash < price:
+			return 0.0
+		return maxf(0.0, Ledger.property_worth(game, pi, pi, site) - price)
+	return Valuer.stop_value(game, pi, tile)
 
 
 # ───────────────────────── 买地 ─────────────────────────

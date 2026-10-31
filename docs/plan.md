@@ -37,7 +37,8 @@
 | 赛马 | 跳过小游戏，随机名次得奖金 |
 | 建房 | 照原版：掷骰前在自己任意符合条件的地上建，不用站在地上。平房 1 块、旅社 / 旅馆 2 块、小洋楼 / 花园洋房 3 块、别墅 4 块，占同一条街沿路连续的自己的空地 |
 | 十字路口 | `crossroad` 字段：`choice` 自己选（默认）、`random` 随机。不照搬原版箭头。预留 `game.gd` 的 `_may_choose_direction` 给角色特性 |
-| 默认地图 | `rules.json` 的 `default_map` 现在还是 40 格简化图 `shanghai_loop`；原版上海是 `shanghai`，主界面能选 |
+| 默认地图 | `rules.json` 的 `default_map` 现在还是 40 格简化图 `shanghai_loop`；原版上海是 `shanghai`，原版战役图“上海西区”（`Sub/Story34.cit`，85 格、3 个路口）是 `shanghai_west`，主界面能选 |
+| 路口自选还是随机 | 作者在试：主界面“路口全部随机（像原版）”勾上 = 所有路口随机（`game.crossroad_override`），不勾 = 按地图（现在都是自选）。自选能绕开有人收租的地方（作者发现的“躲租”），平衡影响待作者试玩后定 |
 
 ## 规则现状
 

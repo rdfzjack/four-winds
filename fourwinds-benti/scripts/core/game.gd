@@ -52,6 +52,8 @@ var rng := RandomNumberGenerator.new()
 var record_history: bool = false
 var history: Array = []
 var seed_used: int = -1         ## 这局的随机种子（导出记录里写上）
+## 路口方式：空 = 按地图（每个路口的 crossroad），"random" = 所有路口都随机（像原版），"choice" = 都能选
+var crossroad_override: String = ""
 ## 测试和作弊用（原版的 STEP / C 作弊码）：下一次掷骰用的点数 [a, b]；下一张机会卡的编号
 var forced_dice: Array = []
 var forced_cards: Array = []
@@ -188,7 +190,8 @@ func export_record() -> Dictionary:
 		seats.append({"player": p.index, "name": p.display_name, "character": p.character,
 				"human": p.human, "ai": p.ai, "form": p.form})
 	return {
-		"format": 1, "map": board.id, "seed": seed_used, "day": day, "phase": phase,
+		"format": 1, "map": board.id, "seed": seed_used, "crossroad": crossroad_override,
+		"day": day, "phase": phase,
 		"winner": winner, "seats": seats, "final": snapshot(), "history": history,
 	}
 
@@ -965,7 +968,12 @@ func _continue_move() -> void:
 ## 现在只看路口类型（choice 能选，random 不能）；以后角色特性可以在这里开例外，
 ## 比如某个角色在随机路口也能选。
 func _may_choose_direction(_p: Player, tile: int) -> bool:
-	return board.crossroad_mode(tile) == "choice"
+	return crossroad_mode(tile) == "choice"
+
+
+## 这个路口现在是 choice 还是 random（考虑 crossroad_override）
+func crossroad_mode(tile: int) -> String:
+	return crossroad_override if crossroad_override != "" else board.crossroad_mode(tile)
 
 
 ## 路上遇到别的玩家：小偷偷走现金，信徒施舍现金。

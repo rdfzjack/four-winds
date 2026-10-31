@@ -313,7 +313,7 @@ static func walk_value(game, pi: int, pos: int, steps: int, ctx: Dictionary) -> 
 	var vals: Array = []
 	for o in opts:
 		vals.append(_enter(game, pi, int(o), steps, ctx.duplicate(true)))
-	if game.board.crossroad_mode(pos) == "choice":
+	if game.crossroad_mode(pos) == "choice":
 		return vals.max()
 	var sum := 0.0
 	for v in vals:

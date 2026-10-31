@@ -75,6 +75,7 @@ func _ready() -> void:
 		push_error("开局失败：" + str(errors))
 		return
 	game.record_history = true
+	game.crossroad_override = "random" if Data.crossroads_random else ""
 	game.start()
 	_build_map()
 	_build_ui()
