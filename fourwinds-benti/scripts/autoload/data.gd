@@ -26,6 +26,8 @@ var errors: Array = []  ## 读取或校验时发现的问题，主界面会显�
 ## 主界面选好的座位，开局时交给棋盘画面：[{character: 角色 id, human: bool}, ...]（格式见 Game.setup）
 var start_specs: Array = []
 var start_map: String = ""   ## 主界面选的地图 id；空 = 默认地图
+## 调试：交易时在按钮上面显示 AI 心里算的账（底价、得失、开价），主界面勾选。正式玩时关着
+var debug_ai: bool = false
 
 
 func _ready() -> void:

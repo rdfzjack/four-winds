@@ -43,6 +43,12 @@ func _ready() -> void:
 	for i in range(SEAT_COUNT):
 		_add_seat(box, i)
 
+	var debug := CheckBox.new()
+	debug.text = "调试：交易时显示 AI 心里算的账（底价、得失、开价）"
+	debug.button_pressed = Data.debug_ai
+	debug.toggled.connect(func(on: bool) -> void: Data.debug_ai = on)
+	box.add_child(debug)
+
 	_hint = _label(box, "", 14, Color("#ef9a9a"))
 	var start := Button.new()
 	start.text = "开始游戏"
