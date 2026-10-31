@@ -197,8 +197,8 @@ func _spite_case(behind: bool) -> Array:
 			money(g, 0, 500, 0)
 			money(g, 1, 4000, 4000)
 		else:
-			money(g, 0, 6000, 4000)
-			money(g, 1, 20000, 0)
+			money(g, 0, 15000, 5000)
+			money(g, 1, 7000, 0)
 		return g
 	var cash := _round10(int(standard_price(make.call(), 1, [ZHONGSHAN[0]]) * 1.1))
 	var g: Game = make.call()

@@ -231,7 +231,7 @@
     "safety_rolls": 5,
     "partner_attitude_behind_pct": 100,
     "ask_up_pct": 100,
-    "counter_range_pct": 50
+    "counter_range_pct": 120
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
