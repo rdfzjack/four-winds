@@ -20,6 +20,8 @@ const ZHONGSHAN := [15, 16, 17, 18, 19]  ## 中山路 5 块，凑齐能盖别墅
 const HENAN_S := [30, 31, 32]            ## 河南南路 3 块，很多人路过
 const JINLING_E := [26, 27]              ## 金陵东路 2 块
 const HENGSHAN := [127, 128, 129, 130, 131]  ## 衡山路 5 块，很少有人停
+## 西藏中路 3 块（作者试玩时孔雀快破产时买 2 号、再贴钱换 1 号）
+const XIZANG_M := [141, 142, 143]
 
 var board := Board.new()
 var rules: Dictionary = {}
@@ -59,6 +61,10 @@ func run(p_version: String) -> Array:
 		["13a", "我有河南南路 2 块，第 3 块在一个比我弱的对手手里（现金 + 存款 1000），我主动去买",
 				"开价，不低于地价，对方按标准账也不亏", s13a_offer_weaker],
 		["13b", "同 13a，但那个对手和我差不多强", "不开价，或者开价也公道", s13b_offer_rival],
+		["14", "快破产（只剩 189，下一把可能停到付不起的房子，对手都有钱），停在西藏中路 2 号（地价 144）",
+				"不买", s14_no_last_money_buy],
+		["15", "我有西藏中路 2 号，对手有同一条街、同样地价的 1 号", "不贴钱换这种几乎一样的地",
+				s15_no_pointless_swap],
 	]:
 		var got: Dictionary = s[3].call()
 		out.append({"id": s[0], "what": s[1], "expect": s[2], "got": got["got"], "ok": got["ok"]})
@@ -351,3 +357,29 @@ func _offer_for_third(seller_money: int, may_skip: bool) -> Dictionary:
 	var fair := after - before > 0.0
 	return result(cash >= price and fair, "出价 %d（地价 %d），对方按标准账%s" % [cash, price,
 			"不亏" if fair else "亏 %.0f" % (before - after)])
+
+
+func s14_no_last_money_buy() -> Dictionary:
+	var g := new_game()
+	g.players[0].pos = XIZANG_M[1]
+	var worst := threaten(g, 0, 2, XIZANG_M)
+	money(g, 0, 189, 0)
+	var b := offer_buy(g, XIZANG_M[1])
+	return result(not b, ("买" if b else "不买") + "（前面最大租 %d）" % worst)
+
+
+func s15_no_pointless_swap() -> Dictionary:
+	var g := new_game()
+	own(g, 0, [XIZANG_M[1]])
+	own(g, 1, [XIZANG_M[2]])
+	g.phase = "pre_roll"
+	for _i in range(5):
+		AI.step(g)
+		if g.phase != "pre_roll" or g.current != 0:
+			break
+	if g.phase == "pending" and str(g.pending.get("type", "")) == "trade":
+		var o: Dictionary = g.pending["offer"]
+		var swap: bool = o["give"].has(XIZANG_M[1]) and o["get"].has(XIZANG_M[2])
+		return result(not swap, "提议 %s" % str(o))
+	return result(true, "没提这种换地")
+

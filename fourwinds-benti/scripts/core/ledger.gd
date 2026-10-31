@@ -17,7 +17,7 @@ extends RefCounted
 ##   game_length_days / horizon_min_days  这局大概打多少天 / 剩下的天数最少按几天算
 ##   value_noise_pct      估价误差（标准 AI 为 0）
 ##   street_chance_pct    这段街缺的地，每块最后能弄到手的可能性（对手也在收这段街时减半）
-##   street_obsession_pct 想凑齐的街多算几成（标准 AI 为 0，角色以后用）
+##   street_obsession_pct 凑街执念：想凑的街（地图写了喜欢的街时只算那些，没写时算自己开始收的街）每块多算几成地价
 ##   safety_rolls         安全线：看接下来几次掷骰（0 = 不看现金流）
 ##   rival_weight_pct     最强对手的局面值算多重
 
@@ -69,6 +69,7 @@ static func property_worth(game, viewer: int, owner: int, tile: int) -> float:
 	else:
 		worth = _rent_now(game, tile) * per_day * days + _development(game, viewer, owner, tile, days) \
 				+ salvage
+	worth += _obsession(game, viewer, owner, tile)
 	if game.props[tile]["mortgaged"]:
 		# 抵押中：要先花钱赎回才收租，抵押的钱已经拿过了
 		worth -= salvage + price * float(mortgage.get("unmortgage_cost_pct", 60)) / 100.0
@@ -106,7 +107,29 @@ static func _development(game, viewer: int, owner: int, tile: int, days: float) 
 	# 盖不盖得起：主人的现金 + 存款不够盖整栋时，按够的比例打折（简化：不管交易里临时加减的钱）
 	var p = game.players[owner]
 	var afford := clampf((p.cash + p.deposit) / maxf(1.0, cost * int(best["lots"])), 0.0, 1.0)
-	return chance * afford * gain * (1.0 + param(game, viewer, "street_obsession_pct", 0) / 100.0)
+	return chance * afford * gain
+
+
+## 凑街执念（③）：自己估自己的地时，想凑的街上每块地多算 street_obsession_pct% 的地价。
+## 地图里写了这个角色喜欢的街（favorites）时只算那些街；没写时算自己已经开始收的街（这段街自己有别的地）。
+static func _obsession(game, viewer: int, owner: int, tile: int) -> float:
+	if viewer != owner or game.board.get_tile(tile)["type"] != "land":
+		return 0.0
+	var pct := param(game, viewer, "street_obsession_pct", 0)
+	if pct <= 0.0:
+		return 0.0
+	var liked: Array = game.board.favorites.get(game.players[viewer].character, [])
+	if not liked.is_empty():
+		if not liked.has(str(game.board.get_tile(tile).get("group", ""))):
+			return 0.0
+	else:
+		var started := false
+		for s in Valuer.segment_of(game, tile):
+			if s != tile and game.owner_of(s) == viewer:
+				started = true
+		if not started:
+			return 0.0
+	return game.property_price(tile) * pct / 100.0
 
 
 ## 能盖在 lots 块地上的最大房子（租金单价最高的那种）
@@ -337,12 +360,21 @@ static func _top(game, pi: int, pos: Array) -> float:
 ## 得分变化换算成钱：得分对自己局面值的变化率是 w·top ÷ (mine + w·top)²，
 ## 得分差 ÷ 它 ≈ “相当于自己多了多少钱”。base 是变化前的局面值。
 static func money_gain(game, pi: int, base: Array, after: Array, weight: float = -1.0) -> float:
+	var diff := score_of(game, pi, after, weight) - score_of(game, pi, base, weight)
+	if _slope(game, pi, base, weight) <= 0.0:
+		return float(after[pi]) - float(base[pi])
+	return to_money(game, pi, base, diff, weight)
+
+
+## 得分差 diff 相当于多少钱（base 是变化前的局面值）
+static func to_money(game, pi: int, base: Array, diff: float, weight: float = -1.0) -> float:
+	var slope := _slope(game, pi, base, weight)
+	return diff if slope <= 0.0 else diff / slope
+
+
+static func _slope(game, pi: int, base: Array, weight: float) -> float:
 	if weight < 0.0:
 		weight = param(game, pi, "rival_weight_pct", 100) / 100.0
 	var top := weight * _top(game, pi, base)
 	var mine: float = base[pi]
-	var slope := top / maxf(1.0, (mine + top) * (mine + top))
-	var diff := score_of(game, pi, after, weight) - score_of(game, pi, base, weight)
-	if slope <= 0.0:
-		return float(after[pi]) - mine
-	return diff / slope
+	return top / maxf(1.0, (mine + top) * (mine + top))

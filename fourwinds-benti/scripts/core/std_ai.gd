@@ -10,11 +10,15 @@ extends RefCounted
 ## 被拒后收敛（几天不找同一人、被拒几次放弃、被拒一次加价）照 trader.gd 的做法。
 ##
 ## 性格用的数（标准 AI 都是“不偏”的值，角色以后在自己的参数组里改，见 H 节）：
-##   partner_attitude_pct / partner_attitude_lead_pct  对交易对象多赚的怎么看：基础值 / 自己每领先 100% 加多少
-##   decision_band_pct  决定的随机范围（交易得失在 ± 这么多 % 以内按概率答应）
-##   haggle_pct         讨价空间：开价、要价离底线多远（占交易好处的 %），被拒一次往底线靠 trade_raise_pct
-##   trade_propose_pct  主动找人交易的概率
-##   distress_use_pct   出价时看不看对方缺钱（100 看，0 不看）
+##   partner_attitude_pct  ⑥ 对交易对象的态度：正 = 肯让一点（最多让出自己交出去的东西的这么多 %），
+##                         负 = 对方多赚的部分算成自己额外的损失（损人不利己）
+##   partner_attitude_ahead_pct / partner_attitude_behind_pct  ⑥ 自己比交易对象领先 / 落后时，上一项随差距怎么变
+##   decision_band_pct  ⑦ 决定的随机范围（交易得失在 ± 这么多 % 以内按概率答应；主动做的事好处要够大）
+##   haggle_pct         ⑧a 虚报多少：别人找我时，好处不到交出去的东西的这么多 % 就先还价往上要；
+##                      我找别人时开价比公道价压低这么多 %，被拒一次加 trade_raise_pct%
+##   counter_range_pct  ⑧b 差多远还肯还价：要对方多给的钱超过交出去的东西的这么多 %，直接拒绝
+##   trade_propose_pct  ⑨ 主动找人交易的概率
+##   distress_use_pct   ⑩ 看不看缺钱：小于 100 时，出价不压缺钱的对方，回答时也不因为自己缺钱就贱卖
 
 const Brain = preload("res://scripts/core/brain.gd")
 const Valuer = preload("res://scripts/core/valuer.gd")
@@ -95,7 +99,7 @@ static func wants_property(game, pi: int, tile: int) -> bool:
 		var wants: bool = q.cash >= price \
 				and Ledger.score_of(game, q.index, pos, 1.0) > Ledger.score_of(game, q.index, base, 1.0)
 		skip += share * (Ledger.score_of(game, pi, pos) if wants else now)
-	var buy := bought > skip
+	var buy := worth_doing(game, pi, Ledger.to_money(game, pi, base, bought - skip), price)
 	if game.record_history:
 		var p = game.players[pi]
 		game.ai_think(pi, "buy", {"tile": tile, "buy": buy, "price": price, "score_buy": bought,
@@ -127,7 +131,8 @@ static func _build_step(game) -> bool:
 	var p = game.players[pi]
 	p.ai_memory["cash_need"] = 0
 	Ledger.begin()
-	var now := Ledger.score_of(game, pi, Ledger.positions(game, pi))
+	var base := Ledger.positions(game, pi)
+	var now := Ledger.score_of(game, pi, base)
 	var best := {}
 	var best_gain := 0.0
 	for c in game.build_choices(pi):
@@ -142,7 +147,8 @@ static func _build_step(game) -> bool:
 		if after - now > best_gain:
 			best = c
 			best_gain = after - now
-	if best.is_empty():
+	if best.is_empty() or not worth_doing(game, pi, Ledger.to_money(game, pi, base, best_gain),
+			int(best["cost"])):
 		return false
 	if game.record_history:
 		game.ai_think(pi, "build", {"kind": best["kind"], "tiles": best["tiles"], "cost": best["cost"],
@@ -156,7 +162,8 @@ static func _build_step(game) -> bool:
 static func _upgrade_step(game) -> bool:
 	var pi: int = game.current
 	Ledger.begin()
-	var now := Ledger.score_of(game, pi, Ledger.positions(game, pi))
+	var base := Ledger.positions(game, pi)
+	var now := Ledger.score_of(game, pi, base)
 	var best := 0
 	var best_gain := 0.0
 	for hid in game.houses:
@@ -171,7 +178,10 @@ static func _upgrade_step(game) -> bool:
 		if after - now > best_gain:
 			best = hid
 			best_gain = after - now
-	return best != 0 and game.upgrade(pi, best) == ""
+	if best == 0 or not worth_doing(game, pi, Ledger.to_money(game, pi, base, best_gain),
+			game.upgrade_fee(game.houses[best]["tiles"])):
+		return false
+	return game.upgrade(pi, best) == ""
 
 
 # ───────────────────────── 交易 ─────────────────────────
@@ -192,20 +202,38 @@ static func _effect(offer: Dictionary) -> Dictionary:
 ## x 看这笔交易：得分涨多少，换算成钱（加上对交易对象的态度），calm 见 Ledger.positions
 static func trade_gain(game, x: int, offer: Dictionary, base: Array = [],
 		calm: Dictionary = {}) -> float:
+	var parts := trade_parts(game, x, offer, base, calm)
+	return parts[0] + parts[1]
+
+
+## [按账算的得失, 态度加减的部分]（都折成钱）
+static func trade_parts(game, x: int, offer: Dictionary, base: Array = [],
+		calm: Dictionary = {}) -> Array:
 	if base.is_empty():
 		base = Ledger.positions(game, x, {}, {}, calm)
 	var e := _effect(offer)
 	var after := Ledger.positions(game, x, e["change"], e["money"], calm)
 	var g := Ledger.money_gain(game, x, base, after)
 	var other := int(offer["to"]) if x == int(offer["from"]) else int(offer["from"])
-	return g + attitude(game, x, other, base) * (after[other] - base[other])
+	var a := attitude(game, x, other, base)
+	if a >= 0.0:
+		# 正的态度 = 肯让一点：最多让出自己交出去的东西的 a 那么多
+		return [g, a * _given(game, x, offer)]
+	# 负的态度 = 对方多赚的部分算成自己额外的损失（损人不利己）
+	return [g, a * maxf(0.0, float(after[other]) - float(base[other]))]
 
 
-## x 对交易对象多赚的部分怎么看（正 = 替他高兴，负 = 他多赚就是我更大的损失）。标准 AI 为 0。
+## x 对交易对象多赚的部分怎么看（⑥）。lead = x 比对方领先的比例（−1 到 1）。标准 AI 为 0。
 static func attitude(game, x: int, other: int, pos: Array) -> float:
-	var lead := (float(pos[x]) - float(pos[other])) / maxf(1.0, float(pos[x]))
-	return (param(game, x, "partner_attitude_pct", 0)
-			+ param(game, x, "partner_attitude_lead_pct", 0) * lead) / 100.0
+	var lead := clampf((float(pos[x]) - float(pos[other])) / maxf(1.0, float(pos[x])), -1.0, 1.0)
+	var slope := param(game, x, "partner_attitude_ahead_pct", 0) if lead > 0.0 \
+			else param(game, x, "partner_attitude_behind_pct", 0)
+	return (param(game, x, "partner_attitude_pct", 0) + slope * lead) / 100.0
+
+
+## 回答时用的“冷静”名单：⑩ 小于 100 的人不因为自己缺钱就贱卖（算自己时不看撑不撑得下去）
+static func _calm_self(game, x: int) -> Dictionary:
+	return {x: true} if param(game, x, "distress_use_pct", 100) < 100 else {}
 
 
 ## x 在这笔交易里交出去的东西值多少（决定的随机范围按它的百分比算）
@@ -215,6 +243,17 @@ static func _given(game, x: int, offer: Dictionary) -> float:
 	for t in (offer["give"] if mine else offer["get"]):
 		total += Ledger.property_worth(game, x, x, int(t))
 	return maxf(1.0, total)
+
+
+## 自己主动做的事（买地、盖房、升级、提交易）值不值得做：好处（折成钱）≥ 动用的钱 × decision_band_pct% 一定做，
+## 在 0 和它之间按比例的概率做，≤ 0 不做。这样为一点点好处（例如快破产时什么都几乎不值钱）不会乱动。
+static func worth_doing(game, pi: int, gain: float, moved: float) -> bool:
+	var band := param(game, pi, "decision_band_pct", 0) / 100.0 * maxf(1.0, moved)
+	if gain <= 0.0:
+		return false
+	if band <= 0.0 or gain >= band:
+		return true
+	return game.rng.randf() < gain / band
 
 
 ## 答不答应：得分涨的超过随机范围一定答应，低于负的随机范围一定不答应，中间按比例
@@ -232,48 +271,61 @@ static func _accepts(game, x: int, g: float, given: float) -> bool:
 static func answer(game, pi: int) -> void:
 	Ledger.begin()
 	var offer: Dictionary = game.pending["offer"]
-	var g := trade_gain(game, pi, offer)
+	var calm := _calm_self(game, pi)
+	var base := Ledger.positions(game, pi, {}, {}, calm)
+	var parts := trade_parts(game, pi, offer, base, calm)
+	var g: float = parts[0] + parts[1]
 	var given := _given(game, pi, offer)
 	var yes := _accepts(game, pi, g, given)
+	var first: bool = game.pending["stage"] == "offer"
 	var counter := {}
-	if not yes and game.pending["stage"] == "offer":
-		counter = _counter(game, pi, offer)
+	var haggle := param(game, pi, "haggle_pct", 0) / 100.0
+	# ⑧a：好处不够“虚报”的那么多时先还价往上要（能答应的也先要）；不能答应的也试着还价
+	if first and (not yes or (haggle > 0.0 and g < haggle * given)):
+		counter = _counter(game, pi, offer, base, calm)
+	_note_answer(game, pi, parts, yes, counter)
 	if game.record_history:
 		var p = game.players[pi]
 		game.ai_think(pi, "trade_answer", {"offer": offer.duplicate(true),
-				"stage": str(game.pending["stage"]), "gain": g, "given": given, "accept": yes,
-				"counter": counter, "cash": p.cash, "deposit": p.deposit,
+				"stage": str(game.pending["stage"]), "gain": g, "gain_by_books": parts[0],
+				"attitude": parts[1], "given": given, "accept": yes, "counter": counter,
+				"cash": p.cash, "deposit": p.deposit,
 				"survival": Ledger.survival(game, pi, pi, p.cash + p.deposit)})
 	Ledger.begin()
-	if yes:
-		game.trade_answer(true)
-	elif not counter.is_empty() and game.trade_counter(counter) == "":
+	if not counter.is_empty() and game.trade_counter(counter) == "":
 		return
-	else:
-		game.trade_answer(false)
+	game.trade_answer(yes)
 
 
-## 还价：要发起人多给现金（先少要他的钱），刚好够自己一定答应，再加上讨价空间。付不起返回 {}。
-static func _counter(game, pi: int, offer: Dictionary) -> Dictionary:
+## 评测统计性格动作：grace（态度让我答应了按账不划算的）、spite（态度让我拒绝了按账划算的）、
+## random_yes（随机范围里答应了不划算的）、haggle（能答应也先还价）
+static func _note_answer(game, pi: int, parts: Array, yes: bool, counter: Dictionary) -> void:
+	var books: float = parts[0]
+	var total: float = parts[0] + parts[1]
+	if yes and counter.is_empty() and books <= 0.0:
+		game.ai_note(pi, "grace" if total > 0.0 else "random_yes")
+	elif not yes and counter.is_empty() and books > 0.0 and total <= 0.0:
+		game.ai_note(pi, "spite")
+	elif yes and not counter.is_empty():
+		game.ai_note(pi, "haggle")
+
+
+## 还价：要发起人多给现金（先少要他的钱），够到“一定答应”再加上虚报的那部分（⑧a）。
+## 要多给的超过交出去的东西 × counter_range_pct%（⑧b）或者对方付不起，就不还价（返回 {}）。
+static func _counter(game, pi: int, offer: Dictionary, base: Array, calm: Dictionary) -> Dictionary:
 	var from := int(offer["from"])
 	var room: int = game.players[from].cash - int(offer["give_cash"]) + int(offer["get_cash"])
-	var base := Ledger.positions(game, pi)
+	var given := _given(game, pi, offer)
+	var want := (param(game, pi, "decision_band_pct", 0) + param(game, pi, "haggle_pct", 0)) / 100.0
 	var need := func(extra: int) -> float:
 		var c := _with_cash_to_responder(offer, extra)
-		var g := trade_gain(game, pi, c, base)
-		return g - param(game, pi, "decision_band_pct", 0) / 100.0 * _given(game, pi, c)
+		return trade_gain(game, pi, c, base, calm) - want * _given(game, pi, c)
 	if room <= 0 or need.call(room) <= 0.0:
 		return {}
-	var lo := 0
-	var hi := room
-	while hi - lo > 10:
-		var mid := (lo + hi) / 2
-		if need.call(mid) > 0.0:
-			hi = mid
-		else:
-			lo = mid
-	var extra := mini(room, Trader._round_up(hi + int(hi * param(game, pi, "haggle_pct", 0) / 100.0)))
-	return _with_cash_to_responder(offer, extra)
+	var hi := _first_true(func(x: int) -> bool: return need.call(x) > 0.0, 0, room)
+	if hi > given * param(game, pi, "counter_range_pct", 100) / 100.0:
+		return {}
+	return _with_cash_to_responder(offer, mini(room, Trader._round_up(hi)))
 
 
 ## 回答的人多拿 extra 现金：先减少他要付的，不够再加发起人给的
@@ -305,7 +357,7 @@ static func propose_step(game) -> bool:
 	var base := Ledger.positions(game, pi)
 	var best := {}
 	var best_gain := 0.0
-	for want in Trader._wants(game, pi):
+	for want in _wants(game, pi):
 		var q := int(want["owner"])
 		if game.day - int(refused_by.get(str(q), -9999)) < cooldown:
 			continue
@@ -323,7 +375,7 @@ static func propose_step(game) -> bool:
 				best = plan
 				best_gain = plan["gain"]
 				best["key"] = key
-	if best.is_empty():
+	if best.is_empty() or not worth_doing(game, pi, best["gain"], _given(game, pi, best["offer"])):
 		return false
 	asked[best["key"]] = game.day
 	var offer: Dictionary = best["offer"]
@@ -332,6 +384,34 @@ static func propose_step(game) -> bool:
 		game.ai_think(pi, "trade_propose", {"offer": offer.duplicate(true), "gain": best["gain"],
 				"most_i_pay": best["most"], "least_they_need": best["least"]})
 	return game.propose_trade(offer) == ""
+
+
+## 想要的地：自己在这一段街有地、或者这条街是自己喜欢的街（地图的 favorites），对手手里这一段没盖房子的地
+static func _wants(game, pi: int) -> Array:
+	var liked: Array = game.board.favorites.get(game.players[pi].character, []) \
+			if param(game, pi, "street_obsession_pct", 0) > 0.0 else []
+	var seen := {}
+	var out: Array = []
+	for t in game.props:
+		if game.board.get_tile(t)["type"] != "land":
+			continue
+		var seg: Array = Valuer.segment_of(game, t)
+		if seen.has(seg[0]):
+			continue
+		seen[seg[0]] = true
+		var mine := 0
+		var by := {}
+		for x in seg:
+			var o: int = game.owner_of(x)
+			if o == pi:
+				mine += 1
+			elif o >= 0 and game.house_at(x) == 0 and not game.players[o].bankrupt:
+				by.get_or_add(o, []).append(x)
+		if mine == 0 and not liked.has(str(game.board.get_tile(t).get("group", ""))):
+			continue
+		for q in by:
+			out.append({"owner": q, "tiles": by[q]})
+	return out
 
 
 ## 能拿来换的：不拿地，或者拿一块自己用不上、对 q 有用的地（trader.gd 的 _spare_for）
@@ -343,7 +423,7 @@ static func _swaps(game, pi: int, q: int) -> Array:
 
 
 ## 定价：我最多肯付 most（再多我就不赚），猜对方最少要 least（用我的估价、我对他的看法）。
-## 出价 = least + (most − least) ÷ 活着的人数 − 讨价空间 + 被拒次数 × 加价，不超过 most。谈不成返回 {}。
+## 出价 = 公道价 × (1 − 讨价空间 + 被拒次数 × 加价)，公道价 = least + (most − least) ÷ 活着的人数，不超过 most。谈不成返回 {}。
 static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int,
 		base: Array) -> Dictionary:
 	var offer := {"from": pi, "to": q, "give": give.duplicate(), "get": tiles.duplicate(),
@@ -371,9 +451,12 @@ static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int,
 	var least := _first_true(func(x: int) -> bool: return theirs.call(x) >= 0.0, 0, most)
 	var alive: int = game.alive_players().size()
 	var room := float(most - least)
-	var x := least + room / alive - room * param(game, pi, "haggle_pct", 0) / 100.0 \
-			+ room * times * param(game, pi, "trade_raise_pct", 10) / 100.0
-	var pay := mini(most, Trader._round_up(int(clampf(x, float(least), float(most)))))
+	# 公道价 = 对方最少要的 + 多出来的好处 ÷ 人数；爱讨价还价的先压低 haggle_pct%（可以比对方最少要的还低），
+	# 每被拒一次加 trade_raise_pct%
+	var fair := least + room / alive
+	var x := fair * (1.0 - param(game, pi, "haggle_pct", 0) / 100.0
+			+ times * param(game, pi, "trade_raise_pct", 10) / 100.0)
+	var pay := mini(most, Trader._round_up(int(clampf(x, 0.0, float(most)))))
 	if pay > cash:
 		return {}
 	offer["give_cash"] = pay

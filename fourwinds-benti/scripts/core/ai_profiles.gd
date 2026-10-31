@@ -29,12 +29,16 @@ static func of(character: String, form: String = "front") -> Dictionary:
 	return table.get(key(character, form), table.get("", {}))
 
 
-## 玩家 p 用的参数：AI 版本是 standard / standard_v2（“认真玩家”替身，没有性格）时一律用 standard 表形态，
+## 玩家 p 用的参数：AI 版本是 standard / standard_v2（“认真玩家”替身，没有性格）时一律用 standard 表形态；
+## new_v2（新框架角色 AI）= standard 表形态 + 这个角色参数组的 front_v2（不用旧框架角色的数）；
 ## 否则按他的角色和形态
 static func for_player(p) -> Dictionary:
 	if p.ai == "standard" or p.ai == "standard_v2":
 		ensure_loaded()
 		return table.get("", {})
+	if p.ai == "new_v2":
+		ensure_loaded()
+		return table.get(key(p.character, "front_v2"), table.get("", {}))
 	return of(p.character, p.form)
 
 
@@ -55,6 +59,12 @@ static func ensure_loaded() -> void:
 		var group: Dictionary = groups.get(str(c.get("ai_profile", "standard")), standard)
 		for form in FORMS:
 			table[key(str(c["id"]), form)] = merged(group, form, base)
+		var v2: Dictionary = base.duplicate()
+		var extra: Dictionary = group.get("front_v2", {})
+		for k in extra:
+			if not str(k).begins_with("_"):
+				v2[k] = extra[k]
+		table[key(str(c["id"]), "front_v2")] = v2
 
 
 ## 参数组 group 在形态 form 下的参数：base 打底，叠上 front，再用 form 里写了的数覆盖

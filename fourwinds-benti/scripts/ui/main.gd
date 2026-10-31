@@ -3,12 +3,13 @@ extends Control
 ## 同时显示数据检查结果，数据读取有问题时在这里能看到。
 
 const SEAT_COUNT := 4
-const SEAT_KINDS := ["人类", "标准 AI（新框架）", "角色 AI（旧框架）", "标准 AI（旧框架）", "原版 AI", "空"]
+const SEAT_KINDS := ["人类", "标准 AI（新框架）", "角色 AI（新框架）", "角色 AI（旧框架）", "标准 AI（旧框架）",
+		"原版 AI", "空"]
 ## 每种座位对应的 AI 版本（见 scripts/core/ai.gd）。标准 AI = 没有性格、按“认真玩家”打
-const SEAT_AI := ["", "standard_v2", "new", "standard", "original", ""]
-## AI 版本名字后面加的标记，对局里分得清
+const SEAT_AI := ["", "standard_v2", "new_v2", "new", "standard", "original", ""]
+## AI 版本名字后面加的标记，对局里分得清（新框架角色 AI 不加，就是角色本人）
 const SEAT_SUFFIX := {"standard_v2": "·标准", "new": "·旧角色", "standard": "·旧标准", "original": "·原版"}
-const EMPTY_KIND := 5
+const EMPTY_KIND := 6
 const DEFAULT_KINDS := [0, 1, 1, 1]
 const BACKGROUND := Color("#1e2a24")
 

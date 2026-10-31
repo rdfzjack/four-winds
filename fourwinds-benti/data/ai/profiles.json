@@ -33,14 +33,16 @@
   "game_length_days": "【新框架】这局大概打多少天；剩下的天数 = 它 − 今天，估地产能收几天的租",
   "horizon_min_days": "【新框架】剩下的天数最少按几天算",
   "street_chance_pct": "【新框架】一段街缺的地，每块最后能弄到手的可能性（%）；对手在这段街也有两块以上时减半",
-  "street_obsession_pct": "【新框架·性格】想凑齐的街，凑街后多收的租多算几成（标准 AI 为 0）",
+  "street_obsession_pct": "【新框架·性格】③ 凑街执念：想凑的街每块地多算这么多 % 的地价（地图写了这个角色喜欢的街时只算那些街，没写时算自己开始收的街；标准 AI 为 0）",
   "safety_rolls": "【新框架·性格】安全线：看接下来几次掷骰会不会碰上付不起的租（0 = 不看现金流）",
   "rival_weight_pct": "【新框架】对手里最强的那个人的局面值算多重：得分 = 自己 − 它 × 最强对手",
-  "partner_attitude_pct": "【新框架·性格】对交易对象多赚的部分怎么看：正 = 替他高兴（大方），负 = 他多赚我更难受（标准 AI 为 0）",
-  "partner_attitude_lead_pct": "【新框架·性格】自己每比交易对象领先 100%，上一项加多少（正 = 领先时放宽；落后时自动反过来）",
+  "partner_attitude_pct": "【新框架·性格】⑥ 对交易对象的态度（%）：正 = 肯让一点（最多让出自己交出去的东西的这么多 %，出价也大方），负 = 对方多赚的部分算成自己额外的损失（标准 AI 为 0）",
+  "partner_attitude_ahead_pct": "【新框架·性格】⑥ 自己比交易对象领先时（领先 100% 算 1），上一项加多少（正 = 领先时放宽）",
+  "partner_attitude_behind_pct": "【新框架·性格】⑥ 自己比交易对象落后时（落后 100% 算 −1），乘上它加到上一项（正 = 落后时变刻薄）",
+  "counter_range_pct": "【新框架·性格】⑧b 差多远还肯还价：要对方多给的钱超过自己交出去的东西的这么多 %，直接拒绝",
   "decision_band_pct": "【新框架·性格】决定的随机范围：交易得失在交出去的东西的 ± 这么多 % 以内时按概率答应",
-  "haggle_pct": "【新框架·性格】讨价空间：开价、要价离底线多远（占交易好处的 %），被拒一次往底线靠 trade_raise_pct",
-  "distress_use_pct": "【新框架·性格】出价时看不看对方缺钱：100 看（对方缺钱就压价），小于 100 不看（按对方不缺钱时出公道价）",
+  "haggle_pct": "【新框架·性格】⑧a 虚报多少：别人找我时好处不到交出去的东西的这么多 % 就先还价往上要；我找别人时开价比公道价压低这么多 %，被拒一次加 trade_raise_pct%",
+  "distress_use_pct": "【新框架·性格】⑩ 看不看缺钱：100 看（对方缺钱就压价，自己缺钱就肯贱卖）；小于 100 不看（对缺钱的人也出公道价，自己缺钱也不贱卖）",
   "value_noise_pct": "【新 AI·性格】估价误差：每块地产这局随机偏 ±这么多 %（0 = 估得准）",
   "favorite_count": "【新 AI·性格】每局随机挑几块“喜欢的地”：现金够就买（不管留钱），交易里绝不交出，拍卖出到现金为止",
   "trade_accept_floor_pct": "【新 AI·性格】再离谱的交易也有这么大概率同意（“按错”，0 = 低于下线一定拒绝）",
@@ -108,7 +110,9 @@
     "safety_rolls": 10,
     "rival_weight_pct": 100,
     "partner_attitude_pct": 0,
-    "partner_attitude_lead_pct": 0,
+    "partner_attitude_ahead_pct": 0,
+    "partner_attitude_behind_pct": 0,
+    "counter_range_pct": 100,
     "decision_band_pct": 5,
     "haggle_pct": 0,
     "distress_use_pct": 100,
@@ -140,6 +144,12 @@
     "trade_cooldown_days": 10,
     "trade_give_up_after": 1,
     "trade_raise_pct": 0
+   },
+   "front_v2": {
+    "_note": "新框架角色 AI（ai 版本 new_v2）只用 standard 的表形态 + 这里写的数，不用上面旧框架的数。斐斐：领先时差不多就得了；对缺钱的人出公道价、自己缺钱也不贱卖；差多了直接拒绝",
+    "partner_attitude_ahead_pct": 30,
+    "distress_use_pct": 0,
+    "counter_range_pct": 30
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
@@ -173,6 +183,15 @@
     "trade_cooldown_days": 10,
     "trade_give_up_after": 1
    },
+   "front_v2": {
+    "_note": "小九：不怎么算（估价误差大）；大方、对落后的人更大方；随机范围大得离谱；很少主动交易；几乎不觉得自己快破产",
+    "value_noise_pct": 30,
+    "partner_attitude_pct": 20,
+    "partner_attitude_ahead_pct": 40,
+    "decision_band_pct": 60,
+    "trade_propose_pct": 30,
+    "safety_rolls": 1
+   },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
    }
@@ -203,6 +222,15 @@
     "trade_give_up_after": 1,
     "trade_propose_pct": 60
    },
+   "front_v2": {
+    "_note": "孔雀：估价误差大；地图上喜欢的街（favorites）特别想凑；留钱少（安全线是正常的一半）；落后时损人不利己；被压价觉得受辱：要价高，差多了直接拒绝",
+    "value_noise_pct": 40,
+    "street_obsession_pct": 300,
+    "safety_rolls": 5,
+    "partner_attitude_behind_pct": 100,
+    "haggle_pct": 100,
+    "counter_range_pct": 50
+   },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
    }
@@ -231,6 +259,18 @@
     "trade_cooldown_days": 3,
     "trade_give_up_after": 3,
     "trade_raise_pct": 5
+   },
+   "front_v2": {
+    "_note": "理理：快节奏，特别想凑齐自己的街，重仓盖房（安全线是正常的八成）；爱讨价还价：先报假价、差多少都要谈；交易很勤",
+    "value_noise_pct": 10,
+    "street_obsession_pct": 50,
+    "safety_rolls": 8,
+    "haggle_pct": 40,
+    "counter_range_pct": 400,
+    "trade_propose_pct": 100,
+    "trade_cooldown_days": 2,
+    "trade_give_up_after": 4,
+    "trade_raise_pct": 15
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
