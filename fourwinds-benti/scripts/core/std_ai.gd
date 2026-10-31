@@ -310,13 +310,15 @@ static func _note_answer(game, pi: int, parts: Array, yes: bool, counter: Dictio
 		game.ai_note(pi, "haggle")
 
 
-## 还价：要发起人多给现金（先少要他的钱），够到“一定答应”再加上虚报的那部分（⑧a）。
+## 还价：要发起人多给现金（先少要他的钱），回到自己的底价再加上要价虚高的那部分（⑧a）。
 ## 要多给的超过交出去的东西 × counter_range_pct%（⑧b）或者对方付不起，就不还价（返回 {}）。
 static func _counter(game, pi: int, offer: Dictionary, base: Array, calm: Dictionary) -> Dictionary:
 	var from := int(offer["from"])
 	var room: int = game.players[from].cash - int(offer["give_cash"]) + int(offer["get_cash"])
 	var given := _given(game, pi, offer)
-	var want := (param(game, pi, "decision_band_pct", 0) + param(game, pi, "ask_up_pct", 0)) / 100.0
+	# 只要回到自己的底价（得分不亏），再加上要价虚高 ⑧a。不按随机范围 ⑦ 的上沿要价：
+	# ⑦ 大的人（小九）是好说话，不是漫天要价
+	var want := param(game, pi, "ask_up_pct", 0) / 100.0
 	var need := func(extra: int) -> float:
 		var c := _with_cash_to_responder(offer, extra)
 		return trade_gain(game, pi, c, base, calm) - want * _given(game, pi, c)
