@@ -29,6 +29,7 @@ func run(p_runner: Object) -> void:
 	test_propose_street()
 	test_auction_limit()
 	test_personality()
+	test_record()
 
 
 ## 玩家 0 是人类，1 是新 AI，2 是原版 AI（3 人局：2 人局里一方赚多少另一方就亏多少，凑街交易本来就谈不成）
@@ -134,3 +135,28 @@ func test_personality() -> void:
 	g4.players[1].ai = "standard"
 	runner.check(Valuer.param(g4, 1, "value_horizon_days", -1)
 			== float(AiProfiles.table[""]["value_horizon_days"]), "标准 AI 用 standard 参数")
+
+
+## 对局记录：开了 record_history 才记；能转成 JSON；有事件、回合快照和 AI 的想法
+func test_record() -> void:
+	var g := new_game()
+	var t: int = street(g)[0]
+	g.props[t]["owner"] = 1
+	g.propose_trade({"from": 0, "to": 1, "get": [t], "get_cash": 0, "give": [], "give_cash": 10})
+	NewAi.step(g)
+	runner.check(g.history.is_empty(), "没开对局记录时不记")
+	g = new_game()
+	g.record_history = true
+	g.props[t]["owner"] = 1
+	g.propose_trade({"from": 0, "to": 1, "get": [t], "get_cash": 0, "give": [], "give_cash": 10})
+	NewAi.step(g)
+	var kinds := {}
+	for e in g.history:
+		kinds[str(e["type"]) + ":" + str(e.get("kind", ""))] = true
+	runner.check(kinds.has("trade_proposed:") and kinds.has("ai_think:trade_answer"),
+			"对局记录有交易事件和 AI 回答时的想法 %s" % str(kinds.keys()))
+	var rec: Dictionary = g.export_record()
+	var back = JSON.parse_string(JSON.stringify(rec))
+	runner.check(back is Dictionary and back["seats"].size() == 3 and back["seed"] == 1,
+			"对局记录能转成 JSON，带座位和种子")
+

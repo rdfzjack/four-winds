@@ -74,6 +74,7 @@ func _ready() -> void:
 	if not errors.is_empty():
 		push_error("开局失败：" + str(errors))
 		return
+	game.record_history = true
 	game.start()
 	_build_map()
 	_build_ui()
@@ -144,6 +145,11 @@ func _build_ui() -> void:
 	menu.text = "菜单"
 	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/main.tscn"))
 	top.add_child(menu)
+	var save := Button.new()
+	save.text = "导出记录"
+	save.tooltip_text = "把这局到现在的记录（含 AI 的想法）存成 JSON，路径写在日志里"
+	save.pressed.connect(_export_record)
+	top.add_child(save)
 	var home := Button.new()
 	home.text = "回到当前角色"
 	home.tooltip_text = "镜头回到当前玩家（拖动地图、方向键 / WASD 平移，滚轮缩放）"
@@ -284,6 +290,8 @@ func _handle_event(ev: Dictionary) -> float:
 			_move_token(int(ev["player"]), game.players[int(ev["player"])].pos)
 		"rolled":
 			_dice.values = ev["dice"]
+		"game_over":
+			_export_record()
 		"turn_start":
 			_dice.values = []
 			_camera.focus(_map.token_position(int(ev["player"])))
@@ -1098,3 +1106,18 @@ func _tile_info(i: int) -> String:
 	if hid != 0:
 		text += " · %s" % _house_name(str(game.houses[hid]["kind"]))
 	return text
+
+
+## 对局记录存到 user://records/（Windows 上在 %APPDATA%\Godot\app_userdata\项目名\records），
+## 文件名带时间。打完一局会自动存一次。
+func _export_record() -> void:
+	DirAccess.make_dir_recursive_absolute("user://records")
+	var stamp := Time.get_datetime_string_from_system().replace(":", "-")
+	var path := "user://records/record_%s_day%d.json" % [stamp, game.day]
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if f == null:
+		_log.append_text("[color=#ef5350]记录存不了：%s[/color]\n" % path)
+		return
+	f.store_string(JSON.stringify(game.export_record(), " "))
+	f.close()
+	_log.append_text("[color=#81c784]对局记录已存：%s[/color]\n" % ProjectSettings.globalize_path(path))

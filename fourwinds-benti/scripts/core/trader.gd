@@ -152,6 +152,7 @@ static func accepts(game, x: int, score: float) -> bool:
 static func answer(game, pi: int) -> void:
 	var offer: Dictionary = game.pending["offer"]
 	var score := trade_score(game, pi, offer)
+	_think_answer(game, pi, offer, score)
 	if game.pending["stage"] == "counter":
 		# 自己发起的、对方还了价：按自己的区间回答
 		game.trade_answer(accepts(game, pi, score))
@@ -167,6 +168,23 @@ static func answer(game, pi: int) -> void:
 		if not counter.is_empty() and game.trade_counter(counter) == "":
 			return
 	game.trade_answer(false)
+
+
+## 对局记录：回答交易时心里的账（得失、交出去的值多少、对方多出来的、得分和两条线、留钱线）
+static func _think_answer(game, pi: int, offer: Dictionary, score: float) -> void:
+	if not game.record_history:
+		return
+	var e := trade_effect(game, pi, offer)
+	var p = game.players[pi]
+	game.ai_think(pi, "trade_answer", {
+		"offer": offer.duplicate(true), "stage": str(game.pending.get("stage", "")),
+		"net": e["net"], "lost": e["lost"], "other_gain": e["other"],
+		"harm": harm(game, pi, e["other"]), "score": score if score != -INF else -99999.0,
+		"reject_below": param(game, pi, "trade_reject_pct", 0),
+		"accept_from": param(game, pi, "trade_accept_pct", 10),
+		"counter_from": param(game, pi, "trade_counter_pct", -30),
+		"cash": p.cash, "deposit": p.deposit, "reserve": Valuer.reserve(game, pi),
+	})
 
 
 ## 还价：有 counter_tile_pct% 的概率先试“改要对方的一块关键地”（不要钱）；
@@ -261,6 +279,15 @@ static func propose_step(game) -> bool:
 		return false
 	asked[best["_key"]] = game.day
 	best.erase("_key")
+	if game.record_history:
+		var mine := trade_effect(game, pi, best)
+		var theirs := trade_effect(game, int(best["to"]), best)
+		game.ai_think(pi, "trade_propose", {
+			"offer": best.duplicate(true), "my_net": mine["net"], "my_harm": harm(game, pi, mine["other"]),
+			"their_net_guess": theirs["net"], "their_lost_guess": theirs["lost"],
+			"guess_accept": param(game, pi, "trade_guess_accept_pct", 50),
+			"reserve": Valuer.reserve(game, pi),
+		})
 	p.ai_memory["trade_last"] = {"to": best["to"], "get": best["get"].duplicate(), "day": game.day}
 	return game.propose_trade(best) == ""
 

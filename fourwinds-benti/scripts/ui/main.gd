@@ -1,12 +1,14 @@
 extends Control
-## 主界面：选座位（每个位置选人类 / 新 AI / 原版 AI / 空，再选角色），然后开始热座对局。
+## 主界面：选座位（每个位置选人类 / 新 AI / 标准 AI / 原版 AI / 空，再选角色），然后开始热座对局。
 ## 同时显示数据检查结果，数据读取有问题时在这里能看到。
 
 const SEAT_COUNT := 4
-const SEAT_KINDS := ["人类", "新 AI", "原版 AI", "空"]
-## 每种座位对应的 AI 版本（见 scripts/core/ai.gd）
-const SEAT_AI := ["", "new", "original", ""]
-const EMPTY_KIND := 3
+const SEAT_KINDS := ["人类", "新 AI", "标准 AI", "原版 AI", "空"]
+## 每种座位对应的 AI 版本（见 scripts/core/ai.gd）。标准 AI = 没有性格、按“认真玩家”打的新 AI
+const SEAT_AI := ["", "new", "standard", "original", ""]
+## AI 版本名字后面加的标记，对局里分得清
+const SEAT_SUFFIX := {"standard": "·标准", "original": "·旧"}
+const EMPTY_KIND := 4
 const DEFAULT_KINDS := [0, 1, 1, 1]
 const BACKGROUND := Color("#1e2a24")
 
@@ -33,7 +35,7 @@ func _ready() -> void:
 
 	_label(box, "四方来财 Four Winds", 36, Color.WHITE)
 	_add_map_choice(box)
-	_label(box, "热座：每个位置选人类或 AI（新 AI 是正在做的角色 AI；原版 AI 的名字后面带“·旧”）", 15,
+	_label(box, "热座：每个位置选人类或 AI（新 AI 是带性格的角色 AI；标准 AI 没有性格，名字后面带“·标准”；原版 AI 带“·旧”）", 15,
 			Color("#b0bec5"))
 	box.add_child(HSeparator.new())
 
@@ -126,9 +128,8 @@ func _on_start() -> void:
 		var spec := {"character": cid, "human": kind == 0}
 		if SEAT_AI[kind] != "":
 			spec["ai"] = SEAT_AI[kind]
-		# 原版 AI 名字后面加标记，对局里分得清
-		if SEAT_AI[kind] == "original":
-			spec["name_suffix"] = "·旧"
+		if SEAT_SUFFIX.has(SEAT_AI[kind]):
+			spec["name_suffix"] = SEAT_SUFFIX[SEAT_AI[kind]]
 		specs.append(spec)
 	if specs.size() < 2:
 		_hint.text = "至少要 2 个玩家。"
