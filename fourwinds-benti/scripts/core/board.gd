@@ -35,6 +35,8 @@ var start_tile: int = 0
 var tiles: Array = []         ## 每格一个 Dictionary，下标就是格子编号
 var groups: Dictionary = {}   ## 街道组 id -> {name, color}
 var prices: Dictionary = {}   ## 这张地图的建房成本、租金、空地基准价
+## 角色喜欢的街：角色 id -> [街道组 id]（地图文件的 favorites，可省略）。AI 的“凑街执念”只算这些街
+var favorites: Dictionary = {}
 
 
 ## 从地图 JSON（已解析成 Dictionary）读取。返回错误列表，空列表表示没问题。
@@ -45,6 +47,7 @@ func load_from(d: Dictionary) -> Array:
 	start_tile = int(d.get("start_tile", 0))
 	groups = d.get("groups", {})
 	prices = d.get("prices", {})
+	favorites = d.get("favorites", {})
 	tiles = []
 	var raw_tiles: Array = d.get("tiles", [])
 	for raw in raw_tiles:

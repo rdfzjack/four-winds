@@ -32,7 +32,9 @@ static func step(game) -> bool:
 				Trader.auction_turn(game, pi)
 				return true
 			"buy_land", "buy_company":
-				if wants_property(game, pi, int(game.pending["tile"])):
+				var buy := wants_property(game, pi, int(game.pending["tile"]))
+				_think_buy(game, pi, int(game.pending["tile"]), buy)
+				if buy:
 					game.buy()
 				else:
 					game.decline()
@@ -84,6 +86,18 @@ static func wants_property(game, pi: int, tile: int) -> bool:
 	if not can_spend(game, pi, price):
 		return false
 	return buy_gain(game, pi, tile) > 0.0
+
+
+## 对局记录：买不买地时的账
+static func _think_buy(game, pi: int, tile: int, buy: bool) -> void:
+	if not game.record_history:
+		return
+	var p = game.players[pi]
+	game.ai_think(pi, "buy", {
+		"tile": tile, "buy": buy, "price": game.property_price(tile),
+		"worth": Valuer.property_worth(game, pi, tile), "gain": buy_gain(game, pi, tile),
+		"cash": p.cash, "deposit": p.deposit, "reserve": Valuer.reserve(game, pi),
+	})
 
 
 static func buy_gain(game, pi: int, tile: int) -> float:

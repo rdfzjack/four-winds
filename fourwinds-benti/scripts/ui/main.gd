@@ -1,12 +1,15 @@
 extends Control
-## 主界面：选座位（每个位置选人类 / 新 AI / 原版 AI / 空，再选角色），然后开始热座对局。
+## 主界面：选座位（每个位置选人类 / 各种 AI / 空，再选角色），然后开始热座对局。
 ## 同时显示数据检查结果，数据读取有问题时在这里能看到。
 
 const SEAT_COUNT := 4
-const SEAT_KINDS := ["人类", "新 AI", "原版 AI", "空"]
-## 每种座位对应的 AI 版本（见 scripts/core/ai.gd）
-const SEAT_AI := ["", "new", "original", ""]
-const EMPTY_KIND := 3
+const SEAT_KINDS := ["人类", "标准 AI（新框架）", "角色 AI（新框架）", "角色 AI（旧框架）", "标准 AI（旧框架）",
+		"原版 AI", "空"]
+## 每种座位对应的 AI 版本（见 scripts/core/ai.gd）。标准 AI = 没有性格、按“认真玩家”打
+const SEAT_AI := ["", "standard_v2", "new_v2", "new", "standard", "original", ""]
+## AI 版本名字后面加的标记，对局里分得清（新框架角色 AI 不加，就是角色本人）
+const SEAT_SUFFIX := {"standard_v2": "·标准", "new": "·旧角色", "standard": "·旧标准", "original": "·原版"}
+const EMPTY_KIND := 6
 const DEFAULT_KINDS := [0, 1, 1, 1]
 const BACKGROUND := Color("#1e2a24")
 
@@ -33,12 +36,24 @@ func _ready() -> void:
 
 	_label(box, "四方来财 Four Winds", 36, Color.WHITE)
 	_add_map_choice(box)
-	_label(box, "热座：每个位置选人类或 AI（新 AI 是正在做的角色 AI；原版 AI 的名字后面带“·旧”）", 15,
+	_label(box, "热座：每个位置选人类或 AI（标准 AI 没有性格；角色 AI 带性格；名字后面的标记分得清是哪种 AI）", 15,
 			Color("#b0bec5"))
 	box.add_child(HSeparator.new())
 
 	for i in range(SEAT_COUNT):
 		_add_seat(box, i)
+
+	var cross := CheckBox.new()
+	cross.text = "路口全部随机（像原版；不勾 = 走到路口自己选方向）"
+	cross.button_pressed = Data.crossroads_random
+	cross.toggled.connect(func(on: bool) -> void: Data.crossroads_random = on)
+	box.add_child(cross)
+
+	var debug := CheckBox.new()
+	debug.text = "调试：交易时显示 AI 心里算的账（底价、得失、开价）"
+	debug.button_pressed = Data.debug_ai
+	debug.toggled.connect(func(on: bool) -> void: Data.debug_ai = on)
+	box.add_child(debug)
 
 	_hint = _label(box, "", 14, Color("#ef9a9a"))
 	var start := Button.new()
@@ -88,14 +103,14 @@ func _add_seat(parent: Node, i: int) -> void:
 	for k in SEAT_KINDS:
 		kind.add_item(k)
 	kind.select(DEFAULT_KINDS[i])
-	kind.custom_minimum_size = Vector2(130, 40)
+	kind.custom_minimum_size = Vector2(190, 40)
 	row.add_child(kind)
 
 	var who := OptionButton.new()
 	for c in Data.characters:
 		who.add_item("%s（%s）· %s" % [c.get("nickname", "?"), c.get("name", ""), c.get("identity", "")])
 	who.select(mini(i, Data.characters.size() - 1))
-	who.custom_minimum_size = Vector2(380, 40)
+	who.custom_minimum_size = Vector2(320, 40)
 	row.add_child(who)
 	_kind_boxes.append(kind)
 	_char_boxes.append(who)
@@ -126,9 +141,8 @@ func _on_start() -> void:
 		var spec := {"character": cid, "human": kind == 0}
 		if SEAT_AI[kind] != "":
 			spec["ai"] = SEAT_AI[kind]
-		# 原版 AI 名字后面加标记，对局里分得清
-		if SEAT_AI[kind] == "original":
-			spec["name_suffix"] = "·旧"
+		if SEAT_SUFFIX.has(SEAT_AI[kind]):
+			spec["name_suffix"] = SEAT_SUFFIX[SEAT_AI[kind]]
 		specs.append(spec)
 	if specs.size() < 2:
 		_hint.text = "至少要 2 个玩家。"

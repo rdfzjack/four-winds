@@ -25,7 +25,8 @@
    "villa": 150
   }
  },
- "groups": {
+ "favorites": {"_note": "角色喜欢的街（角色 id → 街道组 id），新框架 AI 的凑街执念只算这些街", "marcel": ["衡山路"]},
+  "groups": {
   "西藏北路": {
    "name": "西藏北路",
    "color": "#8d6e63"

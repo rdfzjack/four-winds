@@ -67,13 +67,15 @@ func _ready() -> void:
 	_specs = Data.start_specs
 	if _specs.is_empty():
 		for i in range(mini(4, Data.characters.size())):
-			_specs.append({"character": str(Data.characters[i]["id"]), "human": i == 0, "ai": "new"})
+			_specs.append({"character": str(Data.characters[i]["id"]), "human": i == 0, "ai": "standard_v2"})
 	game = Game.new()
 	var cards_file := {"cards": Data.cards, "special_events": Data.special_events}
 	var errors := game.setup(board, Data.rules, cards_file, Data.characters, _specs)
 	if not errors.is_empty():
 		push_error("开局失败：" + str(errors))
 		return
+	game.record_history = true
+	game.crossroad_override = "random" if Data.crossroads_random else ""
 	game.start()
 	_build_map()
 	_build_ui()
@@ -144,6 +146,11 @@ func _build_ui() -> void:
 	menu.text = "菜单"
 	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/main.tscn"))
 	top.add_child(menu)
+	var save := Button.new()
+	save.text = "导出记录"
+	save.tooltip_text = "把这局到现在的记录（含 AI 的想法）存成 JSON，路径写在日志里"
+	save.pressed.connect(_export_record)
+	top.add_child(save)
 	var home := Button.new()
 	home.text = "回到当前角色"
 	home.tooltip_text = "镜头回到当前玩家（拖动地图、方向键 / WASD 平移，滚轮缩放）"
@@ -284,6 +291,8 @@ func _handle_event(ev: Dictionary) -> float:
 			_move_token(int(ev["player"]), game.players[int(ev["player"])].pos)
 		"rolled":
 			_dice.values = ev["dice"]
+		"game_over":
+			_export_record()
 		"turn_start":
 			_dice.values = []
 			_camera.focus(_map.token_position(int(ev["player"])))
@@ -571,6 +580,7 @@ func _show_controls() -> void:
 	_make_label(_controls, "轮到 %s（现金 %d · 存款 %d）" % [p.display_name, p.cash, p.deposit], 14,
 			Color.WHITE)
 	if game.phase == "pre_roll":
+		_show_trade_thought()
 		_button("掷骰子", _on_roll)
 		_button("房产：建房 / 升级 / 拆房", _open_house_dialog)
 		_button("抵押 / 赎回", _open_mortgage_dialog)
@@ -634,6 +644,7 @@ func _show_trade_controls() -> void:
 	var title := "%s 还价：" % game.players[int(o["to"])].display_name if counter \
 			else "%s 向你提议交易：" % game.players[int(o["from"])].display_name
 	_make_label(_controls, title + _offer_text(o), 14, Color("#fff59d"))
+	_show_trade_thought()
 	_map.highlight = o["give"] + o["get"]
 	_button("同意", func() -> void: _do(func() -> void: game.trade_answer(true)))
 	_button("拒绝", func() -> void: _do(func() -> void: game.trade_answer(false)))
@@ -1098,3 +1109,74 @@ func _tile_info(i: int) -> String:
 	if hid != 0:
 		text += " · %s" % _house_name(str(game.houses[hid]["kind"]))
 	return text
+
+
+## 对局记录存到 user://records/（Windows 上在 %APPDATA%\Godot\app_userdata\项目名\records），
+## 文件名带时间。打完一局会自动存一次。
+func _export_record() -> void:
+	DirAccess.make_dir_recursive_absolute("user://records")
+	var stamp := Time.get_datetime_string_from_system().replace(":", "-")
+	var path := "user://records/record_%s_day%d.json" % [stamp, game.day]
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if f == null:
+		_log.append_text("[color=#ef5350]记录存不了：%s[/color]\n" % path)
+		return
+	f.store_string(JSON.stringify(game.export_record(), " "))
+	f.close()
+	_log.append_text("[color=#81c784]对局记录已存：%s[/color]\n" % ProjectSettings.globalize_path(path))
+
+
+# ───────────────────────── 调试：交易时 AI 心里算的数 ─────────────────────────
+
+## 主界面勾了“调试”时，在交易按钮上面显示 AI 对这笔交易的账（只看这回合里最近的一次交易想法）。
+## 以后不要了就删掉这一节和 Data.debug_ai。
+func _show_trade_thought() -> void:
+	if not Data.debug_ai:
+		return
+	for i in range(game.history.size() - 1, -1, -1):
+		var e: Dictionary = game.history[i]
+		var kind := str(e.get("type", ""))
+		if kind == "turn_start":
+			return
+		if kind == "ai_think" and str(e["kind"]).begins_with("trade"):
+			var text := _thought_text(e)
+			if text != "":
+				_make_label(_controls, "〔调试〕" + text, 13, Color("#90a4ae"))
+			return
+
+
+func _thought_text(e: Dictionary) -> String:
+	var who: String = game.players[int(e["player"])].display_name
+	match str(e["kind"]):
+		"buy":
+			return "%s 看 %s：估 %.0f（地价 %d）→ %s" % [who, _tname(int(e["tile"])),
+					float(e.get("worth", 0.0)), int(e.get("price", 0)), "买" if e.get("buy", false) else "不买"]
+		"build":
+			return "%s 盖%s：花 %d（钱 %d + 存款 %d）" % [who, _house_name(str(e["kind"])),
+					int(e.get("cost", 0)), int(e.get("cash", 0)), int(e.get("deposit", 0))]
+		"trade_answer":
+			var o: Dictionary = e["offer"]
+			var g := float(e.get("gain", e.get("net", 0.0)))
+			var text := "%s 算这笔交易：对他折合 %+.0f" % [who, g]
+			if e.has("gain_by_books"):
+				text += "（按账 %+.0f，态度 %+.0f）" % [float(e["gain_by_books"]), float(e["attitude"])]
+			if e.has("land_worth"):
+				text += "；交出去的地它自己估 %.0f" % float(e["land_worth"])
+			if e.has("break_even"):
+				var be := int(e["break_even"])
+				text += "，按账你要出到 %s 它才不亏" % (str(be) if be >= 0 else "多少都不够")
+				if be > float(e.get("land_worth", 0.0)) * 1.3:
+					text += "（多出来的是怕你因此变强）"
+			var c: Dictionary = e.get("counter", {})
+			var verdict := "答应" if e.get("accept", false) else "不答应"
+			if not c.is_empty():
+				verdict = "还价"
+			return text + "，撑得下去的机会 %.0f%% → %s" % [100.0 * float(e.get("survival", 1.0)), verdict]
+		"trade_propose":
+			var o: Dictionary = e["offer"]
+			if not e.has("most_i_pay"):
+				return "%s 提交易：出 %d" % [who, int(o["give_cash"])]
+			return "%s 提交易：最多肯出 %d，猜对方最少要 %d，开价 %d" % [who, int(e["most_i_pay"]),
+					int(e["least_they_need"]), int(o["give_cash"])]
+	return ""
+

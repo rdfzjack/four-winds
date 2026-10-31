@@ -228,11 +228,29 @@ func test_ai_auction_and_trade() -> void:
 	Brain.step(g2)
 	check(g2.owner_of(hs + 1) == 0, "对方 AI 接受公道的出价")
 	check(not Brain._trade_step(g2), "AI 每回合最多提一次交易")
-	# 太亏的提议：AI 还价
+	# 太亏的提议：原版 AI 拒绝（原版不还价）
 	var g3 := new_game()
 	g3.players[1].human = false
 	give(g3, 1, hs)
 	g3.propose_trade({"from": 0, "to": 1, "get": [hs], "give_cash": 10})
 	Brain.step(g3)
-	check(g3.phase == "pending" and g3.pending["stage"] == "counter"
-			and int(g3.pending["offer"]["give_cash"]) > 10, "AI 嫌出价太低就还价")
+	check(g3.phase != "pending" and g3.owner_of(hs) == 1, "原版 AI 嫌出价太低就拒绝（不还价）")
+	# 凑企业：玩家 0 有一家企业，玩家 2 有同行业的另一家，玩家 0 会提议买它
+	var g4 := new_game()
+	for p in g4.players:
+		p.human = false
+	var same: Array = []
+	for t in g4.props:
+		var tile: Dictionary = shanghai.get_tile(t)
+		if tile["type"] == "company" and same.size() < 2 and (same.is_empty() \
+				or str(shanghai.get_tile(same[0]).get("industry", "")) == str(tile.get("industry", ""))):
+			same.append(t)
+	give(g4, 0, same[0])
+	give(g4, 2, same[1])
+	var asked := false
+	for _k in range(30):
+		g4.day += 1
+		if Brain._trade_step(g4):
+			asked = true
+			break
+	check(asked and g4.pending["offer"]["get"] == [same[1]], "原版 AI 会提议买同行业的企业")

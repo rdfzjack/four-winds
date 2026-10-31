@@ -20,6 +20,7 @@ var games := 40
 var max_days := 300
 var seed_start := 1
 var map_id := "shanghai"
+var crossroads := ""  ## 空 = 按地图；"random" = 所有路口随机（同主界面的“路口全部随机”）
 var seats: Array = []           ## [{character, form, ai}]
 var default_relation := 0       ## 所有人之间的初始好感
 var pair_relations: Dictionary = {}  ## Vector2i(座位 a, 座位 b) -> a 对 b 的初始好感
@@ -133,6 +134,7 @@ func _play_one(k: int, per_seat: Array, totals: Dictionary) -> void:
 	if not errors.is_empty():
 		totals["bad"].append("第 %d 局开不了：%s" % [k + 1, str(errors)])
 		return
+	g.crossroad_override = crossroads
 	g.start()
 	totals["games"] += 1
 	var st: Array = []  ## 玩家编号 -> 这局的计数
@@ -284,7 +286,8 @@ func format_report(report: Dictionary) -> String:
 	lines.append("地图 %s · %d 局 · 每局最多 %d 天 · 种子 %d 起 · 初始好感 %d%s%s" % [
 		map_id, t["games"], max_days, seed_start, default_relation,
 		"" if pair_relations.is_empty() else "（另有 %d 对单独配置）" % pair_relations.size(),
-		"" if overrides.is_empty() else " · 临时参数 %s" % str(overrides)])
+		("" if overrides.is_empty() else " · 临时参数 %s" % str(overrides))
+				+ (" · 路口全部随机" if crossroads == "random" else "")])
 	lines.append("打完 %d/%d 局，平均第 %s 天打完；第一次破产平均第 %s 天（%d 局有人破产）；第一次有人凑齐整条街平均第 %s 天（%d 局）" % [
 		t["finished"], t["games"], _avg(t["finish_days"], t["finished"]),
 		_avg(t["first_bankrupt_days"], t["first_bankrupt_games"]), t["first_bankrupt_games"],

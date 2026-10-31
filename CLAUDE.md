@@ -83,6 +83,7 @@ xvfb-run -s "-screen 0 1280x720x24" godot --rendering-driver opengl3 --script re
 
 `run_tests.gd` 最后会把棋盘画面全 AI 跑到第 3 天，画面脚本的运行时错误也能在无头测试里发现。
 `fourwinds-benti/tools/ai_eval.gd` 是“AI 对 AI”评测工具（用法见文件开头）。
+`fourwinds-benti/tools/ai_scenarios.gd`（标准 AI 的固定局面场景，几秒）和 `ai_characters.gd`（表形态角色的场景 + 成交价区间表，一两分钟）检查 AI 的打法方向。工具脚本加载失败时 Godot 不会退出，运行前先 `godot --headless --check-only --script 路径` 查语法。
 `fourwinds-benti/tools/ui_check.gd` 会让画面自动玩一阵再截图（`ai` 全 AI，`human` 替人类点按钮，用法见文件开头）。
 云端截图能查排版，手感仍需作者在 Windows 上按 F5 确认。
 Godot 生成的 `*.uid` 文件要提交进仓库。

@@ -48,6 +48,12 @@ var props: Dictionary = {}
 var houses: Dictionary = {}
 var events: Array = []
 var rng := RandomNumberGenerator.new()
+## 对局记录（导出给作者 / 分析 AI 用）：record_history 打开后，每个事件（除了一步步走）和 AI 的想法都记在这里
+var record_history: bool = false
+var history: Array = []
+var seed_used: int = -1         ## 这局的随机种子（导出记录里写上）
+## 路口方式：空 = 按地图（每个路口的 crossroad），"random" = 所有路口都随机（像原版），"choice" = 都能选
+var crossroad_override: String = ""
 ## 测试和作弊用（原版的 STEP / C 作弊码）：下一次掷骰用的点数 [a, b]；下一张机会卡的编号
 var forced_dice: Array = []
 var forced_cards: Array = []
@@ -80,6 +86,7 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 		rng.seed = seed_value
 	else:
 		rng.randomize()
+	seed_used = int(rng.seed)
 	_house_defs.clear()
 	for lv in rules.get("houses", {}).get("levels", []):
 		_house_defs[str(lv["id"])] = lv
@@ -117,6 +124,7 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 			}
 	houses.clear()
 	events.clear()
+	history.clear()
 	pending = {}
 	_move = {}
 	winner = -1
@@ -148,6 +156,44 @@ func change_relation(a: int, b: int, delta: int) -> void:
 ## AI 记一笔“性格动作”，评测工具统计用：kind = slip（按错）、mercy（放水）等，见 docs/ai_design.md
 func ai_note(pi: int, kind: String) -> void:
 	_emit("ai_note", {"player": pi, "kind": kind})
+
+
+## AI 记下“为什么这样决定”（估价、得分、留钱线……），只在 record_history 打开时记进对局记录。
+## kind 是决定的种类（trade_answer、trade_propose、buy……），data 是当时算出来的数。
+func ai_think(pi: int, kind: String, data: Dictionary) -> void:
+	if not record_history:
+		return
+	var entry := data.duplicate(true)
+	entry["type"] = "ai_think"
+	entry["kind"] = kind
+	entry["player"] = pi
+	entry["day"] = day
+	history.append(entry)
+
+
+## 每个玩家现在的状况（对局记录用）
+func snapshot() -> Array:
+	var out: Array = []
+	for p in players:
+		out.append({
+			"player": p.index, "name": p.display_name, "cash": p.cash, "deposit": p.deposit,
+			"total_assets": total_assets(p.index), "bankrupt": p.bankrupt, "pos": p.pos,
+			"properties": properties_of(p.index),
+		})
+	return out
+
+
+## 整局的记录：开局信息、每个事件、AI 的想法、现在的局面。存成 JSON 发给 AI 分析。
+func export_record() -> Dictionary:
+	var seats: Array = []
+	for p in players:
+		seats.append({"player": p.index, "name": p.display_name, "character": p.character,
+				"human": p.human, "ai": p.ai, "form": p.form})
+	return {
+		"format": 1, "map": board.id, "seed": seed_used, "crossroad": crossroad_override,
+		"day": day, "phase": phase,
+		"winner": winner, "seats": seats, "final": snapshot(), "history": history,
+	}
 
 
 func drain_events() -> Array:
@@ -922,7 +968,12 @@ func _continue_move() -> void:
 ## 现在只看路口类型（choice 能选，random 不能）；以后角色特性可以在这里开例外，
 ## 比如某个角色在随机路口也能选。
 func _may_choose_direction(_p: Player, tile: int) -> bool:
-	return board.crossroad_mode(tile) == "choice"
+	return crossroad_mode(tile) == "choice"
+
+
+## 这个路口现在是 choice 还是 random（考虑 crossroad_override）
+func crossroad_mode(tile: int) -> String:
+	return crossroad_override if crossroad_override != "" else board.crossroad_mode(tile)
 
 
 ## 路上遇到别的玩家：小偷偷走现金，信徒施舍现金。
@@ -1413,6 +1464,12 @@ func _clear_pending() -> void:
 func _emit(type: String, data: Dictionary) -> void:
 	data["type"] = type
 	events.append(data)
+	if record_history and type != "step":
+		var entry := data.duplicate(true)
+		entry["day"] = day
+		history.append(entry)
+		if type == "turn_start":
+			history.append({"type": "snapshot", "day": day, "players": snapshot()})
 
 
 # ───────────────────────── 自检（测试用）─────────────────────────

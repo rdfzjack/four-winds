@@ -1,0 +1,1518 @@
+{
+ "id": "shanghai_west",
+ "name": "上海西区",
+ "placeholder": true,
+ "_comment": "由 tools/cit_to_map.py 从原版 Story34.cit 转换，之后可直接修改。pos 是原版的路面格坐标，lot 是地 / 建筑所在的路边格。带 site 的是分身格：停在这里等于停在 site 那一格（原版一栋建筑、拐角的地挨着好几格路）。road 是旁边没有东西的路面。原版的路是双向的，这里每段路的方向是工具自动定的；路口 crossroad 可以改成 random。price_pct 是地价系数，build_cost_pct 是建房系数（见 shanghai_loop.json 的说明）。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版 上海西区 的 CITY_PROPERTY，单位万圆。",
+  "blank_land_price": 80,
+  "build_cost": {
+   "flat": 40,
+   "hotel": 100,
+   "floor": 140,
+   "villa": 200,
+   "upgrade": 60,
+   "function": 80
+  },
+  "rent": {
+   "blank_land": 15,
+   "flat": 30,
+   "hotel": 60,
+   "super_hotel": 80,
+   "floor": 80,
+   "super_floor": 120,
+   "villa": 150
+  }
+ },
+ "favorites": {"_note": "角色喜欢的街（角色 id → 街道组 id），新框架 AI 的凑街执念只算这些街", "marcel": ["淮海中路"]},
+  "groups": {
+  "华山路": {
+   "name": "华山路",
+   "color": "#8d6e63"
+  },
+  "长乐路": {
+   "name": "长乐路",
+   "color": "#4fc3f7"
+  },
+  "武胜路": {
+   "name": "武胜路",
+   "color": "#f48fb1"
+  },
+  "陕西南路": {
+   "name": "陕西南路",
+   "color": "#ba68c8"
+  },
+  "淮海中路": {
+   "name": "淮海中路",
+   "color": "#ff8a65"
+  },
+  "常熟路": {
+   "name": "常熟路",
+   "color": "#e57373"
+  },
+  "陕西北路": {
+   "name": "陕西北路",
+   "color": "#fff176"
+  },
+  "北京路": {
+   "name": "北京路",
+   "color": "#81c784"
+  },
+  "石门路": {
+   "name": "石门路",
+   "color": "#1565c0"
+  },
+  "万航渡路": {
+   "name": "万航渡路",
+   "color": "#4db6ac"
+  },
+  "南京西路": {
+   "name": "南京西路",
+   "color": "#8d6e63"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "park",
+   "name": "静安公园",
+   "source": "Story34.cit 建筑 静安公园",
+   "lot": [
+    -11,
+    18
+   ],
+   "pos": [
+    -10,
+    18
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "land",
+   "name": "南京西路1号",
+   "group": "南京西路",
+   "price_pct": 180,
+   "build_cost_pct": 180,
+   "source": "Story34.cit 地块 (-9,17)",
+   "lot": [
+    -9,
+    17
+   ],
+   "pos": [
+    -9,
+    18
+   ],
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "land",
+   "name": "万航渡路2号",
+   "group": "万航渡路",
+   "price_pct": 180,
+   "build_cost_pct": 180,
+   "source": "Story34.cit 地块 (-8,17)",
+   "lot": [
+    -8,
+    17
+   ],
+   "pos": [
+    -8,
+    18
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "land",
+   "name": "万航渡路3号",
+   "group": "万航渡路",
+   "price_pct": 180,
+   "build_cost_pct": 180,
+   "source": "Story34.cit 地块 (-7,17)",
+   "lot": [
+    -7,
+    17
+   ],
+   "pos": [
+    -7,
+    18
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "land",
+   "name": "万航渡路4号",
+   "group": "万航渡路",
+   "price_pct": 180,
+   "build_cost_pct": 180,
+   "source": "Story34.cit 地块 (-6,17)",
+   "lot": [
+    -6,
+    17
+   ],
+   "pos": [
+    -6,
+    18
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "company",
+   "name": "华生电灯公司",
+   "industry": "public",
+   "price": 450,
+   "rent": 90,
+   "source": "Story34.cit 建筑 华生电灯公司",
+   "lot": [
+    -5,
+    17
+   ],
+   "pos": [
+    -5,
+    18
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "company",
+   "site": 5,
+   "pos": [
+    -4,
+    18
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "road",
+   "pos": [
+    -3,
+    18
+   ],
+   "crossroad": "choice",
+   "next": [
+    8,
+    67
+   ]
+  },
+  {
+   "id": 8,
+   "type": "bank",
+   "name": "银行",
+   "source": "Story34.cit 建筑 银行",
+   "lot": [
+    -2,
+    19
+   ],
+   "pos": [
+    -2,
+    18
+   ],
+   "next": [
+    9
+   ]
+  },
+  {
+   "id": 9,
+   "type": "bank",
+   "site": 8,
+   "pos": [
+    -1,
+    18
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "land",
+   "name": "南京西路1号",
+   "group": "南京西路",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Story34.cit 地块 (0,17)",
+   "lot": [
+    0,
+    17
+   ],
+   "pos": [
+    0,
+    18
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "land",
+   "name": "南京西路2号",
+   "group": "南京西路",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Story34.cit 地块 (1,17)",
+   "lot": [
+    1,
+    17
+   ],
+   "pos": [
+    1,
+    18
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "land",
+   "name": "南京西路3号",
+   "group": "南京西路",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Story34.cit 地块 (2,17)",
+   "lot": [
+    2,
+    17
+   ],
+   "pos": [
+    2,
+    18
+   ],
+   "next": [
+    13
+   ]
+  },
+  {
+   "id": 13,
+   "type": "land",
+   "name": "南京西路4号",
+   "group": "南京西路",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Story34.cit 地块 (3,17)",
+   "lot": [
+    3,
+    17
+   ],
+   "pos": [
+    3,
+    18
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "land",
+   "name": "石门路1号",
+   "group": "石门路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (5,18)",
+   "lot": [
+    5,
+    18
+   ],
+   "pos": [
+    4,
+    18
+   ],
+   "crossroad": "choice",
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "land",
+   "name": "石门路2号",
+   "group": "石门路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (5,19)",
+   "lot": [
+    5,
+    19
+   ],
+   "pos": [
+    4,
+    19
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "land",
+   "name": "石门路3号",
+   "group": "石门路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (5,20)",
+   "lot": [
+    5,
+    20
+   ],
+   "pos": [
+    4,
+    20
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "land",
+   "name": "石门路4号",
+   "group": "石门路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (5,21)",
+   "lot": [
+    5,
+    21
+   ],
+   "pos": [
+    4,
+    21
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 18,
+   "type": "land",
+   "name": "石门路5号",
+   "group": "石门路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (5,22)",
+   "lot": [
+    5,
+    22
+   ],
+   "pos": [
+    4,
+    22
+   ],
+   "next": [
+    19
+   ]
+  },
+  {
+   "id": 19,
+   "type": "company",
+   "name": "永康自来水公司",
+   "industry": "public",
+   "price": 400,
+   "rent": 80,
+   "source": "Story34.cit 建筑 永康自来水公司",
+   "lot": [
+    5,
+    23
+   ],
+   "pos": [
+    4,
+    23
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "company",
+   "site": 19,
+   "pos": [
+    4,
+    24
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "land",
+   "site": 23,
+   "pos": [
+    4,
+    25
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "road",
+   "pos": [
+    4,
+    26
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "land",
+   "name": "武胜路4号",
+   "group": "武胜路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story34.cit 地块 (3,25)",
+   "lot": [
+    3,
+    25
+   ],
+   "pos": [
+    3,
+    26
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "land",
+   "name": "武胜路3号",
+   "group": "武胜路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story34.cit 地块 (2,25)",
+   "lot": [
+    2,
+    25
+   ],
+   "pos": [
+    2,
+    26
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "land",
+   "name": "武胜路2号",
+   "group": "武胜路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story34.cit 地块 (1,25)",
+   "lot": [
+    1,
+    25
+   ],
+   "pos": [
+    1,
+    26
+   ],
+   "next": [
+    26
+   ]
+  },
+  {
+   "id": 26,
+   "type": "land",
+   "name": "武胜路1号",
+   "group": "武胜路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story34.cit 地块 (0,25)",
+   "lot": [
+    0,
+    25
+   ],
+   "pos": [
+    0,
+    26
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "company",
+   "name": "上海电话公司",
+   "industry": "public",
+   "price": 450,
+   "rent": 90,
+   "source": "Story34.cit 建筑 上海电话公司",
+   "lot": [
+    -1,
+    27
+   ],
+   "pos": [
+    -1,
+    26
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "company",
+   "site": 27,
+   "pos": [
+    -2,
+    26
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "chance",
+   "name": "运气",
+   "source": "Story34.cit 建筑 运气",
+   "lot": [
+    -4,
+    26
+   ],
+   "pos": [
+    -3,
+    26
+   ],
+   "crossroad": "choice",
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "company",
+   "site": 27,
+   "pos": [
+    -3,
+    27
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "company",
+   "site": 27,
+   "pos": [
+    -3,
+    28
+   ],
+   "next": [
+    32
+   ]
+  },
+  {
+   "id": 32,
+   "type": "land",
+   "name": "陕西南路1号",
+   "group": "陕西南路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story34.cit 地块 (-2,29)",
+   "lot": [
+    -2,
+    29
+   ],
+   "pos": [
+    -3,
+    29
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "land",
+   "name": "陕西南路2号",
+   "group": "陕西南路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story34.cit 地块 (-2,30)",
+   "lot": [
+    -2,
+    30
+   ],
+   "pos": [
+    -3,
+    30
+   ],
+   "next": [
+    34
+   ]
+  },
+  {
+   "id": 34,
+   "type": "land",
+   "name": "陕西南路3号",
+   "group": "陕西南路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story34.cit 地块 (-2,31)",
+   "lot": [
+    -2,
+    31
+   ],
+   "pos": [
+    -3,
+    31
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "road",
+   "pos": [
+    -4,
+    31
+   ],
+   "next": [
+    36
+   ]
+  },
+  {
+   "id": 36,
+   "type": "land",
+   "name": "淮海中路6号",
+   "group": "淮海中路",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story34.cit 地块 (-5,32)",
+   "lot": [
+    -5,
+    32
+   ],
+   "pos": [
+    -5,
+    31
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 37,
+   "type": "land",
+   "name": "淮海中路5号",
+   "group": "淮海中路",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story34.cit 地块 (-6,32)",
+   "lot": [
+    -6,
+    32
+   ],
+   "pos": [
+    -6,
+    31
+   ],
+   "next": [
+    38
+   ]
+  },
+  {
+   "id": 38,
+   "type": "land",
+   "name": "淮海中路4号",
+   "group": "淮海中路",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story34.cit 地块 (-7,32)",
+   "lot": [
+    -7,
+    32
+   ],
+   "pos": [
+    -7,
+    31
+   ],
+   "next": [
+    39
+   ]
+  },
+  {
+   "id": 39,
+   "type": "land",
+   "name": "淮海中路3号",
+   "group": "淮海中路",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story34.cit 地块 (-8,32)",
+   "lot": [
+    -8,
+    32
+   ],
+   "pos": [
+    -8,
+    31
+   ],
+   "next": [
+    40
+   ]
+  },
+  {
+   "id": 40,
+   "type": "land",
+   "name": "淮海中路2号",
+   "group": "淮海中路",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story34.cit 地块 (-9,32)",
+   "lot": [
+    -9,
+    32
+   ],
+   "pos": [
+    -9,
+    31
+   ],
+   "next": [
+    41
+   ]
+  },
+  {
+   "id": 41,
+   "type": "land",
+   "name": "淮海中路1号",
+   "group": "淮海中路",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story34.cit 地块 (-10,32)",
+   "lot": [
+    -10,
+    32
+   ],
+   "pos": [
+    -10,
+    31
+   ],
+   "next": [
+    42
+   ]
+  },
+  {
+   "id": 42,
+   "type": "road",
+   "pos": [
+    -10,
+    30
+   ],
+   "next": [
+    43
+   ]
+  },
+  {
+   "id": 43,
+   "type": "jail",
+   "name": "巡捕房",
+   "source": "Story34.cit 建筑 巡捕房",
+   "lot": [
+    -9,
+    29
+   ],
+   "pos": [
+    -10,
+    29
+   ],
+   "next": [
+    44
+   ]
+  },
+  {
+   "id": 44,
+   "type": "jail",
+   "site": 43,
+   "pos": [
+    -10,
+    28
+   ],
+   "next": [
+    45
+   ]
+  },
+  {
+   "id": 45,
+   "type": "land",
+   "name": "常熟路1号",
+   "group": "常熟路",
+   "price_pct": 140,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (-11,27)",
+   "lot": [
+    -11,
+    27
+   ],
+   "pos": [
+    -10,
+    27
+   ],
+   "next": [
+    46
+   ]
+  },
+  {
+   "id": 46,
+   "type": "land",
+   "name": "常熟路1号",
+   "group": "常熟路",
+   "price_pct": 140,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (-11,26)",
+   "lot": [
+    -11,
+    26
+   ],
+   "pos": [
+    -10,
+    26
+   ],
+   "next": [
+    47
+   ]
+  },
+  {
+   "id": 47,
+   "type": "company",
+   "name": "南洋煤球公司",
+   "industry": "public",
+   "price": 400,
+   "rent": 80,
+   "source": "Story34.cit 建筑 南洋煤球公司",
+   "lot": [
+    -11,
+    25
+   ],
+   "pos": [
+    -10,
+    25
+   ],
+   "next": [
+    48
+   ]
+  },
+  {
+   "id": 48,
+   "type": "company",
+   "site": 47,
+   "pos": [
+    -10,
+    24
+   ],
+   "crossroad": "choice",
+   "next": [
+    49,
+    62
+   ]
+  },
+  {
+   "id": 49,
+   "type": "land",
+   "site": 62,
+   "pos": [
+    -9,
+    24
+   ],
+   "next": [
+    50
+   ]
+  },
+  {
+   "id": 50,
+   "type": "land",
+   "name": "长乐路1号",
+   "group": "长乐路",
+   "price_pct": 80,
+   "build_cost_pct": 80,
+   "source": "Story34.cit 地块 (-8,25)",
+   "lot": [
+    -8,
+    25
+   ],
+   "pos": [
+    -8,
+    24
+   ],
+   "next": [
+    51
+   ]
+  },
+  {
+   "id": 51,
+   "type": "land",
+   "name": "长乐路2号",
+   "group": "长乐路",
+   "price_pct": 80,
+   "build_cost_pct": 80,
+   "source": "Story34.cit 地块 (-7,25)",
+   "lot": [
+    -7,
+    25
+   ],
+   "pos": [
+    -7,
+    24
+   ],
+   "next": [
+    52
+   ]
+  },
+  {
+   "id": 52,
+   "type": "land",
+   "name": "长乐路3号",
+   "group": "长乐路",
+   "price_pct": 80,
+   "build_cost_pct": 80,
+   "source": "Story34.cit 地块 (-6,25)",
+   "lot": [
+    -6,
+    25
+   ],
+   "pos": [
+    -6,
+    24
+   ],
+   "next": [
+    53
+   ]
+  },
+  {
+   "id": 53,
+   "type": "chance",
+   "site": 29,
+   "pos": [
+    -5,
+    24
+   ],
+   "next": [
+    54
+   ]
+  },
+  {
+   "id": 54,
+   "type": "chance",
+   "site": 29,
+   "pos": [
+    -4,
+    24
+   ],
+   "next": [
+    55
+   ]
+  },
+  {
+   "id": 55,
+   "type": "land",
+   "name": "陕西北路4号",
+   "group": "陕西北路",
+   "price_pct": 140,
+   "build_cost_pct": 130,
+   "source": "Story34.cit 地块 (-2,24)",
+   "lot": [
+    -2,
+    24
+   ],
+   "pos": [
+    -3,
+    24
+   ],
+   "crossroad": "choice",
+   "next": [
+    56,
+    61
+   ]
+  },
+  {
+   "id": 56,
+   "type": "land",
+   "name": "陕西北路3号",
+   "group": "陕西北路",
+   "price_pct": 140,
+   "build_cost_pct": 130,
+   "source": "Story34.cit 地块 (-2,23)",
+   "lot": [
+    -2,
+    23
+   ],
+   "pos": [
+    -3,
+    23
+   ],
+   "next": [
+    57
+   ]
+  },
+  {
+   "id": 57,
+   "type": "land",
+   "name": "陕西北路2号",
+   "group": "陕西北路",
+   "price_pct": 140,
+   "build_cost_pct": 130,
+   "source": "Story34.cit 地块 (-2,22)",
+   "lot": [
+    -2,
+    22
+   ],
+   "pos": [
+    -3,
+    22
+   ],
+   "next": [
+    58
+   ]
+  },
+  {
+   "id": 58,
+   "type": "land",
+   "name": "陕西北路1号",
+   "group": "陕西北路",
+   "price_pct": 140,
+   "build_cost_pct": 130,
+   "source": "Story34.cit 地块 (-2,21)",
+   "lot": [
+    -2,
+    21
+   ],
+   "pos": [
+    -3,
+    21
+   ],
+   "next": [
+    59
+   ]
+  },
+  {
+   "id": 59,
+   "type": "bank",
+   "site": 8,
+   "pos": [
+    -3,
+    20
+   ],
+   "next": [
+    60
+   ]
+  },
+  {
+   "id": 60,
+   "type": "bank",
+   "site": 8,
+   "pos": [
+    -3,
+    19
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 61,
+   "type": "chance",
+   "site": 29,
+   "pos": [
+    -3,
+    25
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 62,
+   "type": "land",
+   "name": "华山路4号",
+   "group": "华山路",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Story34.cit 地块 (-9,23)",
+   "lot": [
+    -9,
+    23
+   ],
+   "pos": [
+    -10,
+    23
+   ],
+   "next": [
+    63
+   ]
+  },
+  {
+   "id": 63,
+   "type": "land",
+   "name": "华山路3号",
+   "group": "华山路",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Story34.cit 地块 (-9,22)",
+   "lot": [
+    -9,
+    22
+   ],
+   "pos": [
+    -10,
+    22
+   ],
+   "next": [
+    64
+   ]
+  },
+  {
+   "id": 64,
+   "type": "land",
+   "name": "华山路2号",
+   "group": "华山路",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Story34.cit 地块 (-9,21)",
+   "lot": [
+    -9,
+    21
+   ],
+   "pos": [
+    -10,
+    21
+   ],
+   "next": [
+    65
+   ]
+  },
+  {
+   "id": 65,
+   "type": "land",
+   "name": "华山路1号",
+   "group": "华山路",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Story34.cit 地块 (-9,20)",
+   "lot": [
+    -9,
+    20
+   ],
+   "pos": [
+    -10,
+    20
+   ],
+   "next": [
+    66
+   ]
+  },
+  {
+   "id": 66,
+   "type": "park",
+   "site": 0,
+   "pos": [
+    -10,
+    19
+   ],
+   "next": [
+    0
+   ]
+  },
+  {
+   "id": 67,
+   "type": "company",
+   "site": 5,
+   "pos": [
+    -3,
+    17
+   ],
+   "next": [
+    68
+   ]
+  },
+  {
+   "id": 68,
+   "type": "company",
+   "site": 5,
+   "pos": [
+    -3,
+    16
+   ],
+   "next": [
+    69
+   ]
+  },
+  {
+   "id": 69,
+   "type": "church",
+   "name": "教堂",
+   "source": "Story34.cit 建筑 教堂",
+   "lot": [
+    -2,
+    15
+   ],
+   "pos": [
+    -3,
+    15
+   ],
+   "next": [
+    70
+   ]
+  },
+  {
+   "id": 70,
+   "type": "church",
+   "site": 69,
+   "pos": [
+    -3,
+    14
+   ],
+   "next": [
+    71
+   ]
+  },
+  {
+   "id": 71,
+   "type": "road",
+   "pos": [
+    -3,
+    13
+   ],
+   "next": [
+    72
+   ]
+  },
+  {
+   "id": 72,
+   "type": "land",
+   "name": "北京路1号",
+   "group": "北京路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (-3,11)",
+   "lot": [
+    -3,
+    11
+   ],
+   "pos": [
+    -3,
+    12
+   ],
+   "next": [
+    73
+   ]
+  },
+  {
+   "id": 73,
+   "type": "land",
+   "name": "北京路2号",
+   "group": "北京路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (-2,11)",
+   "lot": [
+    -2,
+    11
+   ],
+   "pos": [
+    -2,
+    12
+   ],
+   "next": [
+    74
+   ]
+  },
+  {
+   "id": 74,
+   "type": "land",
+   "name": "北京路3号",
+   "group": "北京路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (-1,11)",
+   "lot": [
+    -1,
+    11
+   ],
+   "pos": [
+    -1,
+    12
+   ],
+   "next": [
+    75
+   ]
+  },
+  {
+   "id": 75,
+   "type": "land",
+   "name": "北京路4号",
+   "group": "北京路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (0,11)",
+   "lot": [
+    0,
+    11
+   ],
+   "pos": [
+    0,
+    12
+   ],
+   "next": [
+    76
+   ]
+  },
+  {
+   "id": 76,
+   "type": "land",
+   "name": "北京路5号",
+   "group": "北京路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Story34.cit 地块 (1,11)",
+   "lot": [
+    1,
+    11
+   ],
+   "pos": [
+    1,
+    12
+   ],
+   "next": [
+    77
+   ]
+  },
+  {
+   "id": 77,
+   "type": "race_course",
+   "name": "赛马场",
+   "source": "Story34.cit 建筑 赛马场",
+   "lot": [
+    2,
+    13
+   ],
+   "pos": [
+    2,
+    12
+   ],
+   "next": [
+    78
+   ]
+  },
+  {
+   "id": 78,
+   "type": "race_course",
+   "site": 77,
+   "pos": [
+    3,
+    12
+   ],
+   "next": [
+    79
+   ]
+  },
+  {
+   "id": 79,
+   "type": "road",
+   "pos": [
+    4,
+    12
+   ],
+   "next": [
+    80
+   ]
+  },
+  {
+   "id": 80,
+   "type": "race_course",
+   "site": 77,
+   "pos": [
+    4,
+    13
+   ],
+   "next": [
+    81
+   ]
+  },
+  {
+   "id": 81,
+   "type": "race_course",
+   "site": 77,
+   "pos": [
+    4,
+    14
+   ],
+   "next": [
+    82
+   ]
+  },
+  {
+   "id": 82,
+   "type": "government",
+   "name": "市政厅",
+   "source": "Story34.cit 建筑 市政厅",
+   "lot": [
+    5,
+    15
+   ],
+   "pos": [
+    4,
+    15
+   ],
+   "next": [
+    83
+   ]
+  },
+  {
+   "id": 83,
+   "type": "government",
+   "site": 82,
+   "pos": [
+    4,
+    16
+   ],
+   "next": [
+    84
+   ]
+  },
+  {
+   "id": 84,
+   "type": "land",
+   "site": 13,
+   "pos": [
+    4,
+    17
+   ],
+   "next": [
+    14
+   ]
+  }
+ ]
+}

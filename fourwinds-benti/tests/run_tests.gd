@@ -12,6 +12,7 @@ const AiTests = preload("res://tests/ai_tests.gd")
 const StreetTests = preload("res://tests/street_tests.gd")
 const OriginalMapTests = preload("res://tests/original_map_tests.gd")
 const TradeTests = preload("res://tests/trade_tests.gd")
+const ScenarioLib = preload("res://tools/ai_scenarios_lib.gd")
 const ValuerTests = preload("res://tests/valuer_tests.gd")
 const TraderTests = preload("res://tests/trader_tests.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
@@ -59,6 +60,15 @@ func run_logic_tests() -> void:
 	AiTests.new().run(self)
 	ValuerTests.new().run(self)
 	TraderTests.new().run(self)
+	test_ai_scenarios_run()
+
+
+## 评测场景工具能跑完（只看不崩，过几个看 tools/ai_scenarios.gd 的输出）
+func test_ai_scenarios_run() -> void:
+	var lib = ScenarioLib.new()
+	check(lib.prepare().is_empty(), "评测场景的数据能读取")
+	var rows: Array = lib.run("standard_v2")
+	check(rows.size() >= 10, "评测场景都跑了一遍（%d 个）" % rows.size())
 
 
 func check(ok: bool, what: String) -> void:
