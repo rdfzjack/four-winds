@@ -179,7 +179,7 @@ godot --headless --script res://tools/ai_eval.gd -- seats=david,giorgio,marcel,e
 
 | # | 数 | 标准 AI | 斐斐 | 小九 | 孔雀 | 理理 |
 |---|---|---|---|---|---|---|
-| ① | 看多远 `game_length_days` / `horizon_min_days` | 90 / 20 | | | | |
+| ① | 看多远 `game_length_days` / `horizon_min_days` | 110 / 40（原来 90 / 20：中后期以为快结束，不肯为凑街盖房投资，作者试玩发现；评测里一局平均 100–140 天。暂定，待作者确认） | | | | |
 | ② | 估价误差 `value_noise_pct` | 0 | | 30（不怎么算） | 40 | 10 |
 | ③ | 凑街执念 `street_obsession_pct`：想凑的街每块多算这么多 % 地价（地图 `favorites` 写了喜欢的街时只算那些，没写时算自己开始收的街） | 0 | | | 300（喜欢的街：上海是衡山路） | 50 |
 | ④ | 安全线 `safety_rolls`（快破产的感觉：看几把会不会付不起） | 10 | 10 | 1（几乎不觉得快破产） | 5（正常的一半） | 8（正常的八成） |
