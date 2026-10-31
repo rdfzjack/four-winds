@@ -45,11 +45,11 @@ func run(p_version: String) -> Array:
 	for s in [
 		["1", "开局钱多，停在河南南路 1 号（很多人路过）", "买", s1_buy_busy],
 		["2", "开局钱多，停在衡山路 1 号（很少有人停）", "不买", s2_skip_quiet],
-		["3", "大家钱都不多；我停在河南南路 1 号，不买付得起下一把最大的租，买了就付不起", "不买", s3_no_buy_broke],
+		["3", "大家钱都不多；我停在河南南路 1 号，不买付得起下一把最大的租，买了就付不起", "看安全线（作者定顺其自然）", s3_no_buy_broke],
 		["4", "同 3，但存款 1000", "买", s4_buy_with_deposit],
 		["5", "大家钱都不多，我的钱比下一把最大的租少一点；对手出地价七成，买我一块凑不成街的地（卖了就付得起）", "卖", s5_sell_to_survive],
 		["6a", "同 5，但对方要的是让他凑齐中山路的那块（凑齐后租上千），我前面那些租也是他的", "卖", s6a_sell_key_to_creditor],
-		["6b", "同 6a，但我前面那些租是别的对手的", "待作者定", s6b_sell_key_other_creditor],
+		["6b", "同 6a，但我前面那些租是别的对手的", "卖", s6b_sell_key_other_creditor],
 		["7", "钱多（3000），对手出两倍地价，买让他凑齐中山路的那块", "不卖", s7_keep_key_rich],
 		["8", "钱多，对手八折买河南南路 1 号", "不卖", s8_no_discount],
 		["9a", "互换：我凑齐河南南路，对手凑齐金陵东路（我的街更好）", "换", s9a_swap_good],
@@ -208,10 +208,11 @@ func s3_no_buy_broke() -> Dictionary:
 	var g := new_game()
 	g.players[0].pos = HENAN_S[0]
 	var worst := threaten(g, 0, 2, HENAN_S)
+	# 作者定“顺其自然”：买不买由安全线 safety_rolls 决定（会冒险的买），这里只记录结果
 	# 不买付得起下一把最大的租，买了就付不起
 	everyone_money(g, worst + g.property_price(HENAN_S[0]) - 10, 0)
 	var b := offer_buy(g, HENAN_S[0])
-	return result(not b, ("买" if b else "不买") + "（前面最大租 %d）" % worst)
+	return result(null, ("买" if b else "不买") + "（前面最大租 %d）" % worst)
 
 
 func s4_buy_with_deposit() -> Dictionary:
@@ -241,7 +242,7 @@ func s6a_sell_key_to_creditor() -> Dictionary:
 
 
 func s6b_sell_key_other_creditor() -> Dictionary:
-	return _key_to_survive(2, null)
+	return _key_to_survive(2, true)
 
 
 ## 快破产时对手 1 买我手里中山路的最后一块；creditor = 我前面那些租的主人。expect_sell = null 时不判对错
