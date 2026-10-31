@@ -16,7 +16,7 @@ extends RefCounted
 ## 用到的参数（profiles.json 的 standard 表形态，说明见那里的 params）：
 ##   game_length_days / horizon_min_days  这局大概打多少天 / 剩下的天数最少按几天算
 ##   value_noise_pct      估价误差（标准 AI 为 0）
-##   street_chance_pct    这段街缺的地，每块最后能弄到手的可能性（对手也在收这段街时减半）
+##   （凑齐一段街的可能性：缺的每块按还活着的人数平分，不用参数）
 ##   street_obsession_pct 凑街执念：想凑的街（地图写了喜欢的街时只算那些，没写时算自己开始收的街）每块多算几成地价
 ##   safety_rolls         安全线：看接下来几次掷骰（0 = 不看现金流）
 ##   rival_weight_pct     最强对手的局面值算多重
@@ -146,10 +146,10 @@ static func _best_level(game, lots: int) -> Dictionary:
 	return best
 
 
-## owner 最后凑齐这段街的可能性：自己的算 1；没人买的每块 street_chance_pct%；
-## 在对手手里的也是 street_chance_pct%（对手在这段街也有两块以上时，他也在收，减半）
+## owner 最后凑齐这段街的可能性：自己的算 1；缺的每块按还活着的人数平分（4 个人就是 1/4）；
+## 在对手手里、而且他在这段街也有两块以上（他也在收）的，再减半。
 static func _street_chance(game, viewer: int, owner: int, seg: Array) -> float:
-	var base := param(game, viewer, "street_chance_pct", 50) / 100.0
+	var base := 1.0 / maxi(1, game.alive_players().size())
 	var count := {}
 	for s in seg:
 		var o: int = game.owner_of(s)
