@@ -388,7 +388,8 @@ static func propose_step(game) -> bool:
 	return game.propose_trade(offer) == ""
 
 
-## 想要的地：自己在这一段街有地、或者这条街是自己喜欢的街（地图的 favorites），对手手里这一段没盖房子的地
+## 想要的地：自己在这一段街有地、或者这条街是自己喜欢的街（地图的 favorites），对手手里这一段没盖房子的地；
+## 还有自己已经有的行业里，对手手里的同行业企业
 static func _wants(game, pi: int) -> Array:
 	var liked: Array = game.board.favorites.get(game.players[pi].character, []) \
 			if param(game, pi, "street_obsession_pct", 0) > 0.0 else []
@@ -413,6 +414,19 @@ static func _wants(game, pi: int) -> Array:
 			continue
 		for q in by:
 			out.append({"owner": q, "tiles": by[q]})
+	# 企业：自己已经有这个行业的企业，对手手里同行业的企业也想要（同行业越多租金越翻倍）
+	var industries := {}
+	for t in game.props:
+		var tile: Dictionary = game.board.get_tile(t)
+		if tile["type"] == "company" and game.owner_of(t) == pi:
+			industries[str(tile.get("industry", ""))] = true
+	for t in game.props:
+		var tile: Dictionary = game.board.get_tile(t)
+		var o: int = game.owner_of(t)
+		if tile["type"] != "company" or not industries.has(str(tile.get("industry", ""))) \
+				or o < 0 or o == pi or game.players[o].bankrupt:
+			continue
+		out.append({"owner": o, "tiles": [t]})
 	return out
 
 
