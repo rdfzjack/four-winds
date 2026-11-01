@@ -339,12 +339,12 @@ func _draw_crossroad_hint(id: int) -> void:
 	for n in board.next_tiles(id):
 		var to := Iso.to_world(_road_cell[int(n)])
 		var dir := (to - here).normalized()
-		var tip := here + dir * 30.0
+		var tip := here + dir * 38.0
 		draw_line(here + dir * 8.0, tip, color, 3.0)
 		var side := Vector2(-dir.y, dir.x)
 		var head := PackedVector2Array([tip + dir * 7.0, tip + side * 5.0, tip - side * 5.0])
 		draw_colored_polygon(head, color)
-	_text("自选" if choice else "随机", here + Vector2(0, -16), 12, color)
+	_text("自选" if choice else "随机", here + Vector2(0, -18), 14, color)
 
 
 func _draw_select(cell: Vector2) -> void:

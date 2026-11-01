@@ -65,7 +65,7 @@ func scn_game(stage: Dictionary, seed_value: int = 5, game_rules: Dictionary = {
 	var g := Game.new()
 	var use_rules := game_rules if not game_rules.is_empty() else rules
 	var errors := g.setup(real_maps()[str(stage["map"])], use_rules,
-			cards_file, characters, sc.specs(), seed_value)
+			cards_file, data().all_characters(), sc.specs(), seed_value)
 	check(errors.is_empty(), "关卡开局成功 %s" % str(errors))
 	g.scenario = sc
 	var apply_errors := sc.apply(g)
