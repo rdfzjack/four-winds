@@ -36,6 +36,26 @@ python3 tools/map_info.py 地图id
 
 例如 `python3 tools/map_info.py london`。想换地块的价格 / 街道，改 `data/maps/<地图 id>.json`（每块地的 `price_pct` 是地价系数，`build_cost_pct` 是建房系数；企业的 `price` / `rent`）。**预置地产写的是“正格”编号**：地图里带 `"site"` 的格子是分身格，不能写。
 
+## 小改地图（调换建筑位置、划街、改路口方向）
+
+地图文件是 `fourwinds-benti/data/maps/<地图 id>.json`。小改用工具 `tools/map_edit.py`（要装 Python），每次改完它会自动检查（格式 + 整张图从任何格子都能走回起点），有问题就**不写文件**并告诉你哪里错。改之前建议复制一份地图文件。先用 `python3 tools/map_info.py 地图id` 或在游戏里点格子看编号。
+
+| 想做什么 | 命令（把 london 换成地图 id） |
+|---|---|
+| 调换两个建筑 / 地块 / 银行……的位置 | `python3 tools/map_edit.py london swap 12 34`（整个换：名字、行业、价格、类型；只能写正格编号，分身格会自动跟着变） |
+| 增加一条街 / 改哪些地属于哪条街 | `python3 tools/map_edit.py london street 新街名 6 7 8`（把这几块地划进“新街名”，不存在就新建，可加 `--color #81c784`；街上最长要有 4 块连续的地才能盖别墅） |
+| 街改名 | `python3 tools/map_edit.py london rename-street 旧名 新名` |
+| 改某个路口默认自选还是随机 | `python3 tools/map_edit.py london crossroad 19 random`（只改地图默认；关卡里的 `crossroads` 还能再覆盖它） |
+| 改路口的方向 / 岔路 | `python3 tools/map_edit.py london exits 19 20 46`（格子 19 走完去 20 或 46，两个以上 = 路口；只写一个 = 单行道）。**改方向容易把图弄成走不通，工具会拦住**；一般是改相邻两格各自的出口，比如把一段路反向 |
+| 改价格 / 租金 / 名字 | `python3 tools/map_edit.py london set 4 price=300 rent=60 name=新名字`（能改 price_pct、build_cost_pct、price、rent、name、industry） |
+| 只检查 | `python3 tools/map_edit.py london check` |
+
+**做不到的**：新增路面 / 新增地块（要写 `pos` 坐标、`lot` 位置，比较麻烦）；要这类大改就告诉我。
+
+**不用工具、手改 json 也行**：每个格子是 `tiles` 里的一项，`id` 就是下标；`next` 是走完去哪格（两个以上 = 路口，`crossroad` 写 `choice` / `random`）；地写 `group`（街名，要在文件开头的 `groups` 里有）、`price_pct`、`build_cost_pct`；企业写 `industry`、`price`、`rent`；带 `site` 的是分身格（停在上面等于停在它指向的正格上，类型要和正格一致）；`pos` 是路面格的坐标，`lot` 是建筑所在的路边格坐标（决定画在哪）。改完运行 `python3 tools/validate_data.py` 检查。
+
+**改完以后**：关卡里写死的格子编号（预置地产、`crossroads`）如果那个格子换了类型或不再是路口，`validate_data.py` 和主界面的“数据有 N 个问题”会告诉你。
+
 ## 几个常用的调法
 
 - **让关卡变简单**：给玩家多一点现金 / 存款；少给对手钱；去掉对手的预置地产；放宽 / 去掉限时；把目标改成“让某个对手破产”这类。

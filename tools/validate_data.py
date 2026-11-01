@@ -158,6 +158,9 @@ def check_campaign(d: dict, maps: dict, char_ids: set, max_players: int, playabl
                 for t in entry.get("tiles", [entry.get("tile", -1)]):
                     if not isinstance(t, (int, float)) or not 0 <= int(t) < len(tiles) or "site" in tiles[int(t)]:
                         errors.append(f"关卡 {sid} 座位 {i}：预置地产格子 {t} 不存在或是分身格")
+                    elif tiles[int(t)].get("type") not in ("land", "company") or (
+                            entry.get("house") and tiles[int(t)].get("type") != "land"):
+                        errors.append(f"关卡 {sid} 座位 {i}：预置地产格子 {t} 不是地 / 企业（现在是 {tiles[int(t)].get('type')}）")
         for key in ("win", "lose"):
             if not st.get(key):
                 errors.append(f"关卡 {sid}：{key} 条件不能为空")
