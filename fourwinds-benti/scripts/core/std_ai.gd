@@ -1,6 +1,6 @@
 extends RefCounted
 ## 新框架的标准 AI（ai 版本 standard_v2，第 6a 步返工）。用法和别的 AI 一样：StdAi.step(game)，经过 ai.gd 调用。
-## 所有决定都比较“做”和“不做”的得分（ledger.gd 的三本账），设计见 docs/ai_design.md 的 H 节。
+## 所有决定都比较“做”和“不做”的得分（ledger.gd 的三本账），设计见 docs/ai_design.md 的“标准 AI：三本账”。
 ##   买地 / 企业：买下 vs 不买（不买时这块可能被某个对手买走）
 ##   盖房、升级：盖 vs 不盖（钱少时撑下去的机会变小，所以不会盖到没钱）
 ##   回答交易：成交 vs 不成交；差一点时还价一次，要对方多给现金
@@ -10,7 +10,7 @@ extends RefCounted
 ## 还没改、照旧的：拍卖出价（trader.gd，作者定先不改）、银行存取 / 保释 / 赎回（原版 AI）。
 ## 被拒后收敛（几天不找同一人、被拒几次放弃、被拒一次加价）照 trader.gd 的做法。
 ##
-## 性格用的数（标准 AI 都是“不偏”的值，角色以后在自己的参数组里改，见 H 节）：
+## 性格用的数（标准 AI 都是“不偏”的值，角色在自己参数组的 front_v2 里改，见 docs/ai_design.md 的“角色参数”）：
 ##   partner_attitude_pct  ⑥ 对交易对象的态度：正 = 肯让一点（最多让出自己交出去的东西的这么多 %），
 ##                         负 = 对方多赚的部分算成自己额外的损失（损人不利己）
 ##   partner_attitude_ahead_pct / partner_attitude_behind_pct  ⑥ 自己比交易对象领先 / 落后时，上一项随差距怎么变

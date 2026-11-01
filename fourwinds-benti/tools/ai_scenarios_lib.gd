@@ -1,7 +1,7 @@
 # gdlint: ignore=max-public-methods
 extends RefCounted
 ## AI 评测场景：在原版上海图上摆固定局面，看 AI 怎么决定，和“应该怎么做”比。
-## 场景和期望是作者确认过的（docs/ai_design.md 的 H 节），这里只检查，**不要为了让场景过关去加参数**：
+## 场景和期望是作者确认过的（docs/ai_design.md 的“评测”），这里只检查，**不要为了让场景过关去加参数**：
 ## 不过关说明三本账哪里算错了，改账。
 ## 命令行入口是 tools/ai_scenarios.gd；无头测试只跑一遍确认不崩。
 ##

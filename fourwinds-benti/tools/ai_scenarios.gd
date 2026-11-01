@@ -2,7 +2,7 @@ extends SceneTree
 ## AI 评测场景（无头）。在 fourwinds-benti/ 里运行：
 ##   godot --headless --script res://tools/ai_scenarios.gd -- [AI 版本 ...]
 ## 不写版本时跑 standard_v2（新框架标准 AI）和 standard（旧框架标准 AI）对比。
-## 场景和期望见 tools/ai_scenarios_lib.gd 和 docs/ai_design.md 的 H 节。
+## 场景和期望见 tools/ai_scenarios_lib.gd 和 docs/ai_design.md 的“评测”。
 
 const Lib = preload("res://tools/ai_scenarios_lib.gd")
 
