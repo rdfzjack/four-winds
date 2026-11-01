@@ -20,6 +20,8 @@ const MapView = preload("res://scripts/ui/map_view.gd")
 const MapCamera = preload("res://scripts/ui/map_camera.gd")
 const Speech = preload("res://scripts/core/speech.gd")
 const Art = preload("res://scripts/ui/art.gd")
+const SaveGame = preload("res://scripts/core/save_game.gd")
+const SavePanel = preload("res://scripts/ui/save_panel.gd")
 const DiceView = preload("res://scripts/ui/dice_view.gd")
 
 const STATUS_NAMES := {
@@ -36,6 +38,7 @@ const RIGHT_WIDTH := 330.0
 const MARGIN := 12.0
 const AI_DELAY := 0.45
 const STEP_DELAY := 0.13
+const LOG_KEEP := 400  ## 存档里留多少条日志
 const PORTRAIT_BOX := Vector2(150, 190)  ## 左下角头像框的大小
 
 var board: Board = null
@@ -66,10 +69,40 @@ var _overlay: Control
 var _overlay_box: VBoxContainer
 ## 交易对话框的草稿：offer 的各项（give / get 是地块列表）+ counter（是不是还价）
 var _trade: Dictionary = {}
+var _log_lines: Array = []      ## 日志的每一条（存档时一起存，读档后接上）
+var _menu_open: bool = false    ## 菜单开着时 AI 暂停
+var _auto_day: int = 0          ## 自动存档存到第几天了
 
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(BACKGROUND)
+	var resume: Dictionary = Data.resume
+	Data.resume = {}
+	if resume.is_empty():
+		if not _new_game():
+			return
+	else:
+		game = resume["game"]
+		board = game.board
+		_auto_day = game.day
+	_speech = Speech.new(Data.lines, game)
+	if not resume.is_empty() and not resume["speech"].is_empty():
+		_speech.import_state(resume["speech"])
+	_build_map()
+	_build_ui()
+	get_viewport().size_changed.connect(_on_resized)
+	_on_resized()
+	_camera.focus(_map.token_position(game.current), true)
+	if not resume.is_empty():
+		for line in resume["extra"].get("log", []):
+			_log_add(str(line))
+		_log_add("[color=#81c784]—— 已读取存档（第 %d 天）——[/color]\n" % game.day)
+	_refresh()
+	_advance()
+
+
+## 按主界面选的座位开一局。失败返回 false
+func _new_game() -> bool:
 	board = Data.selected_map()
 	_specs = Data.start_specs
 	if _specs.is_empty():
@@ -81,18 +114,11 @@ func _ready() -> void:
 	var errors := game.setup(board, Data.rules, cards_file, Data.characters, _specs)
 	if not errors.is_empty():
 		push_error("开局失败：" + str(errors))
-		return
+		return false
 	game.record_history = true
 	game.crossroad_override = "random" if Data.crossroads_random else ""
 	game.start()
-	_speech = Speech.new(Data.lines, game)
-	_build_map()
-	_build_ui()
-	get_viewport().size_changed.connect(_on_resized)
-	_on_resized()
-	_camera.focus(_map.token_position(game.current), true)
-	_refresh()
-	_advance()
+	return true
 
 
 # ───────────────────────── 搭画面 ─────────────────────────
@@ -153,7 +179,8 @@ func _build_ui() -> void:
 	top.add_child(fast)
 	var menu := Button.new()
 	menu.text = "菜单"
-	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/main.tscn"))
+	menu.tooltip_text = "存档、读档、回到主界面（Esc）"
+	menu.pressed.connect(_open_menu)
 	top.add_child(menu)
 	var save := Button.new()
 	save.text = "导出记录"
@@ -271,6 +298,7 @@ func _advance() -> void:
 		await _play(game.drain_events())
 		_sync_tokens()
 		_refresh()
+		_autosave()
 		if game.phase == "over":
 			break
 		if game.players[game.actor()].human:
@@ -287,6 +315,8 @@ func _advance() -> void:
 
 func _wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds * (0.15 if _fast else 1.0)).timeout
+	while _menu_open:  # 菜单开着，游戏停在这里
+		await get_tree().process_frame
 
 
 func _play(events: Array) -> void:
@@ -337,7 +367,7 @@ func _handle_event(ev: Dictionary, talk: Array = []) -> float:
 			_show_portrait(int(ev["player"]), "")
 	var text := _describe(ev)
 	if text != "":
-		_log.append_text(text + "\n")
+		_log_add(text + "\n")
 	for u in talk:
 		_say(u)
 	return _delay_for(type)
@@ -500,7 +530,7 @@ func _describe(ev: Dictionary) -> String:
 func _say(u: Dictionary) -> void:
 	var pi := int(u["player"])
 	_cards[pi]["bubble"].text = "“%s”" % str(u["text"])
-	_log.append_text("    [i]%s：“%s”[/i] [color=#78909c]（%s）[/color]\n" % [_pname(pi), u["text"],
+	_log_add("    [i]%s：“%s”[/i] [color=#78909c]（%s）[/color]\n" % [_pname(pi), u["text"],
 			u["mood"]])
 	_show_portrait(pi, str(u["mood"]))
 
@@ -726,6 +756,14 @@ func _close_overlay() -> void:
 	_map.queue_redraw()
 	if game.phase != "over":
 		_show_controls()
+
+
+## 日志加一条（同时记下来，存档用）
+func _log_add(text: String) -> void:
+	_log_lines.append(text)
+	while _log_lines.size() > LOG_KEEP:
+		_log_lines.pop_front()
+	_log.append_text(text)
 
 
 func _clear_overlay_box() -> void:
@@ -1114,11 +1152,11 @@ func _export_record() -> void:
 	var path := "user://records/record_%s_day%d.json" % [stamp, game.day]
 	var f := FileAccess.open(path, FileAccess.WRITE)
 	if f == null:
-		_log.append_text("[color=#ef5350]记录存不了：%s[/color]\n" % path)
+		_log_add("[color=#ef5350]记录存不了：%s[/color]\n" % path)
 		return
 	f.store_string(JSON.stringify(game.export_record(), " "))
 	f.close()
-	_log.append_text("[color=#81c784]对局记录已存：%s[/color]\n" % ProjectSettings.globalize_path(path))
+	_log_add("[color=#81c784]对局记录已存：%s[/color]\n" % ProjectSettings.globalize_path(path))
 
 
 # ───────────────────────── 调试：交易时 AI 心里算的数 ─────────────────────────
@@ -1176,3 +1214,109 @@ func _thought_text(e: Dictionary) -> String:
 					int(e["least_they_need"]), int(o["give_cash"])]
 	return ""
 
+
+
+# ───────────────────────── 菜单：存档 / 读档 / 回主界面 ─────────────────────────
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_cancel") or game == null:
+		return
+	if _menu_open:
+		_close_menu()
+	elif not _overlay.visible:
+		_open_menu()
+
+
+## 每天开始时自动存一次（存到“自动存档”位）。只在掷骰前存，这时画面和规则是一致的
+func _autosave() -> void:
+	if game.phase != "pre_roll" or game.day == _auto_day:
+		return
+	_auto_day = game.day
+	var err := _save_to(SaveGame.AUTO)
+	if err != "":
+		_log_add("[color=#ef5350]自动存档失败：%s[/color]\n" % err)
+
+
+func _save_to(slot: String) -> String:
+	return SaveGame.save(slot, game, _speech, {"log": _log_lines})
+
+
+func _open_menu() -> void:
+	_menu_open = true
+	_overlay.visible = true
+	_clear_overlay_box()
+	_make_label(_overlay_box, "菜单 · 第 %d 天" % game.day, 22, Color.WHITE)
+	var items := [
+		["继续游戏", _close_menu],
+		["存档", func() -> void: _open_save_panel("save")],
+		["读档", func() -> void: _open_save_panel("load")],
+	]
+	for item in items:
+		var b := Button.new()
+		b.text = item[0]
+		b.custom_minimum_size = Vector2(0, 44)
+		b.pressed.connect(item[1])
+		_overlay_box.add_child(b)
+	var home := Button.new()
+	home.text = "回到主界面"
+	home.custom_minimum_size = Vector2(0, 44)
+	home.pressed.connect(func() -> void: _confirm_home(home))
+	_overlay_box.add_child(home)
+	_make_label(_overlay_box, "每天开始时会自动存一次，读档时在“自动存档”里。", 13, Color("#90a4ae"))
+
+
+## 回主界面会丢掉没存的进度：第一次点只提示，第二次才走
+func _confirm_home(button: Button) -> void:
+	if button.text == "回到主界面":
+		button.text = "没存档的进度会丢掉，再点一次回到主界面"
+		return
+	_menu_open = false
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+
+func _close_menu() -> void:
+	_menu_open = false
+	_close_overlay_only()
+	if not _busy and game.phase != "over":
+		_show_controls()
+
+
+func _close_overlay_only() -> void:
+	_overlay.visible = false
+	_map.hover_highlight = []
+	_map.queue_redraw()
+
+
+func _open_save_panel(mode: String, message: String = "", ok: bool = true) -> void:
+	_clear_overlay_box()
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, 430)
+	_overlay_box.add_child(scroll)
+	var panel := SavePanel.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(panel)
+	panel.setup(mode, mode == "load")
+	if message != "":
+		panel.show_message(message, ok)
+	panel.picked.connect(func(slot: String) -> void: _on_slot_picked(panel, mode, slot))
+	var back := Button.new()
+	back.text = "返回菜单"
+	back.custom_minimum_size = Vector2(0, 40)
+	back.pressed.connect(_open_menu)
+	_overlay_box.add_child(back)
+
+
+func _on_slot_picked(panel: SavePanel, mode: String, slot: String) -> void:
+	if mode == "save":
+		var err := _save_to(slot)
+		if err == "":
+			panel.show_message("已存到存档 %s（第 %d 天）" % [slot, game.day], true)
+		else:
+			panel.show_message(err, false)
+		return
+	var err := Data.resume_from_save(slot)
+	if err != "":
+		panel.show_message(err, false)
+		return
+	_menu_open = false
+	get_tree().change_scene_to_file("res://scenes/table.tscn")

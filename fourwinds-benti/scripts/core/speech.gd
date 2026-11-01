@@ -55,6 +55,29 @@ func _init(p_db: LinesDb, p_game) -> void:
 	rng.seed = int(p_game.seed_used) + 7919
 
 
+## 存档用：台词的记忆（谁最近说过什么、冷却、交易提议记录、随机数），读档后接着往下说
+func export_state() -> Dictionary:
+	return {
+		"day": _day, "gone": _gone, "recent": _recent, "last_day": _last_day,
+		"proposals": _proposals, "countered": _countered, "started": _started, "notes": _notes,
+		"moment": _moment, "rng_seed": str(rng.seed), "rng_state": str(rng.state),
+	}
+
+
+func import_state(state: Dictionary) -> void:
+	_day = int(state["day"])
+	_gone = state["gone"]
+	_recent = state["recent"]
+	_last_day = state["last_day"]
+	_proposals = state["proposals"]
+	_countered = bool(state["countered"])
+	_started = bool(state["started"])
+	_notes = state["notes"]
+	_moment = int(state["moment"])
+	rng.seed = int(str(state["rng_seed"]))
+	rng.state = int(str(state["rng_state"]))
+
+
 ## 一批事件 → 每个事件要冒的台词
 func plan(events: Array) -> Array:
 	_cands.clear()

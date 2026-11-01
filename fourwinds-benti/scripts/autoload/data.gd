@@ -8,6 +8,7 @@ const JsonUtil = preload("res://scripts/core/json_util.gd")
 const Board = preload("res://scripts/core/board.gd")
 const DataCheck = preload("res://scripts/core/data_check.gd")
 const LinesDb = preload("res://scripts/core/lines_db.gd")
+const SaveGame = preload("res://scripts/core/save_game.gd")
 
 const RULES_PATH := "res://data/rules.json"
 const CHARACTERS_PATH := "res://data/characters.json"
@@ -31,6 +32,8 @@ var start_map: String = ""   ## 主界面选的地图 id；空 = 默认地图
 var debug_ai: bool = false
 ## 路口全部随机（像原版），主界面勾选；不勾 = 按地图（现在的地图都是能选方向）
 var crossroads_random: bool = false
+## 读档读出来的东西（SaveGame.load_slot 的结果），交给棋盘画面接着玩；棋盘画面拿走后清空
+var resume: Dictionary = {}
 
 
 func _ready() -> void:
@@ -104,3 +107,13 @@ func _load_lines() -> LinesDb:
 	db.load_dir(LINES_DIR)
 	errors.append_array(db.errors)
 	return db
+
+
+## 读存档 slot，成功就记在 resume 里（然后切到棋盘画面）。成功返回 ""，否则返回原因
+func resume_from_save(slot: String) -> String:
+	var r := SaveGame.load_slot(slot, maps, rules,
+			{"cards": cards, "special_events": special_events}, characters)
+	if str(r["error"]) != "":
+		return str(r["error"])
+	resume = r
+	return ""

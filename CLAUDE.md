@@ -22,8 +22,8 @@
 | `fourwinds-benti/data/` | 所有规则数值、角色、地图、机会卡、AI 参数（JSON），作者会自己改 |
 | `fourwinds-benti/data/lines/` | 台词：每个角色一个纯文本文件（`斐斐.txt`…）+ 事件表 `events.json`。写法见 `docs/lines.md` |
 | `fourwinds-benti/data/reference/` | 原版城市价格参考，游戏不读 |
-| `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试。`game.gd` 是一局游戏的全部规则（用法见文件开头的注释），`board.gd` 是地图，`player.gd` 是玩家数据，`streets.gd` 是街道进度（凑大房子还差什么），`ai.gd` 是 AI 入口（`AI.step(game)`，按玩家的 AI 版本分派），`ai_profiles.gd` 按“角色 + 形态”取 AI 参数，`brain.gd` 是原版 AI，`lines_db.gd` 读台词文件并按条件筛句子，`speech.gd` 决定“谁在什么时候对谁说哪句”（`plan(events)`，画面只负责显示） |
-| `fourwinds-benti/scripts/ui/` | 画面和操作：`main.gd` 选座位，`table.gd` 棋盘和热座（驱动游戏、界面层），`map_view.gd` 地图层，`map_camera.gd` 镜头，`iso.gd` 等距换算（**格子 ↔ 位置只走这里**），`art.gd` 素材路径表（**图片只从这里拿**） |
+| `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试。`game.gd` 是一局游戏的全部规则（用法见文件开头的注释），`board.gd` 是地图，`player.gd` 是玩家数据，`streets.gd` 是街道进度（凑大房子还差什么），`ai.gd` 是 AI 入口（`AI.step(game)`，按玩家的 AI 版本分派），`ai_profiles.gd` 按“角色 + 形态”取 AI 参数，`brain.gd` 是原版 AI，`lines_db.gd` 读台词文件并按条件筛句子，`speech.gd` 决定“谁在什么时候对谁说哪句”（`plan(events)`，画面只负责显示），`save_game.gd` 存档 / 读档（用法见文件开头；`Game.export_state` / `import_state` 是整局状态，改了 `Game`、`Player`、`Speech` 里要跨回合保留的变量，要同步改这几个函数，`tests/save_tests.gd` 会报不一致） |
+| `fourwinds-benti/scripts/ui/` | 画面和操作：`main.gd` 选座位，`table.gd` 棋盘和热座（驱动游戏、界面层），`map_view.gd` 地图层，`map_camera.gd` 镜头，`iso.gd` 等距换算（**格子 ↔ 位置只走这里**），`art.gd` 素材路径表（**图片只从这里拿**），`save_panel.gd` 存档位列表（存档、读档共用） |
 | `fourwinds-benti/assets/placeholder/` | 原版素材占位，由 `tools/copy_placeholder.py` 生成，来源见目录里的 `README.md`。换成作者的素材后整个删掉 |
 | `fourwinds-benti/scripts/autoload/` | 全局单例（`Data` 读取 data/ 下的所有数据） |
 | `fourwinds-benti/tests/` | 无头测试 `run_tests.gd` |
