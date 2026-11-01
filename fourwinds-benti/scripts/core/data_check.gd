@@ -41,11 +41,9 @@ const AI_PARAMS := [
 ]
 
 
-static func check_characters(characters: Array, ai: Dictionary, lines: Dictionary) -> Array:
+static func check_characters(characters: Array, ai: Dictionary) -> Array:
 	var errors: Array = []
 	var profiles: Dictionary = ai.get("profiles", {})
-	var line_sets: Dictionary = lines.get("characters", {})
-	var conditions: Dictionary = lines.get("conditions", {})
 	var seen := {}
 	for c in characters:
 		var cid := str(c.get("id", ""))
@@ -62,14 +60,6 @@ static func check_characters(characters: Array, ai: Dictionary, lines: Dictionar
 			for p in AI_PARAMS:
 				if not profiles[pid]["front"].has(p):
 					errors.append("%s 的 AI 参数（表形态）缺少 %s" % [label, p])
-		var lid := str(c.get("lines", ""))
-		if not line_sets.has(lid):
-			errors.append("%s 的台词 \"%s\" 在 lines/speech.json 里找不到" % [label, lid])
-		else:
-			for cond in conditions:
-				var options: Variant = line_sets[lid].get(cond, [])
-				if not (options is Array) or options.is_empty():
-					errors.append("%s 缺少事件 %s 的台词" % [label, cond])
 	return errors
 
 

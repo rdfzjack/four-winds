@@ -41,6 +41,9 @@ SPRITES = {
     "Hei_b": ("Sprite/Hei_b", None, "foot", "黑帮走路图，占位给小九"),
     "Mai_b": ("Sprite/Mai_b", None, "foot", "买办走路图，占位给孔雀"),
     "Tu_c": ("Sprite/Tu_c", None, "foot", "土财主走路图，占位给理理"),
+    "Portrait": ("Screen/Portrait", None, "foot",
+                 "原版界面左下角的半身头像（8 个原版人物各一帧，每人只有一种表情）：帧 0 董莺雨（孔雀）、"
+                 "2 包德利（斐斐）、5 冯全篾（小九）、6 发达而（理理），其余留着不用"),
 }
 
 

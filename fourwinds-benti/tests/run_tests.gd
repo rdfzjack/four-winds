@@ -15,11 +15,15 @@ const TradeTests = preload("res://tests/trade_tests.gd")
 const ScenarioLib = preload("res://tools/ai_scenarios_lib.gd")
 const ValuerTests = preload("res://tests/valuer_tests.gd")
 const TraderTests = preload("res://tests/trader_tests.gd")
+const SpeechTests = preload("res://tests/speech_tests.gd")
+const SaveTests = preload("res://tests/save_tests.gd")
+const SaveGame = preload("res://scripts/core/save_game.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
 const Art = preload("res://scripts/ui/art.gd")
 
 const SMOKE_DAYS := 3          ## 棋盘画面跑到第几天算通过
 const SMOKE_TIMEOUT_MS := 30000  ## 最多等这么久
+const RESUME_FRAMES := 120      ## 读档后画面接着跑多少帧
 const SMOKE_MAP := "shanghai"     ## 冒烟测试用的地图（原版上海，格子最多）
 
 var failures := 0
@@ -27,6 +31,9 @@ var checks := 0
 var _frame := 0
 var _table: Node = null
 var _smoke_start := 0
+var _stage := 0                ## 0 = 冒烟测试，1 = 读档后接着玩
+var _resume_start := 0
+var _resume_game = null        ## 存档时那局的状态（读档后对照）
 
 
 func _process(_delta: float) -> bool:
@@ -36,8 +43,13 @@ func _process(_delta: float) -> bool:
 		test_iso()
 		test_art_table()
 		_start_table_smoke()
-	elif _smoke_done():
+	elif _stage == 0 and _smoke_done():
 		_finish_table_smoke()
+		_start_resume_smoke()
+		_stage = 1
+		_resume_start = _frame
+	elif _stage == 1 and _frame - _resume_start >= RESUME_FRAMES:
+		_finish_resume_smoke()
 		print("测试完成：%d 项检查，%d 项失败" % [checks, failures])
 		quit(1 if failures > 0 else 0)
 	return false
@@ -49,7 +61,7 @@ func run_logic_tests() -> void:
 	test_walk_on_loop()
 	test_walk_with_crossroad()
 	test_broken_map_is_reported()
-	test_characters_ai_lines_match()
+	test_characters_ai_match()
 	test_cards_valid()
 	test_broken_cards_reported()
 	test_default_map()
@@ -60,6 +72,8 @@ func run_logic_tests() -> void:
 	AiTests.new().run(self)
 	ValuerTests.new().run(self)
 	TraderTests.new().run(self)
+	SpeechTests.new().run(self)
+	SaveTests.new().run(self)
 	test_ai_scenarios_run()
 
 
@@ -138,14 +152,12 @@ func test_broken_map_is_reported() -> void:
 	check(errors.size() >= 3, "坏地图能被发现（走不到的格子、缺街道组、缺系数）")
 
 
-func test_characters_ai_lines_match() -> void:
+func test_characters_ai_match() -> void:
 	var errors: Array = []
 	var chars := JsonUtil.load_dict("res://data/characters.json", errors)
 	var ai := JsonUtil.load_dict("res://data/ai/profiles.json", errors)
-	var lines := JsonUtil.load_dict("res://data/lines/speech.json", errors)
-	errors.append_array(DataCheck.check_characters(chars.get("characters", []), ai, lines))
-	check(errors.is_empty(), "角色、AI 参数、台词对得上 %s" % str(errors))
-	check(lines.get("conditions", {}).size() == 12, "台词有 12 种事件")
+	errors.append_array(DataCheck.check_characters(chars.get("characters", []), ai))
+	check(errors.is_empty(), "角色、AI 参数对得上 %s" % str(errors))
 
 
 func test_cards_valid() -> void:
@@ -240,7 +252,7 @@ func _start_table_smoke() -> void:
 		specs.append({"character": str(c["id"]), "human": false})
 	root.get_node("Data").start_specs = specs
 	root.get_node("Data").start_map = SMOKE_MAP
-	_table = load("res://scenes/table.tscn").instantiate()
+	_table = _new_table()
 	root.add_child(_table)
 	_table._fast = true
 	_smoke_start = Time.get_ticks_msec()
@@ -264,6 +276,54 @@ func _finish_table_smoke() -> void:
 	_table._open_auction_dialog()
 	_table._open_trade_dialog({})
 	check(_table.get("_overlay").visible, "抵押、拍卖、交易对话框能打开")
+	_check_menu_and_save()
 	_table.queue_free()
 	root.get_node("Data").start_specs = []
 	root.get_node("Data").start_map = ""
+
+
+## 菜单、存档 / 读档列表能搭起来；存档后能读回来，棋盘画面接着玩
+func _check_menu_and_save() -> void:
+	var data = root.get_node("Data")
+	SaveGame.dir = "user://test_saves_ui"
+	_table._open_menu()
+	check(_table.get("_overlay").visible and _table.get("_menu_open"), "菜单能打开，游戏暂停")
+	_table._open_save_panel("save")
+	_table._open_save_panel("load")
+	var panel: Node = null
+	for c in _table.get("_overlay_box").find_children("*", "", true, false):
+		if c.has_method("show_message") and not c.is_queued_for_deletion():
+			panel = c
+	check(panel != null, "存档列表搭出来了")
+	_table._on_slot_picked(panel, "save", "1")
+	var m := SaveGame.meta("1")
+	check(not m["empty"] and m["day"] == _table.get("game").day, "画面里存档，存档位 1 有了")
+	_table._close_menu()
+	check(not _table.get("_overlay").visible and not _table.get("_menu_open"), "菜单能关上，游戏继续")
+	_resume_game = _table.get("game")
+	_table.set("_menu_open", false)
+	check(data.resume_from_save("1") == "", "存档能读回来")
+
+
+func _start_resume_smoke() -> void:
+	_table = _new_table()
+	root.add_child(_table)
+	_table._fast = true
+
+
+func _finish_resume_smoke() -> void:
+	var g = _table.get("game")
+	check(g != null and g.board.id == _resume_game.board.id, "读档后棋盘画面用的是存档里的地图")
+	check(g.day >= _resume_game.day and g.check_invariants().is_empty(), "读档后接着走，数据自洽")
+	check(root.get_node("Data").resume.is_empty(), "棋盘画面拿走了读档数据")
+	var lines: Array = _table.get("_log_lines")
+	check(str(lines[-1]).length() > 0 and lines.size() > 3, "读档后日志接上了")
+	_table.queue_free()
+	for f in DirAccess.get_files_at(SaveGame.dir):
+		DirAccess.remove_absolute(SaveGame.dir.path_join(f))
+	DirAccess.remove_absolute(SaveGame.dir)
+	SaveGame.dir = "user://saves"
+
+
+func _new_table() -> Node:
+	return load("res://scenes/table.tscn").instantiate()

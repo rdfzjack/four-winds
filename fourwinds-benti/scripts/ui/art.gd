@@ -27,6 +27,12 @@ const SPRITES := {
 	"walker_giorgio": {"sheet": P + "Hei_b"},
 	"walker_marcel": {"sheet": P + "Mai_b"},
 	"walker_eric": {"sheet": P + "Tu_c"},
+	# 头像（立绘）：原版半身像，借用 based_on 的原版人物（profiles.json）。原版每人只有一种表情，
+	# 所以所有表情先用同一张；以后每个表情有自己的图，就加 "portrait_<角色 id>_<表情名>" 一项（见 portrait()）
+	"portrait_david": {"sheet": P + "Portrait", "group": 0, "frames": [2]},
+	"portrait_giorgio": {"sheet": P + "Portrait", "group": 0, "frames": [5]},
+	"portrait_marcel": {"sheet": P + "Portrait", "group": 0, "frames": [0]},
+	"portrait_eric": {"sheet": P + "Portrait", "group": 0, "frames": [6]},
 }
 ## 人物拼图里第几组是哪个朝向（原版走路图：4 组 × 8 帧）
 const FACING_GROUPS := {"up_left": 0, "up_right": 1, "down_left": 2, "down_right": 3}
@@ -67,6 +73,15 @@ static func frame(key: String, index: int = 0, group: int = -1) -> Dictionary:
 ## 人物某个朝向的一帧（不动时用第 0 帧）
 static func walker(character_id: String, facing: String, index: int = 0) -> Dictionary:
 	return frame("walker_" + character_id, index, int(FACING_GROUPS.get(facing, 2)))
+
+
+## 角色的头像：mood 是表情名（data/lines/events.json 的表情列表）。
+## 有 "portrait_<角色 id>_<表情名>" 就用它，没有就用这个角色的默认头像 "portrait_<角色 id>"。没图返回 {}
+static func portrait(character_id: String, mood: String = "") -> Dictionary:
+	var key := "portrait_%s_%s" % [character_id, mood]
+	if not SPRITES.has(key):
+		key = "portrait_" + character_id
+	return frame(key)
 
 
 ## 这一种图有几帧可挑（地表随机用）

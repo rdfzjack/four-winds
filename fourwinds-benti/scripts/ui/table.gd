@@ -18,6 +18,10 @@ const Game = preload("res://scripts/core/game.gd")
 const AI = preload("res://scripts/core/ai.gd")
 const MapView = preload("res://scripts/ui/map_view.gd")
 const MapCamera = preload("res://scripts/ui/map_camera.gd")
+const Speech = preload("res://scripts/core/speech.gd")
+const Art = preload("res://scripts/ui/art.gd")
+const SaveGame = preload("res://scripts/core/save_game.gd")
+const SavePanel = preload("res://scripts/ui/save_panel.gd")
 const DiceView = preload("res://scripts/ui/dice_view.gd")
 
 const STATUS_NAMES := {
@@ -34,6 +38,8 @@ const RIGHT_WIDTH := 330.0
 const MARGIN := 12.0
 const AI_DELAY := 0.45
 const STEP_DELAY := 0.13
+const LOG_KEEP := 400  ## 存档里留多少条日志
+const PORTRAIT_BOX := Vector2(150, 190)  ## 左下角头像框的大小
 
 var board: Board = null
 var game: Game = null
@@ -55,35 +61,65 @@ var _info_label: Label
 var _head_label: Label
 var _controls: VBoxContainer
 var _log: RichTextLabel
+var _speech: Speech             ## 谁在什么时候说什么（规则层，见 scripts/core/speech.gd）
+var _portrait_box: PanelContainer  ## 左下角的头像（位置照原版界面：当前玩家 / 正在说话的人）
+var _portrait: TextureRect
+var _portrait_label: Label
 var _overlay: Control
 var _overlay_box: VBoxContainer
 ## 交易对话框的草稿：offer 的各项（give / get 是地块列表）+ counter（是不是还价）
 var _trade: Dictionary = {}
+var _log_lines: Array = []      ## 日志的每一条（存档时一起存，读档后接上）
+var _menu_open: bool = false    ## 菜单开着时 AI 暂停
+var _leaving: bool = false      ## 正在离开本画面（切场景），协程见到就停
+var _auto_day: int = 0          ## 自动存档存到第几天了
 
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(BACKGROUND)
-	board = Data.selected_map()
-	_specs = Data.start_specs
-	if _specs.is_empty():
-		for i in range(mini(4, Data.characters.size())):
-			_specs.append({"character": str(Data.characters[i]["id"]), "human": i == 0, "ai": "standard_v2"})
-	game = Game.new()
-	var cards_file := {"cards": Data.cards, "special_events": Data.special_events}
-	var errors := game.setup(board, Data.rules, cards_file, Data.characters, _specs)
-	if not errors.is_empty():
-		push_error("开局失败：" + str(errors))
-		return
-	game.record_history = true
-	game.crossroad_override = "random" if Data.crossroads_random else ""
-	game.start()
+	var resume: Dictionary = Data.resume
+	Data.resume = {}
+	if resume.is_empty():
+		if not _new_game():
+			return
+	else:
+		game = resume["game"]
+		board = game.board
+		_auto_day = game.day
+	_speech = Speech.new(Data.lines, game)
+	if not resume.is_empty() and not resume["speech"].is_empty():
+		_speech.import_state(resume["speech"])
 	_build_map()
 	_build_ui()
 	get_viewport().size_changed.connect(_on_resized)
 	_on_resized()
 	_camera.focus(_map.token_position(game.current), true)
+	if not resume.is_empty():
+		for line in resume["extra"].get("log", []):
+			_log_add(str(line))
+		_log_add("[color=#81c784]—— 已读取存档（第 %d 天）——[/color]\n" % game.day)
 	_refresh()
 	_advance()
+
+
+## 按主界面选的座位开一局。失败返回 false
+func _new_game() -> bool:
+	board = Data.selected_map()
+	_specs = Data.start_specs
+	if _specs.is_empty():
+		for i in range(mini(4, Data.characters.size())):
+			_specs.append({"character": str(Data.characters[i]["id"]), "human": i == 0,
+					"ai": "standard_v2"})
+	game = Game.new()
+	var cards_file := {"cards": Data.cards, "special_events": Data.special_events}
+	var errors := game.setup(board, Data.rules, cards_file, Data.characters, _specs)
+	if not errors.is_empty():
+		push_error("开局失败：" + str(errors))
+		return false
+	game.record_history = true
+	game.crossroad_override = "random" if Data.crossroads_random else ""
+	game.start()
+	return true
 
 
 # ───────────────────────── 搭画面 ─────────────────────────
@@ -144,7 +180,8 @@ func _build_ui() -> void:
 	top.add_child(fast)
 	var menu := Button.new()
 	menu.text = "菜单"
-	menu.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/main.tscn"))
+	menu.tooltip_text = "存档、读档、回到主界面（Esc）"
+	menu.pressed.connect(_open_menu)
 	top.add_child(menu)
 	var save := Button.new()
 	save.text = "导出记录"
@@ -187,6 +224,31 @@ func _build_ui() -> void:
 	_dice = DiceView.new()
 	_ui.add_child(_dice)
 	_ui.move_child(_dice, 0)
+	_build_portrait()
+	_show_portrait(game.current, "")
+
+
+## 左下角的头像框（原版界面的头像在左下角）。现在只显示头像和名字；现金、存款等 HUD 以后统一做
+func _build_portrait() -> void:
+	var box := VBoxContainer.new()
+	_portrait = TextureRect.new()
+	_portrait.custom_minimum_size = Vector2(130, 150)
+	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	box.add_child(_portrait)
+	_portrait_label = _make_label(box, "", 13, Color.WHITE)
+	_portrait_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_portrait_box = _panel(box)
+	_portrait_box.custom_minimum_size = PORTRAIT_BOX
+	_portrait_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
+## 头像换成 pi，表情 mood（空 = 平常）
+func _show_portrait(pi: int, mood: String) -> void:
+	var p = game.players[pi]
+	var art := Art.portrait(p.character, mood)
+	_portrait.texture = art.get("tex", null)
+	_portrait_label.text = p.display_name if mood == "" else "%s · %s" % [p.display_name, mood]
 
 
 func _add_player_card(p) -> void:
@@ -220,6 +282,7 @@ func _on_resized() -> void:
 	_right_panel.size = Vector2(RIGHT_WIDTH - MARGIN, view.y - 2.0 * MARGIN)
 	_dice.position = Vector2(LEFT_WIDTH, MARGIN)
 	_dice.size = Vector2(view.x - LEFT_WIDTH - RIGHT_WIDTH, DiceView.SIZE.y)
+	_portrait_box.position = Vector2(LEFT_WIDTH + MARGIN, view.y - PORTRAIT_BOX.y - MARGIN)
 	# 镜头对准左右两栏之间空出来的那块
 	_camera.view_shift = Vector2((LEFT_WIDTH - RIGHT_WIDTH) / 2.0, 0.0)
 
@@ -234,13 +297,18 @@ func _advance() -> void:
 	_clear_controls()
 	while true:
 		await _play(game.drain_events())
+		if _leaving or not is_inside_tree():
+			return
 		_sync_tokens()
 		_refresh()
+		_autosave()
 		if game.phase == "over":
 			break
 		if game.players[game.actor()].human:
 			break
 		await _wait(AI_DELAY)
+		if _leaving or not is_inside_tree():
+			return
 		if not AI.step(game):
 			break
 	_busy = false
@@ -251,22 +319,31 @@ func _advance() -> void:
 
 
 func _wait(seconds: float) -> void:
+	if _leaving or not is_inside_tree():
+		return
 	await get_tree().create_timer(seconds * (0.15 if _fast else 1.0)).timeout
+	while _menu_open and not _leaving and is_inside_tree():  # 菜单开着，游戏停在这里
+		await get_tree().process_frame
 
 
 func _play(events: Array) -> void:
-	for ev in events:
-		var delay := _handle_event(ev)
+	var talk := _speech.plan(events)
+	for i in range(events.size()):
+		var delay := _handle_event(events[i], talk[i])
 		_refresh()
 		_map.queue_redraw()
 		if delay > 0.0:
 			await _wait(delay)
+			if _leaving or not is_inside_tree():
+				return
 
 
 ## 人类操作后立刻把事件记进日志（不播动画，建房对话框用）
 func _flush_events() -> void:
-	for ev in game.drain_events():
-		_handle_event(ev)
+	var events := game.drain_events()
+	var talk := _speech.plan(events)
+	for i in range(events.size()):
+		_handle_event(events[i], talk[i])
 	_sync_tokens()
 	_refresh()
 	_map.queue_redraw()
@@ -279,7 +356,7 @@ func _sync_tokens() -> void:
 # ───────────────────────── 事件 → 日志 / 台词 / 动画 ─────────────────────────
 
 ## 处理一个事件：更新画面状态、写日志、冒台词。返回播放完要停多久（秒）。
-func _handle_event(ev: Dictionary) -> float:
+func _handle_event(ev: Dictionary, talk: Array = []) -> float:
 	var type := str(ev["type"])
 	match type:
 		"step":
@@ -296,10 +373,12 @@ func _handle_event(ev: Dictionary) -> float:
 		"turn_start":
 			_dice.values = []
 			_camera.focus(_map.token_position(int(ev["player"])))
+			_show_portrait(int(ev["player"]), "")
 	var text := _describe(ev)
 	if text != "":
-		_log.append_text(text + "\n")
-	_speak(ev)
+		_log_add(text + "\n")
+	for u in talk:
+		_say(u)
 	return _delay_for(type)
 
 
@@ -323,7 +402,8 @@ func _delay_for(type: String) -> float:
 
 func _pname(i: int) -> String:
 	var c: Color = _cards[i]["color"]
-	return "[color=#%s]%s[/color]" % [c.lightened(0.35).to_html(false), game.players[i].display_name]
+	return "[color=#%s]%s[/color]" % [c.lightened(0.35).to_html(false),
+			game.players[i].display_name]
 
 
 func _tname(i: int) -> String:
@@ -455,66 +535,13 @@ func _describe(ev: Dictionary) -> String:
 # gdlint: enable=max-returns
 
 
-## 按事件挑一句台词（台词表见 data/lines/speech.json）
-func _speak(ev: Dictionary) -> void:
-	var who := -1
-	var cond := ""
-	match str(ev["type"]):
-		"rent":
-			who = int(ev["player"])
-			cond = {"big": "GIVE_MUCH_MONEY", "small": "GIVE_LITTLE_MONEY"}.get(str(ev["scale"]), "")
-		"jailed":
-			who = int(ev["player"])
-			cond = "TO_JAIL"
-		"built":
-			if str(ev["kind"]) == "villa":
-				who = int(ev["player"])
-				cond = "BUILD_VILLA"
-		"antique":
-			who = int(ev["player"])
-			cond = "GOOD_LUCK"
-		"collapse":
-			who = int(ev["player"])
-			cond = "BAD_LUCK"
-		"stolen":
-			_say(int(ev["victim"]), "BEEN_STOLEN")
-			who = int(ev["thief"])
-			cond = "STEAL"
-		"alms":
-			who = int(ev["receiver"])
-			cond = "GET_CHARITY"
-		"trade_done":
-			who = int(ev["offer"]["from"])
-			cond = "TRADE_OK"
-		"trade_rejected":
-			# 被拒的一方说话：对方拒绝了发起人的提议，或发起人拒绝了还价
-			var o: Dictionary = ev["offer"]
-			who = int(o["from"]) if int(ev["player"]) == int(o["to"]) else int(o["to"])
-			cond = "TRADE_NOT_OK"
-		"card":
-			who = int(ev["player"])
-			cond = _card_mood(int(ev["card"]))
-	if who >= 0 and cond != "":
-		_say(who, cond)
-
-
-## 机会卡带来的钱是正还是负 → 好运 / 倒霉；没有金额的卡不说话
-func _card_mood(card_id: int) -> String:
-	for c in Data.cards:
-		if int(c["id"]) != card_id:
-			continue
-		for e in c.get("effects", []):
-			if str(e["op"]) == "money":
-				return "GOOD_LUCK" if int(e["amount"]) > 0 else "BAD_LUCK"
-	return ""
-
-
-func _say(pi: int, cond: String) -> void:
-	var line := Data.random_line(game.players[pi].character, cond)
-	if line == "":
-		return
-	_cards[pi]["bubble"].text = "“%s”" % line
-	_log.append_text("    [i]%s：“%s”[/i]\n" % [_pname(pi), line])
+## 冒一句台词：玩家卡片上的气泡、日志、左下角的头像（带表情）
+func _say(u: Dictionary) -> void:
+	var pi := int(u["player"])
+	_cards[pi]["bubble"].text = "“%s”" % str(u["text"])
+	_log_add("    [i]%s：“%s”[/i] [color=#78909c]（%s）[/color]\n" % [_pname(pi), u["text"],
+			u["mood"]])
+	_show_portrait(pi, str(u["mood"]))
 
 
 # ───────────────────────── 左边：玩家卡片 ─────────────────────────
@@ -545,7 +572,8 @@ func _refresh() -> void:
 					"" if days <= 0 else "（剩 %d 天）" % days]
 		card["label"].text = text
 		var style := StyleBoxFlat.new()
-		style.bg_color = Color(0.2, 0.28, 0.24) if p.index == game.current else Color(0.14, 0.19, 0.17)
+		style.bg_color = Color(0.2, 0.28, 0.24) if p.index == game.current else Color(0.14, 0.19,
+				0.17)
 		style.border_color = card["color"]
 		style.set_border_width_all(3 if p.index == game.current else 1)
 		style.set_content_margin_all(6)
@@ -597,7 +625,8 @@ func _show_controls() -> void:
 				var t: int = r["option"]
 				var last: int = r["tiles"][-1]
 				var where := "落在 %s" % _tname(last) if r["ends"] else "走到 %s 的路口再选" % _tname(last)
-				var b := _button(where, func() -> void: _do(func() -> void: game.choose_direction(t)))
+				var b := _button(where,
+						func() -> void: _do(func() -> void: game.choose_direction(t)))
 				b.modulate = MapView.ROUTE_COLORS[i % MapView.ROUTE_COLORS.size()]
 		"bank":
 			_show_bank_controls(p)
@@ -632,7 +661,8 @@ func _show_auction_controls(p) -> void:
 	_map.highlight = [int(a["tile"])]
 	for step in game.bid_steps():
 		var s: int = step
-		var b := _button("加 %d（出 %d 万）" % [s, int(a["price"]) + s], func() -> void: _do(func() -> void:
+		var b := _button("加 %d（出 %d 万）" % [s, int(a["price"]) + s],
+				func() -> void: _do(func() -> void:
 				game.auction_bid(s)))
 		b.disabled = p.cash < int(a["price"]) + s
 	_button("不出价了", func() -> void: _do(game.auction_pass))
@@ -737,6 +767,14 @@ func _close_overlay() -> void:
 		_show_controls()
 
 
+## 日志加一条（同时记下来，存档用）
+func _log_add(text: String) -> void:
+	_log_lines.append(text)
+	while _log_lines.size() > LOG_KEEP:
+		_log_lines.pop_front()
+	_log.append_text(text)
+
+
 func _clear_overlay_box() -> void:
 	for c in _overlay_box.get_children():
 		c.queue_free()
@@ -791,7 +829,8 @@ func _rebuild_house_dialog(message: String) -> void:
 		var id: int = hid
 		var refund := Game.pct_of(game.house_cost(str(h["kind"]), h["tiles"]),
 				int(Data.rules["houses"]["remove_refund_pct"]))
-		var text := "拆除 %s · %s · 退还 %d" % [_house_name(str(h["kind"])), _tiles_text(h["tiles"]), refund]
+		var text := "拆除 %s · %s · 退还 %d" % [_house_name(str(h["kind"])), _tiles_text(h["tiles"]),
+				refund]
 		_dialog_button(list, text, h["tiles"], func() -> void:
 				_house_action(game.remove_house(p.index, id)))
 
@@ -846,7 +885,8 @@ func _dialog_frame(title: String, message: String) -> VBoxContainer:
 	_clear_overlay_box()
 	_map.hover_highlight = []
 	var p = game.players[game.actor()]
-	_make_label(_overlay_box, "%s · %s · 现金 %d 万" % [title, p.display_name, p.cash], 18, Color.WHITE)
+	_make_label(_overlay_box, "%s · %s · 现金 %d 万" % [title, p.display_name, p.cash], 18,
+			Color.WHITE)
 	if message != "":
 		_make_label(_overlay_box, message, 14, Color("#ef9a9a"))
 	var scroll := ScrollContainer.new()
@@ -912,8 +952,10 @@ func _open_auction_dialog() -> void:
 			continue
 		var tile: int = t
 		count += 1
-		_dialog_button(list, "拍卖 %s · 起拍 %d" % [_tname(tile), game.auction_start_price(tile)], [tile],
-				func() -> void: _start_from_dialog(func() -> String: return game.start_auction(pi, tile)))
+		_dialog_button(list, "拍卖 %s · 起拍 %d" % [_tname(tile), game.auction_start_price(tile)],
+				[tile],
+				func() -> void: _start_from_dialog(func() -> String: return game.start_auction(pi,
+						tile)))
 	if count == 0:
 		_make_label(list, "现在没有能拍卖的地产", 13, Color("#90a4ae"))
 	_add_close_button()
@@ -1119,11 +1161,11 @@ func _export_record() -> void:
 	var path := "user://records/record_%s_day%d.json" % [stamp, game.day]
 	var f := FileAccess.open(path, FileAccess.WRITE)
 	if f == null:
-		_log.append_text("[color=#ef5350]记录存不了：%s[/color]\n" % path)
+		_log_add("[color=#ef5350]记录存不了：%s[/color]\n" % path)
 		return
 	f.store_string(JSON.stringify(game.export_record(), " "))
 	f.close()
-	_log.append_text("[color=#81c784]对局记录已存：%s[/color]\n" % ProjectSettings.globalize_path(path))
+	_log_add("[color=#81c784]对局记录已存：%s[/color]\n" % ProjectSettings.globalize_path(path))
 
 
 # ───────────────────────── 调试：交易时 AI 心里算的数 ─────────────────────────
@@ -1150,7 +1192,8 @@ func _thought_text(e: Dictionary) -> String:
 	match str(e["kind"]):
 		"buy":
 			return "%s 看 %s：估 %.0f（地价 %d）→ %s" % [who, _tname(int(e["tile"])),
-					float(e.get("worth", 0.0)), int(e.get("price", 0)), "买" if e.get("buy", false) else "不买"]
+					float(e.get("worth", 0.0)), int(e.get("price", 0)), "买" if e.get("buy",
+							false) else "不买"]
 		"build":
 			return "%s 盖%s：花 %d（钱 %d + 存款 %d）" % [who, _house_name(str(e["kind"])),
 					int(e.get("cost", 0)), int(e.get("cash", 0)), int(e.get("deposit", 0))]
@@ -1180,3 +1223,115 @@ func _thought_text(e: Dictionary) -> String:
 					int(e["least_they_need"]), int(o["give_cash"])]
 	return ""
 
+
+
+# ───────────────────────── 菜单：存档 / 读档 / 回主界面 ─────────────────────────
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_cancel") or game == null:
+		return
+	if _menu_open:
+		_close_menu()
+	elif not _overlay.visible:
+		_open_menu()
+
+
+## 每天开始时自动存一次（存到“自动存档”位）。只在掷骰前存，这时画面和规则是一致的
+func _autosave() -> void:
+	if game.phase != "pre_roll" or game.day == _auto_day:
+		return
+	_auto_day = game.day
+	var err := _save_to(SaveGame.AUTO)
+	if err != "":
+		_log_add("[color=#ef5350]自动存档失败：%s[/color]\n" % err)
+
+
+func _save_to(slot: String) -> String:
+	return SaveGame.save(slot, game, _speech, {"log": _log_lines})
+
+
+func _open_menu() -> void:
+	_menu_open = true
+	_overlay.visible = true
+	_clear_overlay_box()
+	_make_label(_overlay_box, "菜单 · 第 %d 天" % game.day, 22, Color.WHITE)
+	var items := [
+		["继续游戏", _close_menu],
+		["存档", func() -> void: _open_save_panel("save")],
+		["读档", func() -> void: _open_save_panel("load")],
+	]
+	for item in items:
+		var b := Button.new()
+		b.text = item[0]
+		b.custom_minimum_size = Vector2(0, 44)
+		b.pressed.connect(item[1])
+		_overlay_box.add_child(b)
+	var home := Button.new()
+	home.text = "回到主界面"
+	home.custom_minimum_size = Vector2(0, 44)
+	home.pressed.connect(func() -> void: _confirm_home(home))
+	_overlay_box.add_child(home)
+	_make_label(_overlay_box, "每天开始时会自动存一次，读档时在“自动存档”里。", 13, Color("#90a4ae"))
+
+
+## 回主界面会丢掉没存的进度：第一次点只提示，第二次才走
+func _confirm_home(button: Button) -> void:
+	if button.text == "回到主界面":
+		button.text = "没存档的进度会丢掉，再点一次回到主界面"
+		return
+	_leave_to("res://scenes/main.tscn")
+
+
+## 离开这个棋盘画面（回主界面 / 读档重开）。先让还在跑的 AI 协程停住（_leaving），再切场景：
+## 切场景是等这一帧结束才真正销毁本画面，不停住的话协程会在销毁后醒来去 get_tree()，报错
+func _leave_to(scene_path: String) -> void:
+	_leaving = true
+	_menu_open = true  # 菜单一直算开着，游戏停在原地，不会再往下走
+	get_tree().change_scene_to_file(scene_path)
+
+
+func _close_menu() -> void:
+	_menu_open = false
+	_close_overlay_only()
+	if not _busy and game.phase != "over":
+		_show_controls()
+
+
+func _close_overlay_only() -> void:
+	_overlay.visible = false
+	_map.hover_highlight = []
+	_map.queue_redraw()
+
+
+func _open_save_panel(mode: String, message: String = "", ok: bool = true) -> void:
+	_clear_overlay_box()
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, 430)
+	_overlay_box.add_child(scroll)
+	var panel := SavePanel.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(panel)
+	panel.setup(mode, mode == "load")
+	if message != "":
+		panel.show_message(message, ok)
+	panel.picked.connect(func(slot: String) -> void: _on_slot_picked(panel, mode, slot))
+	var back := Button.new()
+	back.text = "返回菜单"
+	back.custom_minimum_size = Vector2(0, 40)
+	back.pressed.connect(_open_menu)
+	_overlay_box.add_child(back)
+
+
+func _on_slot_picked(panel: SavePanel, mode: String, slot: String) -> void:
+	if mode == "save":
+		var err := _save_to(slot)
+		if err == "":
+			panel.show_message("已存到存档 %s（第 %d 天）" % [slot, game.day], true)
+		else:
+			panel.show_message(err, false)
+		return
+	var err := Data.resume_from_save(slot)
+	if err != "":
+		panel.show_message(err, false)
+		return
+	_leave_to("res://scenes/table.tscn")

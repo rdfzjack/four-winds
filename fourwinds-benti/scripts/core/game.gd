@@ -196,6 +196,74 @@ func export_record() -> Dictionary:
 	}
 
 
+## 存档用：整局的状态（原生值，字典的键可以是整数；转成 JSON 的事交给 save_game.gd）。
+## 地图、规则、机会卡不存（读档时用当前的数据文件）。随机数的种子和现在的状态都存，
+## 所以读档后掷出的骰子、抽到的牌和没存档继续玩完全一样。
+## 64 位的随机数状态用字符串存（JSON 里大整数会丢精度）。
+func export_state() -> Dictionary:
+	var seats: Array = []
+	for p in players:
+		seats.append({
+			"character": p.character, "display_name": p.display_name, "human": p.human,
+			"form": p.form, "ai": p.ai, "cash": p.cash, "deposit": p.deposit, "pos": p.pos,
+			"bankrupt": p.bankrupt, "status": p.status, "church_passes": p.church_passes,
+			"permit": p.permit, "ai_memory": p.ai_memory, "relations": p.relations,
+		})
+	return {
+		"map": board.id, "tile_count": board.tile_count(), "players": seats,
+		"current": current, "day": day, "phase": phase, "pending": pending, "winner": winner,
+		"props": props, "houses": houses, "events": events, "next_house_id": _next_house_id,
+		"move": _move, "trade_refused": _trade_refused,
+		"crossroad_override": crossroad_override, "forced_dice": forced_dice,
+		"forced_cards": forced_cards, "record_history": record_history, "history": history,
+		"seed_used": str(seed_used), "rng_seed": str(rng.seed), "rng_state": str(rng.state),
+	}
+
+
+## 读档：开局（setup）以后调用，把 export_state() 的内容装回来。成功返回 ""，否则返回原因。
+func import_state(state: Dictionary) -> String:
+	var seats: Array = state.get("players", [])
+	if seats.size() != players.size():
+		return "存档里的玩家人数和开局不一致"
+	for i in range(seats.size()):
+		var d: Dictionary = seats[i]
+		var p: Player = players[i]
+		p.character = str(d["character"])
+		p.display_name = str(d["display_name"])
+		p.human = bool(d["human"])
+		p.form = str(d["form"])
+		p.ai = str(d["ai"])
+		p.cash = int(d["cash"])
+		p.deposit = int(d["deposit"])
+		p.pos = int(d["pos"])
+		p.bankrupt = bool(d["bankrupt"])
+		p.status = d["status"]
+		p.church_passes = int(d["church_passes"])
+		p.permit = str(d["permit"])
+		p.ai_memory = d["ai_memory"]
+		p.relations = d["relations"]
+	current = int(state["current"])
+	day = int(state["day"])
+	phase = str(state["phase"])
+	pending = state["pending"]
+	winner = int(state["winner"])
+	props = state["props"]
+	houses = state["houses"]
+	events = state["events"]
+	_next_house_id = int(state["next_house_id"])
+	_move = state["move"]
+	_trade_refused = state["trade_refused"]
+	crossroad_override = str(state["crossroad_override"])
+	forced_dice = state["forced_dice"]
+	forced_cards = state["forced_cards"]
+	record_history = bool(state["record_history"])
+	history = state["history"]
+	seed_used = int(str(state["seed_used"]))
+	rng.seed = int(str(state["rng_seed"]))
+	rng.state = int(str(state["rng_state"]))
+	return ""
+
+
 func drain_events() -> Array:
 	var out := events
 	events = []
@@ -740,6 +808,7 @@ func _auction_end() -> void:
 		players[seller].cash += price
 		props[tile]["owner"] = top
 		_emit("auction_sold", {"player": top, "seller": seller, "tile": tile, "price": price})
+		_emit_street_done(top, [tile])
 	else:
 		var start := int(pending["start"])
 		players[seller].cash += start
@@ -876,6 +945,8 @@ func _do_trade(o: Dictionary) -> void:
 	players[a].cash += o["get_cash"] - o["give_cash"]
 	players[b].cash += o["give_cash"] - o["get_cash"]
 	_emit("trade_done", {"player": a, "offer": o})
+	_emit_street_done(a, o["get"])
+	_emit_street_done(b, o["give"])
 
 
 # ───────────────────────── 掷骰和移动 ─────────────────────────
@@ -949,6 +1020,7 @@ func _continue_move() -> void:
 		p.pos = dest
 		_move["remaining"] = int(_move["remaining"]) - 1
 		_emit("step", {"player": p.index, "tile": dest})
+		_move.get_or_add("trail", []).append(dest)
 		_meet_players(p)
 		if p.bankrupt:
 			_finish_turn()
@@ -958,6 +1030,7 @@ func _continue_move() -> void:
 		if p.bankrupt:
 			_finish_turn()
 			return
+	_emit_dodged(p, _move.get("trail", []))
 	_move = {}
 	_on_stop(p)
 	if phase != "pending" and phase != "over":
@@ -974,6 +1047,54 @@ func _may_choose_direction(_p: Player, tile: int) -> bool:
 ## 这个路口现在是 choice 还是 random（考虑 crossroad_override）
 func crossroad_mode(tile: int) -> String:
 	return crossroad_override if crossroad_override != "" else board.crossroad_mode(tile)
+
+
+## 台词用：这次移动停下的地方，前后一两格有别人的高租地（租金够得上“大笔”）却没踩到，记一个 dodged。
+## 前后一两格 = 走过来的最后两步，加上落点往前的两步（路口的几个方向都算）。只是记事件，不影响规则。
+func _emit_dodged(p: Player, trail: Array) -> void:
+	var land := board.site(p.pos)
+	if props.has(land) and owner_of(land) >= 0 and owner_of(land) != p.index:
+		return  # 落点自己就要付租
+	var near: Array = []
+	for k in [2, 3]:
+		if trail.size() >= k:
+			near.append(trail[trail.size() - k])
+	for a in board.next_tiles(p.pos):
+		near.append(a)
+		near.append_array(board.next_tiles(int(a)))
+	var wealth: int = p.cash + p.deposit
+	for t in near:
+		var site := board.site(int(t))
+		if site == land or not props.has(site):
+			continue
+		var o := owner_of(site)
+		if o < 0 or o == p.index or players[o].bankrupt or props[site]["mortgaged"] \
+				or NO_RENT_STATES.has(players[o].status_kind()):
+			continue
+		if rent_of(site) * 100 > wealth * int(rules["speech"]["much_money_pct"]):
+			_emit("dodged", {"player": p.index, "tile": site, "owner": o})
+			return
+
+
+## 台词用：pi 刚拿到 tiles 这些地，哪条街因此被他凑齐了（整条街的地全是他的，抵押也算），记一个 street_done
+func _emit_street_done(pi: int, tiles: Array) -> void:
+	var seen := {}
+	for t in tiles:
+		var tile: Dictionary = board.get_tile(int(t))
+		var g := str(tile.get("group", ""))
+		if str(tile["type"]) != "land" or seen.has(g):
+			continue
+		seen[g] = true
+		var total := 0
+		var mine := 0
+		for x in board.tiles:
+			if str(x["type"]) == "land" and not x.has("site") and str(x.get("group", "")) == g:
+				total += 1
+				if owner_of(int(x["id"])) == pi:
+					mine += 1
+		if total >= 2 and mine == total:
+			_emit("street_done", {"player": pi, "group": g,
+					"name": str(board.groups.get(g, {}).get("name", g))})
 
 
 ## 路上遇到别的玩家：小偷偷走现金，信徒施舍现金。
@@ -1170,6 +1291,7 @@ func buy() -> bool:
 	props[tile]["owner"] = p.index
 	props[tile]["mortgaged"] = false
 	_emit("bought", {"player": p.index, "tile": tile, "price": price})
+	_emit_street_done(p.index, [tile])
 	_clear_pending()
 	_finish_turn()
 	return true

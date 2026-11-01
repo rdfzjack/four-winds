@@ -7,12 +7,14 @@ extends Node
 const JsonUtil = preload("res://scripts/core/json_util.gd")
 const Board = preload("res://scripts/core/board.gd")
 const DataCheck = preload("res://scripts/core/data_check.gd")
+const LinesDb = preload("res://scripts/core/lines_db.gd")
+const SaveGame = preload("res://scripts/core/save_game.gd")
 
 const RULES_PATH := "res://data/rules.json"
 const CHARACTERS_PATH := "res://data/characters.json"
 const CARDS_PATH := "res://data/cards/chance.json"
 const AI_PATH := "res://data/ai/profiles.json"
-const LINES_PATH := "res://data/lines/speech.json"
+const LINES_DIR := "res://data/lines"
 const MAPS_DIR := "res://data/maps"
 
 var rules: Dictionary = {}
@@ -21,7 +23,7 @@ var maps: Dictionary = {}  ## 地图 id -> Board
 var cards: Array = []  ## 机会卡列表
 var special_events: Array = []  ## 不在牌堆里的特殊事件（古董、倒塌等）
 var ai_profiles: Dictionary = {}  ## AI 参数组 id -> {形态: {参数名: 数值}}（AI 自己用 ai_profiles.gd 读）
-var lines: Dictionary = {}  ## 整个 lines/speech.json
+var lines: LinesDb = null  ## 台词库（data/lines/ 下的事件表和每个角色的台词文件）
 var errors: Array = []  ## 读取或校验时发现的问题，主界面会显示出来
 ## 主界面选好的座位，开局时交给棋盘画面：[{character: 角色 id, human: bool}, ...]（格式见 Game.setup）
 var start_specs: Array = []
@@ -30,6 +32,8 @@ var start_map: String = ""   ## 主界面选的地图 id；空 = 默认地图
 var debug_ai: bool = false
 ## 路口全部随机（像原版），主界面勾选；不勾 = 按地图（现在的地图都是能选方向）
 var crossroads_random: bool = false
+## 读档读出来的东西（SaveGame.load_slot 的结果），交给棋盘画面接着玩；棋盘画面拿走后清空
+var resume: Dictionary = {}
 
 
 func _ready() -> void:
@@ -46,9 +50,7 @@ func reload() -> void:
 	special_events = cards_file.get("special_events", [])
 	var ai := JsonUtil.load_dict(AI_PATH, errors)
 	ai_profiles = ai.get("profiles", {})
-	lines = JsonUtil.load_dict(LINES_PATH, errors)
-
-	errors.append_array(DataCheck.check_characters(characters, ai, lines))
+	errors.append_array(DataCheck.check_characters(characters, ai))
 	errors.append_array(DataCheck.check_cards(cards_file, characters))
 
 	maps.clear()
@@ -62,6 +64,7 @@ func reload() -> void:
 		for e in board.load_from(d):
 			errors.append("%s：%s" % [file, e])
 		maps[board.id] = board
+	lines = _load_lines()
 	if not maps.has(str(rules.get("default_map", ""))):
 		errors.append("rules.json 的 default_map 找不到对应地图")
 	for e in errors:
@@ -93,11 +96,24 @@ func character(id: String) -> Dictionary:
 	return {}
 
 
-## 随机取一句台词。condition 是事件名（如 "TO_JAIL"），找不到时返回空字符串。
-func random_line(character_id: String, condition: String) -> String:
-	var c := character(character_id)
-	var set_id := str(c.get("lines", character_id))
-	var options: Array = lines.get("characters", {}).get(set_id, {}).get(condition, [])
-	if options.is_empty():
-		return ""
-	return str(options.pick_random())
+## 读台词：事件表 + 每个角色一个的 .txt。读不懂的行记进 errors（带文件名和行号）
+func _load_lines() -> LinesDb:
+	var db := LinesDb.new()
+	var map_info: Array = []
+	for id in maps:
+		map_info.append({"id": id, "name": maps[id].display_name})
+	var events_file := JsonUtil.load_dict(LINES_DIR.path_join("events.json"), errors)
+	db.setup(events_file, characters, map_info)
+	db.load_dir(LINES_DIR)
+	errors.append_array(db.errors)
+	return db
+
+
+## 读存档 slot，成功就记在 resume 里（然后切到棋盘画面）。成功返回 ""，否则返回原因
+func resume_from_save(slot: String) -> String:
+	var r := SaveGame.load_slot(slot, maps, rules,
+			{"cards": cards, "special_events": special_events}, characters)
+	if str(r["error"]) != "":
+		return str(r["error"])
+	resume = r
+	return ""

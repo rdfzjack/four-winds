@@ -1,0 +1,58 @@
+{
+  "_comment": "台词的事件表和抽取规则。作者写台词在同目录的 角色名.txt 里（写法见 docs/lines.md），这里只管：有哪些事件、谁先说、说多频繁、怎么抽。",
+  "sources": {
+    "_comment": "来源开关：0 = 关掉这个来源的全部台词，1 = 正常，也可以写别的数当相对权重（比如占位 0.3 = 占位台词出现得少一些）。台词文件里 “# 来源：xxx” 的 xxx 必须是这里的名字。",
+    "作者": 1,
+    "AI 写": 1,
+    "占位": 1
+  },
+  "moods": {
+    "_comment": "表情名。台词句尾 [xx] 写的必须是这里的名字，不写就用事件的默认表情。图片对应关系在 scripts/ui/art.gd。",
+    "list": ["平常", "开心", "生气", "得意", "沮丧", "惊讶", "无奈"]
+  },
+  "settings": {
+    "_comment": "weight_* = 台词带这种条件时的权重倍数（条件越具体越常出现，几个条件相乘）；recent_memory = 同一个人最近说过的几句先不抽；pester_* = 同一个人 pester_window_days 天内向同一个对象提议到第 pester_count 次，算“被纠缠”。",
+    "weight_target": 4,
+    "weight_present": 2,
+    "weight_map": 3,
+    "recent_memory": 3,
+    "pester_window_days": 6,
+    "pester_count": 3
+  },
+  "events": {
+    "_comment": "每个事件：id = 代码里用的名字；mood = 默认表情；priority = 同一刻撞上时谁说（大的先，只说一句）；chance = 说话概率（百分数）；cooldown = 同一个人说过这个事件后隔几天才再说（0 = 不限）。",
+    "付高额租金": {"id": "rent_big", "mood": "沮丧", "priority": 10, "chance": 100, "cooldown": 0},
+    "付少量钱": {"id": "rent_small", "mood": "平常", "priority": 10, "chance": 60, "cooldown": 2},
+    "交好运": {"id": "good_luck", "mood": "开心", "priority": 10, "chance": 100, "cooldown": 0},
+    "倒霉": {"id": "bad_luck", "mood": "沮丧", "priority": 10, "chance": 100, "cooldown": 0},
+    "进巡捕房": {"id": "jailed", "mood": "惊讶", "priority": 10, "chance": 100, "cooldown": 0},
+    "建成别墅": {"id": "build_villa", "mood": "得意", "priority": 10, "chance": 100, "cooldown": 0},
+    "得到施舍": {"id": "alms_get", "mood": "开心", "priority": 10, "chance": 100, "cooldown": 0},
+    "被偷": {"id": "stolen", "mood": "惊讶", "priority": 10, "chance": 100, "cooldown": 0},
+    "偷到钱": {"id": "steal", "mood": "得意", "priority": 10, "chance": 100, "cooldown": 0},
+
+    "发起交易": {"id": "trade_propose", "mood": "平常", "priority": 10, "chance": 70, "cooldown": 0},
+    "接受交易": {"id": "trade_accept", "mood": "开心", "priority": 10, "chance": 100, "cooldown": 0},
+    "拒绝交易": {"id": "trade_reject", "mood": "无奈", "priority": 10, "chance": 100, "cooldown": 0},
+    "还价": {"id": "trade_counter", "mood": "平常", "priority": 10, "chance": 100, "cooldown": 0},
+
+    "被压价": {"id": "lowball", "mood": "生气", "priority": 20, "chance": 100, "cooldown": 0},
+    "讨价还价": {"id": "haggle", "mood": "平常", "priority": 20, "chance": 100, "cooldown": 0},
+    "放水让价": {"id": "mercy", "mood": "开心", "priority": 20, "chance": 100, "cooldown": 0},
+    "领先时放宽": {"id": "lead_relax", "mood": "平常", "priority": 20, "chance": 100, "cooldown": 0},
+    "落后时损人不利己": {"id": "spite", "mood": "生气", "priority": 20, "chance": 100, "cooldown": 0},
+    "按错": {"id": "slip", "mood": "惊讶", "priority": 20, "chance": 100, "cooldown": 0},
+    "被同一个人纠缠": {"id": "pestered", "mood": "无奈", "priority": 15, "chance": 100, "cooldown": 0},
+
+    "买到喜欢的街": {"id": "fav_street", "mood": "得意", "priority": 12, "chance": 100, "cooldown": 0},
+    "凑齐整条街": {"id": "street_done", "mood": "得意", "priority": 15, "chance": 100, "cooldown": 0},
+    "拍卖买到": {"id": "auction_won", "mood": "开心", "priority": 10, "chance": 100, "cooldown": 0},
+    "躲开大租": {"id": "dodged", "mood": "得意", "priority": 8, "chance": 50, "cooldown": 4},
+    "游览公园": {"id": "park", "mood": "开心", "priority": 10, "chance": 100, "cooldown": 0},
+    "开局": {"id": "game_start", "mood": "平常", "priority": 10, "chance": 100, "cooldown": 0},
+    "赢": {"id": "win", "mood": "开心", "priority": 30, "chance": 100, "cooldown": 0},
+    "输": {"id": "lose", "mood": "沮丧", "priority": 30, "chance": 100, "cooldown": 0},
+    "自己破产": {"id": "self_bankrupt", "mood": "沮丧", "priority": 30, "chance": 100, "cooldown": 0},
+    "对手破产": {"id": "rival_bankrupt", "mood": "得意", "priority": 30, "chance": 100, "cooldown": 0}
+  }
+}

@@ -5,7 +5,8 @@ Usage:
     python3 tools/validate_data.py [--project fourwinds-benti]
 
 Applies the same map checks as fourwinds-benti/scripts/core/board.gd
-(validate) plus basic checks on rules.json and characters.json, and runs a
+(validate) plus basic checks on rules.json and characters.json, the speech lines
+(data/lines/*.txt, same reading as scripts/core/lines_db.gd), and runs a
 small walk test on every map. Exit code 0 = all good.
 """
 from __future__ import annotations
@@ -14,6 +15,9 @@ import argparse
 import json
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lines_lib import Lines  # noqa: E402
 
 TILE_TYPES = {"start", "land", "company", "chance", "bank", "tax", "jail", "park",
               "church", "government", "casino", "race_course", "road"}
@@ -132,21 +136,17 @@ def main() -> int:
         errors.append("角色 id 为空或重复")
 
     ai = load(proj / "data/ai/profiles.json", errors) or {}
-    lines = load(proj / "data/lines/speech.json", errors) or {}
-    conditions = lines.get("conditions", {})
+    lines = Lines(proj)
+    errors.extend(lines.errors)
+    for cid in ids:
+        if (cid, "front") not in lines.sets:
+            errors.append(f"角色 {cid} 没有台词文件（data/lines/{lines.nicknames.get(cid, cid)}.txt）")
     for c in chars:
         prof = ai.get("profiles", {}).get(c.get("ai_profile"))
         if prof is None:
             errors.append(f"角色 {c.get('id')} 的 AI 参数 {c.get('ai_profile')!r} 不存在")
         elif not isinstance(prof.get("front"), dict):
             errors.append(f"角色 {c.get('id')} 的 AI 参数缺少 front（表形态）")
-        lset = lines.get("characters", {}).get(c.get("lines"))
-        if lset is None:
-            errors.append(f"角色 {c.get('id')} 的台词 {c.get('lines')!r} 不存在")
-        else:
-            for cond in conditions:
-                if not lset.get(cond):
-                    errors.append(f"角色 {c.get('id')} 缺少事件 {cond} 的台词")
     cards = load(proj / "data/cards/chance.json", errors) or {}
     ops = cards.get("ops", {})
     ids = [c.get("id") for c in cards.get("cards", [])]
@@ -162,7 +162,8 @@ def main() -> int:
         for e in c.get("effects", []):
             if e.get("op") not in ops:
                 errors.append(f"机会卡 {c.get('id')} 的效果 {e.get('op')!r} 没有在 ops 里说明")
-    print(f"机会卡 {len(ids)} 张，台词 {len(lines.get('characters', {}))} 人 × {len(conditions)} 种事件")
+    total = sum(len(v) for st in lines.sets.values() for v in st.values())
+    print(f"机会卡 {len(ids)} 张，台词 {len(lines.sets)} 个文件共 {total} 句，{len(lines.events)} 种事件")
 
     map_ids = []
     for f in sorted((proj / "data/maps").glob("*.json")):
