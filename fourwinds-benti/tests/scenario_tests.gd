@@ -6,6 +6,7 @@ const Scenario = preload("res://scripts/core/scenario.gd")
 const Profile = preload("res://scripts/core/profile.gd")
 
 const PROFILE_PATH := "user://test_profile.json"
+const FIXTURE := "res://tests/fixtures/example_campaign.json"
 
 
 func run(p_runner: Object) -> void:
@@ -15,6 +16,7 @@ func run(p_runner: Object) -> void:
 	_clean()
 	Profile.path = PROFILE_PATH
 	test_campaign_data()
+	test_real_stages_play()
 	test_validate_catches_mistakes()
 	test_apply_setup()
 	test_conditions()
@@ -41,8 +43,12 @@ func data() -> Node:
 	return runner.root.get_node("Data")
 
 
+## 测试用的示例关（tests/fixtures/example_campaign.json，不是正式内容）
 func sample_stage(index: int = 0) -> Dictionary:
-	return data().stages_of("david")[index].duplicate(true)
+	var errors: Array = []
+	var fx := JsonUtil.load_dict(FIXTURE, errors)
+	check(errors.is_empty(), "示例主线能读 %s" % str(errors))
+	return fx["stages"][index].duplicate(true)
 
 
 ## 概率事件关掉的规则（建房后不会挖古董 / 倒塌），测试里要建房时用
@@ -77,12 +83,32 @@ func event_types(g: Game) -> Array:
 # ───────────────────────── 数据 ─────────────────────────
 
 func test_campaign_data() -> void:
-	check(data().campaigns.has("david"), "读到了斐斐的主线（示例）")
-	check(data().stages_of("david").size() == 2, "示例主线有 2 关")
 	for e in data().errors:
-		check(not str(e).contains("campaigns"), "主线数据没有校验问题：%s" % str(e))
+		check(not str(e).contains(".json：关卡") and not str(e).contains("campaigns"),
+				"主线数据没有校验问题：%s" % str(e))
+	for cid in ["david", "eric"]:
+		check(data().campaigns.has(cid) and data().stages_of(cid).size() == 3, "%s 的主线有 3 关" % cid)
 	for stage in data().stages_of("david"):
-		check(bool(stage.get("example", false)), "示例关带 example 标记：%s" % str(stage["id"]))
+		check(bool(stage.get("example", false)) == (str(stage["id"]) != "david_3"),
+				"斐斐第 1、2 关是占位（example），第 3 关不是：%s" % str(stage["id"]))
+	check(sample_stage(0)["seats"].size() == 3 and sample_stage(1)["seats"].size() == 4, "示例关读得到")
+
+
+## 正式主线的每一关：能开局，玩家交给 AI 打一阵，内部数据一直一致；打出结果的话结果合理
+func test_real_stages_play() -> void:
+	for cid in ["eric", "david"]:
+		for i in range(data().stages_of(cid).size()):
+			var stage: Dictionary = data().stages_of(cid)[i].duplicate(true)
+			var g := scn_game(stage, 100 + i)
+			g.players[g.scenario.player_seat].human = false
+			g.players[g.scenario.player_seat].ai = "new_v2"
+			steps(g, 2500)
+			check(g.check_invariants().is_empty(),
+					"%s 内部数据一致 %s" % [str(stage["id"]), str(g.check_invariants())])
+			check(g.phase != "over" or g.scenario.result != "",
+					"%s 结束时有结果" % str(stage["id"]))
+			print("  主线 %s：第 %d 天 %s %s" % [str(stage["id"]), g.day,
+					g.scenario.result if g.phase == "over" else "还在打", g.scenario.reason])
 
 
 func test_validate_catches_mistakes() -> void:

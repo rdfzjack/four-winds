@@ -5,6 +5,7 @@ extends SceneTree
 ## 会写进度文件（user://profile.json）：脚本里先把路径换成临时文件，不弄脏真进度。
 
 const Profile = preload("res://scripts/core/profile.gd")
+const JsonUtil = preload("res://scripts/core/json_util.gd")
 
 var out_dir := "/tmp"
 var frames := 0
@@ -30,6 +31,9 @@ func _process(_delta: float) -> bool:
 	var data = root.get_node("Data")
 	match frames:
 		5:
+			# 用测试用的示例主线（斐斐，2 关），不依赖正式关卡内容
+			var errors: Array = []
+			data.campaigns["david"] = JsonUtil.load_dict("res://tests/fixtures/example_campaign.json", errors)
 			current_scene._open_campaign()
 		12:
 			panel = current_scene._overlay.find_children("*", "VBoxContainer", true, false)[0]

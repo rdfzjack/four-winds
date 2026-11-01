@@ -1,0 +1,2030 @@
+{
+ "id": "riviera",
+ "name": "蔚蓝海岸",
+ "placeholder": true,
+ "_comment": "由 tools/cit_to_map.py 从原版 Story35.cit 转换，地名、企业名按个人主线重新包装（行业类别是机制，名字随城市），之后可直接修改。pos 是原版的路面格。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版 上海 的 CITY_PROPERTY，单位万圆。",
+  "blank_land_price": 80,
+  "build_cost": {
+   "flat": 40,
+   "hotel": 100,
+   "floor": 140,
+   "villa": 200,
+   "upgrade": 60,
+   "function": 80
+  },
+  "rent": {
+   "blank_land": 15,
+   "flat": 30,
+   "hotel": 60,
+   "super_hotel": 80,
+   "floor": 80,
+   "super_floor": 120,
+   "villa": 150
+  }
+ },
+ "groups": {
+  "英国人散步大道": {
+   "name": "英国人散步大道",
+   "color": "#8d6e63"
+  },
+  "尼斯老城": {
+   "name": "尼斯老城",
+   "color": "#4fc3f7"
+  },
+  "滨海自由城": {
+   "name": "滨海自由城",
+   "color": "#f48fb1"
+  },
+  "费拉角": {
+   "name": "费拉角",
+   "color": "#ba68c8"
+  },
+  "博利厄": {
+   "name": "博利厄",
+   "color": "#ff8a65"
+  },
+  "埃兹": {
+   "name": "埃兹",
+   "color": "#e57373"
+  },
+  "蒙特卡洛": {
+   "name": "蒙特卡洛",
+   "color": "#fff176"
+  },
+  "芒通": {
+   "name": "芒通",
+   "color": "#81c784"
+  },
+  "马丁角": {
+   "name": "马丁角",
+   "color": "#1565c0"
+  },
+  "戛纳十字大道": {
+   "name": "戛纳十字大道",
+   "color": "#4db6ac"
+  },
+  "戛纳老港": {
+   "name": "戛纳老港",
+   "color": "#8d6e63"
+  },
+  "昂蒂布角": {
+   "name": "昂蒂布角",
+   "color": "#4fc3f7"
+  },
+  "瑞昂莱潘": {
+   "name": "瑞昂莱潘",
+   "color": "#f48fb1"
+  },
+  "格拉斯山路": {
+   "name": "格拉斯山路",
+   "color": "#ba68c8"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "company",
+   "name": "蒙特卡洛赌场",
+   "industry": "entertainment",
+   "price": 450,
+   "rent": 120,
+   "source": "Story35.cit 建筑 大世界夜总会",
+   "lot": [
+    6,
+    17
+   ],
+   "pos": [
+    5,
+    17
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "company",
+   "site": 0,
+   "pos": [
+    5,
+    18
+   ],
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "company",
+   "name": "尼斯港",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "source": "Story35.cit 建筑 公平路码头",
+   "lot": [
+    6,
+    19
+   ],
+   "pos": [
+    5,
+    19
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "company",
+   "site": 2,
+   "pos": [
+    5,
+    20
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "land",
+   "name": "昂蒂布角1号",
+   "group": "昂蒂布角",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story35.cit 地块 (6,21)",
+   "lot": [
+    6,
+    21
+   ],
+   "pos": [
+    5,
+    21
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "land",
+   "name": "昂蒂布角2号",
+   "group": "昂蒂布角",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story35.cit 地块 (6,22)",
+   "lot": [
+    6,
+    22
+   ],
+   "pos": [
+    5,
+    22
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "land",
+   "name": "昂蒂布角3号",
+   "group": "昂蒂布角",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story35.cit 地块 (6,23)",
+   "lot": [
+    6,
+    23
+   ],
+   "pos": [
+    5,
+    23
+   ],
+   "crossroad": "choice",
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "land",
+   "name": "昂蒂布角4号",
+   "group": "昂蒂布角",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story35.cit 地块 (6,24)",
+   "lot": [
+    6,
+    24
+   ],
+   "pos": [
+    5,
+    24
+   ],
+   "next": [
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "land",
+   "name": "昂蒂布角5号",
+   "group": "昂蒂布角",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story35.cit 地块 (6,25)",
+   "lot": [
+    6,
+    25
+   ],
+   "pos": [
+    5,
+    25
+   ],
+   "next": [
+    9
+   ]
+  },
+  {
+   "id": 9,
+   "type": "company",
+   "name": "白鹭精品店",
+   "industry": "shop",
+   "price": 420,
+   "rent": 110,
+   "source": "Story35.cit 建筑 三井洋行",
+   "lot": [
+    6,
+    26
+   ],
+   "pos": [
+    5,
+    26
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "company",
+   "site": 9,
+   "pos": [
+    5,
+    27
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "company",
+   "name": "蓝鹦鹉酒吧",
+   "industry": "entertainment",
+   "price": 400,
+   "rent": 120,
+   "source": "Story35.cit 建筑 百老汇夜总会",
+   "lot": [
+    6,
+    28
+   ],
+   "pos": [
+    5,
+    28
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "company",
+   "site": 11,
+   "pos": [
+    5,
+    29
+   ],
+   "next": [
+    13
+   ]
+  },
+  {
+   "id": 13,
+   "type": "company",
+   "name": "昂蒂布游艇码头",
+   "industry": "transport",
+   "price": 480,
+   "rent": 100,
+   "source": "Story35.cit 建筑 电车公司",
+   "lot": [
+    4,
+    30
+   ],
+   "pos": [
+    4,
+    29
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "company",
+   "site": 13,
+   "pos": [
+    3,
+    29
+   ],
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "land",
+   "name": "芒通1号",
+   "group": "芒通",
+   "price_pct": 130,
+   "build_cost_pct": 130,
+   "source": "Story35.cit 地块 (2,28)",
+   "lot": [
+    2,
+    28
+   ],
+   "pos": [
+    2,
+    29
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "land",
+   "name": "芒通1号",
+   "group": "芒通",
+   "price_pct": 130,
+   "build_cost_pct": 130,
+   "source": "Story35.cit 地块 (1,28)",
+   "lot": [
+    1,
+    28
+   ],
+   "pos": [
+    1,
+    29
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "land",
+   "site": 19,
+   "pos": [
+    0,
+    29
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 18,
+   "type": "road",
+   "pos": [
+    -1,
+    29
+   ],
+   "crossroad": "choice",
+   "next": [
+    19,
+    114
+   ]
+  },
+  {
+   "id": 19,
+   "type": "land",
+   "name": "费拉角1号",
+   "group": "费拉角",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (0,30)",
+   "lot": [
+    0,
+    30
+   ],
+   "pos": [
+    -1,
+    30
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "land",
+   "name": "费拉角2号",
+   "group": "费拉角",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (0,31)",
+   "lot": [
+    0,
+    31
+   ],
+   "pos": [
+    -1,
+    31
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "land",
+   "name": "费拉角3号",
+   "group": "费拉角",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (0,32)",
+   "lot": [
+    0,
+    32
+   ],
+   "pos": [
+    -1,
+    32
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "chance",
+   "name": "运气",
+   "source": "Story35.cit 建筑 运气",
+   "lot": [
+    -2,
+    33
+   ],
+   "pos": [
+    -1,
+    33
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "chance",
+   "site": 22,
+   "pos": [
+    -1,
+    34
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "road",
+   "pos": [
+    -1,
+    35
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "chance",
+   "site": 22,
+   "pos": [
+    -2,
+    35
+   ],
+   "next": [
+    26
+   ]
+  },
+  {
+   "id": 26,
+   "type": "chance",
+   "site": 22,
+   "pos": [
+    -3,
+    35
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "company",
+   "name": "蓝色列车终点站",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "source": "Story35.cit 建筑 十六铺码头",
+   "lot": [
+    -4,
+    36
+   ],
+   "pos": [
+    -4,
+    35
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "company",
+   "site": 27,
+   "pos": [
+    -5,
+    35
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "government",
+   "name": "市政厅",
+   "source": "Story35.cit 建筑 市政厅",
+   "lot": [
+    -6,
+    36
+   ],
+   "pos": [
+    -6,
+    35
+   ],
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "government",
+   "site": 29,
+   "pos": [
+    -7,
+    35
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "land",
+   "name": "埃兹3号",
+   "group": "埃兹",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story35.cit 地块 (-9,35)",
+   "lot": [
+    -9,
+    35
+   ],
+   "pos": [
+    -8,
+    35
+   ],
+   "next": [
+    32
+   ]
+  },
+  {
+   "id": 32,
+   "type": "land",
+   "name": "埃兹2号",
+   "group": "埃兹",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story35.cit 地块 (-9,34)",
+   "lot": [
+    -9,
+    34
+   ],
+   "pos": [
+    -8,
+    34
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "land",
+   "name": "埃兹1号",
+   "group": "埃兹",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story35.cit 地块 (-9,33)",
+   "lot": [
+    -9,
+    33
+   ],
+   "pos": [
+    -8,
+    33
+   ],
+   "next": [
+    34
+   ]
+  },
+  {
+   "id": 34,
+   "type": "company",
+   "name": "老港古董店",
+   "industry": "shop",
+   "price": 400,
+   "rent": 100,
+   "source": "Story35.cit 建筑 协昌祥百货公司",
+   "lot": [
+    -7,
+    32
+   ],
+   "pos": [
+    -8,
+    32
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "company",
+   "site": 34,
+   "pos": [
+    -8,
+    31
+   ],
+   "next": [
+    36
+   ]
+  },
+  {
+   "id": 36,
+   "type": "land",
+   "site": 62,
+   "pos": [
+    -8,
+    30
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 37,
+   "type": "road",
+   "pos": [
+    -8,
+    29
+   ],
+   "crossroad": "choice",
+   "next": [
+    38,
+    108
+   ]
+  },
+  {
+   "id": 38,
+   "type": "bank",
+   "name": "银行",
+   "source": "Story35.cit 建筑 银行",
+   "lot": [
+    -7,
+    28
+   ],
+   "pos": [
+    -8,
+    28
+   ],
+   "next": [
+    39
+   ]
+  },
+  {
+   "id": 39,
+   "type": "bank",
+   "site": 38,
+   "pos": [
+    -8,
+    27
+   ],
+   "next": [
+    40
+   ]
+  },
+  {
+   "id": 40,
+   "type": "land",
+   "name": "瑞昂莱潘3号",
+   "group": "瑞昂莱潘",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story35.cit 地块 (-7,26)",
+   "lot": [
+    -7,
+    26
+   ],
+   "pos": [
+    -8,
+    26
+   ],
+   "next": [
+    41
+   ]
+  },
+  {
+   "id": 41,
+   "type": "land",
+   "name": "瑞昂莱潘2号",
+   "group": "瑞昂莱潘",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story35.cit 地块 (-7,25)",
+   "lot": [
+    -7,
+    25
+   ],
+   "pos": [
+    -8,
+    25
+   ],
+   "next": [
+    42
+   ]
+  },
+  {
+   "id": 42,
+   "type": "land",
+   "name": "瑞昂莱潘1号",
+   "group": "瑞昂莱潘",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story35.cit 地块 (-7,24)",
+   "lot": [
+    -7,
+    24
+   ],
+   "pos": [
+    -8,
+    24
+   ],
+   "next": [
+    43
+   ]
+  },
+  {
+   "id": 43,
+   "type": "road",
+   "pos": [
+    -8,
+    23
+   ],
+   "crossroad": "choice",
+   "next": [
+    44,
+    63
+   ]
+  },
+  {
+   "id": 44,
+   "type": "land",
+   "name": "戛纳十字大道4号",
+   "group": "戛纳十字大道",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story35.cit 地块 (-9,22)",
+   "lot": [
+    -9,
+    22
+   ],
+   "pos": [
+    -9,
+    23
+   ],
+   "next": [
+    45
+   ]
+  },
+  {
+   "id": 45,
+   "type": "land",
+   "name": "戛纳十字大道3号",
+   "group": "戛纳十字大道",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story35.cit 地块 (-10,22)",
+   "lot": [
+    -10,
+    22
+   ],
+   "pos": [
+    -10,
+    23
+   ],
+   "next": [
+    46
+   ]
+  },
+  {
+   "id": 46,
+   "type": "land",
+   "name": "戛纳十字大道2号",
+   "group": "戛纳十字大道",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story35.cit 地块 (-11,22)",
+   "lot": [
+    -11,
+    22
+   ],
+   "pos": [
+    -11,
+    23
+   ],
+   "next": [
+    47
+   ]
+  },
+  {
+   "id": 47,
+   "type": "land",
+   "name": "戛纳十字大道1号",
+   "group": "戛纳十字大道",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story35.cit 地块 (-12,22)",
+   "lot": [
+    -12,
+    22
+   ],
+   "pos": [
+    -12,
+    23
+   ],
+   "next": [
+    48
+   ]
+  },
+  {
+   "id": 48,
+   "type": "church",
+   "name": "教堂",
+   "source": "Story35.cit 建筑 教堂",
+   "lot": [
+    -13,
+    22
+   ],
+   "pos": [
+    -13,
+    23
+   ],
+   "next": [
+    49
+   ]
+  },
+  {
+   "id": 49,
+   "type": "church",
+   "site": 48,
+   "pos": [
+    -14,
+    23
+   ],
+   "next": [
+    50
+   ]
+  },
+  {
+   "id": 50,
+   "type": "company",
+   "name": "地中海珠宝行",
+   "industry": "shop",
+   "price": 450,
+   "rent": 100,
+   "source": "Story35.cit 建筑 大新百货公司",
+   "lot": [
+    -16,
+    23
+   ],
+   "pos": [
+    -15,
+    23
+   ],
+   "next": [
+    51
+   ]
+  },
+  {
+   "id": 51,
+   "type": "company",
+   "site": 50,
+   "pos": [
+    -15,
+    24
+   ],
+   "next": [
+    52
+   ]
+  },
+  {
+   "id": 52,
+   "type": "company",
+   "name": "海滨夏宫俱乐部",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 100,
+   "source": "Story35.cit 建筑 天外天夜总会",
+   "lot": [
+    -14,
+    25
+   ],
+   "pos": [
+    -15,
+    25
+   ],
+   "next": [
+    53
+   ]
+  },
+  {
+   "id": 53,
+   "type": "company",
+   "site": 52,
+   "pos": [
+    -15,
+    26
+   ],
+   "next": [
+    54
+   ]
+  },
+  {
+   "id": 54,
+   "type": "race_course",
+   "name": "赛马场",
+   "source": "Story35.cit 建筑 赛马场",
+   "lot": [
+    -14,
+    27
+   ],
+   "pos": [
+    -15,
+    27
+   ],
+   "next": [
+    55
+   ]
+  },
+  {
+   "id": 55,
+   "type": "race_course",
+   "site": 54,
+   "pos": [
+    -15,
+    28
+   ],
+   "next": [
+    56
+   ]
+  },
+  {
+   "id": 56,
+   "type": "road",
+   "pos": [
+    -15,
+    29
+   ],
+   "next": [
+    57
+   ]
+  },
+  {
+   "id": 57,
+   "type": "race_course",
+   "site": 54,
+   "pos": [
+    -14,
+    29
+   ],
+   "next": [
+    58
+   ]
+  },
+  {
+   "id": 58,
+   "type": "race_course",
+   "site": 54,
+   "pos": [
+    -13,
+    29
+   ],
+   "next": [
+    59
+   ]
+  },
+  {
+   "id": 59,
+   "type": "land",
+   "name": "蒙特卡洛1号",
+   "group": "蒙特卡洛",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-12,30)",
+   "lot": [
+    -12,
+    30
+   ],
+   "pos": [
+    -12,
+    29
+   ],
+   "next": [
+    60
+   ]
+  },
+  {
+   "id": 60,
+   "type": "land",
+   "name": "蒙特卡洛2号",
+   "group": "蒙特卡洛",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-11,30)",
+   "lot": [
+    -11,
+    30
+   ],
+   "pos": [
+    -11,
+    29
+   ],
+   "next": [
+    61
+   ]
+  },
+  {
+   "id": 61,
+   "type": "land",
+   "name": "蒙特卡洛3号",
+   "group": "蒙特卡洛",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-10,30)",
+   "lot": [
+    -10,
+    30
+   ],
+   "pos": [
+    -10,
+    29
+   ],
+   "next": [
+    62
+   ]
+  },
+  {
+   "id": 62,
+   "type": "land",
+   "name": "蒙特卡洛4号",
+   "group": "蒙特卡洛",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-9,30)",
+   "lot": [
+    -9,
+    30
+   ],
+   "pos": [
+    -9,
+    29
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 63,
+   "type": "land",
+   "site": 42,
+   "pos": [
+    -7,
+    23
+   ],
+   "next": [
+    64
+   ]
+  },
+  {
+   "id": 64,
+   "type": "company",
+   "name": "尼斯狂欢节花车行",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 90,
+   "source": "Story35.cit 建筑 百乐门夜总会",
+   "lot": [
+    -6,
+    22
+   ],
+   "pos": [
+    -6,
+    23
+   ],
+   "next": [
+    65
+   ]
+  },
+  {
+   "id": 65,
+   "type": "company",
+   "site": 64,
+   "pos": [
+    -5,
+    23
+   ],
+   "next": [
+    66
+   ]
+  },
+  {
+   "id": 66,
+   "type": "land",
+   "name": "格拉斯山路1号",
+   "group": "格拉斯山路",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story35.cit 地块 (-4,22)",
+   "lot": [
+    -4,
+    22
+   ],
+   "pos": [
+    -4,
+    23
+   ],
+   "next": [
+    67
+   ]
+  },
+  {
+   "id": 67,
+   "type": "land",
+   "name": "格拉斯山路2号",
+   "group": "格拉斯山路",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story35.cit 地块 (-3,22)",
+   "lot": [
+    -3,
+    22
+   ],
+   "pos": [
+    -3,
+    23
+   ],
+   "next": [
+    68
+   ]
+  },
+  {
+   "id": 68,
+   "type": "land",
+   "name": "格拉斯山路3号",
+   "group": "格拉斯山路",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story35.cit 地块 (-2,22)",
+   "lot": [
+    -2,
+    22
+   ],
+   "pos": [
+    -2,
+    23
+   ],
+   "next": [
+    69
+   ]
+  },
+  {
+   "id": 69,
+   "type": "road",
+   "pos": [
+    -1,
+    23
+   ],
+   "crossroad": "choice",
+   "next": [
+    70,
+    103
+   ]
+  },
+  {
+   "id": 70,
+   "type": "land",
+   "site": 68,
+   "pos": [
+    -1,
+    22
+   ],
+   "next": [
+    71
+   ]
+  },
+  {
+   "id": 71,
+   "type": "land",
+   "name": "滨海自由城2号",
+   "group": "滨海自由城",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (0,21)",
+   "lot": [
+    0,
+    21
+   ],
+   "pos": [
+    -1,
+    21
+   ],
+   "next": [
+    72
+   ]
+  },
+  {
+   "id": 72,
+   "type": "land",
+   "name": "滨海自由城1号",
+   "group": "滨海自由城",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (0,20)",
+   "lot": [
+    0,
+    20
+   ],
+   "pos": [
+    -1,
+    20
+   ],
+   "next": [
+    73
+   ]
+  },
+  {
+   "id": 73,
+   "type": "road",
+   "pos": [
+    -1,
+    19
+   ],
+   "next": [
+    74
+   ]
+  },
+  {
+   "id": 74,
+   "type": "land",
+   "site": 98,
+   "pos": [
+    -1,
+    18
+   ],
+   "next": [
+    75
+   ]
+  },
+  {
+   "id": 75,
+   "type": "road",
+   "pos": [
+    -1,
+    17
+   ],
+   "crossroad": "choice",
+   "next": [
+    76,
+    98
+   ]
+  },
+  {
+   "id": 76,
+   "type": "road",
+   "pos": [
+    -1,
+    16
+   ],
+   "next": [
+    77
+   ]
+  },
+  {
+   "id": 77,
+   "type": "road",
+   "pos": [
+    -1,
+    15
+   ],
+   "next": [
+    78
+   ]
+  },
+  {
+   "id": 78,
+   "type": "jail",
+   "name": "巡捕房",
+   "source": "Story35.cit 建筑 巡捕房",
+   "lot": [
+    0,
+    14
+   ],
+   "pos": [
+    -1,
+    14
+   ],
+   "next": [
+    79
+   ]
+  },
+  {
+   "id": 79,
+   "type": "jail",
+   "site": 78,
+   "pos": [
+    -1,
+    13
+   ],
+   "next": [
+    80
+   ]
+  },
+  {
+   "id": 80,
+   "type": "land",
+   "name": "博利厄4号",
+   "group": "博利厄",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-1,11)",
+   "lot": [
+    -1,
+    11
+   ],
+   "pos": [
+    -1,
+    12
+   ],
+   "next": [
+    81
+   ]
+  },
+  {
+   "id": 81,
+   "type": "land",
+   "name": "博利厄3号",
+   "group": "博利厄",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-2,11)",
+   "lot": [
+    -2,
+    11
+   ],
+   "pos": [
+    -2,
+    12
+   ],
+   "next": [
+    82
+   ]
+  },
+  {
+   "id": 82,
+   "type": "land",
+   "name": "博利厄2号",
+   "group": "博利厄",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-3,11)",
+   "lot": [
+    -3,
+    11
+   ],
+   "pos": [
+    -3,
+    12
+   ],
+   "next": [
+    83
+   ]
+  },
+  {
+   "id": 83,
+   "type": "land",
+   "name": "博利厄1号",
+   "group": "博利厄",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story35.cit 地块 (-4,11)",
+   "lot": [
+    -4,
+    11
+   ],
+   "pos": [
+    -4,
+    12
+   ],
+   "next": [
+    84
+   ]
+  },
+  {
+   "id": 84,
+   "type": "company",
+   "name": "海角公路汽车行",
+   "industry": "transport",
+   "price": 560,
+   "rent": 130,
+   "source": "Story35.cit 建筑 上海站",
+   "lot": [
+    -5,
+    11
+   ],
+   "pos": [
+    -5,
+    12
+   ],
+   "next": [
+    85
+   ]
+  },
+  {
+   "id": 85,
+   "type": "company",
+   "site": 84,
+   "pos": [
+    -6,
+    12
+   ],
+   "next": [
+    86
+   ]
+  },
+  {
+   "id": 86,
+   "type": "land",
+   "name": "英国人散步大道1号",
+   "group": "英国人散步大道",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story35.cit 地块 (-7,13)",
+   "lot": [
+    -7,
+    13
+   ],
+   "pos": [
+    -6,
+    13
+   ],
+   "next": [
+    87
+   ]
+  },
+  {
+   "id": 87,
+   "type": "land",
+   "name": "英国人散步大道2号",
+   "group": "英国人散步大道",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story35.cit 地块 (-7,14)",
+   "lot": [
+    -7,
+    14
+   ],
+   "pos": [
+    -6,
+    14
+   ],
+   "next": [
+    88
+   ]
+  },
+  {
+   "id": 88,
+   "type": "land",
+   "name": "英国人散步大道3号",
+   "group": "英国人散步大道",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story35.cit 地块 (-7,15)",
+   "lot": [
+    -7,
+    15
+   ],
+   "pos": [
+    -6,
+    15
+   ],
+   "next": [
+    89
+   ]
+  },
+  {
+   "id": 89,
+   "type": "land",
+   "name": "英国人散步大道4号",
+   "group": "英国人散步大道",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story35.cit 地块 (-7,16)",
+   "lot": [
+    -7,
+    16
+   ],
+   "pos": [
+    -6,
+    16
+   ],
+   "next": [
+    90
+   ]
+  },
+  {
+   "id": 90,
+   "type": "road",
+   "pos": [
+    -6,
+    17
+   ],
+   "next": [
+    91
+   ]
+  },
+  {
+   "id": 91,
+   "type": "road",
+   "pos": [
+    -6,
+    18
+   ],
+   "next": [
+    92
+   ]
+  },
+  {
+   "id": 92,
+   "type": "road",
+   "pos": [
+    -6,
+    19
+   ],
+   "next": [
+    93
+   ]
+  },
+  {
+   "id": 93,
+   "type": "road",
+   "pos": [
+    -7,
+    19
+   ],
+   "next": [
+    94
+   ]
+  },
+  {
+   "id": 94,
+   "type": "chance",
+   "name": "运气",
+   "source": "Story35.cit 建筑 运气",
+   "lot": [
+    -9,
+    19
+   ],
+   "pos": [
+    -8,
+    19
+   ],
+   "next": [
+    95
+   ]
+  },
+  {
+   "id": 95,
+   "type": "chance",
+   "site": 94,
+   "pos": [
+    -8,
+    20
+   ],
+   "next": [
+    96
+   ]
+  },
+  {
+   "id": 96,
+   "type": "road",
+   "pos": [
+    -8,
+    21
+   ],
+   "next": [
+    97
+   ]
+  },
+  {
+   "id": 97,
+   "type": "land",
+   "site": 44,
+   "pos": [
+    -8,
+    22
+   ],
+   "next": [
+    43
+   ]
+  },
+  {
+   "id": 98,
+   "type": "land",
+   "name": "尼斯老城1号",
+   "group": "尼斯老城",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (0,18)",
+   "lot": [
+    0,
+    18
+   ],
+   "pos": [
+    0,
+    17
+   ],
+   "next": [
+    99
+   ]
+  },
+  {
+   "id": 99,
+   "type": "land",
+   "name": "尼斯老城2号",
+   "group": "尼斯老城",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (1,18)",
+   "lot": [
+    1,
+    18
+   ],
+   "pos": [
+    1,
+    17
+   ],
+   "next": [
+    100
+   ]
+  },
+  {
+   "id": 100,
+   "type": "land",
+   "name": "尼斯老城3号",
+   "group": "尼斯老城",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story35.cit 地块 (2,18)",
+   "lot": [
+    2,
+    18
+   ],
+   "pos": [
+    2,
+    17
+   ],
+   "next": [
+    101
+   ]
+  },
+  {
+   "id": 101,
+   "type": "park",
+   "name": "公园",
+   "source": "Story35.cit 建筑 公园",
+   "lot": [
+    3,
+    16
+   ],
+   "pos": [
+    3,
+    17
+   ],
+   "next": [
+    102
+   ]
+  },
+  {
+   "id": 102,
+   "type": "park",
+   "site": 101,
+   "pos": [
+    4,
+    17
+   ],
+   "next": [
+    0
+   ]
+  },
+  {
+   "id": 103,
+   "type": "land",
+   "site": 118,
+   "pos": [
+    0,
+    23
+   ],
+   "next": [
+    104
+   ]
+  },
+  {
+   "id": 104,
+   "type": "company",
+   "name": "格拉斯花园香水坊",
+   "industry": "shop",
+   "price": 480,
+   "rent": 120,
+   "source": "Story35.cit 建筑 先施百货公司",
+   "lot": [
+    1,
+    22
+   ],
+   "pos": [
+    1,
+    23
+   ],
+   "next": [
+    105
+   ]
+  },
+  {
+   "id": 105,
+   "type": "company",
+   "site": 104,
+   "pos": [
+    2,
+    23
+   ],
+   "next": [
+    106
+   ]
+  },
+  {
+   "id": 106,
+   "type": "road",
+   "pos": [
+    3,
+    23
+   ],
+   "next": [
+    107
+   ]
+  },
+  {
+   "id": 107,
+   "type": "road",
+   "pos": [
+    4,
+    23
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 108,
+   "type": "bank",
+   "site": 38,
+   "pos": [
+    -7,
+    29
+   ],
+   "next": [
+    109
+   ]
+  },
+  {
+   "id": 109,
+   "type": "bank",
+   "site": 38,
+   "pos": [
+    -6,
+    29
+   ],
+   "next": [
+    110
+   ]
+  },
+  {
+   "id": 110,
+   "type": "land",
+   "name": "戛纳老港1号",
+   "group": "戛纳老港",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (-5,28)",
+   "lot": [
+    -5,
+    28
+   ],
+   "pos": [
+    -5,
+    29
+   ],
+   "next": [
+    111
+   ]
+  },
+  {
+   "id": 111,
+   "type": "land",
+   "name": "戛纳老港2号",
+   "group": "戛纳老港",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (-4,28)",
+   "lot": [
+    -4,
+    28
+   ],
+   "pos": [
+    -4,
+    29
+   ],
+   "next": [
+    112
+   ]
+  },
+  {
+   "id": 112,
+   "type": "land",
+   "name": "戛纳老港3号",
+   "group": "戛纳老港",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (-3,28)",
+   "lot": [
+    -3,
+    28
+   ],
+   "pos": [
+    -3,
+    29
+   ],
+   "next": [
+    113
+   ]
+  },
+  {
+   "id": 113,
+   "type": "land",
+   "name": "戛纳老港4号",
+   "group": "戛纳老港",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (-2,28)",
+   "lot": [
+    -2,
+    28
+   ],
+   "pos": [
+    -2,
+    29
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 114,
+   "type": "land",
+   "site": 113,
+   "pos": [
+    -1,
+    28
+   ],
+   "next": [
+    115
+   ]
+  },
+  {
+   "id": 115,
+   "type": "land",
+   "name": "马丁角4号",
+   "group": "马丁角",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (0,27)",
+   "lot": [
+    0,
+    27
+   ],
+   "pos": [
+    -1,
+    27
+   ],
+   "next": [
+    116
+   ]
+  },
+  {
+   "id": 116,
+   "type": "land",
+   "name": "马丁角3号",
+   "group": "马丁角",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (0,26)",
+   "lot": [
+    0,
+    26
+   ],
+   "pos": [
+    -1,
+    26
+   ],
+   "next": [
+    117
+   ]
+  },
+  {
+   "id": 117,
+   "type": "land",
+   "name": "马丁角2号",
+   "group": "马丁角",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (0,25)",
+   "lot": [
+    0,
+    25
+   ],
+   "pos": [
+    -1,
+    25
+   ],
+   "next": [
+    118
+   ]
+  },
+  {
+   "id": 118,
+   "type": "land",
+   "name": "马丁角1号",
+   "group": "马丁角",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story35.cit 地块 (0,24)",
+   "lot": [
+    0,
+    24
+   ],
+   "pos": [
+    -1,
+    24
+   ],
+   "next": [
+    69
+   ]
+  }
+ ]
+}

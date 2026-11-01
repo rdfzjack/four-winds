@@ -1,0 +1,178 @@
+{
+ "_comment": "理理的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。开局资金、预置地产、百分比、限时都是起点数字，等逐关跑模拟后标定；标“待定”的是作者还没定的。",
+ "character": "eric",
+ "name": "合伙人纠纷",
+ "stages": [
+  {
+   "id": "eric_1",
+   "name": "柏林，1923",
+   "map": "berlin",
+   "intro": "德国恶性通胀，斐斐去柏林抄底投资，那条街只是最便宜。理理收到消息“斐斐去了柏林，地址在诺伦多夫广场”，以为他要去 gay bar，吓坏了，买船票连夜去，要抢先买下整条街。理理是德裔，被迫回到满街他不想认的同胞中间。",
+   "outro_win": "斐斐来问：“这条街回报率很好，你也看出来了？”理理发现自己花大钱买了一条 gay 街。",
+   "outro_lose": "斐斐买下整条街，账上记作“柏林房地产，低估资产”。",
+   "seats": [
+    {
+     "character": "eric",
+     "player": true,
+     "cash": 200,
+     "deposit": 300
+    },
+    {
+     "character": "david",
+     "cash": 200,
+     "deposit": 300
+    }
+   ],
+   "win": [
+    {
+     "type": "control_street",
+     "who": "player",
+     "group": "莫茨街"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "control_street",
+     "who": 1,
+     "group": "莫茨街"
+    }
+   ]
+  },
+  {
+   "id": "eric_2",
+   "name": "上海",
+   "map": "shanghai_west",
+   "intro": "斐斐和小九躲到上海，要盖别墅当爱巢，以为没人知道。理理连夜赶过去拆散。",
+   "outro_win": "两人被迫分开。",
+   "outro_lose": "理理收到一张乔迁请柬。",
+   "seats": [
+    {
+     "character": "eric",
+     "player": true,
+     "cash": 1000,
+     "deposit": 2000
+    },
+    {
+     "character": "david",
+     "cash": 1500,
+     "deposit": 3000
+    },
+    {
+     "character": "giorgio",
+     "cash": 1000,
+     "deposit": 2000
+    }
+   ],
+   "win": [
+    {
+     "type": "own_lots_pct",
+     "who": "player",
+     "pct": 40
+    },
+    {
+     "type": "bankrupt",
+     "who": [
+      1,
+      2
+     ],
+     "mode": "any"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "build_house",
+     "who": [
+      1,
+      2
+     ],
+     "kind": "villa"
+    }
+   ]
+  },
+  {
+   "id": "eric_3",
+   "name": "纽约",
+   "map": "newyork",
+   "intro": "孔雀也加入，和他们不清不楚。理理已经放弃他们了，不劝了，只要把股份抢回来。",
+   "outro_win": "股份抢回来了。第二天报纸头版：他和这三个人纠缠不清，疑似同性恋。",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "eric",
+     "player": true,
+     "cash": 2000,
+     "deposit": 2000
+    },
+    {
+     "character": "david",
+     "cash": 2000,
+     "deposit": 3000,
+     "props": [
+      {
+       "tile": 63
+      },
+      {
+       "tile": 64
+      },
+      {
+       "tile": 100
+      }
+     ]
+    },
+    {
+     "character": "giorgio",
+     "cash": 2000,
+     "deposit": 2000,
+     "props": [
+      {
+       "tile": 152
+      },
+      {
+       "tile": 153
+      },
+      {
+       "tile": 123
+      }
+     ]
+    },
+    {
+     "character": "marcel",
+     "cash": 2000,
+     "deposit": 2000,
+     "props": [
+      {
+       "tile": 10
+      },
+      {
+       "tile": 11
+      },
+      {
+       "tile": 15
+      }
+     ]
+    }
+   ],
+   "win": [
+    {
+     "type": "bankrupt",
+     "who": "others",
+     "mode": "all"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    }
+   ]
+  }
+ ]
+}

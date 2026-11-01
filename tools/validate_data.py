@@ -109,7 +109,7 @@ def check_map(d: dict, max_house_lots: int = 4) -> list[str]:
     if len(seen) != n:
         errors.append(f"从起点走不到：{sorted(set(range(n)) - seen)}")
     street = longest_street(tiles)
-    if street < max_house_lots:
+    if street < max_house_lots and not d.get("short_streets_ok", False):
         errors.append(f"最长的街只有 {street} 块连续的地，别墅要占 {max_house_lots} 块，"
                       f"至少要有一条街有 {max_house_lots} 块连续的地")
     positions = [tuple(t["pos"]) for t in tiles]

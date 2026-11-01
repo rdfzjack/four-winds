@@ -2,7 +2,9 @@
 
 每个角色一条主线，一个文件：`fourwinds-benti/data/campaigns/<角色 id>.json`（作者以后自己改）。读取和检查在 `Data._load_campaigns`，写错了会显示在主界面的“数据有 N 个问题”里。规则逻辑在 `scripts/core/scenario.gd`，进度保存在 `scripts/core/profile.gd`。
 
-现在 `david.json` 里只有两个**示例关**（`"example": true`，占位数据，用来测试流程）。关卡内容（剧情、对手、目标）等作者给，不要替作者编。
+**现有数据**（8b 进行中）：`eric.json`（理理 3 关）已按作者的讨论稿填好；`david.json`（斐斐）第 3 关按讨论稿，第 1、2 关作者还没定，是带 `example` 标记的占位（目标取自讨论稿的候选，对手也是占位，只为让第 3 关能打到）；孔雀、小九还没有。开局资金、预置地产、百分比、限时都是起点数字，等逐关跑模拟后标定。测试用的示例关在 `tests/fixtures/example_campaign.json`（游戏不读）。关卡内容（剧情、对手、目标）以作者为准，不要替作者编。
+
+**主线用的地图**（原版地图数据换皮，地名、企业名重新包装，行业类别是机制）：`berlin`（Story11，柏林·舍讷贝格）、`london`（Story23）、`shanghai_concession`（Story15）、`riviera`（Story35，蔚蓝海岸）、`newyork`（Story17，纺织换成 `finance` 金融）；理理第 2 关用已有的 `shanghai_west`（没有改它的街名）。`berlin` 最长的街只有 3 块，写了 `short_streets_ok`，盖不了别墅。
 
 ## 文件
 
