@@ -58,9 +58,12 @@ func specs() -> Array:
 	return out
 
 
-## Game.setup 之后、start 之前：开局现金 / 存款、预置地产和房子。返回错误列表（空 = 没问题）。
+## Game.setup 之后、start 之前：开局现金 / 存款、预置地产和房子、路口方式。返回错误列表（空 = 没问题）。
+## 路口方式：关卡写 "crossroad": "random" / "choice" 就用它，不写 = 按地图（主界面“路口全部随机”勾上时仍然全随机）
 func apply(game) -> Array:
 	var errors: Array = []
+	if str(stage.get("crossroad", "")) != "" and game.crossroad_override == "":
+		game.crossroad_override = str(stage["crossroad"])
 	var seats: Array = stage.get("seats", [])
 	for i in range(mini(seats.size(), game.players.size())):
 		var s: Dictionary = seats[i]
@@ -374,6 +377,8 @@ static func validate(stage: Dictionary, boards: Dictionary, characters: Array,
 					errors.append("关卡 %s 座位 %d：预置地产格子 %d 不存在，或是分身格（要写正格）" % [sid, i, ti])
 	if players != 1:
 		errors.append("关卡 %s：要有且只有一个 player 座位（现在 %d 个）" % [sid, players])
+	if not ["", "random", "choice"].has(str(stage.get("crossroad", ""))):
+		errors.append("关卡 %s：crossroad 只能写 random 或 choice" % sid)
 	for key in ["win", "lose"]:
 		if stage.get(key, []).is_empty():
 			errors.append("关卡 %s：%s 条件不能为空" % [sid, key])

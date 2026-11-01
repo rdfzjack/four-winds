@@ -150,12 +150,12 @@ func _new_scenario_game(stage_ref: Dictionary) -> bool:
 		push_error("开局失败：" + str(errors))
 		return false
 	game.scenario = sc
+	game.crossroad_override = "random" if Data.crossroads_random else ""
 	errors = sc.apply(game)
 	if not errors.is_empty():
 		push_error("关卡设置失败：" + str(errors))
 		return false
 	game.record_history = true
-	game.crossroad_override = "random" if Data.crossroads_random else ""
 	_campaign = {"character": str(stage_ref["character"]), "stage": index}
 	game.start()
 	return true

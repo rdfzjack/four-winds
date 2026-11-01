@@ -1,7 +1,7 @@
 extends SceneTree
 ## 主线关卡体检：每一关让 AI 替玩家打 N 局（对手按关卡设置），汇总：结果分布、平均天数、
 ## 哪些格子几乎没人走（路口把人引到别处去了）、企业有没有被买。用来在标定难度前先发现“地图 / 设置本身的问题”。
-##   godot --headless --script res://tools/campaign_audit.gd -- [每关局数，默认 6] [角色 id:关卡序号，如 david:0，默认全部]
+##   godot --headless --script res://tools/campaign_audit.gd -- [每关局数，默认 6] [角色 id:关卡序号，如 david:0，默认全部] [random|choice 强行覆盖路口方式]
 ## 数字只是“AI 当玩家”的参考，不等于真人的难度。
 
 const Game = preload("res://scripts/core/game.gd")
@@ -11,6 +11,7 @@ const Scenario = preload("res://scripts/core/scenario.gd")
 const MAX_STEPS := 4000
 
 var _done := false
+var args_crossroad := ""  ## 第 3 个参数：random / choice，强行覆盖所有关的路口方式（对比用）
 
 
 func _process(_delta: float) -> bool:
@@ -21,6 +22,7 @@ func _process(_delta: float) -> bool:
 	var args := OS.get_cmdline_user_args()
 	var games := int(args[0]) if args.size() > 0 else 6
 	var only: String = args[1] if args.size() > 1 else ""
+	args_crossroad = args[2] if args.size() > 2 else ""
 	for cid in data.campaigns:
 		var stages: Array = data.stages_of(cid)
 		for i in range(stages.size()):
@@ -50,6 +52,8 @@ func _audit(data, stage: Dictionary, games: int) -> void:
 				data.all_characters(), sc.specs(), 1000 + k)
 		g.scenario = sc
 		sc.apply(g)
+		if args_crossroad != "":
+			g.crossroad_override = args_crossroad
 		g.players[sc.player_seat].human = false
 		g.players[sc.player_seat].ai = "new_v2"
 		g.start()

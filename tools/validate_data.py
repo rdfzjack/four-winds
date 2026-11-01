@@ -139,6 +139,8 @@ def check_campaign(d: dict, maps: dict, char_ids: set, max_players: int, playabl
             continue
         tiles = board.get("tiles", [])
         seats = st.get("seats", [])
+        if st.get("crossroad", "") not in ("", "random", "choice"):
+            errors.append(f"关卡 {sid}：crossroad 只能写 random 或 choice")
         if not 2 <= len(seats) <= max_players:
             errors.append(f"关卡 {sid}：座位数应该是 2 到 {max_players}")
         if sum(1 for s in seats if s.get("player")) != 1:
