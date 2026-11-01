@@ -29,6 +29,41 @@ def stats(path: Path) -> str:
     return (r.stdout.strip().splitlines() or [r.stderr.strip()[-80:]])[-1] if r.returncode == 0 else "转换失败"
 
 
+def original_campaigns() -> list[str]:
+    """原版 3 条战役（20 关）的对局情况：地图、各人开局资金、预置地产、胜负条件。给讨论剧情当参考。"""
+    camp = json.load(open(ROOT / "extracted/text/campaigns.json", encoding="utf-8"))["stages"]
+    pid_name: dict[int, str] = {}
+    for f in CITIES.glob("Sub_Story*.json"):
+        if f.name.endswith("_buildings.json"):
+            continue
+        for pr in json.load(open(f, encoding="utf-8")).get("persons", []):
+            pid_name[pr["person_id"]] = pr["name"]
+    out: list[str] = []
+    lead = None
+    for st in camp:
+        d = json.load(open(CITIES / (st["map_file"].replace("/", "_").replace(".cit", "") + ".json"),
+                           encoding="utf-8"))
+        if st["campaign_lead"] != lead:
+            lead = st["campaign_lead"]
+            out += ["", f"### 原版战役：{lead}（主角）", "",
+                    "| 关 | 地图 | 玩家（主角）开局 | 对手开局 | 预置地产 | 胜利条件 | 失败条件 |",
+                    "|---|---|---|---|---|---|---|"]
+        persons = d["persons"]
+        me = next((p for p in persons if p["ai"] == 0), persons[0])
+        others = "、".join(f"{p['name']} {p['cash']}/{p['deposit']}" for p in persons if p is not me)
+        owned = Counter()
+        for b in d["blocks"]:
+            if b.get("class") == "LAND" and b.get("owner") not in (None, 8):
+                owned[(pid_name.get(b["owner"], str(b["owner"])), "房子" if b["building_index"] >= 0 else "空地")] += 1
+        for b in d["buildings"]:
+            if b["class"] == "COMPANY" and b.get("owner") not in (None, 8):
+                owned[(pid_name.get(b["owner"], str(b["owner"])), "企业")] += 1
+        pre = "、".join(f"{n} {v} 块{k}" if k != "企业" else f"{n} {v} 家企业" for (n, k), v in owned.items()) or "无"
+        out.append(f"| {st['stage']} | {st['place']}（{st['map_file'].split('/')[-1][:-4]}） | "
+                   f"{me['name']} {me['cash']}/{me['deposit']} | {others} | {pre} | {st['win']} | {st['lose']} |")
+    return out
+
+
 def main() -> None:
     rows = []
     for f in sorted(CITIES.glob("*.json")):
@@ -55,9 +90,11 @@ def main() -> None:
         companies = "、".join(f"{k} {v}" for k, v in comp.items()) or "无"
         lines.append(f"| {stem} | {name} | {tiles or st} | {cross} | {streets} | {companies} | {conv or '—'} |")
     text = OUT.read_text(encoding="utf-8")
-    start, end = "<!-- map_catalog:start -->", "<!-- map_catalog:end -->"
-    a, b = text.index(start) + len(start), text.index(end)
-    OUT.write_text(text[:a] + "\n" + "\n".join(lines) + "\n" + text[b:], encoding="utf-8")
+    for tag, body in (("map_catalog", lines), ("original_campaigns", original_campaigns())):
+        start, end = f"<!-- {tag}:start -->", f"<!-- {tag}:end -->"
+        a, b = text.index(start) + len(start), text.index(end)
+        text = text[:a] + "\n" + "\n".join(body) + "\n" + text[b:]
+    OUT.write_text(text, encoding="utf-8")
     print(f"写入 {OUT}（{len(rows)} 张）")
 
 
