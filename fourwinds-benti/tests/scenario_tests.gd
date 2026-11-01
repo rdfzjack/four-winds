@@ -21,6 +21,7 @@ func run(p_runner: Object) -> void:
 	test_apply_setup()
 	test_conditions()
 	test_win_lose_flow()
+	test_crossroad_modes()
 	test_free_mode_untouched()
 	test_ai_games_end_in_time()
 	test_save_and_resume()
@@ -86,8 +87,10 @@ func test_campaign_data() -> void:
 	for e in data().errors:
 		check(not str(e).contains(".json：关卡") and not str(e).contains("campaigns"),
 				"主线数据没有校验问题：%s" % str(e))
-	for cid in ["david", "eric"]:
-		check(data().campaigns.has(cid) and data().stages_of(cid).size() == 3, "%s 的主线有 3 关" % cid)
+	var counts := {"david": 3, "eric": 3, "marcel": 3, "giorgio": 4}
+	for cid in counts:
+		check(data().campaigns.has(cid) and data().stages_of(cid).size() == counts[cid],
+				"%s 的主线有 %d 关" % [cid, counts[cid]])
 	for stage in data().stages_of("david"):
 		check(bool(stage.get("example", false)) == (str(stage["id"]) != "david_3"),
 				"斐斐第 1、2 关是占位（example），第 3 关不是：%s" % str(stage["id"]))
@@ -96,7 +99,7 @@ func test_campaign_data() -> void:
 
 ## 正式主线的每一关：能开局，玩家交给 AI 打一阵，内部数据一直一致；打出结果的话结果合理
 func test_real_stages_play() -> void:
-	for cid in ["eric", "david"]:
+	for cid in ["eric", "david", "marcel", "giorgio"]:
 		for i in range(data().stages_of(cid).size()):
 			var stage: Dictionary = data().stages_of(cid)[i].duplicate(true)
 			var g := scn_game(stage, 100 + i)
@@ -283,6 +286,43 @@ func test_win_lose_flow() -> void:
 	# 结果出来以后不再变
 	var r: String = g.scenario.check(g)
 	check(r == "lost", "有了结果以后 check 返回原结果")
+
+
+func test_crossroad_modes() -> void:
+	# london：路口 19（地图里是 random）；用关卡的 crossroad / crossroads 改它
+	var s := sample_stage(1)   # shanghai_west，有 3 个路口：7、48、55
+	var board = real_maps()["shanghai_west"]
+	var base: String = board.crossroad_mode(7)
+	var g := scn_game(s, 5)
+	check(g.crossroad_mode(7) == base, "不写：按地图（%s）" % base)
+	s["crossroad"] = "random"
+	g = scn_game(s, 5)
+	check(g.crossroad_mode(7) == "random" and g.crossroad_mode(48) == "random",
+			"关卡的 crossroad 是所有路口的默认")
+	s["crossroads"] = {"7": "choice"}
+	g = scn_game(s, 5)
+	check(g.crossroad_mode(7) == "choice" and g.crossroad_mode(48) == "random", "单独指定的路口优先于关卡默认")
+	g.crossroad_override = "random"
+	check(g.crossroad_mode(7) == "random", "主界面“全部随机”最优先")
+	g.crossroad_override = ""
+	var bad1 := sample_stage_with(s, {"crossroads": {"3": "random"}})
+	check(not Scenario.validate(bad1, real_maps(), characters, rules).is_empty(),
+			"crossroads 写了不是路口的格子要报错")
+	var bad2 := sample_stage_with(s, {"crossroads": {"7": "maybe"}})
+	check(not Scenario.validate(bad2, real_maps(), characters, rules).is_empty(),
+			"crossroads 的方式写错要报错")
+	# 存档读档后路口方式还在
+	var r := roundtrip(g, "4")
+	var loaded: Game = r["game"]
+	check(loaded.crossroad_mode(7) == "choice" and loaded.crossroad_mode(48) == "random",
+			"存档读档后路口方式原样回来")
+
+
+func sample_stage_with(stage: Dictionary, patch: Dictionary) -> Dictionary:
+	var out := stage.duplicate(true)
+	for k in patch:
+		out[k] = patch[k]
+	return out
 
 
 func test_free_mode_untouched() -> void:

@@ -1240,6 +1240,12 @@ func _tile_info(i: int) -> String:
 		return "点棋盘上的格子看详情"
 	var t: Dictionary = board.get_tile(i)
 	var text := "%s（%s）· 编号 %d" % [_tname(i), MapView.TYPE_NAMES.get(str(t["type"]), ""), i]
+	if board.is_crossroad(i):
+		var exits: Array = []
+		for n in board.next_tiles(i):
+			exits.append(_exit_name(int(n)))
+		text += "\n路口：%s · %d 个出口：%s" % ["自选方向" if game.crossroad_mode(i) == "choice" else "随机方向",
+				exits.size(), "、".join(exits)]
 	if not game.props.has(i):
 		return text
 	text += "\n价格 %d 万 · 现在的租金 %d 万" % [game.property_price(i), game.rent_of(i)]
@@ -1249,6 +1255,21 @@ func _tile_info(i: int) -> String:
 	if hid != 0:
 		text += " · %s" % _house_name(str(game.houses[hid]["kind"]))
 	return text
+
+
+## 路口某个出口的名字：沿路往前走到第一个有名字的格子（地、企业、银行……）
+func _exit_name(first: int) -> String:
+	var cur := first
+	for _i in range(12):
+		var t: Dictionary = board.get_tile(cur)
+		var name := str(t.get("name", ""))
+		if name != "" and str(t["type"]) != "road":
+			return name
+		var site := board.site(cur)
+		if site != cur and str(board.get_tile(site).get("name", "")) != "":
+			return str(board.get_tile(site)["name"])
+		cur = int(t["next"][0])
+	return "（前方）"
 
 
 ## 对局记录存到 user://records/（Windows 上在 %APPDATA%\Godot\app_userdata\项目名\records），

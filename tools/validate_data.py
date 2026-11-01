@@ -141,6 +141,11 @@ def check_campaign(d: dict, maps: dict, char_ids: set, max_players: int, playabl
         seats = st.get("seats", [])
         if st.get("crossroad", "") not in ("", "random", "choice"):
             errors.append(f"关卡 {sid}：crossroad 只能写 random 或 choice")
+        for k, v in (st.get("crossroads") or {}).items():
+            if not str(k).isdigit() or int(k) >= len(tiles) or len(tiles[int(k)].get("next", [])) < 2:
+                errors.append(f"关卡 {sid}：crossroads 里的 {k} 不是这张地图的路口")
+            if v not in ("random", "choice"):
+                errors.append(f"关卡 {sid}：路口 {k} 的方式只能写 random 或 choice")
         if not 2 <= len(seats) <= max_players:
             errors.append(f"关卡 {sid}：座位数应该是 2 到 {max_players}")
         if sum(1 for s in seats if s.get("player")) != 1:

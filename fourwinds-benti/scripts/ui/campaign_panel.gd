@@ -101,7 +101,7 @@ func _show_briefing(cid: String, index: int) -> void:
 	for i in range(names.size()):
 		_seat_row(cid, index, i, names[i], i == sc.player_seat)
 	var cross := CheckBox.new()
-	cross.text = "路口全部随机（这一关）"
+	cross.text = "这一关的路口默认全部随机（下面单独指定的除外）"
 	cross.button_pressed = str(stage.get("crossroad", "")) == "random"
 	cross.toggled.connect(func(on: bool) -> void:
 			var st := _editable(cid, index)
@@ -110,6 +110,11 @@ func _show_briefing(cid: String, index: int) -> void:
 			else:
 				st.erase("crossroad"))
 	add_child(cross)
+	if board != null:
+		_label("每个路口单独设置（地图上路口处一直显示“自选 / 随机”和出口箭头）", 13, Color("#b0bec5"))
+		for t in board.tiles:
+			if board.is_crossroad(int(t["id"])):
+				_crossroad_row(cid, index, board, int(t["id"]))
 	_button("开始", func() -> void:
 			Data.start_stage = {"character": cid, "stage": index}
 			get_tree().change_scene_to_file("res://scenes/table.tscn"))
@@ -119,6 +124,51 @@ func _show_briefing(cid: String, index: int) -> void:
 			Data.stage_override.erase("%s:%d" % [cid, index])
 			_show_briefing(cid, index))
 	_button("返回", func() -> void: _show_stages(cid))
+
+
+## 路口 id 的一行：说明出口去哪，下拉选 按默认 / 自选 / 随机
+func _crossroad_row(cid: String, index: int, board, id: int) -> void:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	add_child(row)
+	var exits: Array = []
+	for n in board.next_tiles(id):
+		exits.append(_front_name(board, int(n)))
+	var label := Label.new()
+	label.text = "路口 %d → %s" % [id, " / ".join(exits)]
+	label.custom_minimum_size = Vector2(360, 0)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	row.add_child(label)
+	var pick := OptionButton.new()
+	var base: String = "自选" if board.crossroad_mode(id) == "choice" else "随机"
+	pick.add_item("按默认（地图：%s）" % base)
+	pick.add_item("自选")
+	pick.add_item("随机")
+	var current: Dictionary = Data.stage_for(cid, index).get("crossroads", {})
+	var mode := str(current.get(str(id), ""))
+	pick.select(1 if mode == "choice" else (2 if mode == "random" else 0))
+	pick.item_selected.connect(func(i: int) -> void:
+			var st := _editable(cid, index)
+			if not st.has("crossroads"):
+				st["crossroads"] = {}
+			if i == 0:
+				st["crossroads"].erase(str(id))
+			else:
+				st["crossroads"][str(id)] = "choice" if i == 1 else "random")
+	row.add_child(pick)
+
+
+## 出口前方第一个有名字的地方（沿路往前走）
+func _front_name(board, first: int) -> String:
+	var cur := first
+	for _i in range(12):
+		var t: Dictionary = board.get_tile(cur)
+		var site: int = board.site(cur)
+		var nm := str(board.get_tile(site).get("name", ""))
+		if nm != "" and str(board.get_tile(site)["type"]) != "road":
+			return nm
+		cur = int(t["next"][0])
+	return "（前方）"
 
 
 ## 这一关的可改副本（第一次改时从 data 复制一份放进 Data.stage_override）

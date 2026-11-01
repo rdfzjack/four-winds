@@ -57,6 +57,11 @@ var history: Array = []
 var seed_used: int = -1         ## 这局的随机种子（导出记录里写上）
 ## 路口方式：空 = 按地图（每个路口的 crossroad），"random" = 所有路口都随机（像原版），"choice" = 都能选
 var crossroad_override: String = ""
+## 关卡指定的路口方式（scenario.gd 的 apply 设置）：每个路口单独指定（格子编号 → choice / random），
+## 没单独指定的用 crossroad_default（空 = 按地图）。
+## 优先级：crossroad_override > crossroad_modes > crossroad_default > 地图
+var crossroad_modes: Dictionary = {}
+var crossroad_default: String = ""
 ## 测试和作弊用（原版的 STEP / C 作弊码）：下一次掷骰用的点数 [a, b]；下一张机会卡的编号
 var forced_dice: Array = []
 var forced_cards: Array = []
@@ -132,6 +137,8 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 	_move = {}
 	winner = -1
 	scenario = null
+	crossroad_modes = {}
+	crossroad_default = ""
 	day = 1
 	phase = "idle"
 	return errors
@@ -218,7 +225,8 @@ func export_state() -> Dictionary:
 		"current": current, "day": day, "phase": phase, "pending": pending, "winner": winner,
 		"props": props, "houses": houses, "events": events, "next_house_id": _next_house_id,
 		"move": _move, "trade_refused": _trade_refused,
-		"crossroad_override": crossroad_override, "forced_dice": forced_dice,
+		"crossroad_override": crossroad_override, "crossroad_modes": crossroad_modes,
+		"crossroad_default": crossroad_default, "forced_dice": forced_dice,
 		"forced_cards": forced_cards, "record_history": record_history, "history": history,
 		"seed_used": str(seed_used), "rng_seed": str(rng.seed), "rng_state": str(rng.state),
 		"scenario": scenario.export_state() if scenario != null else {},
@@ -259,6 +267,8 @@ func import_state(state: Dictionary) -> String:
 	_move = state["move"]
 	_trade_refused = state["trade_refused"]
 	crossroad_override = str(state["crossroad_override"])
+	crossroad_modes = state.get("crossroad_modes", {})
+	crossroad_default = str(state.get("crossroad_default", ""))
 	forced_dice = state["forced_dice"]
 	forced_cards = state["forced_cards"]
 	record_history = bool(state["record_history"])
@@ -1109,9 +1119,13 @@ func _may_choose_direction(_p: Player, tile: int) -> bool:
 	return crossroad_mode(tile) == "choice"
 
 
-## 这个路口现在是 choice 还是 random（考虑 crossroad_override）
+## 这个路口现在是 choice 还是 random（优先级见 crossroad_modes 的说明）
 func crossroad_mode(tile: int) -> String:
-	return crossroad_override if crossroad_override != "" else board.crossroad_mode(tile)
+	if crossroad_override != "":
+		return crossroad_override
+	if crossroad_modes.has(tile):
+		return str(crossroad_modes[tile])
+	return crossroad_default if crossroad_default != "" else board.crossroad_mode(tile)
 
 
 ## 台词用：这次移动停下的地方，前后一两格有别人的高租地（租金够得上“大笔”）却没踩到，记一个 dodged。
