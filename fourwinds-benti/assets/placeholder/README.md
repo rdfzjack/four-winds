@@ -15,6 +15,7 @@
 | `Mai_b.png` / `Mai_b.json` | `Sprite/Mai_b.spr`（解包：`extracted/images/Sprite/Mai_b.png`） | 全部 | 买办走路图，占位给孔雀 |
 | `Tu_c.png` / `Tu_c.json` | `Sprite/Tu_c.spr`（解包：`extracted/images/Sprite/Tu_c.png`） | 全部 | 土财主走路图，占位给理理 |
 | `Liu_l.png` / `Liu_l.json` | `Sprite/Liu_l.spr`（解包：`extracted/images/Sprite/Liu_l.png`） | 全部 | 流浪儿走路图，占位给路人“堂弟”（data/extra_characters.json） |
+| `Jao_j.png` / `Jao_j.json` | `Sprite/Jao_j.spr`（解包：`extracted/images/Sprite/Jao_j.png`） | 全部 | 交际花走路图，占位给路人“情妇”（data/extra_characters.json） |
 | `Fu_j.png` / `Fu_j.json` | `Sprite/Fu_j.spr`（解包：`extracted/images/Sprite/Fu_j.png`） | 全部 | 富家千金走路图，占位给路人“路人甲”（data/extra_characters.json） |
-| `Portrait.png` / `Portrait.json` | `Screen/Portrait.spr`（解包：`extracted/images/Screen/Portrait.png`） | 全部 | 原版界面左下角的半身头像（8 个原版人物各一帧，每人只有一种表情）：帧 0 董莺雨（孔雀）、2 包德利（斐斐）、5 冯全篾（小九）、6 发达而（理理）、1 四毛（路人“堂弟”）、3 陈玛丽（路人“路人甲”），其余留着不用 |
+| `Portrait.png` / `Portrait.json` | `Screen/Portrait.spr`（解包：`extracted/images/Screen/Portrait.png`） | 全部 | 原版界面左下角的半身头像（8 个原版人物各一帧，每人只有一种表情）：帧 0 董莺雨（孔雀）、2 包德利（斐斐）、5 冯全篾（小九）、6 发达而（理理）、1 四毛（路人“堂弟”）、3 陈玛丽（路人“路人甲”）、4 赛珍珠（路人“情妇”），其余留着不用 |
 | `Sign.png` / `Sign.json` | `Sprite/Base.spr`（原版文件，用 `Sprite/1940.col` 调色板） | 第 2 帧 | 地主牌：第 1 组是旗杆，第 2 组是旗面灰度（原版色号 56、184–191），画面乘上主人颜色 |

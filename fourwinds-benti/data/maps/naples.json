@@ -1,0 +1,907 @@
+{
+ "id": "naples",
+ "name": "那不勒斯港",
+ "placeholder": true,
+ "_comment": "由 tools/cit_to_map.py 从原版 Story22 转换，地名、企业名按个人主线重新包装（行业类别是机制，名字随城市），之后可直接修改。pos 是原版的路面格。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版 元宝山 的 CITY_PROPERTY，单位万圆。",
+  "blank_land_price": 50,
+  "build_cost": {
+   "flat": 30,
+   "hotel": 80,
+   "floor": 100,
+   "villa": 120,
+   "upgrade": 30,
+   "function": 50
+  },
+  "rent": {
+   "blank_land": 10,
+   "flat": 20,
+   "hotel": 30,
+   "super_hotel": 40,
+   "floor": 40,
+   "super_floor": 50,
+   "villa": 80
+  }
+ },
+ "groups": {
+  "圣卢西亚": {
+   "name": "圣卢西亚",
+   "color": "#8d6e63"
+  },
+  "托莱多街": {
+   "name": "托莱多街",
+   "color": "#4fc3f7"
+  },
+  "西班牙区": {
+   "name": "西班牙区",
+   "color": "#f48fb1"
+  },
+  "阿尔梅诺街": {
+   "name": "阿尔梅诺街",
+   "color": "#ba68c8"
+  },
+  "卡拉乔洛海滨路": {
+   "name": "卡拉乔洛海滨路",
+   "color": "#ff8a65"
+  },
+  "梅尔杰利纳": {
+   "name": "梅尔杰利纳",
+   "color": "#e57373"
+  },
+  "马里纳拉港": {
+   "name": "马里纳拉港",
+   "color": "#fff176"
+  },
+  "福切利亚": {
+   "name": "福切利亚",
+   "color": "#81c784"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "land",
+   "name": "马里纳拉港1号",
+   "group": "马里纳拉港",
+   "price_pct": 150,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (-6,8)",
+   "lot": [
+    -6,
+    8
+   ],
+   "pos": [
+    -6,
+    9
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "land",
+   "site": 3,
+   "pos": [
+    -7,
+    9
+   ],
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "road",
+   "pos": [
+    -8,
+    9
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "land",
+   "name": "西班牙区1号",
+   "group": "西班牙区",
+   "price_pct": 100,
+   "build_cost_pct": 90,
+   "source": "Story22.cit 地块 (-7,10)",
+   "lot": [
+    -7,
+    10
+   ],
+   "pos": [
+    -8,
+    10
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "land",
+   "name": "西班牙区2号",
+   "group": "西班牙区",
+   "price_pct": 100,
+   "build_cost_pct": 90,
+   "source": "Story22.cit 地块 (-7,11)",
+   "lot": [
+    -7,
+    11
+   ],
+   "pos": [
+    -8,
+    11
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "land",
+   "name": "西班牙区3号",
+   "group": "西班牙区",
+   "price_pct": 100,
+   "build_cost_pct": 90,
+   "source": "Story22.cit 地块 (-7,12)",
+   "lot": [
+    -7,
+    12
+   ],
+   "pos": [
+    -8,
+    12
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "chance",
+   "name": "运气",
+   "source": "Story22.cit 建筑 运气",
+   "lot": [
+    -9,
+    13
+   ],
+   "pos": [
+    -9,
+    12
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "chance",
+   "site": 6,
+   "pos": [
+    -10,
+    12
+   ],
+   "next": [
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "road",
+   "pos": [
+    -11,
+    12
+   ],
+   "next": [
+    9
+   ]
+  },
+  {
+   "id": 9,
+   "type": "chance",
+   "site": 6,
+   "pos": [
+    -11,
+    13
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "chance",
+   "site": 6,
+   "pos": [
+    -11,
+    14
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "land",
+   "name": "梅尔杰利纳1号",
+   "group": "梅尔杰利纳",
+   "price_pct": 150,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (-10,15)",
+   "lot": [
+    -10,
+    15
+   ],
+   "pos": [
+    -11,
+    15
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "land",
+   "name": "梅尔杰利纳2号",
+   "group": "梅尔杰利纳",
+   "price_pct": 150,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (-10,16)",
+   "lot": [
+    -10,
+    16
+   ],
+   "pos": [
+    -11,
+    16
+   ],
+   "next": [
+    13
+   ]
+  },
+  {
+   "id": 13,
+   "type": "land",
+   "name": "梅尔杰利纳3号",
+   "group": "梅尔杰利纳",
+   "price_pct": 150,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (-10,17)",
+   "lot": [
+    -10,
+    17
+   ],
+   "pos": [
+    -11,
+    17
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "road",
+   "pos": [
+    -11,
+    18
+   ],
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "company",
+   "name": "维苏威酒窖",
+   "industry": "food",
+   "price": 300,
+   "rent": 70,
+   "source": "Story22.cit 建筑 十里香酒家",
+   "lot": [
+    -11,
+    20
+   ],
+   "pos": [
+    -11,
+    19
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "company",
+   "site": 15,
+   "pos": [
+    -10,
+    19
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "land",
+   "name": "托莱多街5号",
+   "group": "托莱多街",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Story22.cit 地块 (-9,20)",
+   "lot": [
+    -9,
+    20
+   ],
+   "pos": [
+    -9,
+    19
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 18,
+   "type": "land",
+   "name": "托莱多街4号",
+   "group": "托莱多街",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Story22.cit 地块 (-8,20)",
+   "lot": [
+    -8,
+    20
+   ],
+   "pos": [
+    -8,
+    19
+   ],
+   "next": [
+    19
+   ]
+  },
+  {
+   "id": 19,
+   "type": "land",
+   "name": "托莱多街3号",
+   "group": "托莱多街",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Story22.cit 地块 (-7,18)",
+   "lot": [
+    -7,
+    18
+   ],
+   "pos": [
+    -7,
+    19
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "land",
+   "name": "托莱多街2号",
+   "group": "托莱多街",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Story22.cit 地块 (-6,18)",
+   "lot": [
+    -6,
+    18
+   ],
+   "pos": [
+    -6,
+    19
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "land",
+   "name": "托莱多街1号",
+   "group": "托莱多街",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Story22.cit 地块 (-5,18)",
+   "lot": [
+    -5,
+    18
+   ],
+   "pos": [
+    -5,
+    19
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "road",
+   "pos": [
+    -4,
+    19
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "park",
+   "name": "公园",
+   "source": "Story22.cit 建筑 公园",
+   "lot": [
+    -2,
+    19
+   ],
+   "pos": [
+    -3,
+    19
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "park",
+   "site": 23,
+   "pos": [
+    -3,
+    18
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "land",
+   "name": "福切利亚3号",
+   "group": "福切利亚",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story22.cit 地块 (-2,17)",
+   "lot": [
+    -2,
+    17
+   ],
+   "pos": [
+    -3,
+    17
+   ],
+   "next": [
+    26
+   ]
+  },
+  {
+   "id": 26,
+   "type": "land",
+   "name": "福切利亚2号",
+   "group": "福切利亚",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story22.cit 地块 (-2,16)",
+   "lot": [
+    -2,
+    16
+   ],
+   "pos": [
+    -3,
+    16
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "land",
+   "name": "福切利亚1号",
+   "group": "福切利亚",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story22.cit 地块 (-2,15)",
+   "lot": [
+    -2,
+    15
+   ],
+   "pos": [
+    -3,
+    15
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "bank",
+   "name": "元宝钱行",
+   "source": "Story22.cit 建筑 元宝钱行",
+   "lot": [
+    -4,
+    14
+   ],
+   "pos": [
+    -3,
+    14
+   ],
+   "crossroad": "choice",
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "bank",
+   "site": 28,
+   "pos": [
+    -3,
+    13
+   ],
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "land",
+   "name": "卡拉乔洛海滨路2号",
+   "group": "卡拉乔洛海滨路",
+   "price_pct": 140,
+   "build_cost_pct": 120,
+   "source": "Story22.cit 地块 (-2,12)",
+   "lot": [
+    -2,
+    12
+   ],
+   "pos": [
+    -3,
+    12
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "land",
+   "name": "卡拉乔洛海滨路1号",
+   "group": "卡拉乔洛海滨路",
+   "price_pct": 140,
+   "build_cost_pct": 120,
+   "source": "Story22.cit 地块 (-2,11)",
+   "lot": [
+    -2,
+    11
+   ],
+   "pos": [
+    -3,
+    11
+   ],
+   "next": [
+    32
+   ]
+  },
+  {
+   "id": 32,
+   "type": "road",
+   "pos": [
+    -3,
+    10
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "company",
+   "name": "阿马尔菲柠檬甜酒坊",
+   "industry": "food",
+   "price": 200,
+   "rent": 50,
+   "source": "Story22.cit 建筑 三朋饭庄",
+   "lot": [
+    -3,
+    8
+   ],
+   "pos": [
+    -3,
+    9
+   ],
+   "crossroad": "choice",
+   "next": [
+    34,
+    36
+   ]
+  },
+  {
+   "id": 34,
+   "type": "land",
+   "name": "马里纳拉港3号",
+   "group": "马里纳拉港",
+   "price_pct": 150,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (-4,8)",
+   "lot": [
+    -4,
+    8
+   ],
+   "pos": [
+    -4,
+    9
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "land",
+   "name": "马里纳拉港2号",
+   "group": "马里纳拉港",
+   "price_pct": 150,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (-5,8)",
+   "lot": [
+    -5,
+    8
+   ],
+   "pos": [
+    -5,
+    9
+   ],
+   "next": [
+    0
+   ]
+  },
+  {
+   "id": 36,
+   "type": "company",
+   "site": 33,
+   "pos": [
+    -2,
+    9
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 37,
+   "type": "land",
+   "name": "阿尔梅诺街1号",
+   "group": "阿尔梅诺街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (-1,8)",
+   "lot": [
+    -1,
+    8
+   ],
+   "pos": [
+    -1,
+    9
+   ],
+   "next": [
+    38
+   ]
+  },
+  {
+   "id": 38,
+   "type": "land",
+   "name": "阿尔梅诺街2号",
+   "group": "阿尔梅诺街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (0,8)",
+   "lot": [
+    0,
+    8
+   ],
+   "pos": [
+    0,
+    9
+   ],
+   "next": [
+    39
+   ]
+  },
+  {
+   "id": 39,
+   "type": "land",
+   "name": "阿尔梅诺街3号",
+   "group": "阿尔梅诺街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (1,8)",
+   "lot": [
+    1,
+    8
+   ],
+   "pos": [
+    1,
+    9
+   ],
+   "next": [
+    40
+   ]
+  },
+  {
+   "id": 40,
+   "type": "land",
+   "name": "阿尔梅诺街4号",
+   "group": "阿尔梅诺街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story22.cit 地块 (2,8)",
+   "lot": [
+    2,
+    8
+   ],
+   "pos": [
+    2,
+    9
+   ],
+   "next": [
+    41
+   ]
+  },
+  {
+   "id": 41,
+   "type": "company",
+   "name": "马里纳拉炸物摊",
+   "industry": "food",
+   "price": 200,
+   "rent": 40,
+   "source": "Story22.cit 建筑 金陵饭店",
+   "lot": [
+    3,
+    10
+   ],
+   "pos": [
+    2,
+    10
+   ],
+   "next": [
+    42
+   ]
+  },
+  {
+   "id": 42,
+   "type": "company",
+   "site": 41,
+   "pos": [
+    2,
+    11
+   ],
+   "next": [
+    43
+   ]
+  },
+  {
+   "id": 43,
+   "type": "road",
+   "pos": [
+    2,
+    12
+   ],
+   "next": [
+    44
+   ]
+  },
+  {
+   "id": 44,
+   "type": "land",
+   "site": 46,
+   "pos": [
+    2,
+    13
+   ],
+   "next": [
+    45
+   ]
+  },
+  {
+   "id": 45,
+   "type": "road",
+   "pos": [
+    2,
+    14
+   ],
+   "next": [
+    46
+   ]
+  },
+  {
+   "id": 46,
+   "type": "land",
+   "name": "圣卢西亚3号",
+   "group": "圣卢西亚",
+   "price_pct": 80,
+   "build_cost_pct": 80,
+   "source": "Story22.cit 地块 (1,13)",
+   "lot": [
+    1,
+    13
+   ],
+   "pos": [
+    1,
+    14
+   ],
+   "next": [
+    47
+   ]
+  },
+  {
+   "id": 47,
+   "type": "land",
+   "name": "圣卢西亚2号",
+   "group": "圣卢西亚",
+   "price_pct": 80,
+   "build_cost_pct": 80,
+   "source": "Story22.cit 地块 (0,13)",
+   "lot": [
+    0,
+    13
+   ],
+   "pos": [
+    0,
+    14
+   ],
+   "next": [
+    48
+   ]
+  },
+  {
+   "id": 48,
+   "type": "land",
+   "name": "圣卢西亚1号",
+   "group": "圣卢西亚",
+   "price_pct": 80,
+   "build_cost_pct": 80,
+   "source": "Story22.cit 地块 (-1,13)",
+   "lot": [
+    -1,
+    13
+   ],
+   "pos": [
+    -1,
+    14
+   ],
+   "next": [
+    49
+   ]
+  },
+  {
+   "id": 49,
+   "type": "land",
+   "site": 27,
+   "pos": [
+    -2,
+    14
+   ],
+   "next": [
+    28
+   ]
+  }
+ ]
+}

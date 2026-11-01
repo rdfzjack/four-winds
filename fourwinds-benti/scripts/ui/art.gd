@@ -29,6 +29,7 @@ const SPRITES := {
 	"walker_eric": {"sheet": P + "Tu_c"},
 	"walker_cousin": {"sheet": P + "Liu_l"},       ## 路人（data/extra_characters.json）
 	"walker_passerby_a": {"sheet": P + "Fu_j"},
+	"walker_mistress": {"sheet": P + "Jao_j"},
 	# 头像（立绘）：原版半身像，借用 based_on 的原版人物（profiles.json）。原版每人只有一种表情，
 	# 所以所有表情先用同一张；以后每个表情有自己的图，就加 "portrait_<角色 id>_<表情名>" 一项（见 portrait()）
 	"portrait_david": {"sheet": P + "Portrait", "group": 0, "frames": [2]},
@@ -37,6 +38,7 @@ const SPRITES := {
 	"portrait_eric": {"sheet": P + "Portrait", "group": 0, "frames": [6]},
 	"portrait_cousin": {"sheet": P + "Portrait", "group": 0, "frames": [1]},
 	"portrait_passerby_a": {"sheet": P + "Portrait", "group": 0, "frames": [3]},
+	"portrait_mistress": {"sheet": P + "Portrait", "group": 0, "frames": [4]},
 }
 ## 人物拼图里第几组是哪个朝向（原版走路图：4 组 × 8 帧）
 const FACING_GROUPS := {"up_left": 0, "up_right": 1, "down_left": 2, "down_right": 3}

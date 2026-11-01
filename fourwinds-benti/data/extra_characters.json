@@ -1,7 +1,26 @@
 {
  "_comment": "路人：只在个人主线关卡里出现的角色，不能在自由模式选。字段和 characters.json 的角色一样（id、name、nickname、color），ai_profile 不写 = 用没有性格的标准 AI 参数；以后要给路人性格，在 data/ai/profiles.json 加一组参数再把 ai_profile 指过去。没有台词文件就不说话。头像和走路图现在是借用原版人物的占位（scripts/ui/art.gd）。作者给了路人名单以后替换这里的占位。",
  "characters": [
-  {"id": "cousin", "name": "堂弟", "nickname": "堂弟", "color": "#c0a060", "placeholder": "原版四毛"},
-  {"id": "passerby_a", "name": "路人甲", "nickname": "路人甲", "color": "#d08090", "placeholder": "原版陈玛丽"}
+  {
+   "id": "cousin",
+   "name": "堂弟",
+   "nickname": "堂弟",
+   "color": "#c0a060",
+   "placeholder": "原版四毛"
+  },
+  {
+   "id": "passerby_a",
+   "name": "路人甲",
+   "nickname": "路人甲",
+   "color": "#d08090",
+   "placeholder": "原版陈玛丽"
+  },
+  {
+   "id": "mistress",
+   "name": "父亲的情妇",
+   "nickname": "情妇",
+   "color": "#b05080",
+   "placeholder": "原版赛珍珠"
+  }
  ]
 }

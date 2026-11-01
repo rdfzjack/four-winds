@@ -141,7 +141,7 @@ func _new_scenario_game(stage_ref: Dictionary) -> bool:
 	if index < 0 or index >= stages.size():
 		push_error("找不到关卡：%s" % str(stage_ref))
 		return false
-	var sc := Scenario.new(stages[index])
+	var sc := Scenario.new(Data.stage_for(str(stage_ref["character"]), index))
 	board = Data.maps[str(sc.stage["map"])]
 	game = Game.new()
 	var cards_file := {"cards": Data.cards, "special_events": Data.special_events}
@@ -1239,7 +1239,7 @@ func _tile_info(i: int) -> String:
 	if i < 0:
 		return "点棋盘上的格子看详情"
 	var t: Dictionary = board.get_tile(i)
-	var text := "%s（%s）" % [_tname(i), MapView.TYPE_NAMES.get(str(t["type"]), "")]
+	var text := "%s（%s）· 编号 %d" % [_tname(i), MapView.TYPE_NAMES.get(str(t["type"]), ""), i]
 	if not game.props.has(i):
 		return text
 	text += "\n价格 %d 万 · 现在的租金 %d 万" % [game.property_price(i), game.rent_of(i)]

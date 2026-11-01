@@ -76,10 +76,10 @@ func _show_stages(cid: String) -> void:
 	var stages := Data.stages_of(cid)
 	for i in range(stages.size()):
 		var status := Profile.stage_status(_profile, cid, i, stages.size())
-		var mark: String = {"cleared": "已通关", "current": "当前", "locked": "未解锁"}[status]
+		var mark: String = {"cleared": "已通关", "current": "当前", "locked": "还没打到（测试阶段可直接选）"}[status]
 		var stage: Dictionary = stages[i]
 		_button("第 %d 关 · %s · %s" % [i + 1, str(stage.get("name", "")), mark],
-				func() -> void: _show_briefing(cid, i), status == "locked")
+				func() -> void: _show_briefing(cid, i))
 	_button("返回", _show_characters)
 
 
@@ -87,7 +87,7 @@ func _show_stages(cid: String) -> void:
 
 func _show_briefing(cid: String, index: int) -> void:
 	_clear()
-	var stage: Dictionary = Data.stages_of(cid)[index]
+	var stage: Dictionary = Data.stage_for(cid, index)
 	var sc := Scenario.new(stage)
 	var names := sc.seat_names(Data.all_characters())
 	_label("第 %d 关 · %s" % [index + 1, str(stage.get("name", ""))], 26, Color.WHITE)
@@ -96,16 +96,57 @@ func _show_briefing(cid: String, index: int) -> void:
 	var intro := str(stage.get("intro", ""))
 	if intro != "":
 		_label(intro, 16, Color("#cfd8dc"))
-	var lines: Array = []
-	for i in range(names.size()):
-		var seat: Dictionary = stage["seats"][i]
-		var cash := str(int(seat["cash"])) if seat.has("cash") else "默认"
-		var deposit := str(int(seat["deposit"])) if seat.has("deposit") else "默认"
-		lines.append("%s%s：现金 %s 万 · 存款 %s 万" % [names[i], "（你）" if i == sc.player_seat else "",
-				cash, deposit])
-	_label("\n".join(lines), 14, Color.WHITE)
 	_label(sc.goals_text(names), 16, Color("#ffd54f"))
+	_label("开局资金（调试：在这里改只对这次运行有效，不写进文件；改完点“开始”）", 13, Color("#b0bec5"))
+	for i in range(names.size()):
+		_seat_row(cid, index, i, names[i], i == sc.player_seat)
+	var cross := CheckBox.new()
+	cross.text = "路口全部随机（这一关）"
+	cross.button_pressed = str(stage.get("crossroad", "")) == "random"
+	cross.toggled.connect(func(on: bool) -> void:
+			var st := _editable(cid, index)
+			if on:
+				st["crossroad"] = "random"
+			else:
+				st.erase("crossroad"))
+	add_child(cross)
 	_button("开始", func() -> void:
 			Data.start_stage = {"character": cid, "stage": index}
 			get_tree().change_scene_to_file("res://scenes/table.tscn"))
+	_button("复制这一关的数据（JSON，要永久改就粘进 data/campaigns/%s.json）" % cid, func() -> void:
+			DisplayServer.clipboard_set(JSON.stringify(Data.stage_for(cid, index), "  ")))
+	_button("恢复默认", func() -> void:
+			Data.stage_override.erase("%s:%d" % [cid, index])
+			_show_briefing(cid, index))
 	_button("返回", func() -> void: _show_stages(cid))
+
+
+## 这一关的可改副本（第一次改时从 data 复制一份放进 Data.stage_override）
+func _editable(cid: String, index: int) -> Dictionary:
+	var key := "%s:%d" % [cid, index]
+	if not Data.stage_override.has(key):
+		Data.stage_override[key] = Data.stages_of(cid)[index].duplicate(true)
+	return Data.stage_override[key]
+
+
+func _seat_row(cid: String, index: int, seat_index: int, name: String, is_player: bool) -> void:
+	var seat: Dictionary = Data.stage_for(cid, index)["seats"][seat_index]
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	add_child(row)
+	var label := Label.new()
+	label.text = "%s%s" % [name, "（你）" if is_player else ""]
+	label.custom_minimum_size = Vector2(150, 0)
+	row.add_child(label)
+	for field in ["cash", "deposit"]:
+		var caption := Label.new()
+		caption.text = "现金" if field == "cash" else "存款"
+		row.add_child(caption)
+		var box := SpinBox.new()
+		box.min_value = 0
+		box.max_value = 99999
+		box.step = 100
+		box.value = float(seat.get(field, Data.rules.get("starting_" + field, 0)))
+		box.value_changed.connect(func(v: float) -> void:
+				_editable(cid, index)["seats"][seat_index][field] = int(v))
+		row.add_child(box)

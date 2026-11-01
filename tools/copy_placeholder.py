@@ -42,10 +42,11 @@ SPRITES = {
     "Mai_b": ("Sprite/Mai_b", None, "foot", "买办走路图，占位给孔雀"),
     "Tu_c": ("Sprite/Tu_c", None, "foot", "土财主走路图，占位给理理"),
     "Liu_l": ("Sprite/Liu_l", None, "foot", "流浪儿走路图，占位给路人“堂弟”（data/extra_characters.json）"),
+    "Jao_j": ("Sprite/Jao_j", None, "foot", "交际花走路图，占位给路人“情妇”（data/extra_characters.json）"),
     "Fu_j": ("Sprite/Fu_j", None, "foot", "富家千金走路图，占位给路人“路人甲”（data/extra_characters.json）"),
     "Portrait": ("Screen/Portrait", None, "foot",
                  "原版界面左下角的半身头像（8 个原版人物各一帧，每人只有一种表情）：帧 0 董莺雨（孔雀）、"
-                 "2 包德利（斐斐）、5 冯全篾（小九）、6 发达而（理理）、1 四毛（路人“堂弟”）、3 陈玛丽（路人“路人甲”），其余留着不用"),
+                 "2 包德利（斐斐）、5 冯全篾（小九）、6 发达而（理理）、1 四毛（路人“堂弟”）、3 陈玛丽（路人“路人甲”）、4 赛珍珠（路人“情妇”），其余留着不用"),
 }
 
 

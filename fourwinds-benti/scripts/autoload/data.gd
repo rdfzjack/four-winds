@@ -36,6 +36,8 @@ var start_map: String = ""   ## 主界面选的地图 id；空 = 默认地图
 ## 个人主线：主界面选好关卡后交给棋盘画面 {character: 角色 id, stage: 第几关（0 起）}；空 = 自由模式。
 ## 棋盘画面开局时拿走并清空，之后记在画面自己身上
 var start_stage: Dictionary = {}
+## 调试：关前简介页里临时改过的关卡（开局资金、路口方式），键 "角色 id:第几关"，只在这次运行有效，不写文件
+var stage_override: Dictionary = {}
 ## 调试：交易时在按钮上面显示 AI 心里算的账（底价、得失、开价），主界面勾选。正式玩时关着
 var debug_ai: bool = false
 ## 路口全部随机（像原版），主界面勾选；不勾 = 按地图（现在的地图都是能选方向）
@@ -105,6 +107,14 @@ func _load_campaigns() -> void:
 			for e in Scenario.validate(stage, maps, all_characters(), rules):
 				errors.append("%s：%s" % [file, e])
 		campaigns[cid] = d
+
+
+## 某一关的数据：简介页临时改过就用改过的，否则用 data/campaigns 里的
+func stage_for(cid: String, index: int) -> Dictionary:
+	var key := "%s:%d" % [cid, index]
+	if stage_override.has(key):
+		return stage_override[key]
+	return stages_of(cid)[index]
 
 
 ## 某个角色的主线关卡列表（没有主线返回空数组）

@@ -1,0 +1,2030 @@
+{
+ "id": "little_italy",
+ "name": "纽约·小意大利",
+ "placeholder": true,
+ "_comment": "由 tools/cit_to_map.py 从原版 Story16 转换，地名、企业名按个人主线重新包装（行业类别是机制，名字随城市），之后可直接修改。pos 是原版的路面格。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版 上海 的 CITY_PROPERTY，单位万圆。",
+  "blank_land_price": 80,
+  "build_cost": {
+   "flat": 40,
+   "hotel": 100,
+   "floor": 140,
+   "villa": 200,
+   "upgrade": 60,
+   "function": 80
+  },
+  "rent": {
+   "blank_land": 15,
+   "flat": 30,
+   "hotel": 60,
+   "super_hotel": 80,
+   "floor": 80,
+   "super_floor": 120,
+   "villa": 150
+  }
+ },
+ "groups": {
+  "桑树街": {
+   "name": "桑树街",
+   "color": "#8d6e63"
+  },
+  "莫特街": {
+   "name": "莫特街",
+   "color": "#4fc3f7"
+  },
+  "伊丽莎白街": {
+   "name": "伊丽莎白街",
+   "color": "#f48fb1"
+  },
+  "海斯特街": {
+   "name": "海斯特街",
+   "color": "#ba68c8"
+  },
+  "格兰德街": {
+   "name": "格兰德街",
+   "color": "#ff8a65"
+  },
+  "布鲁姆街": {
+   "name": "布鲁姆街",
+   "color": "#e57373"
+  },
+  "包厘街": {
+   "name": "包厘街",
+   "color": "#fff176"
+  },
+  "坚尼街": {
+   "name": "坚尼街",
+   "color": "#81c784"
+  },
+  "德兰西街": {
+   "name": "德兰西街",
+   "color": "#1565c0"
+  },
+  "果园街": {
+   "name": "果园街",
+   "color": "#4db6ac"
+  },
+  "春街": {
+   "name": "春街",
+   "color": "#8d6e63"
+  },
+  "王子街": {
+   "name": "王子街",
+   "color": "#4fc3f7"
+  },
+  "肯梅尔街": {
+   "name": "肯梅尔街",
+   "color": "#f48fb1"
+  },
+  "巴克斯特街": {
+   "name": "巴克斯特街",
+   "color": "#ba68c8"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "land",
+   "name": "王子街3号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,23)",
+   "lot": [
+    6,
+    23
+   ],
+   "pos": [
+    5,
+    23
+   ],
+   "crossroad": "choice",
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "land",
+   "name": "王子街4号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,24)",
+   "lot": [
+    6,
+    24
+   ],
+   "pos": [
+    5,
+    24
+   ],
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "land",
+   "name": "王子街5号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,25)",
+   "lot": [
+    6,
+    25
+   ],
+   "pos": [
+    5,
+    25
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "company",
+   "name": "圣真纳罗移民银行",
+   "industry": "shop",
+   "price": 420,
+   "rent": 110,
+   "source": "Story16.cit 建筑 三井洋行",
+   "lot": [
+    6,
+    26
+   ],
+   "pos": [
+    5,
+    26
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "company",
+   "site": 3,
+   "pos": [
+    5,
+    27
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "company",
+   "name": "绿门俱乐部",
+   "industry": "entertainment",
+   "price": 400,
+   "rent": 120,
+   "source": "Story16.cit 建筑 百老汇夜总会",
+   "lot": [
+    6,
+    28
+   ],
+   "pos": [
+    5,
+    28
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "company",
+   "site": 5,
+   "pos": [
+    5,
+    29
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "company",
+   "name": "富尔顿鱼市码头",
+   "industry": "transport",
+   "price": 480,
+   "rent": 100,
+   "source": "Story16.cit 建筑 电车公司",
+   "lot": [
+    4,
+    30
+   ],
+   "pos": [
+    4,
+    29
+   ],
+   "next": [
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "company",
+   "site": 7,
+   "pos": [
+    3,
+    29
+   ],
+   "next": [
+    9
+   ]
+  },
+  {
+   "id": 9,
+   "type": "land",
+   "name": "坚尼街1号",
+   "group": "坚尼街",
+   "price_pct": 130,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (2,28)",
+   "lot": [
+    2,
+    28
+   ],
+   "pos": [
+    2,
+    29
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "land",
+   "name": "坚尼街1号",
+   "group": "坚尼街",
+   "price_pct": 130,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (1,28)",
+   "lot": [
+    1,
+    28
+   ],
+   "pos": [
+    1,
+    29
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "land",
+   "site": 13,
+   "pos": [
+    0,
+    29
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "road",
+   "pos": [
+    -1,
+    29
+   ],
+   "crossroad": "choice",
+   "next": [
+    13,
+    114
+   ]
+  },
+  {
+   "id": 13,
+   "type": "land",
+   "name": "海斯特街1号",
+   "group": "海斯特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,30)",
+   "lot": [
+    0,
+    30
+   ],
+   "pos": [
+    -1,
+    30
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "land",
+   "name": "海斯特街2号",
+   "group": "海斯特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,31)",
+   "lot": [
+    0,
+    31
+   ],
+   "pos": [
+    -1,
+    31
+   ],
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "land",
+   "name": "海斯特街3号",
+   "group": "海斯特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,32)",
+   "lot": [
+    0,
+    32
+   ],
+   "pos": [
+    -1,
+    32
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "chance",
+   "name": "运气",
+   "source": "Story16.cit 建筑 运气",
+   "lot": [
+    -2,
+    33
+   ],
+   "pos": [
+    -1,
+    33
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "chance",
+   "site": 16,
+   "pos": [
+    -1,
+    34
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 18,
+   "type": "road",
+   "pos": [
+    -1,
+    35
+   ],
+   "next": [
+    19
+   ]
+  },
+  {
+   "id": 19,
+   "type": "chance",
+   "site": 16,
+   "pos": [
+    -2,
+    35
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "chance",
+   "site": 16,
+   "pos": [
+    -3,
+    35
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "company",
+   "name": "格兰德街渡口",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "source": "Story16.cit 建筑 十六铺码头",
+   "lot": [
+    -4,
+    36
+   ],
+   "pos": [
+    -4,
+    35
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "company",
+   "site": 21,
+   "pos": [
+    -5,
+    35
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "government",
+   "name": "市政厅",
+   "source": "Story16.cit 建筑 市政厅",
+   "lot": [
+    -6,
+    36
+   ],
+   "pos": [
+    -6,
+    35
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "government",
+   "site": 23,
+   "pos": [
+    -7,
+    35
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "land",
+   "name": "布鲁姆街3号",
+   "group": "布鲁姆街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (-9,35)",
+   "lot": [
+    -9,
+    35
+   ],
+   "pos": [
+    -8,
+    35
+   ],
+   "next": [
+    26
+   ]
+  },
+  {
+   "id": 26,
+   "type": "land",
+   "name": "布鲁姆街2号",
+   "group": "布鲁姆街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (-9,34)",
+   "lot": [
+    -9,
+    34
+   ],
+   "pos": [
+    -8,
+    34
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "land",
+   "name": "布鲁姆街1号",
+   "group": "布鲁姆街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (-9,33)",
+   "lot": [
+    -9,
+    33
+   ],
+   "pos": [
+    -8,
+    33
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "company",
+   "name": "三球当铺",
+   "industry": "shop",
+   "price": 400,
+   "rent": 100,
+   "source": "Story16.cit 建筑 协昌祥百货公司",
+   "lot": [
+    -7,
+    32
+   ],
+   "pos": [
+    -8,
+    32
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "company",
+   "site": 28,
+   "pos": [
+    -8,
+    31
+   ],
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "land",
+   "site": 56,
+   "pos": [
+    -8,
+    30
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "road",
+   "pos": [
+    -8,
+    29
+   ],
+   "crossroad": "choice",
+   "next": [
+    32,
+    108
+   ]
+  },
+  {
+   "id": 32,
+   "type": "bank",
+   "name": "银行",
+   "source": "Story16.cit 建筑 银行",
+   "lot": [
+    -7,
+    28
+   ],
+   "pos": [
+    -8,
+    28
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "bank",
+   "site": 32,
+   "pos": [
+    -8,
+    27
+   ],
+   "next": [
+    34
+   ]
+  },
+  {
+   "id": 34,
+   "type": "land",
+   "name": "肯梅尔街3号",
+   "group": "肯梅尔街",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-7,26)",
+   "lot": [
+    -7,
+    26
+   ],
+   "pos": [
+    -8,
+    26
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "land",
+   "name": "肯梅尔街2号",
+   "group": "肯梅尔街",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-7,25)",
+   "lot": [
+    -7,
+    25
+   ],
+   "pos": [
+    -8,
+    25
+   ],
+   "next": [
+    36
+   ]
+  },
+  {
+   "id": 36,
+   "type": "land",
+   "name": "肯梅尔街1号",
+   "group": "肯梅尔街",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-7,24)",
+   "lot": [
+    -7,
+    24
+   ],
+   "pos": [
+    -8,
+    24
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 37,
+   "type": "road",
+   "pos": [
+    -8,
+    23
+   ],
+   "crossroad": "choice",
+   "next": [
+    38,
+    57
+   ]
+  },
+  {
+   "id": 38,
+   "type": "land",
+   "name": "果园街4号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-9,22)",
+   "lot": [
+    -9,
+    22
+   ],
+   "pos": [
+    -9,
+    23
+   ],
+   "next": [
+    39
+   ]
+  },
+  {
+   "id": 39,
+   "type": "land",
+   "name": "果园街3号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-10,22)",
+   "lot": [
+    -10,
+    22
+   ],
+   "pos": [
+    -10,
+    23
+   ],
+   "next": [
+    40
+   ]
+  },
+  {
+   "id": 40,
+   "type": "land",
+   "name": "果园街2号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-11,22)",
+   "lot": [
+    -11,
+    22
+   ],
+   "pos": [
+    -11,
+    23
+   ],
+   "next": [
+    41
+   ]
+  },
+  {
+   "id": 41,
+   "type": "land",
+   "name": "果园街1号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-12,22)",
+   "lot": [
+    -12,
+    22
+   ],
+   "pos": [
+    -12,
+    23
+   ],
+   "next": [
+    42
+   ]
+  },
+  {
+   "id": 42,
+   "type": "church",
+   "name": "教堂",
+   "source": "Story16.cit 建筑 教堂",
+   "lot": [
+    -13,
+    22
+   ],
+   "pos": [
+    -13,
+    23
+   ],
+   "next": [
+    43
+   ]
+  },
+  {
+   "id": 43,
+   "type": "church",
+   "site": 42,
+   "pos": [
+    -14,
+    23
+   ],
+   "next": [
+    44
+   ]
+  },
+  {
+   "id": 44,
+   "type": "company",
+   "name": "维苏威杂货",
+   "industry": "shop",
+   "price": 450,
+   "rent": 100,
+   "source": "Story16.cit 建筑 大新百货公司",
+   "lot": [
+    -16,
+    23
+   ],
+   "pos": [
+    -15,
+    23
+   ],
+   "next": [
+    45
+   ]
+  },
+  {
+   "id": 45,
+   "type": "company",
+   "site": 44,
+   "pos": [
+    -15,
+    24
+   ],
+   "next": [
+    46
+   ]
+  },
+  {
+   "id": 46,
+   "type": "company",
+   "name": "奥兰多木偶戏院",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 100,
+   "source": "Story16.cit 建筑 天外天夜总会",
+   "lot": [
+    -14,
+    25
+   ],
+   "pos": [
+    -15,
+    25
+   ],
+   "next": [
+    47
+   ]
+  },
+  {
+   "id": 47,
+   "type": "company",
+   "site": 46,
+   "pos": [
+    -15,
+    26
+   ],
+   "next": [
+    48
+   ]
+  },
+  {
+   "id": 48,
+   "type": "race_course",
+   "name": "赛马场",
+   "source": "Story16.cit 建筑 赛马场",
+   "lot": [
+    -14,
+    27
+   ],
+   "pos": [
+    -15,
+    27
+   ],
+   "next": [
+    49
+   ]
+  },
+  {
+   "id": 49,
+   "type": "race_course",
+   "site": 48,
+   "pos": [
+    -15,
+    28
+   ],
+   "next": [
+    50
+   ]
+  },
+  {
+   "id": 50,
+   "type": "road",
+   "pos": [
+    -15,
+    29
+   ],
+   "next": [
+    51
+   ]
+  },
+  {
+   "id": 51,
+   "type": "race_course",
+   "site": 48,
+   "pos": [
+    -14,
+    29
+   ],
+   "next": [
+    52
+   ]
+  },
+  {
+   "id": 52,
+   "type": "race_course",
+   "site": 48,
+   "pos": [
+    -13,
+    29
+   ],
+   "next": [
+    53
+   ]
+  },
+  {
+   "id": 53,
+   "type": "land",
+   "name": "包厘街1号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-12,30)",
+   "lot": [
+    -12,
+    30
+   ],
+   "pos": [
+    -12,
+    29
+   ],
+   "next": [
+    54
+   ]
+  },
+  {
+   "id": 54,
+   "type": "land",
+   "name": "包厘街2号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-11,30)",
+   "lot": [
+    -11,
+    30
+   ],
+   "pos": [
+    -11,
+    29
+   ],
+   "next": [
+    55
+   ]
+  },
+  {
+   "id": 55,
+   "type": "land",
+   "name": "包厘街3号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-10,30)",
+   "lot": [
+    -10,
+    30
+   ],
+   "pos": [
+    -10,
+    29
+   ],
+   "next": [
+    56
+   ]
+  },
+  {
+   "id": 56,
+   "type": "land",
+   "name": "包厘街4号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-9,30)",
+   "lot": [
+    -9,
+    30
+   ],
+   "pos": [
+    -9,
+    29
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 57,
+   "type": "land",
+   "site": 36,
+   "pos": [
+    -7,
+    23
+   ],
+   "next": [
+    58
+   ]
+  },
+  {
+   "id": 58,
+   "type": "company",
+   "name": "斯塔瑞拳击馆",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 90,
+   "source": "Story16.cit 建筑 百乐门夜总会",
+   "lot": [
+    -6,
+    22
+   ],
+   "pos": [
+    -6,
+    23
+   ],
+   "next": [
+    59
+   ]
+  },
+  {
+   "id": 59,
+   "type": "company",
+   "site": 58,
+   "pos": [
+    -5,
+    23
+   ],
+   "next": [
+    60
+   ]
+  },
+  {
+   "id": 60,
+   "type": "land",
+   "name": "巴克斯特街1号",
+   "group": "巴克斯特街",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story16.cit 地块 (-4,22)",
+   "lot": [
+    -4,
+    22
+   ],
+   "pos": [
+    -4,
+    23
+   ],
+   "next": [
+    61
+   ]
+  },
+  {
+   "id": 61,
+   "type": "land",
+   "name": "巴克斯特街2号",
+   "group": "巴克斯特街",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story16.cit 地块 (-3,22)",
+   "lot": [
+    -3,
+    22
+   ],
+   "pos": [
+    -3,
+    23
+   ],
+   "next": [
+    62
+   ]
+  },
+  {
+   "id": 62,
+   "type": "land",
+   "name": "巴克斯特街3号",
+   "group": "巴克斯特街",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story16.cit 地块 (-2,22)",
+   "lot": [
+    -2,
+    22
+   ],
+   "pos": [
+    -2,
+    23
+   ],
+   "next": [
+    63
+   ]
+  },
+  {
+   "id": 63,
+   "type": "road",
+   "pos": [
+    -1,
+    23
+   ],
+   "crossroad": "choice",
+   "next": [
+    64,
+    103
+   ]
+  },
+  {
+   "id": 64,
+   "type": "land",
+   "site": 62,
+   "pos": [
+    -1,
+    22
+   ],
+   "next": [
+    65
+   ]
+  },
+  {
+   "id": 65,
+   "type": "land",
+   "name": "伊丽莎白街2号",
+   "group": "伊丽莎白街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,21)",
+   "lot": [
+    0,
+    21
+   ],
+   "pos": [
+    -1,
+    21
+   ],
+   "next": [
+    66
+   ]
+  },
+  {
+   "id": 66,
+   "type": "land",
+   "name": "伊丽莎白街1号",
+   "group": "伊丽莎白街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,20)",
+   "lot": [
+    0,
+    20
+   ],
+   "pos": [
+    -1,
+    20
+   ],
+   "next": [
+    67
+   ]
+  },
+  {
+   "id": 67,
+   "type": "road",
+   "pos": [
+    -1,
+    19
+   ],
+   "next": [
+    68
+   ]
+  },
+  {
+   "id": 68,
+   "type": "land",
+   "site": 92,
+   "pos": [
+    -1,
+    18
+   ],
+   "next": [
+    69
+   ]
+  },
+  {
+   "id": 69,
+   "type": "road",
+   "pos": [
+    -1,
+    17
+   ],
+   "crossroad": "choice",
+   "next": [
+    70,
+    92
+   ]
+  },
+  {
+   "id": 70,
+   "type": "road",
+   "pos": [
+    -1,
+    16
+   ],
+   "next": [
+    71
+   ]
+  },
+  {
+   "id": 71,
+   "type": "road",
+   "pos": [
+    -1,
+    15
+   ],
+   "next": [
+    72
+   ]
+  },
+  {
+   "id": 72,
+   "type": "jail",
+   "name": "巡捕房",
+   "source": "Story16.cit 建筑 巡捕房",
+   "lot": [
+    0,
+    14
+   ],
+   "pos": [
+    -1,
+    14
+   ],
+   "next": [
+    73
+   ]
+  },
+  {
+   "id": 73,
+   "type": "jail",
+   "site": 72,
+   "pos": [
+    -1,
+    13
+   ],
+   "next": [
+    74
+   ]
+  },
+  {
+   "id": 74,
+   "type": "land",
+   "name": "格兰德街4号",
+   "group": "格兰德街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-1,11)",
+   "lot": [
+    -1,
+    11
+   ],
+   "pos": [
+    -1,
+    12
+   ],
+   "next": [
+    75
+   ]
+  },
+  {
+   "id": 75,
+   "type": "land",
+   "name": "格兰德街3号",
+   "group": "格兰德街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-2,11)",
+   "lot": [
+    -2,
+    11
+   ],
+   "pos": [
+    -2,
+    12
+   ],
+   "next": [
+    76
+   ]
+  },
+  {
+   "id": 76,
+   "type": "land",
+   "name": "格兰德街2号",
+   "group": "格兰德街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-3,11)",
+   "lot": [
+    -3,
+    11
+   ],
+   "pos": [
+    -3,
+    12
+   ],
+   "next": [
+    77
+   ]
+  },
+  {
+   "id": 77,
+   "type": "land",
+   "name": "格兰德街1号",
+   "group": "格兰德街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-4,11)",
+   "lot": [
+    -4,
+    11
+   ],
+   "pos": [
+    -4,
+    12
+   ],
+   "next": [
+    78
+   ]
+  },
+  {
+   "id": 78,
+   "type": "company",
+   "name": "包厘街高架站",
+   "industry": "transport",
+   "price": 560,
+   "rent": 130,
+   "source": "Story16.cit 建筑 上海站",
+   "lot": [
+    -5,
+    11
+   ],
+   "pos": [
+    -5,
+    12
+   ],
+   "next": [
+    79
+   ]
+  },
+  {
+   "id": 79,
+   "type": "company",
+   "site": 78,
+   "pos": [
+    -6,
+    12
+   ],
+   "next": [
+    80
+   ]
+  },
+  {
+   "id": 80,
+   "type": "land",
+   "name": "桑树街1号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,13)",
+   "lot": [
+    -7,
+    13
+   ],
+   "pos": [
+    -6,
+    13
+   ],
+   "next": [
+    81
+   ]
+  },
+  {
+   "id": 81,
+   "type": "land",
+   "name": "桑树街2号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,14)",
+   "lot": [
+    -7,
+    14
+   ],
+   "pos": [
+    -6,
+    14
+   ],
+   "next": [
+    82
+   ]
+  },
+  {
+   "id": 82,
+   "type": "land",
+   "name": "桑树街3号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,15)",
+   "lot": [
+    -7,
+    15
+   ],
+   "pos": [
+    -6,
+    15
+   ],
+   "next": [
+    83
+   ]
+  },
+  {
+   "id": 83,
+   "type": "land",
+   "name": "桑树街4号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,16)",
+   "lot": [
+    -7,
+    16
+   ],
+   "pos": [
+    -6,
+    16
+   ],
+   "next": [
+    84
+   ]
+  },
+  {
+   "id": 84,
+   "type": "road",
+   "pos": [
+    -6,
+    17
+   ],
+   "next": [
+    85
+   ]
+  },
+  {
+   "id": 85,
+   "type": "road",
+   "pos": [
+    -6,
+    18
+   ],
+   "next": [
+    86
+   ]
+  },
+  {
+   "id": 86,
+   "type": "road",
+   "pos": [
+    -6,
+    19
+   ],
+   "next": [
+    87
+   ]
+  },
+  {
+   "id": 87,
+   "type": "road",
+   "pos": [
+    -7,
+    19
+   ],
+   "next": [
+    88
+   ]
+  },
+  {
+   "id": 88,
+   "type": "chance",
+   "name": "运气",
+   "source": "Story16.cit 建筑 运气",
+   "lot": [
+    -9,
+    19
+   ],
+   "pos": [
+    -8,
+    19
+   ],
+   "next": [
+    89
+   ]
+  },
+  {
+   "id": 89,
+   "type": "chance",
+   "site": 88,
+   "pos": [
+    -8,
+    20
+   ],
+   "next": [
+    90
+   ]
+  },
+  {
+   "id": 90,
+   "type": "road",
+   "pos": [
+    -8,
+    21
+   ],
+   "next": [
+    91
+   ]
+  },
+  {
+   "id": 91,
+   "type": "land",
+   "site": 38,
+   "pos": [
+    -8,
+    22
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 92,
+   "type": "land",
+   "name": "莫特街1号",
+   "group": "莫特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,18)",
+   "lot": [
+    0,
+    18
+   ],
+   "pos": [
+    0,
+    17
+   ],
+   "next": [
+    93
+   ]
+  },
+  {
+   "id": 93,
+   "type": "land",
+   "name": "莫特街2号",
+   "group": "莫特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (1,18)",
+   "lot": [
+    1,
+    18
+   ],
+   "pos": [
+    1,
+    17
+   ],
+   "next": [
+    94
+   ]
+  },
+  {
+   "id": 94,
+   "type": "land",
+   "name": "莫特街3号",
+   "group": "莫特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (2,18)",
+   "lot": [
+    2,
+    18
+   ],
+   "pos": [
+    2,
+    17
+   ],
+   "next": [
+    95
+   ]
+  },
+  {
+   "id": 95,
+   "type": "park",
+   "name": "公园",
+   "source": "Story16.cit 建筑 公园",
+   "lot": [
+    3,
+    16
+   ],
+   "pos": [
+    3,
+    17
+   ],
+   "next": [
+    96
+   ]
+  },
+  {
+   "id": 96,
+   "type": "park",
+   "site": 95,
+   "pos": [
+    4,
+    17
+   ],
+   "next": [
+    97
+   ]
+  },
+  {
+   "id": 97,
+   "type": "company",
+   "name": "八号球台球厅",
+   "industry": "entertainment",
+   "price": 450,
+   "rent": 110,
+   "source": "Story16.cit 建筑 大世界夜总会",
+   "lot": [
+    6,
+    17
+   ],
+   "pos": [
+    5,
+    17
+   ],
+   "next": [
+    98
+   ]
+  },
+  {
+   "id": 98,
+   "type": "company",
+   "site": 97,
+   "pos": [
+    5,
+    18
+   ],
+   "next": [
+    99
+   ]
+  },
+  {
+   "id": 99,
+   "type": "company",
+   "name": "马鲁奇手推车行",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "source": "Story16.cit 建筑 公平路码头",
+   "lot": [
+    6,
+    19
+   ],
+   "pos": [
+    5,
+    19
+   ],
+   "next": [
+    100
+   ]
+  },
+  {
+   "id": 100,
+   "type": "company",
+   "site": 99,
+   "pos": [
+    5,
+    20
+   ],
+   "next": [
+    101
+   ]
+  },
+  {
+   "id": 101,
+   "type": "land",
+   "name": "王子街1号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,21)",
+   "lot": [
+    6,
+    21
+   ],
+   "pos": [
+    5,
+    21
+   ],
+   "next": [
+    102
+   ]
+  },
+  {
+   "id": 102,
+   "type": "land",
+   "name": "王子街2号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,22)",
+   "lot": [
+    6,
+    22
+   ],
+   "pos": [
+    5,
+    22
+   ],
+   "next": [
+    0
+   ]
+  },
+  {
+   "id": 103,
+   "type": "land",
+   "site": 118,
+   "pos": [
+    0,
+    23
+   ],
+   "next": [
+    104
+   ]
+  },
+  {
+   "id": 104,
+   "type": "company",
+   "name": "托托理发馆",
+   "industry": "shop",
+   "price": 480,
+   "rent": 120,
+   "source": "Story16.cit 建筑 先施百货公司",
+   "lot": [
+    1,
+    22
+   ],
+   "pos": [
+    1,
+    23
+   ],
+   "next": [
+    105
+   ]
+  },
+  {
+   "id": 105,
+   "type": "company",
+   "site": 104,
+   "pos": [
+    2,
+    23
+   ],
+   "next": [
+    106
+   ]
+  },
+  {
+   "id": 106,
+   "type": "road",
+   "pos": [
+    3,
+    23
+   ],
+   "next": [
+    107
+   ]
+  },
+  {
+   "id": 107,
+   "type": "road",
+   "pos": [
+    4,
+    23
+   ],
+   "next": [
+    0
+   ]
+  },
+  {
+   "id": 108,
+   "type": "bank",
+   "site": 32,
+   "pos": [
+    -7,
+    29
+   ],
+   "next": [
+    109
+   ]
+  },
+  {
+   "id": 109,
+   "type": "bank",
+   "site": 32,
+   "pos": [
+    -6,
+    29
+   ],
+   "next": [
+    110
+   ]
+  },
+  {
+   "id": 110,
+   "type": "land",
+   "name": "春街1号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-5,28)",
+   "lot": [
+    -5,
+    28
+   ],
+   "pos": [
+    -5,
+    29
+   ],
+   "next": [
+    111
+   ]
+  },
+  {
+   "id": 111,
+   "type": "land",
+   "name": "春街2号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-4,28)",
+   "lot": [
+    -4,
+    28
+   ],
+   "pos": [
+    -4,
+    29
+   ],
+   "next": [
+    112
+   ]
+  },
+  {
+   "id": 112,
+   "type": "land",
+   "name": "春街3号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-3,28)",
+   "lot": [
+    -3,
+    28
+   ],
+   "pos": [
+    -3,
+    29
+   ],
+   "next": [
+    113
+   ]
+  },
+  {
+   "id": 113,
+   "type": "land",
+   "name": "春街4号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-2,28)",
+   "lot": [
+    -2,
+    28
+   ],
+   "pos": [
+    -2,
+    29
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 114,
+   "type": "land",
+   "site": 113,
+   "pos": [
+    -1,
+    28
+   ],
+   "next": [
+    115
+   ]
+  },
+  {
+   "id": 115,
+   "type": "land",
+   "name": "德兰西街4号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,27)",
+   "lot": [
+    0,
+    27
+   ],
+   "pos": [
+    -1,
+    27
+   ],
+   "next": [
+    116
+   ]
+  },
+  {
+   "id": 116,
+   "type": "land",
+   "name": "德兰西街3号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,26)",
+   "lot": [
+    0,
+    26
+   ],
+   "pos": [
+    -1,
+    26
+   ],
+   "next": [
+    117
+   ]
+  },
+  {
+   "id": 117,
+   "type": "land",
+   "name": "德兰西街2号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,25)",
+   "lot": [
+    0,
+    25
+   ],
+   "pos": [
+    -1,
+    25
+   ],
+   "next": [
+    118
+   ]
+  },
+  {
+   "id": 118,
+   "type": "land",
+   "name": "德兰西街1号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,24)",
+   "lot": [
+    0,
+    24
+   ],
+   "pos": [
+    -1,
+    24
+   ],
+   "next": [
+    63
+   ]
+  }
+ ]
+}

@@ -1,0 +1,145 @@
+{
+ "_comment": "孔雀的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。开局资金、预置地产、百分比、限时都是起点数字，等逐关跑模拟后标定；标“待定”的是作者还没定的（路人情妇的性格、巴黎的社交圈路人、第 3 关的“总资产比所有人高”现在用高 N 近似）。每关至少两个对手。",
+ "character": "marcel",
+ "name": "证明自己",
+ "stages": [
+  {
+   "id": "marcel_1",
+   "name": "纽约",
+   "map": "upper_east",
+   "intro": "关前三人当面说他毫无商业头脑，孔雀离席。去纽约抢父亲的遗产。小九说要帮他，在场上照常买地收租，客观上分走情妇的钱，也会顺手踩孔雀的地。",
+   "outro_win": "遗产到手。小九：“看吧，我帮你了。”",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "marcel",
+     "player": true,
+     "cash": 500,
+     "deposit": 1000
+    },
+    {
+     "character": "mistress",
+     "cash": 500,
+     "deposit": 1000,
+     "ai": "standard_v2"
+    },
+    {
+     "character": "giorgio",
+     "cash": 500,
+     "deposit": 1000
+    }
+   ],
+   "win": [
+    {
+     "type": "bankrupt",
+     "who": 1
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    }
+   ]
+  },
+  {
+   "id": "marcel_2",
+   "name": "巴黎",
+   "map": "paris",
+   "intro": "社交圈嘲笑他，他要开古董连锁或掌握全城沙龙。理理和斐斐正好路过巴黎投资，根本没把他当回事，孔雀认定是冲他来的。",
+   "outro_win": "社交圈改口了，那两个人没注意到发生了什么。",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "marcel",
+     "player": true,
+     "cash": 1500,
+     "deposit": 2000
+    },
+    {
+     "character": "eric",
+     "cash": 1500,
+     "deposit": 2000
+    },
+    {
+     "character": "david",
+     "cash": 1500,
+     "deposit": 2000
+    }
+   ],
+   "win": [
+    {
+     "type": "control_industry",
+     "who": "player",
+     "industry": "shop",
+     "industry_name": "商业"
+    },
+    {
+     "type": "control_industry",
+     "who": "player",
+     "industry": "entertainment",
+     "industry_name": "娱乐"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    }
+   ]
+  },
+  {
+   "id": "marcel_3",
+   "name": "纽约",
+   "map": "newyork",
+   "intro": "三人都劝他住手，他越劝越来劲。",
+   "outro_win": "【待定】",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "marcel",
+     "player": true,
+     "cash": 2000,
+     "deposit": 2000
+    },
+    {
+     "character": "david",
+     "cash": 2000,
+     "deposit": 2000
+    },
+    {
+     "character": "giorgio",
+     "cash": 2000,
+     "deposit": 2000
+    },
+    {
+     "character": "eric",
+     "cash": 2000,
+     "deposit": 2000
+    }
+   ],
+   "win": [
+    {
+     "type": "own_lots_pct",
+     "who": "player",
+     "pct": 40
+    },
+    {
+     "type": "assets_at_least",
+     "who": "player",
+     "amount": 15000
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "days_over",
+     "days": 100
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,230 @@
+{
+ "_comment": "小九的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。开局资金、预置地产、总资产 N、限时都是起点数字，等逐关跑模拟后标定；标“待定”的是作者还没定的（第 3 关朋友的那条街、结局）。每关至少两个对手：第 1、2 关斐斐之外的第二个对手“路人甲”是占位。第 4 关“保护孔雀”用失败条件“孔雀破产”表示。",
+ "character": "giorgio",
+ "name": "船王",
+ "stages": [
+  {
+   "id": "giorgio_1",
+   "name": "那不勒斯，进货",
+   "map": "naples",
+   "intro": "禁酒令，回欧洲进酒。斐斐觉得把酒买走他就运不成了。",
+   "outro_win": "小九的酒运走了。斐斐仓库里堆得更多，说是“作为投资的葡萄酒收藏”。",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "giorgio",
+     "player": true,
+     "cash": 500,
+     "deposit": 1000
+    },
+    {
+     "character": "david",
+     "cash": 500,
+     "deposit": 1000
+    },
+    {
+     "character": "passerby_a",
+     "cash": 500,
+     "deposit": 1000,
+     "ai": "standard_v2"
+    }
+   ],
+   "win": [
+    {
+     "type": "assets_at_least",
+     "who": "player",
+     "amount": 3000
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "days_over",
+     "days": 45
+    }
+   ]
+  },
+  {
+   "id": "giorgio_2",
+   "name": "拿骚，小港口",
+   "map": "nassau",
+   "intro": "私酒中转港。斐斐觉得码头都归他，小九的船就靠不了岸。",
+   "outro_win": "斐斐发现自己名下的码头每天停满走私船，租金一分不少。",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "giorgio",
+     "player": true,
+     "cash": 1000,
+     "deposit": 1000
+    },
+    {
+     "character": "david",
+     "cash": 1000,
+     "deposit": 1000
+    },
+    {
+     "character": "passerby_a",
+     "cash": 1000,
+     "deposit": 1000,
+     "ai": "standard_v2"
+    }
+   ],
+   "win": [
+    {
+     "type": "control_industry",
+     "who": "player",
+     "industry": "transport",
+     "industry_name": "运输"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    }
+   ]
+  },
+  {
+   "id": "giorgio_3",
+   "name": "纽约，为朋友挺身而出",
+   "map": "little_italy",
+   "intro": "小九拍胸脯说“包在我身上”，转头就忘，想起来时期限快到了。斐斐觉得替朋友出头迟早要和黑帮扯上关系，先把那条街买下来。【待定】朋友是谁、哪条街作者还没定（占位：包厘街，对手路人甲是欺负朋友的人）。",
+   "outro_win": "街保住了。斐斐成了那条街第二大房东，租户全是黑帮。",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "giorgio",
+     "player": true,
+     "cash": 1500,
+     "deposit": 2000
+    },
+    {
+     "character": "david",
+     "cash": 1500,
+     "deposit": 2000
+    },
+    {
+     "character": "passerby_a",
+     "cash": 1500,
+     "deposit": 2000,
+     "ai": "standard_v2"
+    }
+   ],
+   "win": [
+    {
+     "type": "control_street",
+     "who": "player",
+     "group": "包厘街"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "days_over",
+     "days": 60
+    },
+    {
+     "type": "control_street",
+     "who": [
+      1,
+      2
+     ],
+     "group": "包厘街"
+    }
+   ]
+  },
+  {
+   "id": "giorgio_4",
+   "name": "上海，船王",
+   "map": "shanghai_full",
+   "intro": "孔雀在上海又玩大了，斐斐和理理要清算他，小九要保护孔雀。\n关前：斐斐和理理拿着孔雀的账本来找小九签字清算。小九没看（看不懂），说：“不行，他是我朋友。”",
+   "outro_win": "孔雀保住了，说“我本来就不需要帮忙”。斐斐整晚没跟小九说话。斐斐这一路攒下的家底比小九黑多了。",
+   "outro_lose": "孔雀破产，搬进小九家。斐斐脸色比清算之前还难看。",
+   "seats": [
+    {
+     "character": "giorgio",
+     "player": true,
+     "cash": 2000,
+     "deposit": 2000
+    },
+    {
+     "character": "david",
+     "cash": 2000,
+     "deposit": 2000
+    },
+    {
+     "character": "eric",
+     "cash": 2000,
+     "deposit": 2000
+    },
+    {
+     "character": "marcel",
+     "cash": 200,
+     "deposit": 200,
+     "props": [
+      {
+       "tile": 15
+      },
+      {
+       "tile": 16
+      },
+      {
+       "tile": 17
+      },
+      {
+       "tile": 18
+      },
+      {
+       "tile": 19
+      },
+      {
+       "tile": 127
+      },
+      {
+       "tile": 128
+      },
+      {
+       "tile": 129
+      },
+      {
+       "tile": 130
+      }
+     ]
+    }
+   ],
+   "win": [
+    {
+     "type": "bankrupt",
+     "who": [
+      1,
+      2
+     ],
+     "mode": "all"
+    },
+    {
+     "type": "control_industry",
+     "who": "player",
+     "industry": "transport",
+     "industry_name": "运输"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "bankrupt",
+     "who": 3
+    }
+   ]
+  }
+ ]
+}
