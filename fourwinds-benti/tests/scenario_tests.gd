@@ -4,6 +4,7 @@ extends "res://tests/save_tests.gd"
 
 const Scenario = preload("res://scripts/core/scenario.gd")
 const Profile = preload("res://scripts/core/profile.gd")
+const StageEdit = preload("res://scripts/core/stage_edit.gd")
 
 const PROFILE_PATH := "user://test_profile.json"
 const FIXTURE := "res://tests/fixtures/example_campaign.json"
@@ -22,6 +23,7 @@ func run(p_runner: Object) -> void:
 	test_conditions()
 	test_win_lose_flow()
 	test_crossroad_modes()
+	test_stage_edit()
 	test_free_mode_untouched()
 	test_ai_games_end_in_time()
 	test_save_and_resume()
@@ -316,6 +318,55 @@ func test_crossroad_modes() -> void:
 	var loaded: Game = r["game"]
 	check(loaded.crossroad_mode(7) == "choice" and loaded.crossroad_mode(48) == "random",
 			"存档读档后路口方式原样回来")
+
+
+func test_stage_edit() -> void:
+	var maps := real_maps()
+	# 示例关 2：理理(玩家)、斐斐、小九，位置 0 玩家；胜 / 负里有对座位 1、2 的引用
+	var s := sample_stage(1)
+	s["lose"].append({"type": "build_house", "who": [1, 2], "kind": "villa"})
+	check(StageEdit.add_seat(s, "marcel", "new_v2", 900, 800, 4) == "" and s["seats"].size() == 4,
+			"加一个对手")
+	check(StageEdit.add_seat(s, "eric", "new_v2", 1, 1, 6) != "", "同一个角色不能再加")
+	check(StageEdit.add_seat(s, "cousin", "standard_v2", 1, 1, 4) != "", "座位满了不能再加")
+	check(Scenario.validate(s, maps, data().all_characters(), rules).is_empty(), "加完以后关卡仍然合法")
+	var g := scn_game(s, 3)
+	check(g.players.size() == 4 and g.players[3].cash == 900, "加的对手开局现金按设置")
+	# 删座位 1：who=[1,2] 变成 [1]（原来的 2 前移），who=[1,2] 的 bankrupt（mode any）同理
+	check(StageEdit.remove_seat(s, 0) != "", "不能删玩家自己")
+	check(StageEdit.remove_seat(s, 1) == "" and s["seats"].size() == 3, "删一个对手")
+	var found := false
+	for c in s["lose"]:
+		if c["type"] == "build_house":
+			found = (c["who"] == [1])
+	check(found, "删座位后条件里的座位号前移：%s" % str(s["lose"]))
+	check(Scenario.validate(s, maps, data().all_characters(), rules).is_empty(), "删完以后关卡仍然合法")
+	# 删到只剩 who 空的条件：被丢掉，列表空了补默认
+	var t := sample_stage(0)    # 3 个座位，win 是对玩家的条件
+	t["win"] = [{"type": "bankrupt", "who": 2}]
+	check(StageEdit.remove_seat(t, 2) == "", "删座位 2")
+	check(t["win"][0]["who"] == "others", "胜利条件只涉及被删对手：补默认的击败所有对手")
+	check(StageEdit.remove_seat(t, 1) != "", "只剩玩家和一个对手时不能再删")
+	# 地产：送、转手、拿走
+	var u := sample_stage(1)
+	StageEdit.grant(u, 1, [10, 11])
+	StageEdit.grant(u, 2, [11, 12])
+	check(StageEdit.seat_tiles(u["seats"][1]) == [10]
+			and StageEdit.seat_tiles(u["seats"][2]) == [11, 12],
+			"同一块地给了别人，从原来的人那里拿走 %s" % str(u["seats"]))
+	StageEdit.grant(u, 2, [11])
+	check(StageEdit.seat_tiles(u["seats"][2]) == [11, 12], "已经是自己的不重复加")
+	StageEdit.revoke(u, 2, 11)
+	check(StageEdit.seat_tiles(u["seats"][2]) == [12], "拿走一块")
+	StageEdit.revoke(u, 2, 12)
+	check(not u["seats"][2].has("props"), "拿完了 props 项去掉")
+	check(Scenario.validate(u, maps, data().all_characters(), rules).is_empty(), "改完地产后关卡仍然合法")
+	var h := scn_game(u, 3)
+	check(h.owner_of(10) == 1, "送的地开局就在对手名下")
+	# 预置房子：拿走其中一块，整栋预置去掉
+	var v := sample_stage(0)    # 座位 1 有 tile 1 的平房
+	StageEdit.revoke(v, 1, 1)
+	check(not v["seats"][1].has("props"), "拿走预置房子的地，这个预置没了")
 
 
 func sample_stage_with(stage: Dictionary, patch: Dictionary) -> Dictionary:

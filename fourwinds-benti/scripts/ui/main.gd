@@ -248,8 +248,11 @@ func _open_campaign() -> void:
 	_overlay.add_child(center)
 	var frame := PanelContainer.new()
 	center.add_child(frame)
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(840, 600)
+	frame.add_child(scroll)
 	var panel := CampaignPanel.new()
-	frame.add_child(panel)
+	scroll.add_child(panel)
 	panel.closed.connect(func() -> void:
 			_overlay.queue_free()
 			_overlay = null)
