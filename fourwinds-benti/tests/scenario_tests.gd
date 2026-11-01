@@ -322,17 +322,17 @@ func test_crossroad_modes() -> void:
 
 func test_stage_edit() -> void:
 	var maps := real_maps()
-	# 示例关 2：理理(玩家)、斐斐、小九，位置 0 玩家；胜 / 负里有对座位 1、2 的引用
-	var s := sample_stage(1)
+	# 示例关 1（一圈图）：斐斐(玩家)、小九、孔雀 3 个座位；胜 / 负里有对座位 1、2 的引用
+	var s := sample_stage(0)
 	s["lose"].append({"type": "build_house", "who": [1, 2], "kind": "villa"})
-	check(StageEdit.add_seat(s, "marcel", "new_v2", 900, 800, 4) == "" and s["seats"].size() == 4,
+	check(StageEdit.add_seat(s, "eric", "new_v2", 900, 800, 4) == "" and s["seats"].size() == 4,
 			"加一个对手")
 	check(StageEdit.add_seat(s, "eric", "new_v2", 1, 1, 6) != "", "同一个角色不能再加")
 	check(StageEdit.add_seat(s, "cousin", "standard_v2", 1, 1, 4) != "", "座位满了不能再加")
 	check(Scenario.validate(s, maps, data().all_characters(), rules).is_empty(), "加完以后关卡仍然合法")
 	var g := scn_game(s, 3)
 	check(g.players.size() == 4 and g.players[3].cash == 900, "加的对手开局现金按设置")
-	# 删座位 1：who=[1,2] 变成 [1]（原来的 2 前移），who=[1,2] 的 bankrupt（mode any）同理
+	# 删座位 1：who=[1,2] 变成 [1]（原来的 2 前移）
 	check(StageEdit.remove_seat(s, 0) != "", "不能删玩家自己")
 	check(StageEdit.remove_seat(s, 1) == "" and s["seats"].size() == 3, "删一个对手")
 	var found := false
