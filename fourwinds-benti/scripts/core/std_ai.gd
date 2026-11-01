@@ -27,6 +27,9 @@ const Trader = preload("res://scripts/core/trader.gd")
 const NewAi = preload("res://scripts/core/new_ai.gd")
 const Ledger = preload("res://scripts/core/ledger.gd")
 
+## 台词用的“被压价”线：对方开的条件（折成钱）比我交出去的东西少这个百分比以上，我没答应
+const LOWBALL_PCT := 30.0
+
 const FAKE_HOUSE := 999999
 
 
@@ -153,7 +156,8 @@ static func wants_property(game, pi: int, tile: int) -> bool:
 		# 对手买了对他自己有利（按标准的账猜）、而且付得起，才算他会买走；否则还是没人买
 		var pos := Ledger.positions(game, pi, {tile: q.index}, {q.index: -price})
 		var wants: bool = q.cash >= price \
-				and Ledger.score_of(game, q.index, pos, 1.0) > Ledger.score_of(game, q.index, base, 1.0)
+				and Ledger.score_of(game, q.index, pos, 1.0) > Ledger.score_of(game, q.index, base,
+						1.0)
 		skip += share * (Ledger.score_of(game, pi, pos) if wants else now)
 	var buy := worth_doing(game, pi, Ledger.to_money(game, pi, base, bought - skip), price)
 	if game.record_history:
@@ -199,7 +203,8 @@ static func _build_step(game) -> bool:
 		if p.cash + p.deposit < cost:
 			continue
 		var after: float = _with_house(game, pi, str(c["kind"]), c["tiles"], func() -> float:
-			return Ledger.score_of(game, pi, Ledger.positions(game, pi, {}, {pi: -cost}, {}, c["tiles"])))
+			return Ledger.score_of(game, pi, Ledger.positions(game, pi, {}, {pi: -cost}, {},
+					c["tiles"])))
 		if after - now > best_gain:
 			best = c
 			best_gain = after - now
@@ -207,7 +212,8 @@ static func _build_step(game) -> bool:
 			int(best["cost"])):
 		return false
 	if game.record_history:
-		game.ai_think(pi, "build", {"kind": best["kind"], "tiles": best["tiles"], "cost": best["cost"],
+		game.ai_think(pi, "build", {"kind": best["kind"], "tiles": best["tiles"],
+				"cost": best["cost"],
 				"gain": best_gain, "cash": p.cash, "deposit": p.deposit})
 	if str(best["why"]) != "":
 		p.ai_memory["cash_need"] = int(best["cost"]) - p.cash
@@ -229,7 +235,8 @@ static func _upgrade_step(game) -> bool:
 		var fee: int = game.upgrade_fee(h["tiles"])
 		var old: String = h["kind"]
 		h["kind"] = game.upgrade_kind(old)
-		var after := Ledger.score_of(game, pi, Ledger.positions(game, pi, {}, {pi: -fee}, {}, h["tiles"]))
+		var after := Ledger.score_of(game, pi, Ledger.positions(game, pi, {}, {pi: -fee}, {},
+				h["tiles"]))
 		h["kind"] = old
 		if after - now > best_gain:
 			best = hid
@@ -339,7 +346,7 @@ static func answer(game, pi: int) -> void:
 	# ⑧a 要价虚高：好处不够这么多时先还价往上要（能答应的也先要）；不能答应的也试着还价
 	if first and (not yes or (haggle > 0.0 and g < haggle * given)):
 		counter = _counter(game, pi, offer, base, calm)
-	_note_answer(game, pi, parts, yes, counter)
+	_note_answer(game, pi, parts, yes, counter, given)
 	if game.record_history:
 		var p = game.players[pi]
 		var think := {"offer": offer.duplicate(true),
@@ -376,7 +383,8 @@ static func _explain_price(game, pi: int, offer: Dictionary, base: Array, calm: 
 
 ## 评测统计性格动作：grace（态度让我答应了按账不划算的）、spite（态度让我拒绝了按账划算的）、
 ## random_yes（随机范围里答应了不划算的）、haggle（能答应也先还价）
-static func _note_answer(game, pi: int, parts: Array, yes: bool, counter: Dictionary) -> void:
+static func _note_answer(game, pi: int, parts: Array, yes: bool, counter: Dictionary,
+		given: float) -> void:
 	var books: float = parts[0]
 	var total: float = parts[0] + parts[1]
 	if yes and counter.is_empty() and books <= 0.0:
@@ -385,6 +393,9 @@ static func _note_answer(game, pi: int, parts: Array, yes: bool, counter: Dictio
 		game.ai_note(pi, "spite")
 	elif yes and not counter.is_empty():
 		game.ai_note(pi, "haggle")
+	# 台词用：被压价 = 对方开的条件比我交出去的东西少 LOWBALL_PCT% 以上，没答应（拒绝或还价）
+	if not yes and parts[0] + parts[1] < -given * LOWBALL_PCT / 100.0:
+		game.ai_note(pi, "lowball")
 
 
 ## 还价：要发起人多给现金（先少要他的钱），回到自己的底价再加上要价虚高的那部分（⑧a）。
@@ -458,7 +469,8 @@ static func propose_step(game) -> bool:
 		return false
 	asked[best["key"]] = game.day
 	var offer: Dictionary = best["offer"]
-	p.ai_memory["trade_last"] = {"to": offer["to"], "get": offer["get"].duplicate(), "day": game.day}
+	p.ai_memory["trade_last"] = {"to": offer["to"], "get": offer["get"].duplicate(),
+			"day": game.day}
 	if game.record_history:
 		game.ai_think(pi, "trade_propose", {"offer": offer.duplicate(true), "gain": best["gain"],
 				"most_i_pay": best["most"], "least_they_need": best["least"]})

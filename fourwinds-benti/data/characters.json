@@ -18,7 +18,6 @@
    "home_city": "伦敦",
    "voice": "客气、冷静，全是银行和账本的说法",
    "ai_profile": "david",
-   "lines": "david",
    "placeholder_art": {
     "borrowed_from": "包德利",
     "walk": "extracted/images/Sprite/Mai_b.png",
@@ -45,7 +44,6 @@
    "home_city": "那不勒斯（城市待定）",
    "voice": "热情、夹意大利语，讲义气，满口“朋友”",
    "ai_profile": "giorgio",
-   "lines": "giorgio",
    "placeholder_art": {
     "borrowed_from": "冯全篾",
     "walk": "extracted/images/Sprite/Hei_b.png",
@@ -72,7 +70,6 @@
    "home_city": "巴黎（城市待定）",
    "voice": "文绉绉、爱面子，动不动搬出学术头衔",
    "ai_profile": "marcel",
-   "lines": "marcel",
    "placeholder_art": {
     "borrowed_from": "董莺雨",
     "walk": "extracted/images/Sprite/Nu_x.png",
@@ -99,7 +96,6 @@
    "home_city": "纽约",
    "voice": "政客腔，永远“早就料到”，什么都推给对手",
    "ai_profile": "eric",
-   "lines": "eric",
    "placeholder_art": {
     "borrowed_from": "发达而",
     "walk": "extracted/images/Sprite/Wai_g.png",

@@ -10,8 +10,8 @@ Writes into fourwinds-benti/data/:
     maps/shanghai_loop.json        38-tile loop built from the original Shanghai data
     cards/chance.json              30 chance cards + 4 special events, effects from the game code
     ai/profiles.json               AI parameters for the 4 characters (from Ai/Standard.ai)
-    lines/speech.json              speech lines per event (drafts) + original lines for reference
     reference/original_cities.json price tables of all 24 original maps (for designing new maps)
+    reference/original_speech.json original characters' speech lines (reference only; ours live in data/lines/*.txt)
 
 After the first run these files belong to the author: edit the JSON directly.
 The script skips files that already exist unless --force is given.
@@ -306,60 +306,17 @@ def build_ai() -> dict:
     }
 
 
-# ------------------------------------------------------------------ speech lines
-
-CONDITIONS = [
-    ("GIVE_MUCH_MONEY", "付了一大笔钱（高额租金）"),
-    ("GIVE_LITTLE_MONEY", "付了一点小钱"),
-    ("GOOD_LUCK", "交好运"),
-    ("BAD_LUCK", "倒霉"),
-    ("TO_JAIL", "进巡捕房"),
-    ("BUILD_VILLA", "建成别墅"),
-    ("TRADE_OK", "交易成功"),
-    ("TRADE_NOT_OK", "交易被拒"),
-    ("GET_CHARITY", "得到施舍"),
-    ("BEEN_STOLEN", "被偷"),
-    ("STEAL", "偷到钱"),
-    ("AFTER_DANGER", "脱险"),
-]
-
-# Draft lines written from the personas in docs/design.md. The author will rewrite.
-DRAFT_LINES = {
-    "david": ["这笔账，我记下了。", "零钱而已，不必找了。", "运气也是一种资产。", "短期波动，不足挂齿。",
-              "我要见我的律师——还有我的银行经理。", "利息总会回来的。", "很高兴和您做生意。",
-              "您先开个价，我再考虑。", "这算借款，还是赠予？", "保险公司会处理的……我希望。",
-              "就当是提前收的手续费。", "风险已对冲。"],
-    "giorgio": ["Mamma mia！这比海关还狠！", "拿去，朋友，喝杯咖啡。", "圣母保佑那不勒斯人！",
-                "今天的海风不对劲。", "我只是个卖橄榄油的！", "给我妈妈也盖一间。", "成交！握手就算合同。",
-                "朋友之间，别这么算计嘛。", "你是好人，我欠你一次。", "谁动了我的货？！",
-                "这不叫偷，这叫转运。", "跑得比缉私船还快。"],
-    "marcel": ["如此粗鄙的数字……", "区区小数，不值一提。", "这是学识的回报。", "此乃命运对学者的嫉妒。",
-               "你们可知道我是法兰西学院的……？", "终于有地方放我的藏书了。", "成交。记得在报上写明是我让的价。",
-               "这种价格，有辱斯文。", "我收下，纯粹是为了学术。", "那可是吐火罗文的手稿！",
-               "这叫文物保护。", "体面，总算保住了。"],
-    "eric": ["记在竞选经费里。", "我早就算到了。", "内部消息从不出错。", "这是对手的抹黑！",
-             "我要求举行听证会。", "下一步，州长官邸。", "你刚刚错过了更好的价格。",
-             "没关系，我已经买下了你隔壁那块。", "选民的支持我心领了。", "我会让国会调查此事。",
-             "这叫再分配。", "我从不出现在出事的现场。"],
-}
-
+# ------------------------------------------------------------------ speech lines (reference only)
+# 角色台词现在写在 fourwinds-benti/data/lines/<角色>.txt 里（作者自己改，不由这个脚本生成）。
+# 这里只导出原版 8 个角色的台词，当参考。
 
 def build_lines() -> dict:
     src = json.loads((EXTRACTED / "text/speech_lines.json").read_text("utf-8"))
-    chars = {}
-    for cid, lines in DRAFT_LINES.items():
-        chars[cid] = {cond: [line] for (cond, _), line in zip(CONDITIONS, lines)}
     reference = {}
     for code, c in src["characters"].items():
         reference[c["name"]] = c["lines"]
     return {
-        "_comment": "角色台词。characters 里每种事件是一个列表，游戏从中随机挑一句，可以随时加句子。"
-                    "这一版是按设计文档人设写的草稿，等作者改写。"
-                    "以后可加 \"vs\"：{对手 id: {事件: [台词]}}，做针对某个对手的专属台词。"
-                    "original_reference 是原版 8 个角色的台词（来自 Sentence/*.spr），只作参考，游戏不读。",
-        "status": "草稿",
-        "conditions": {cond: zh for cond, zh in CONDITIONS},
-        "characters": chars,
+        "_comment": "原版 8 个角色的台词（来自 Sentence/*.spr，帧顺序对应原版的 12 种事件），只作参考，游戏不读。",
         "original_reference": reference,
     }
 
@@ -406,7 +363,7 @@ def main() -> None:
         "maps/shanghai_loop.json": lambda: build_loop_map(SHANGHAI_LOOP),
         "cards/chance.json": build_cards,
         "ai/profiles.json": build_ai,
-        "lines/speech.json": build_lines,
+        "reference/original_speech.json": build_lines,
         "reference/original_cities.json": build_reference,
     }
     for rel, fn in outputs.items():

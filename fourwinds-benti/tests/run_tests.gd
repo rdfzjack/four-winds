@@ -15,6 +15,7 @@ const TradeTests = preload("res://tests/trade_tests.gd")
 const ScenarioLib = preload("res://tools/ai_scenarios_lib.gd")
 const ValuerTests = preload("res://tests/valuer_tests.gd")
 const TraderTests = preload("res://tests/trader_tests.gd")
+const SpeechTests = preload("res://tests/speech_tests.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
 const Art = preload("res://scripts/ui/art.gd")
 
@@ -49,7 +50,7 @@ func run_logic_tests() -> void:
 	test_walk_on_loop()
 	test_walk_with_crossroad()
 	test_broken_map_is_reported()
-	test_characters_ai_lines_match()
+	test_characters_ai_match()
 	test_cards_valid()
 	test_broken_cards_reported()
 	test_default_map()
@@ -60,6 +61,7 @@ func run_logic_tests() -> void:
 	AiTests.new().run(self)
 	ValuerTests.new().run(self)
 	TraderTests.new().run(self)
+	SpeechTests.new().run(self)
 	test_ai_scenarios_run()
 
 
@@ -138,14 +140,12 @@ func test_broken_map_is_reported() -> void:
 	check(errors.size() >= 3, "坏地图能被发现（走不到的格子、缺街道组、缺系数）")
 
 
-func test_characters_ai_lines_match() -> void:
+func test_characters_ai_match() -> void:
 	var errors: Array = []
 	var chars := JsonUtil.load_dict("res://data/characters.json", errors)
 	var ai := JsonUtil.load_dict("res://data/ai/profiles.json", errors)
-	var lines := JsonUtil.load_dict("res://data/lines/speech.json", errors)
-	errors.append_array(DataCheck.check_characters(chars.get("characters", []), ai, lines))
-	check(errors.is_empty(), "角色、AI 参数、台词对得上 %s" % str(errors))
-	check(lines.get("conditions", {}).size() == 12, "台词有 12 种事件")
+	errors.append_array(DataCheck.check_characters(chars.get("characters", []), ai))
+	check(errors.is_empty(), "角色、AI 参数对得上 %s" % str(errors))
 
 
 func test_cards_valid() -> void:

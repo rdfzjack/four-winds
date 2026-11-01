@@ -740,6 +740,7 @@ func _auction_end() -> void:
 		players[seller].cash += price
 		props[tile]["owner"] = top
 		_emit("auction_sold", {"player": top, "seller": seller, "tile": tile, "price": price})
+		_emit_street_done(top, [tile])
 	else:
 		var start := int(pending["start"])
 		players[seller].cash += start
@@ -876,6 +877,8 @@ func _do_trade(o: Dictionary) -> void:
 	players[a].cash += o["get_cash"] - o["give_cash"]
 	players[b].cash += o["give_cash"] - o["get_cash"]
 	_emit("trade_done", {"player": a, "offer": o})
+	_emit_street_done(a, o["get"])
+	_emit_street_done(b, o["give"])
 
 
 # ───────────────────────── 掷骰和移动 ─────────────────────────
@@ -949,6 +952,7 @@ func _continue_move() -> void:
 		p.pos = dest
 		_move["remaining"] = int(_move["remaining"]) - 1
 		_emit("step", {"player": p.index, "tile": dest})
+		_move.get_or_add("trail", []).append(dest)
 		_meet_players(p)
 		if p.bankrupt:
 			_finish_turn()
@@ -958,6 +962,7 @@ func _continue_move() -> void:
 		if p.bankrupt:
 			_finish_turn()
 			return
+	_emit_dodged(p, _move.get("trail", []))
 	_move = {}
 	_on_stop(p)
 	if phase != "pending" and phase != "over":
@@ -974,6 +979,54 @@ func _may_choose_direction(_p: Player, tile: int) -> bool:
 ## 这个路口现在是 choice 还是 random（考虑 crossroad_override）
 func crossroad_mode(tile: int) -> String:
 	return crossroad_override if crossroad_override != "" else board.crossroad_mode(tile)
+
+
+## 台词用：这次移动停下的地方，前后一两格有别人的高租地（租金够得上“大笔”）却没踩到，记一个 dodged。
+## 前后一两格 = 走过来的最后两步，加上落点往前的两步（路口的几个方向都算）。只是记事件，不影响规则。
+func _emit_dodged(p: Player, trail: Array) -> void:
+	var land := board.site(p.pos)
+	if props.has(land) and owner_of(land) >= 0 and owner_of(land) != p.index:
+		return  # 落点自己就要付租
+	var near: Array = []
+	for k in [2, 3]:
+		if trail.size() >= k:
+			near.append(trail[trail.size() - k])
+	for a in board.next_tiles(p.pos):
+		near.append(a)
+		near.append_array(board.next_tiles(int(a)))
+	var wealth: int = p.cash + p.deposit
+	for t in near:
+		var site := board.site(int(t))
+		if site == land or not props.has(site):
+			continue
+		var o := owner_of(site)
+		if o < 0 or o == p.index or players[o].bankrupt or props[site]["mortgaged"] \
+				or NO_RENT_STATES.has(players[o].status_kind()):
+			continue
+		if rent_of(site) * 100 > wealth * int(rules["speech"]["much_money_pct"]):
+			_emit("dodged", {"player": p.index, "tile": site, "owner": o})
+			return
+
+
+## 台词用：pi 刚拿到 tiles 这些地，哪条街因此被他凑齐了（整条街的地全是他的，抵押也算），记一个 street_done
+func _emit_street_done(pi: int, tiles: Array) -> void:
+	var seen := {}
+	for t in tiles:
+		var tile: Dictionary = board.get_tile(int(t))
+		var g := str(tile.get("group", ""))
+		if str(tile["type"]) != "land" or seen.has(g):
+			continue
+		seen[g] = true
+		var total := 0
+		var mine := 0
+		for x in board.tiles:
+			if str(x["type"]) == "land" and not x.has("site") and str(x.get("group", "")) == g:
+				total += 1
+				if owner_of(int(x["id"])) == pi:
+					mine += 1
+		if total >= 2 and mine == total:
+			_emit("street_done", {"player": pi, "group": g,
+					"name": str(board.groups.get(g, {}).get("name", g))})
 
 
 ## 路上遇到别的玩家：小偷偷走现金，信徒施舍现金。
@@ -1170,6 +1223,7 @@ func buy() -> bool:
 	props[tile]["owner"] = p.index
 	props[tile]["mortgaged"] = false
 	_emit("bought", {"player": p.index, "tile": tile, "price": price})
+	_emit_street_done(p.index, [tile])
 	_clear_pending()
 	_finish_turn()
 	return true
