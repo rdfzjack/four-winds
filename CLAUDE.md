@@ -9,7 +9,7 @@
 - `docs/design.md`：设计文档（角色、城市、远期新规则）。和作者最新指示冲突时以作者为准。
 - `docs/original_rules.md`：反汇编确认的原版规则和数值。
 - `docs/campaigns.md`：个人主线的关卡数据格式、条件类型、判定时机、进度文件。
-- `docs/campaign_brief.md`：作者和其他 AI 讨论主线剧情用的规则框架（单文件，含地图目录，目录部分由 `python3 tools/map_catalog.py` 生成），同时是 8b 要作者交付的清单。
+- `docs/campaign_brief.md`：作者和其他 AI 讨论主线剧情用的规则框架（精简单文件，约 4000 字；`docs/campaign_brief_full.md` 是详细版，含完整地图目录和原版 20 关表，由 `python3 tools/map_catalog.py` 生成），同时是 8b 要作者交付的清单。
 - `docs/analysis.md`：原版文件格式和数据结构（`.cit` 地图、AI 参数、台词等）。
 
 ## 目录

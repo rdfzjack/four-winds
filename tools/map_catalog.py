@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""生成地图目录，写进 docs/campaign_brief.md：原版 24 张城市 / 战役地图（和已经转好的地图）的规模、企业、路口。
+"""生成地图目录，写进 docs/campaign_brief_full.md：原版 24 张城市 / 战役地图（和已经转好的地图）的规模、企业、路口。
 给主线剧情讨论用（选图、定目标时看企业够不够）。用法：python3 tools/map_catalog.py
 数字来自 tools/cit_to_map.py --print（转换后的格数、路口、街道数）和解包出来的 *_buildings.csv。"""
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CITIES = ROOT / "extracted/data/cities"
-OUT = ROOT / "docs/campaign_brief.md"  # 表格写进简报里 <!-- map_catalog:start/end --> 之间
+OUT = ROOT / "docs/campaign_brief_full.md"  # 表格写进简报里 <!-- map_catalog:start/end --> 之间
 CONVERTED = {  # 原版文件 -> 已经在 data/maps/ 里的地图 id
     "Cit_Shaihai": "shanghai", "Sub_Story34": "shanghai_west",
 }
