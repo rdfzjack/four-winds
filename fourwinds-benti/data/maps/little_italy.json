@@ -2,10 +2,10 @@
  "id": "little_italy",
  "name": "纽约·小意大利",
  "placeholder": true,
- "_comment": "由 tools/cit_to_map.py 从原版 Cit_Nanjing.cit（南京，自由模式城市） 转换，地名、企业名按个人主线重新包装；行业按需要调整过：公用 → 运输，纺织 → 商业，运输 → 娱乐（共 运输 4 / 商业 3 / 娱乐 3）。之后可直接修改。pos 是原版的路面格。",
+ "_comment": "由 tools/cit_to_map.py 从原版 Story16.cit（上海局部，119 格）转换，地名、企业名按个人主线重新包装（行业类别是机制，名字随城市），之后可直接修改。pos 是原版的路面格。",
  "start_tile": 0,
  "prices": {
-  "_comment": "原版 南京 的 CITY_PROPERTY，单位万圆。",
+  "_comment": "原版 上海 的 CITY_PROPERTY，单位万圆。",
   "blank_land_price": 80,
   "build_cost": {
    "flat": 40,
@@ -20,7 +20,7 @@
    "flat": 30,
    "hotel": 60,
    "super_hotel": 80,
-   "floor": 100,
+   "floor": 80,
    "super_floor": 120,
    "villa": 150
   }
@@ -81,41 +81,45 @@
   "巴克斯特街": {
    "name": "巴克斯特街",
    "color": "#ba68c8"
-  },
-  "佩尔街": {
-   "name": "佩尔街",
-   "color": "#ff8a65"
-  },
-  "卡纳尔街": {
-   "name": "卡纳尔街",
-   "color": "#e57373"
   }
  },
  "tiles": [
   {
    "id": 0,
-   "type": "park",
-   "name": "玄武湖公园",
-   "source": "Nanjing.cit 建筑 玄武湖公园",
+   "type": "land",
+   "name": "王子街3号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,23)",
    "lot": [
-    9,
-    16
+    6,
+    23
    ],
    "pos": [
-    10,
-    16
+    5,
+    23
    ],
+   "crossroad": "choice",
    "next": [
     1
    ]
   },
   {
    "id": 1,
-   "type": "park",
-   "site": 0,
+   "type": "land",
+   "name": "王子街4号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,24)",
+   "lot": [
+    6,
+    24
+   ],
    "pos": [
-    10,
-    17
+    5,
+    24
    ],
    "next": [
     2
@@ -123,19 +127,19 @@
   },
   {
    "id": 2,
-   "type": "company",
-   "name": "富尔顿鱼市码头",
-   "industry": "transport",
-   "price": 360,
-   "rent": 80,
-   "source": "Nanjing.cit 建筑 多能煤球公司",
+   "type": "land",
+   "name": "王子街5号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,25)",
    "lot": [
-    11,
-    18
+    6,
+    25
    ],
    "pos": [
-    10,
-    18
+    5,
+    25
    ],
    "next": [
     3
@@ -144,10 +148,18 @@
   {
    "id": 3,
    "type": "company",
-   "site": 2,
+   "name": "圣真纳罗移民银行",
+   "industry": "shop",
+   "price": 420,
+   "rent": 110,
+   "source": "Story16.cit 建筑 三井洋行",
+   "lot": [
+    6,
+    26
+   ],
    "pos": [
-    10,
-    19
+    5,
+    26
    ],
    "next": [
     4
@@ -155,28 +167,31 @@
   },
   {
    "id": 4,
-   "type": "road",
+   "type": "company",
+   "site": 3,
    "pos": [
-    10,
-    20
+    5,
+    27
    ],
-   "crossroad": "choice",
    "next": [
     5
    ]
   },
   {
    "id": 5,
-   "type": "bank",
-   "name": "银行",
-   "source": "Nanjing.cit 建筑 银行",
+   "type": "company",
+   "name": "绿门俱乐部",
+   "industry": "entertainment",
+   "price": 400,
+   "rent": 120,
+   "source": "Story16.cit 建筑 百老汇夜总会",
    "lot": [
-    9,
-    21
+    6,
+    28
    ],
    "pos": [
-    10,
-    21
+    5,
+    28
    ],
    "next": [
     6
@@ -184,11 +199,11 @@
   },
   {
    "id": 6,
-   "type": "bank",
+   "type": "company",
    "site": 5,
    "pos": [
-    10,
-    22
+    5,
+    29
    ],
    "next": [
     7
@@ -196,19 +211,19 @@
   },
   {
    "id": 7,
-   "type": "land",
-   "name": "坚尼街2号",
-   "group": "坚尼街",
-   "price_pct": 120,
-   "build_cost_pct": 130,
-   "source": "Nanjing.cit 地块 (11,23)",
+   "type": "company",
+   "name": "富尔顿鱼市码头",
+   "industry": "transport",
+   "price": 480,
+   "rent": 100,
+   "source": "Story16.cit 建筑 电车公司",
    "lot": [
-    11,
-    23
+    4,
+    30
    ],
    "pos": [
-    10,
-    23
+    4,
+    29
    ],
    "next": [
     8
@@ -216,19 +231,11 @@
   },
   {
    "id": 8,
-   "type": "land",
-   "name": "坚尼街1号",
-   "group": "坚尼街",
-   "price_pct": 120,
-   "build_cost_pct": 130,
-   "source": "Nanjing.cit 地块 (11,24)",
-   "lot": [
-    11,
-    24
-   ],
+   "type": "company",
+   "site": 7,
    "pos": [
-    10,
-    24
+    3,
+    29
    ],
    "next": [
     9
@@ -236,16 +243,19 @@
   },
   {
    "id": 9,
-   "type": "chance",
-   "name": "运气",
-   "source": "Nanjing.cit 建筑 运气",
+   "type": "land",
+   "name": "坚尼街1号",
+   "group": "坚尼街",
+   "price_pct": 130,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (2,28)",
    "lot": [
-    10,
-    26
+    2,
+    28
    ],
    "pos": [
-    10,
-    25
+    2,
+    29
    ],
    "next": [
     10
@@ -253,11 +263,19 @@
   },
   {
    "id": 10,
-   "type": "chance",
-   "site": 9,
+   "type": "land",
+   "name": "坚尼街1号",
+   "group": "坚尼街",
+   "price_pct": 130,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (1,28)",
+   "lot": [
+    1,
+    28
+   ],
    "pos": [
-    9,
-    25
+    1,
+    29
    ],
    "next": [
     11
@@ -266,43 +284,43 @@
   {
    "id": 11,
    "type": "land",
-   "name": "卡纳尔街6号",
-   "group": "卡纳尔街",
-   "price_pct": 200,
-   "build_cost_pct": 180,
-   "source": "Nanjing.cit 地块 (8,24)",
-   "lot": [
-    8,
-    24
-   ],
+   "site": 13,
    "pos": [
-    8,
-    25
+    0,
+    29
    ],
-   "crossroad": "choice",
    "next": [
     12
    ]
   },
   {
    "id": 12,
-   "type": "chance",
-   "site": 9,
+   "type": "road",
    "pos": [
-    8,
-    26
+    -1,
+    29
    ],
+   "crossroad": "choice",
    "next": [
-    13
+    13,
+    114
    ]
   },
   {
    "id": 13,
-   "type": "chance",
-   "site": 9,
+   "type": "land",
+   "name": "海斯特街1号",
+   "group": "海斯特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,30)",
+   "lot": [
+    0,
+    30
+   ],
    "pos": [
-    8,
-    27
+    -1,
+    30
    ],
    "next": [
     14
@@ -310,10 +328,19 @@
   },
   {
    "id": 14,
-   "type": "road",
+   "type": "land",
+   "name": "海斯特街2号",
+   "group": "海斯特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,31)",
+   "lot": [
+    0,
+    31
+   ],
    "pos": [
-    8,
-    28
+    -1,
+    31
    ],
    "next": [
     15
@@ -321,10 +348,19 @@
   },
   {
    "id": 15,
-   "type": "road",
+   "type": "land",
+   "name": "海斯特街3号",
+   "group": "海斯特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,32)",
+   "lot": [
+    0,
+    32
+   ],
    "pos": [
-    7,
-    28
+    -1,
+    32
    ],
    "next": [
     16
@@ -332,19 +368,16 @@
   },
   {
    "id": 16,
-   "type": "land",
-   "name": "布鲁姆街4号",
-   "group": "布鲁姆街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (6,27)",
+   "type": "chance",
+   "name": "运气",
+   "source": "Story16.cit 建筑 运气",
    "lot": [
-    6,
-    27
+    -2,
+    33
    ],
    "pos": [
-    6,
-    28
+    -1,
+    33
    ],
    "next": [
     17
@@ -352,19 +385,11 @@
   },
   {
    "id": 17,
-   "type": "company",
-   "name": "圣真纳罗移民银行",
-   "industry": "shop",
-   "price": 440,
-   "rent": 120,
-   "source": "Nanjing.cit 建筑 东瀛纱厂",
-   "lot": [
-    4,
-    28
-   ],
+   "type": "chance",
+   "site": 16,
    "pos": [
-    5,
-    28
+    -1,
+    34
    ],
    "next": [
     18
@@ -372,11 +397,10 @@
   },
   {
    "id": 18,
-   "type": "company",
-   "site": 17,
+   "type": "road",
    "pos": [
-    5,
-    29
+    -1,
+    35
    ],
    "next": [
     19
@@ -384,10 +408,11 @@
   },
   {
    "id": 19,
-   "type": "road",
+   "type": "chance",
+   "site": 16,
    "pos": [
-    5,
-    30
+    -2,
+    35
    ],
    "next": [
     20
@@ -395,11 +420,11 @@
   },
   {
    "id": 20,
-   "type": "company",
-   "site": 17,
+   "type": "chance",
+   "site": 16,
    "pos": [
-    4,
-    30
+    -3,
+    35
    ],
    "next": [
     21
@@ -408,10 +433,18 @@
   {
    "id": 21,
    "type": "company",
-   "site": 17,
+   "name": "格兰德街渡口",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "source": "Story16.cit 建筑 十六铺码头",
+   "lot": [
+    -4,
+    36
+   ],
    "pos": [
-    3,
-    30
+    -4,
+    35
    ],
    "next": [
     22
@@ -419,11 +452,11 @@
   },
   {
    "id": 22,
-   "type": "land",
-   "site": 24,
+   "type": "company",
+   "site": 21,
    "pos": [
-    3,
-    31
+    -5,
+    35
    ],
    "next": [
     23
@@ -431,10 +464,16 @@
   },
   {
    "id": 23,
-   "type": "road",
+   "type": "government",
+   "name": "市政厅",
+   "source": "Story16.cit 建筑 市政厅",
+   "lot": [
+    -6,
+    36
+   ],
    "pos": [
-    3,
-    32
+    -6,
+    35
    ],
    "next": [
     24
@@ -442,19 +481,11 @@
   },
   {
    "id": 24,
-   "type": "land",
-   "name": "布鲁姆街2号",
-   "group": "布鲁姆街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (2,31)",
-   "lot": [
-    2,
-    31
-   ],
+   "type": "government",
+   "site": 23,
    "pos": [
-    2,
-    32
+    -7,
+    35
    ],
    "next": [
     25
@@ -463,18 +494,18 @@
   {
    "id": 25,
    "type": "land",
-   "name": "布鲁姆街1号",
+   "name": "布鲁姆街3号",
    "group": "布鲁姆街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (1,31)",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (-9,35)",
    "lot": [
-    1,
-    31
+    -9,
+    35
    ],
    "pos": [
-    1,
-    32
+    -8,
+    35
    ],
    "next": [
     26
@@ -482,10 +513,19 @@
   },
   {
    "id": 26,
-   "type": "road",
+   "type": "land",
+   "name": "布鲁姆街2号",
+   "group": "布鲁姆街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (-9,34)",
+   "lot": [
+    -9,
+    34
+   ],
    "pos": [
-    1,
-    33
+    -8,
+    34
    ],
    "next": [
     27
@@ -493,10 +533,19 @@
   },
   {
    "id": 27,
-   "type": "road",
+   "type": "land",
+   "name": "布鲁姆街1号",
+   "group": "布鲁姆街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Story16.cit 地块 (-9,33)",
+   "lot": [
+    -9,
+    33
+   ],
    "pos": [
-    1,
-    34
+    -8,
+    33
    ],
    "next": [
     28
@@ -505,18 +554,18 @@
   {
    "id": 28,
    "type": "company",
-   "name": "格兰德街渡口",
-   "industry": "transport",
-   "price": 420,
-   "rent": 90,
-   "source": "Nanjing.cit 建筑 黑且亮供水公司",
+   "name": "三球当铺",
+   "industry": "shop",
+   "price": 400,
+   "rent": 100,
+   "source": "Story16.cit 建筑 协昌祥百货公司",
    "lot": [
-    0,
-    35
+    -7,
+    32
    ],
    "pos": [
-    0,
-    34
+    -8,
+    32
    ],
    "next": [
     29
@@ -527,8 +576,8 @@
    "type": "company",
    "site": 28,
    "pos": [
-    -1,
-    34
+    -8,
+    31
    ],
    "next": [
     30
@@ -536,51 +585,41 @@
   },
   {
    "id": 30,
-   "type": "road",
+   "type": "land",
+   "site": 56,
    "pos": [
-    -2,
-    34
+    -8,
+    30
    ],
-   "crossroad": "choice",
    "next": [
     31
    ]
   },
   {
    "id": 31,
-   "type": "land",
-   "name": "伊丽莎白街4号",
-   "group": "伊丽莎白街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-3,33)",
-   "lot": [
-    -3,
-    33
-   ],
+   "type": "road",
    "pos": [
-    -3,
-    34
+    -8,
+    29
    ],
+   "crossroad": "choice",
    "next": [
-    32
+    32,
+    108
    ]
   },
   {
    "id": 32,
-   "type": "land",
-   "name": "伊丽莎白街3号",
-   "group": "伊丽莎白街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-4,33)",
+   "type": "bank",
+   "name": "银行",
+   "source": "Story16.cit 建筑 银行",
    "lot": [
-    -4,
-    33
+    -7,
+    28
    ],
    "pos": [
-    -4,
-    34
+    -8,
+    28
    ],
    "next": [
     33
@@ -588,19 +627,11 @@
   },
   {
    "id": 33,
-   "type": "land",
-   "name": "伊丽莎白街2号",
-   "group": "伊丽莎白街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-5,33)",
-   "lot": [
-    -5,
-    33
-   ],
+   "type": "bank",
+   "site": 32,
    "pos": [
-    -5,
-    34
+    -8,
+    27
    ],
    "next": [
     34
@@ -609,18 +640,18 @@
   {
    "id": 34,
    "type": "land",
-   "name": "伊丽莎白街1号",
-   "group": "伊丽莎白街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-6,33)",
+   "name": "肯梅尔街3号",
+   "group": "肯梅尔街",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-7,26)",
    "lot": [
-    -6,
-    33
+    -7,
+    26
    ],
    "pos": [
-    -6,
-    34
+    -8,
+    26
    ],
    "next": [
     35
@@ -628,19 +659,19 @@
   },
   {
    "id": 35,
-   "type": "company",
-   "name": "绿门俱乐部",
-   "industry": "entertainment",
-   "price": 450,
-   "rent": 110,
-   "source": "Nanjing.cit 建筑 1100公交公司",
+   "type": "land",
+   "name": "肯梅尔街2号",
+   "group": "肯梅尔街",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-7,25)",
    "lot": [
     -7,
-    35
+    25
    ],
    "pos": [
-    -7,
-    34
+    -8,
+    25
    ],
    "next": [
     36
@@ -648,44 +679,52 @@
   },
   {
    "id": 36,
-   "type": "company",
-   "site": 35,
+   "type": "land",
+   "name": "肯梅尔街1号",
+   "group": "肯梅尔街",
+   "price_pct": 180,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-7,24)",
+   "lot": [
+    -7,
+    24
+   ],
    "pos": [
     -8,
-    34
+    24
    ],
-   "crossroad": "choice",
    "next": [
     37
    ]
   },
   {
    "id": 37,
-   "type": "land",
-   "site": 88,
+   "type": "road",
    "pos": [
-    -9,
-    34
+    -8,
+    23
    ],
+   "crossroad": "choice",
    "next": [
-    38
+    38,
+    57
    ]
   },
   {
    "id": 38,
    "type": "land",
-   "name": "海斯特街2号",
-   "group": "海斯特街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-10,35)",
+   "name": "果园街4号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-9,22)",
    "lot": [
-    -10,
-    35
+    -9,
+    22
    ],
    "pos": [
-    -10,
-    34
+    -9,
+    23
    ],
    "next": [
     39
@@ -694,18 +733,18 @@
   {
    "id": 39,
    "type": "land",
-   "name": "海斯特街1号",
-   "group": "海斯特街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-11,35)",
+   "name": "果园街3号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-10,22)",
    "lot": [
-    -11,
-    35
+    -10,
+    22
    ],
    "pos": [
-    -11,
-    34
+    -10,
+    23
    ],
    "next": [
     40
@@ -713,10 +752,19 @@
   },
   {
    "id": 40,
-   "type": "road",
+   "type": "land",
+   "name": "果园街2号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-11,22)",
+   "lot": [
+    -11,
+    22
+   ],
    "pos": [
-    -12,
-    34
+    -11,
+    23
    ],
    "next": [
     41
@@ -724,16 +772,19 @@
   },
   {
    "id": 41,
-   "type": "bank",
-   "name": "银行",
-   "source": "Nanjing.cit 建筑 银行",
+   "type": "land",
+   "name": "果园街1号",
+   "group": "果园街",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Story16.cit 地块 (-12,22)",
    "lot": [
-    -13,
-    35
+    -12,
+    22
    ],
    "pos": [
-    -13,
-    34
+    -12,
+    23
    ],
    "next": [
     42
@@ -741,11 +792,16 @@
   },
   {
    "id": 42,
-   "type": "bank",
-   "site": 41,
+   "type": "church",
+   "name": "教堂",
+   "source": "Story16.cit 建筑 教堂",
+   "lot": [
+    -13,
+    22
+   ],
    "pos": [
-    -14,
-    34
+    -13,
+    23
    ],
    "next": [
     43
@@ -753,19 +809,11 @@
   },
   {
    "id": 43,
-   "type": "company",
-   "name": "三球当铺",
-   "industry": "shop",
-   "price": 400,
-   "rent": 100,
-   "source": "Nanjing.cit 建筑 中原丝厂",
-   "lot": [
-    -15,
-    33
-   ],
+   "type": "church",
+   "site": 42,
    "pos": [
     -14,
-    33
+    23
    ],
    "next": [
     44
@@ -774,10 +822,18 @@
   {
    "id": 44,
    "type": "company",
-   "site": 43,
+   "name": "维苏威杂货",
+   "industry": "shop",
+   "price": 450,
+   "rent": 100,
+   "source": "Story16.cit 建筑 大新百货公司",
+   "lot": [
+    -16,
+    23
+   ],
    "pos": [
-    -14,
-    32
+    -15,
+    23
    ],
    "next": [
     45
@@ -785,19 +841,11 @@
   },
   {
    "id": 45,
-   "type": "land",
-   "name": "包厘街5号",
-   "group": "包厘街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (-13,31)",
-   "lot": [
-    -13,
-    31
-   ],
+   "type": "company",
+   "site": 44,
    "pos": [
-    -14,
-    31
+    -15,
+    24
    ],
    "next": [
     46
@@ -805,19 +853,19 @@
   },
   {
    "id": 46,
-   "type": "land",
-   "name": "包厘街4号",
-   "group": "包厘街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (-13,30)",
+   "type": "company",
+   "name": "奥兰多木偶戏院",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 100,
+   "source": "Story16.cit 建筑 天外天夜总会",
    "lot": [
-    -13,
-    30
+    -14,
+    25
    ],
    "pos": [
-    -14,
-    30
+    -15,
+    25
    ],
    "next": [
     47
@@ -825,19 +873,11 @@
   },
   {
    "id": 47,
-   "type": "land",
-   "name": "包厘街3号",
-   "group": "包厘街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (-13,29)",
-   "lot": [
-    -13,
-    29
-   ],
+   "type": "company",
+   "site": 46,
    "pos": [
-    -14,
-    29
+    -15,
+    26
    ],
    "next": [
     48
@@ -845,19 +885,16 @@
   },
   {
    "id": 48,
-   "type": "land",
-   "name": "包厘街2号",
-   "group": "包厘街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (-13,28)",
+   "type": "race_course",
+   "name": "赛马场",
+   "source": "Story16.cit 建筑 赛马场",
    "lot": [
-    -13,
-    28
+    -14,
+    27
    ],
    "pos": [
-    -14,
-    28
+    -15,
+    27
    ],
    "next": [
     49
@@ -865,19 +902,11 @@
   },
   {
    "id": 49,
-   "type": "land",
-   "name": "包厘街1号",
-   "group": "包厘街",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Nanjing.cit 地块 (-13,27)",
-   "lot": [
-    -13,
-    27
-   ],
+   "type": "race_course",
+   "site": 48,
    "pos": [
-    -14,
-    27
+    -15,
+    28
    ],
    "next": [
     50
@@ -885,16 +914,10 @@
   },
   {
    "id": 50,
-   "type": "jail",
-   "name": "巡捕房",
-   "source": "Nanjing.cit 建筑 巡捕房",
-   "lot": [
-    -15,
-    26
-   ],
+   "type": "road",
    "pos": [
-    -14,
-    26
+    -15,
+    29
    ],
    "next": [
     51
@@ -902,33 +925,23 @@
   },
   {
    "id": 51,
-   "type": "jail",
-   "site": 50,
+   "type": "race_course",
+   "site": 48,
    "pos": [
     -14,
-    25
+    29
    ],
-   "crossroad": "choice",
    "next": [
-    52,
-    89
+    52
    ]
   },
   {
    "id": 52,
-   "type": "land",
-   "name": "肯梅尔街1号",
-   "group": "肯梅尔街",
-   "price_pct": 140,
-   "build_cost_pct": 140,
-   "source": "Nanjing.cit 地块 (-13,24)",
-   "lot": [
-    -13,
-    24
-   ],
+   "type": "race_course",
+   "site": 48,
    "pos": [
     -13,
-    25
+    29
    ],
    "next": [
     53
@@ -937,18 +950,18 @@
   {
    "id": 53,
    "type": "land",
-   "name": "肯梅尔街2号",
-   "group": "肯梅尔街",
-   "price_pct": 140,
-   "build_cost_pct": 140,
-   "source": "Nanjing.cit 地块 (-12,24)",
+   "name": "包厘街1号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-12,30)",
    "lot": [
     -12,
-    24
+    30
    ],
    "pos": [
     -12,
-    25
+    29
    ],
    "next": [
     54
@@ -957,18 +970,18 @@
   {
    "id": 54,
    "type": "land",
-   "name": "肯梅尔街3号",
-   "group": "肯梅尔街",
-   "price_pct": 140,
-   "build_cost_pct": 140,
-   "source": "Nanjing.cit 地块 (-11,24)",
+   "name": "包厘街2号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-11,30)",
    "lot": [
     -11,
-    24
+    30
    ],
    "pos": [
     -11,
-    25
+    29
    ],
    "next": [
     55
@@ -977,18 +990,18 @@
   {
    "id": 55,
    "type": "land",
-   "name": "肯梅尔街4号",
-   "group": "肯梅尔街",
-   "price_pct": 140,
-   "build_cost_pct": 140,
-   "source": "Nanjing.cit 地块 (-10,24)",
+   "name": "包厘街3号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-10,30)",
    "lot": [
     -10,
-    24
+    30
    ],
    "pos": [
     -10,
-    25
+    29
    ],
    "next": [
     56
@@ -997,51 +1010,50 @@
   {
    "id": 56,
    "type": "land",
-   "name": "肯梅尔街5号",
-   "group": "肯梅尔街",
-   "price_pct": 140,
-   "build_cost_pct": 140,
-   "source": "Nanjing.cit 地块 (-9,24)",
+   "name": "包厘街4号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-9,30)",
    "lot": [
     -9,
-    24
+    30
    ],
    "pos": [
     -9,
-    25
+    29
    ],
    "next": [
-    57
+    31
    ]
   },
   {
    "id": 57,
-   "type": "road",
+   "type": "land",
+   "site": 36,
    "pos": [
-    -8,
-    25
+    -7,
+    23
    ],
-   "crossroad": "choice",
    "next": [
-    58,
-    81
+    58
    ]
   },
   {
    "id": 58,
-   "type": "land",
-   "name": "肯梅尔街6号",
-   "group": "肯梅尔街",
-   "price_pct": 160,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (-7,26)",
+   "type": "company",
+   "name": "斯塔瑞拳击馆",
+   "industry": "entertainment",
+   "price": 360,
+   "rent": 90,
+   "source": "Story16.cit 建筑 百乐门夜总会",
    "lot": [
-    -7,
-    26
+    -6,
+    22
    ],
    "pos": [
-    -7,
-    25
+    -6,
+    23
    ],
    "next": [
     59
@@ -1049,19 +1061,11 @@
   },
   {
    "id": 59,
-   "type": "land",
-   "name": "肯梅尔街7号",
-   "group": "肯梅尔街",
-   "price_pct": 160,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (-6,26)",
-   "lot": [
-    -6,
-    26
-   ],
+   "type": "company",
+   "site": 58,
    "pos": [
-    -6,
-    25
+    -5,
+    23
    ],
    "next": [
     60
@@ -1070,18 +1074,18 @@
   {
    "id": 60,
    "type": "land",
-   "name": "肯梅尔街8号",
-   "group": "肯梅尔街",
-   "price_pct": 160,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (-5,26)",
+   "name": "巴克斯特街1号",
+   "group": "巴克斯特街",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story16.cit 地块 (-4,22)",
    "lot": [
-    -5,
-    26
+    -4,
+    22
    ],
    "pos": [
-    -5,
-    25
+    -4,
+    23
    ],
    "next": [
     61
@@ -1089,16 +1093,19 @@
   },
   {
    "id": 61,
-   "type": "government",
-   "name": "市政厅",
-   "source": "Nanjing.cit 建筑 市政厅",
+   "type": "land",
+   "name": "巴克斯特街2号",
+   "group": "巴克斯特街",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story16.cit 地块 (-3,22)",
    "lot": [
-    -4,
-    26
+    -3,
+    22
    ],
    "pos": [
-    -4,
-    25
+    -3,
+    23
    ],
    "next": [
     62
@@ -1106,11 +1113,19 @@
   },
   {
    "id": 62,
-   "type": "government",
-   "site": 61,
+   "type": "land",
+   "name": "巴克斯特街3号",
+   "group": "巴克斯特街",
+   "price_pct": 240,
+   "build_cost_pct": 220,
+   "source": "Story16.cit 地块 (-2,22)",
+   "lot": [
+    -2,
+    22
+   ],
    "pos": [
-    -3,
-    25
+    -2,
+    23
    ],
    "next": [
     63
@@ -1120,27 +1135,22 @@
    "id": 63,
    "type": "road",
    "pos": [
-    -2,
-    25
+    -1,
+    23
    ],
    "crossroad": "choice",
    "next": [
     64,
-    73
+    103
    ]
   },
   {
    "id": 64,
-   "type": "race_course",
-   "name": "准赢赛马场",
-   "source": "Nanjing.cit 建筑 准赢赛马场",
-   "lot": [
-    -1,
-    24
-   ],
+   "type": "land",
+   "site": 62,
    "pos": [
     -1,
-    25
+    22
    ],
    "next": [
     65
@@ -1148,11 +1158,19 @@
   },
   {
    "id": 65,
-   "type": "race_course",
-   "site": 64,
-   "pos": [
+   "type": "land",
+   "name": "伊丽莎白街2号",
+   "group": "伊丽莎白街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,21)",
+   "lot": [
     0,
-    25
+    21
+   ],
+   "pos": [
+    -1,
+    21
    ],
    "next": [
     66
@@ -1161,18 +1179,18 @@
   {
    "id": 66,
    "type": "land",
-   "name": "卡纳尔街1号",
-   "group": "卡纳尔街",
-   "price_pct": 200,
-   "build_cost_pct": 180,
-   "source": "Nanjing.cit 地块 (1,24)",
+   "name": "伊丽莎白街1号",
+   "group": "伊丽莎白街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,20)",
    "lot": [
-    1,
-    24
+    0,
+    20
    ],
    "pos": [
-    1,
-    25
+    -1,
+    20
    ],
    "next": [
     67
@@ -1180,19 +1198,10 @@
   },
   {
    "id": 67,
-   "type": "land",
-   "name": "卡纳尔街2号",
-   "group": "卡纳尔街",
-   "price_pct": 200,
-   "build_cost_pct": 180,
-   "source": "Nanjing.cit 地块 (2,24)",
-   "lot": [
-    2,
-    24
-   ],
+   "type": "road",
    "pos": [
-    2,
-    25
+    -1,
+    19
    ],
    "next": [
     68
@@ -1201,18 +1210,10 @@
   {
    "id": 68,
    "type": "land",
-   "name": "卡纳尔街3号",
-   "group": "卡纳尔街",
-   "price_pct": 200,
-   "build_cost_pct": 180,
-   "source": "Nanjing.cit 地块 (3,24)",
-   "lot": [
-    3,
-    24
-   ],
+   "site": 92,
    "pos": [
-    3,
-    25
+    -1,
+    18
    ],
    "next": [
     69
@@ -1220,36 +1221,23 @@
   },
   {
    "id": 69,
-   "type": "land",
-   "name": "卡纳尔街4号",
-   "group": "卡纳尔街",
-   "price_pct": 200,
-   "build_cost_pct": 180,
-   "source": "Nanjing.cit 地块 (4,24)",
-   "lot": [
-    4,
-    24
-   ],
+   "type": "road",
    "pos": [
-    4,
-    25
+    -1,
+    17
    ],
+   "crossroad": "choice",
    "next": [
-    70
+    70,
+    92
    ]
   },
   {
    "id": 70,
-   "type": "church",
-   "name": "教堂",
-   "source": "Nanjing.cit 建筑 教堂",
-   "lot": [
-    5,
-    24
-   ],
+   "type": "road",
    "pos": [
-    5,
-    25
+    -1,
+    16
    ],
    "next": [
     71
@@ -1257,11 +1245,10 @@
   },
   {
    "id": 71,
-   "type": "church",
-   "site": 70,
+   "type": "road",
    "pos": [
-    6,
-    25
+    -1,
+    15
    ],
    "next": [
     72
@@ -1269,31 +1256,28 @@
   },
   {
    "id": 72,
-   "type": "land",
-   "name": "卡纳尔街5号",
-   "group": "卡纳尔街",
-   "price_pct": 200,
-   "build_cost_pct": 180,
-   "source": "Nanjing.cit 地块 (7,24)",
+   "type": "jail",
+   "name": "巡捕房",
+   "source": "Story16.cit 建筑 巡捕房",
    "lot": [
-    7,
-    24
+    0,
+    14
    ],
    "pos": [
-    7,
-    25
+    -1,
+    14
    ],
    "next": [
-    11
+    73
    ]
   },
   {
    "id": 73,
-   "type": "government",
-   "site": 61,
+   "type": "jail",
+   "site": 72,
    "pos": [
-    -2,
-    26
+    -1,
+    13
    ],
    "next": [
     74
@@ -1301,11 +1285,19 @@
   },
   {
    "id": 74,
-   "type": "government",
-   "site": 61,
+   "type": "land",
+   "name": "格兰德街4号",
+   "group": "格兰德街",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Story16.cit 地块 (-1,11)",
+   "lot": [
+    -1,
+    11
+   ],
    "pos": [
-    -2,
-    27
+    -1,
+    12
    ],
    "next": [
     75
@@ -1314,18 +1306,18 @@
   {
    "id": 75,
    "type": "land",
-   "name": "果园街1号",
-   "group": "果园街",
-   "price_pct": 130,
+   "name": "格兰德街3号",
+   "group": "格兰德街",
+   "price_pct": 120,
    "build_cost_pct": 120,
-   "source": "Nanjing.cit 地块 (-1,28)",
+   "source": "Story16.cit 地块 (-2,11)",
    "lot": [
-    -1,
-    28
+    -2,
+    11
    ],
    "pos": [
     -2,
-    28
+    12
    ],
    "next": [
     76
@@ -1334,18 +1326,18 @@
   {
    "id": 76,
    "type": "land",
-   "name": "果园街2号",
-   "group": "果园街",
-   "price_pct": 130,
+   "name": "格兰德街2号",
+   "group": "格兰德街",
+   "price_pct": 120,
    "build_cost_pct": 120,
-   "source": "Nanjing.cit 地块 (-1,29)",
+   "source": "Story16.cit 地块 (-3,11)",
    "lot": [
-    -1,
-    29
+    -3,
+    11
    ],
    "pos": [
-    -2,
-    29
+    -3,
+    12
    ],
    "next": [
     77
@@ -1354,18 +1346,18 @@
   {
    "id": 77,
    "type": "land",
-   "name": "果园街3号",
-   "group": "果园街",
-   "price_pct": 130,
+   "name": "格兰德街1号",
+   "group": "格兰德街",
+   "price_pct": 120,
    "build_cost_pct": 120,
-   "source": "Nanjing.cit 地块 (-1,30)",
+   "source": "Story16.cit 地块 (-4,11)",
    "lot": [
-    -1,
-    30
+    -4,
+    11
    ],
    "pos": [
-    -2,
-    30
+    -4,
+    12
    ],
    "next": [
     78
@@ -1373,19 +1365,19 @@
   },
   {
    "id": 78,
-   "type": "land",
-   "name": "果园街4号",
-   "group": "果园街",
-   "price_pct": 130,
-   "build_cost_pct": 120,
-   "source": "Nanjing.cit 地块 (-1,31)",
+   "type": "company",
+   "name": "包厘街高架站",
+   "industry": "transport",
+   "price": 560,
+   "rent": 130,
+   "source": "Story16.cit 建筑 上海站",
    "lot": [
-    -1,
-    31
+    -5,
+    11
    ],
    "pos": [
-    -2,
-    31
+    -5,
+    12
    ],
    "next": [
     79
@@ -1393,19 +1385,11 @@
   },
   {
    "id": 79,
-   "type": "land",
-   "name": "果园街5号",
-   "group": "果园街",
-   "price_pct": 130,
-   "build_cost_pct": 120,
-   "source": "Nanjing.cit 地块 (-1,32)",
-   "lot": [
-    -1,
-    32
-   ],
+   "type": "company",
+   "site": 78,
    "pos": [
-    -2,
-    32
+    -6,
+    12
    ],
    "next": [
     80
@@ -1414,22 +1398,38 @@
   {
    "id": 80,
    "type": "land",
-   "site": 31,
+   "name": "桑树街1号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,13)",
+   "lot": [
+    -7,
+    13
+   ],
    "pos": [
-    -2,
-    33
+    -6,
+    13
    ],
    "next": [
-    30
+    81
    ]
   },
   {
    "id": 81,
    "type": "land",
-   "site": 58,
+   "name": "桑树街2号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,14)",
+   "lot": [
+    -7,
+    14
+   ],
    "pos": [
-    -8,
-    26
+    -6,
+    14
    ],
    "next": [
     82
@@ -1438,18 +1438,18 @@
   {
    "id": 82,
    "type": "land",
-   "name": "德兰西街1号",
-   "group": "德兰西街",
-   "price_pct": 120,
-   "build_cost_pct": 110,
-   "source": "Nanjing.cit 地块 (-9,27)",
+   "name": "桑树街3号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,15)",
    "lot": [
-    -9,
-    27
+    -7,
+    15
    ],
    "pos": [
-    -8,
-    27
+    -6,
+    15
    ],
    "next": [
     83
@@ -1458,18 +1458,18 @@
   {
    "id": 83,
    "type": "land",
-   "name": "德兰西街2号",
-   "group": "德兰西街",
-   "price_pct": 120,
-   "build_cost_pct": 110,
-   "source": "Nanjing.cit 地块 (-9,28)",
+   "name": "桑树街4号",
+   "group": "桑树街",
+   "price_pct": 80,
+   "build_cost_pct": 60,
+   "source": "Story16.cit 地块 (-7,16)",
    "lot": [
-    -9,
-    28
+    -7,
+    16
    ],
    "pos": [
-    -8,
-    28
+    -6,
+    16
    ],
    "next": [
     84
@@ -1477,19 +1477,10 @@
   },
   {
    "id": 84,
-   "type": "land",
-   "name": "德兰西街3号",
-   "group": "德兰西街",
-   "price_pct": 120,
-   "build_cost_pct": 110,
-   "source": "Nanjing.cit 地块 (-9,29)",
-   "lot": [
-    -9,
-    29
-   ],
+   "type": "road",
    "pos": [
-    -8,
-    29
+    -6,
+    17
    ],
    "next": [
     85
@@ -1497,19 +1488,10 @@
   },
   {
    "id": 85,
-   "type": "land",
-   "name": "德兰西街4号",
-   "group": "德兰西街",
-   "price_pct": 120,
-   "build_cost_pct": 110,
-   "source": "Nanjing.cit 地块 (-9,30)",
-   "lot": [
-    -9,
-    30
-   ],
+   "type": "road",
    "pos": [
-    -8,
-    30
+    -6,
+    18
    ],
    "next": [
     86
@@ -1517,19 +1499,10 @@
   },
   {
    "id": 86,
-   "type": "land",
-   "name": "德兰西街5号",
-   "group": "德兰西街",
-   "price_pct": 120,
-   "build_cost_pct": 110,
-   "source": "Nanjing.cit 地块 (-9,31)",
-   "lot": [
-    -9,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -8,
-    31
+    -6,
+    19
    ],
    "next": [
     87
@@ -1537,19 +1510,10 @@
   },
   {
    "id": 87,
-   "type": "land",
-   "name": "德兰西街6号",
-   "group": "德兰西街",
-   "price_pct": 120,
-   "build_cost_pct": 110,
-   "source": "Nanjing.cit 地块 (-9,32)",
-   "lot": [
-    -9,
-    32
-   ],
+   "type": "road",
    "pos": [
-    -8,
-    32
+    -7,
+    19
    ],
    "next": [
     88
@@ -1557,31 +1521,28 @@
   },
   {
    "id": 88,
-   "type": "land",
-   "name": "德兰西街7号",
-   "group": "德兰西街",
-   "price_pct": 120,
-   "build_cost_pct": 110,
-   "source": "Nanjing.cit 地块 (-9,33)",
+   "type": "chance",
+   "name": "运气",
+   "source": "Story16.cit 建筑 运气",
    "lot": [
     -9,
-    33
+    19
    ],
    "pos": [
     -8,
-    33
+    19
    ],
    "next": [
-    36
+    89
    ]
   },
   {
    "id": 89,
-   "type": "land",
-   "site": 52,
+   "type": "chance",
+   "site": 88,
    "pos": [
-    -14,
-    24
+    -8,
+    20
    ],
    "next": [
     90
@@ -1589,19 +1550,10 @@
   },
   {
    "id": 90,
-   "type": "land",
-   "name": "格兰德街3号",
-   "group": "格兰德街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-15,23)",
-   "lot": [
-    -15,
-    23
-   ],
+   "type": "road",
    "pos": [
-    -14,
-    23
+    -8,
+    21
    ],
    "next": [
     91
@@ -1610,38 +1562,30 @@
   {
    "id": 91,
    "type": "land",
-   "name": "格兰德街2号",
-   "group": "格兰德街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-15,22)",
-   "lot": [
-    -15,
-    22
-   ],
+   "site": 38,
    "pos": [
-    -14,
+    -8,
     22
    ],
    "next": [
-    92
+    37
    ]
   },
   {
    "id": 92,
    "type": "land",
-   "name": "格兰德街1号",
-   "group": "格兰德街",
-   "price_pct": 80,
-   "build_cost_pct": 90,
-   "source": "Nanjing.cit 地块 (-15,21)",
+   "name": "莫特街1号",
+   "group": "莫特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (0,18)",
    "lot": [
-    -15,
-    21
+    0,
+    18
    ],
    "pos": [
-    -14,
-    21
+    0,
+    17
    ],
    "next": [
     93
@@ -1649,16 +1593,19 @@
   },
   {
    "id": 93,
-   "type": "chance",
-   "name": "运气",
-   "source": "Nanjing.cit 建筑 运气",
+   "type": "land",
+   "name": "莫特街2号",
+   "group": "莫特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (1,18)",
    "lot": [
-    -14,
-    19
+    1,
+    18
    ],
    "pos": [
-    -14,
-    20
+    1,
+    17
    ],
    "next": [
     94
@@ -1666,11 +1613,19 @@
   },
   {
    "id": 94,
-   "type": "chance",
-   "site": 93,
+   "type": "land",
+   "name": "莫特街3号",
+   "group": "莫特街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Story16.cit 地块 (2,18)",
+   "lot": [
+    2,
+    18
+   ],
    "pos": [
-    -13,
-    20
+    2,
+    17
    ],
    "next": [
     95
@@ -1678,41 +1633,28 @@
   },
   {
    "id": 95,
-   "type": "land",
-   "name": "巴克斯特街1号",
-   "group": "巴克斯特街",
-   "price_pct": 150,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (-12,21)",
+   "type": "park",
+   "name": "公园",
+   "source": "Story16.cit 建筑 公园",
    "lot": [
-    -12,
-    21
+    3,
+    16
    ],
    "pos": [
-    -12,
-    20
+    3,
+    17
    ],
-   "crossroad": "choice",
    "next": [
-    96,
-    125
+    96
    ]
   },
   {
    "id": 96,
-   "type": "land",
-   "name": "巴克斯特街2号",
-   "group": "巴克斯特街",
-   "price_pct": 150,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (-11,21)",
-   "lot": [
-    -11,
-    21
-   ],
+   "type": "park",
+   "site": 95,
    "pos": [
-    -11,
-    20
+    4,
+    17
    ],
    "next": [
     97
@@ -1720,19 +1662,19 @@
   },
   {
    "id": 97,
-   "type": "land",
-   "name": "巴克斯特街3号",
-   "group": "巴克斯特街",
-   "price_pct": 150,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (-10,21)",
+   "type": "company",
+   "name": "八号球台球厅",
+   "industry": "entertainment",
+   "price": 450,
+   "rent": 110,
+   "source": "Story16.cit 建筑 大世界夜总会",
    "lot": [
-    -10,
-    21
+    6,
+    17
    ],
    "pos": [
-    -10,
-    20
+    5,
+    17
    ],
    "next": [
     98
@@ -1741,18 +1683,10 @@
   {
    "id": 98,
    "type": "company",
-   "name": "包厘街高架站",
-   "industry": "transport",
-   "price": 430,
-   "rent": 100,
-   "source": "Nanjing.cit 建筑 看得见电灯公司",
-   "lot": [
-    -9,
-    19
-   ],
+   "site": 97,
    "pos": [
-    -9,
-    20
+    5,
+    18
    ],
    "next": [
     99
@@ -1761,23 +1695,29 @@
   {
    "id": 99,
    "type": "company",
-   "site": 98,
-   "pos": [
-    -8,
-    20
+   "name": "马鲁奇手推车行",
+   "industry": "transport",
+   "price": 520,
+   "rent": 120,
+   "source": "Story16.cit 建筑 公平路码头",
+   "lot": [
+    6,
+    19
    ],
-   "crossroad": "choice",
+   "pos": [
+    5,
+    19
+   ],
    "next": [
-    100,
-    121
+    100
    ]
   },
   {
    "id": 100,
-   "type": "land",
-   "site": 121,
+   "type": "company",
+   "site": 99,
    "pos": [
-    -7,
+    5,
     20
    ],
    "next": [
@@ -1786,19 +1726,19 @@
   },
   {
    "id": 101,
-   "type": "company",
-   "name": "维苏威杂货",
-   "industry": "shop",
-   "price": 420,
-   "rent": 100,
-   "source": "Nanjing.cit 建筑 西洋色布厂",
+   "type": "land",
+   "name": "王子街1号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,21)",
    "lot": [
-    -6,
-    19
+    6,
+    21
    ],
    "pos": [
-    -6,
-    20
+    5,
+    21
    ],
    "next": [
     102
@@ -1806,28 +1746,31 @@
   },
   {
    "id": 102,
-   "type": "company",
-   "site": 101,
+   "type": "land",
+   "name": "王子街2号",
+   "group": "王子街",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Story16.cit 地块 (6,22)",
+   "lot": [
+    6,
+    22
+   ],
    "pos": [
-    -5,
-    20
+    5,
+    22
    ],
    "next": [
-    103
+    0
    ]
   },
   {
    "id": 103,
-   "type": "chance",
-   "name": "运气",
-   "source": "Nanjing.cit 建筑 运气",
-   "lot": [
-    -4,
-    21
-   ],
+   "type": "land",
+   "site": 118,
    "pos": [
-    -4,
-    20
+    0,
+    23
    ],
    "next": [
     104
@@ -1835,11 +1778,19 @@
   },
   {
    "id": 104,
-   "type": "chance",
-   "site": 103,
+   "type": "company",
+   "name": "托托理发馆",
+   "industry": "shop",
+   "price": 480,
+   "rent": 120,
+   "source": "Story16.cit 建筑 先施百货公司",
+   "lot": [
+    1,
+    22
+   ],
    "pos": [
-    -3,
-    20
+    1,
+    23
    ],
    "next": [
     105
@@ -1847,32 +1798,22 @@
   },
   {
    "id": 105,
-   "type": "road",
+   "type": "company",
+   "site": 104,
    "pos": [
-    -2,
-    20
+    2,
+    23
    ],
-   "crossroad": "choice",
    "next": [
-    106,
-    117
+    106
    ]
   },
   {
    "id": 106,
-   "type": "company",
-   "name": "马鲁奇手推车行",
-   "industry": "transport",
-   "price": 380,
-   "rent": 80,
-   "source": "Nanjing.cit 建筑 悦耳电话公司",
-   "lot": [
-    -1,
-    19
-   ],
+   "type": "road",
    "pos": [
-    -1,
-    20
+    3,
+    23
    ],
    "next": [
     107
@@ -1880,31 +1821,22 @@
   },
   {
    "id": 107,
-   "type": "company",
-   "site": 106,
+   "type": "road",
    "pos": [
-    0,
-    20
+    4,
+    23
    ],
    "next": [
-    108
+    0
    ]
   },
   {
    "id": 108,
-   "type": "land",
-   "name": "佩尔街1号",
-   "group": "佩尔街",
-   "price_pct": 170,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (1,21)",
-   "lot": [
-    1,
-    21
-   ],
+   "type": "bank",
+   "site": 32,
    "pos": [
-    1,
-    20
+    -7,
+    29
    ],
    "next": [
     109
@@ -1912,19 +1844,11 @@
   },
   {
    "id": 109,
-   "type": "land",
-   "name": "佩尔街2号",
-   "group": "佩尔街",
-   "price_pct": 170,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (2,21)",
-   "lot": [
-    2,
-    21
-   ],
+   "type": "bank",
+   "site": 32,
    "pos": [
-    2,
-    20
+    -6,
+    29
    ],
    "next": [
     110
@@ -1933,18 +1857,18 @@
   {
    "id": 110,
    "type": "land",
-   "name": "佩尔街3号",
-   "group": "佩尔街",
-   "price_pct": 170,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (3,21)",
+   "name": "春街1号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-5,28)",
    "lot": [
-    3,
-    21
+    -5,
+    28
    ],
    "pos": [
-    3,
-    20
+    -5,
+    29
    ],
    "next": [
     111
@@ -1953,18 +1877,18 @@
   {
    "id": 111,
    "type": "land",
-   "name": "佩尔街4号",
-   "group": "佩尔街",
-   "price_pct": 170,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (4,21)",
+   "name": "春街2号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-4,28)",
    "lot": [
-    4,
-    21
+    -4,
+    28
    ],
    "pos": [
-    4,
-    20
+    -4,
+    29
    ],
    "next": [
     112
@@ -1973,18 +1897,18 @@
   {
    "id": 112,
    "type": "land",
-   "name": "佩尔街5号",
-   "group": "佩尔街",
-   "price_pct": 170,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (5,21)",
+   "name": "春街3号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-3,28)",
    "lot": [
-    5,
-    21
+    -3,
+    28
    ],
    "pos": [
-    5,
-    20
+    -3,
+    29
    ],
    "next": [
     113
@@ -1993,38 +1917,30 @@
   {
    "id": 113,
    "type": "land",
-   "name": "佩尔街6号",
-   "group": "佩尔街",
-   "price_pct": 170,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (6,21)",
+   "name": "春街4号",
+   "group": "春街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (-2,28)",
    "lot": [
-    6,
-    21
+    -2,
+    28
    ],
    "pos": [
-    6,
-    20
+    -2,
+    29
    ],
    "next": [
-    114
+    12
    ]
   },
   {
    "id": 114,
    "type": "land",
-   "name": "佩尔街7号",
-   "group": "佩尔街",
-   "price_pct": 170,
-   "build_cost_pct": 160,
-   "source": "Nanjing.cit 地块 (7,21)",
-   "lot": [
-    7,
-    21
-   ],
+   "site": 113,
    "pos": [
-    7,
-    20
+    -1,
+    28
    ],
    "next": [
     115
@@ -2032,11 +1948,19 @@
   },
   {
    "id": 115,
-   "type": "bank",
-   "site": 5,
+   "type": "land",
+   "name": "德兰西街4号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,27)",
+   "lot": [
+    0,
+    27
+   ],
    "pos": [
-    8,
-    20
+    -1,
+    27
    ],
    "next": [
     116
@@ -2044,23 +1968,39 @@
   },
   {
    "id": 116,
-   "type": "bank",
-   "site": 5,
+   "type": "land",
+   "name": "德兰西街3号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,26)",
+   "lot": [
+    0,
+    26
+   ],
    "pos": [
-    9,
-    20
+    -1,
+    26
    ],
    "next": [
-    4
+    117
    ]
   },
   {
    "id": 117,
-   "type": "chance",
-   "site": 103,
+   "type": "land",
+   "name": "德兰西街2号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,25)",
+   "lot": [
+    0,
+    25
+   ],
    "pos": [
-    -2,
-    21
+    -1,
+    25
    ],
    "next": [
     118
@@ -2068,704 +2008,22 @@
   },
   {
    "id": 118,
-   "type": "chance",
-   "site": 103,
-   "pos": [
-    -2,
-    22
+   "type": "land",
+   "name": "德兰西街1号",
+   "group": "德兰西街",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Story16.cit 地块 (0,24)",
+   "lot": [
+    0,
+    24
    ],
-   "next": [
-    119
-   ]
-  },
-  {
-   "id": 119,
-   "type": "race_course",
-   "site": 64,
    "pos": [
-    -2,
-    23
-   ],
-   "next": [
-    120
-   ]
-  },
-  {
-   "id": 120,
-   "type": "race_course",
-   "site": 64,
-   "pos": [
-    -2,
+    -1,
     24
    ],
    "next": [
     63
-   ]
-  },
-  {
-   "id": 121,
-   "type": "land",
-   "name": "春街1号",
-   "group": "春街",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Nanjing.cit 地块 (-7,21)",
-   "lot": [
-    -7,
-    21
-   ],
-   "pos": [
-    -8,
-    21
-   ],
-   "next": [
-    122
-   ]
-  },
-  {
-   "id": 122,
-   "type": "land",
-   "name": "春街2号",
-   "group": "春街",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Nanjing.cit 地块 (-7,22)",
-   "lot": [
-    -7,
-    22
-   ],
-   "pos": [
-    -8,
-    22
-   ],
-   "next": [
-    123
-   ]
-  },
-  {
-   "id": 123,
-   "type": "land",
-   "name": "春街3号",
-   "group": "春街",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Nanjing.cit 地块 (-7,23)",
-   "lot": [
-    -7,
-    23
-   ],
-   "pos": [
-    -8,
-    23
-   ],
-   "next": [
-    124
-   ]
-  },
-  {
-   "id": 124,
-   "type": "land",
-   "site": 56,
-   "pos": [
-    -8,
-    24
-   ],
-   "next": [
-    57
-   ]
-  },
-  {
-   "id": 125,
-   "type": "chance",
-   "site": 93,
-   "pos": [
-    -12,
-    19
-   ],
-   "next": [
-    126
-   ]
-  },
-  {
-   "id": 126,
-   "type": "chance",
-   "site": 93,
-   "pos": [
-    -12,
-    18
-   ],
-   "next": [
-    127
-   ]
-  },
-  {
-   "id": 127,
-   "type": "road",
-   "pos": [
-    -11,
-    18
-   ],
-   "next": [
-    128
-   ]
-  },
-  {
-   "id": 128,
-   "type": "road",
-   "pos": [
-    -11,
-    17
-   ],
-   "next": [
-    129
-   ]
-  },
-  {
-   "id": 129,
-   "type": "road",
-   "pos": [
-    -10,
-    17
-   ],
-   "next": [
-    130
-   ]
-  },
-  {
-   "id": 130,
-   "type": "road",
-   "pos": [
-    -10,
-    16
-   ],
-   "next": [
-    131
-   ]
-  },
-  {
-   "id": 131,
-   "type": "road",
-   "pos": [
-    -9,
-    16
-   ],
-   "next": [
-    132
-   ]
-  },
-  {
-   "id": 132,
-   "type": "road",
-   "pos": [
-    -9,
-    15
-   ],
-   "next": [
-    133
-   ]
-  },
-  {
-   "id": 133,
-   "type": "road",
-   "pos": [
-    -8,
-    15
-   ],
-   "next": [
-    134
-   ]
-  },
-  {
-   "id": 134,
-   "type": "road",
-   "pos": [
-    -8,
-    14
-   ],
-   "next": [
-    135
-   ]
-  },
-  {
-   "id": 135,
-   "type": "road",
-   "pos": [
-    -7,
-    14
-   ],
-   "next": [
-    136
-   ]
-  },
-  {
-   "id": 136,
-   "type": "road",
-   "pos": [
-    -7,
-    13
-   ],
-   "next": [
-    137
-   ]
-  },
-  {
-   "id": 137,
-   "type": "road",
-   "pos": [
-    -6,
-    13
-   ],
-   "next": [
-    138
-   ]
-  },
-  {
-   "id": 138,
-   "type": "company",
-   "name": "奥兰多木偶戏院",
-   "industry": "entertainment",
-   "price": 500,
-   "rent": 120,
-   "source": "Nanjing.cit 建筑 中山码头",
-   "lot": [
-    -6,
-    11
-   ],
-   "pos": [
-    -6,
-    12
-   ],
-   "next": [
-    139
-   ]
-  },
-  {
-   "id": 139,
-   "type": "company",
-   "site": 138,
-   "pos": [
-    -5,
-    12
-   ],
-   "next": [
-    140
-   ]
-  },
-  {
-   "id": 140,
-   "type": "land",
-   "name": "莫特街3号",
-   "group": "莫特街",
-   "price_pct": 70,
-   "build_cost_pct": 80,
-   "source": "Nanjing.cit 地块 (-4,11)",
-   "lot": [
-    -4,
-    11
-   ],
-   "pos": [
-    -4,
-    12
-   ],
-   "next": [
-    141
-   ]
-  },
-  {
-   "id": 141,
-   "type": "land",
-   "name": "莫特街2号",
-   "group": "莫特街",
-   "price_pct": 70,
-   "build_cost_pct": 80,
-   "source": "Nanjing.cit 地块 (-3,11)",
-   "lot": [
-    -3,
-    11
-   ],
-   "pos": [
-    -3,
-    12
-   ],
-   "next": [
-    142
-   ]
-  },
-  {
-   "id": 142,
-   "type": "land",
-   "name": "莫特街1号",
-   "group": "莫特街",
-   "price_pct": 70,
-   "build_cost_pct": 80,
-   "source": "Nanjing.cit 地块 (-2,11)",
-   "lot": [
-    -2,
-    11
-   ],
-   "pos": [
-    -2,
-    12
-   ],
-   "crossroad": "choice",
-   "next": [
-    143,
-    158
-   ]
-  },
-  {
-   "id": 143,
-   "type": "land",
-   "name": "桑树街7号",
-   "group": "桑树街",
-   "price_pct": 70,
-   "build_cost_pct": 80,
-   "source": "Nanjing.cit 地块 (-1,13)",
-   "lot": [
-    -1,
-    13
-   ],
-   "pos": [
-    -1,
-    12
-   ],
-   "next": [
-    144
-   ]
-  },
-  {
-   "id": 144,
-   "type": "land",
-   "name": "桑树街6号",
-   "group": "桑树街",
-   "price_pct": 70,
-   "build_cost_pct": 80,
-   "source": "Nanjing.cit 地块 (0,13)",
-   "lot": [
-    0,
-    13
-   ],
-   "pos": [
-    0,
-    12
-   ],
-   "next": [
-    145
-   ]
-  },
-  {
-   "id": 145,
-   "type": "land",
-   "name": "桑树街5号",
-   "group": "桑树街",
-   "price_pct": 70,
-   "build_cost_pct": 80,
-   "source": "Nanjing.cit 地块 (1,13)",
-   "lot": [
-    1,
-    13
-   ],
-   "pos": [
-    1,
-    12
-   ],
-   "next": [
-    146
-   ]
-  },
-  {
-   "id": 146,
-   "type": "land",
-   "name": "桑树街4号",
-   "group": "桑树街",
-   "price_pct": 60,
-   "build_cost_pct": 70,
-   "source": "Nanjing.cit 地块 (2,11)",
-   "lot": [
-    2,
-    11
-   ],
-   "pos": [
-    2,
-    12
-   ],
-   "next": [
-    147
-   ]
-  },
-  {
-   "id": 147,
-   "type": "land",
-   "name": "桑树街3号",
-   "group": "桑树街",
-   "price_pct": 60,
-   "build_cost_pct": 70,
-   "source": "Nanjing.cit 地块 (3,11)",
-   "lot": [
-    3,
-    11
-   ],
-   "pos": [
-    3,
-    12
-   ],
-   "next": [
-    148
-   ]
-  },
-  {
-   "id": 148,
-   "type": "land",
-   "name": "桑树街2号",
-   "group": "桑树街",
-   "price_pct": 60,
-   "build_cost_pct": 70,
-   "source": "Nanjing.cit 地块 (4,11)",
-   "lot": [
-    4,
-    11
-   ],
-   "pos": [
-    4,
-    12
-   ],
-   "next": [
-    149
-   ]
-  },
-  {
-   "id": 149,
-   "type": "land",
-   "name": "桑树街1号",
-   "group": "桑树街",
-   "price_pct": 60,
-   "build_cost_pct": 70,
-   "source": "Nanjing.cit 地块 (5,11)",
-   "lot": [
-    5,
-    11
-   ],
-   "pos": [
-    5,
-    12
-   ],
-   "next": [
-    150
-   ]
-  },
-  {
-   "id": 150,
-   "type": "company",
-   "name": "斯塔瑞拳击馆",
-   "industry": "entertainment",
-   "price": 450,
-   "rent": 100,
-   "source": "Nanjing.cit 建筑 南京火车站",
-   "lot": [
-    6,
-    11
-   ],
-   "pos": [
-    6,
-    12
-   ],
-   "next": [
-    151
-   ]
-  },
-  {
-   "id": 151,
-   "type": "company",
-   "site": 150,
-   "pos": [
-    7,
-    12
-   ],
-   "next": [
-    152
-   ]
-  },
-  {
-   "id": 152,
-   "type": "road",
-   "pos": [
-    7,
-    13
-   ],
-   "next": [
-    153
-   ]
-  },
-  {
-   "id": 153,
-   "type": "road",
-   "pos": [
-    8,
-    13
-   ],
-   "next": [
-    154
-   ]
-  },
-  {
-   "id": 154,
-   "type": "road",
-   "pos": [
-    8,
-    14
-   ],
-   "next": [
-    155
-   ]
-  },
-  {
-   "id": 155,
-   "type": "road",
-   "pos": [
-    9,
-    14
-   ],
-   "next": [
-    156
-   ]
-  },
-  {
-   "id": 156,
-   "type": "park",
-   "site": 0,
-   "pos": [
-    9,
-    15
-   ],
-   "next": [
-    157
-   ]
-  },
-  {
-   "id": 157,
-   "type": "road",
-   "pos": [
-    10,
-    15
-   ],
-   "next": [
-    0
-   ]
-  },
-  {
-   "id": 158,
-   "type": "land",
-   "site": 143,
-   "pos": [
-    -2,
-    13
-   ],
-   "next": [
-    159
-   ]
-  },
-  {
-   "id": 159,
-   "type": "land",
-   "name": "王子街1号",
-   "group": "王子街",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Nanjing.cit 地块 (-3,14)",
-   "lot": [
-    -3,
-    14
-   ],
-   "pos": [
-    -2,
-    14
-   ],
-   "next": [
-    160
-   ]
-  },
-  {
-   "id": 160,
-   "type": "land",
-   "name": "王子街2号",
-   "group": "王子街",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Nanjing.cit 地块 (-3,15)",
-   "lot": [
-    -3,
-    15
-   ],
-   "pos": [
-    -2,
-    15
-   ],
-   "next": [
-    161
-   ]
-  },
-  {
-   "id": 161,
-   "type": "land",
-   "name": "王子街3号",
-   "group": "王子街",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Nanjing.cit 地块 (-3,16)",
-   "lot": [
-    -3,
-    16
-   ],
-   "pos": [
-    -2,
-    16
-   ],
-   "next": [
-    162
-   ]
-  },
-  {
-   "id": 162,
-   "type": "land",
-   "name": "王子街4号",
-   "group": "王子街",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Nanjing.cit 地块 (-3,17)",
-   "lot": [
-    -3,
-    17
-   ],
-   "pos": [
-    -2,
-    17
-   ],
-   "next": [
-    163
-   ]
-  },
-  {
-   "id": 163,
-   "type": "company",
-   "site": 106,
-   "pos": [
-    -2,
-    18
-   ],
-   "next": [
-    164
-   ]
-  },
-  {
-   "id": 164,
-   "type": "company",
-   "site": 106,
-   "pos": [
-    -2,
-    19
-   ],
-   "next": [
-    105
    ]
   }
  ]
