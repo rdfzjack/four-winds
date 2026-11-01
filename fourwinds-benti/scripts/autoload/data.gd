@@ -13,6 +13,7 @@ const Scenario = preload("res://scripts/core/scenario.gd")
 
 const RULES_PATH := "res://data/rules.json"
 const CHARACTERS_PATH := "res://data/characters.json"
+const EXTRAS_PATH := "res://data/extra_characters.json"
 const CARDS_PATH := "res://data/cards/chance.json"
 const AI_PATH := "res://data/ai/profiles.json"
 const LINES_DIR := "res://data/lines"
@@ -21,6 +22,7 @@ const CAMPAIGNS_DIR := "res://data/campaigns"
 
 var rules: Dictionary = {}
 var characters: Array = []
+var extras: Array = []  ## 路人（只在个人主线关卡里出现，data/extra_characters.json）
 var maps: Dictionary = {}  ## 地图 id -> Board
 var cards: Array = []  ## 机会卡列表
 var special_events: Array = []  ## 不在牌堆里的特殊事件（古董、倒塌等）
@@ -51,6 +53,7 @@ func reload() -> void:
 	rules = JsonUtil.load_dict(RULES_PATH, errors)
 	var chars := JsonUtil.load_dict(CHARACTERS_PATH, errors)
 	characters = chars.get("characters", [])
+	extras = JsonUtil.load_dict(EXTRAS_PATH, errors).get("characters", [])
 	var cards_file := JsonUtil.load_dict(CARDS_PATH, errors)
 	cards = cards_file.get("cards", [])
 	special_events = cards_file.get("special_events", [])
@@ -88,15 +91,18 @@ func _load_campaigns() -> void:
 		if d.is_empty():
 			continue
 		var cid := str(d.get("character", ""))
-		if character(cid).is_empty():
-			errors.append("%s：角色“%s”不存在" % [file, cid])
+		var playable := false
+		for c in characters:
+			playable = playable or str(c.get("id", "")) == cid
+		if not playable:
+			errors.append("%s：主线的角色“%s”不是可选角色" % [file, cid])
 			continue
 		var seen := {}
 		for stage in d.get("stages", []):
 			if seen.has(str(stage.get("id", ""))):
 				errors.append("%s：关卡 id“%s”重复" % [file, str(stage.get("id", ""))])
 			seen[str(stage.get("id", ""))] = true
-			for e in Scenario.validate(stage, maps, characters, rules):
+			for e in Scenario.validate(stage, maps, all_characters(), rules):
 				errors.append("%s：%s" % [file, e])
 		campaigns[cid] = d
 
@@ -123,9 +129,14 @@ func selected_map() -> Board:
 	return default_map()
 
 
-## 按 id 找角色；找不到返回空字典。
+## 可选角色 + 路人（开局、显示名字、头像都用它；主界面选座位只用 characters）
+func all_characters() -> Array:
+	return characters + extras
+
+
+## 按 id 找角色（含路人）；找不到返回空字典。
 func character(id: String) -> Dictionary:
-	for c in characters:
+	for c in all_characters():
 		if str(c.get("id", "")) == id:
 			return c
 	return {}
@@ -147,7 +158,7 @@ func _load_lines() -> LinesDb:
 ## 读存档 slot，成功就记在 resume 里（然后切到棋盘画面）。成功返回 ""，否则返回原因
 func resume_from_save(slot: String) -> String:
 	var r := SaveGame.load_slot(slot, maps, rules,
-			{"cards": cards, "special_events": special_events}, characters)
+			{"cards": cards, "special_events": special_events}, all_characters())
 	if str(r["error"]) != "":
 		return str(r["error"])
 	resume = r

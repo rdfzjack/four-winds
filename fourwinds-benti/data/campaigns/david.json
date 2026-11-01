@@ -1,5 +1,5 @@
 {
- "_comment": "斐斐的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。第 1、2 关作者还没定（标 example: true 的是占位，只为让第 3 关能打到，目标取自讨论稿的候选；对手也是占位），第 3 关按讨论稿。开局资金、预置地产、限时都是起点数字，等逐关跑模拟后标定。",
+ "_comment": "斐斐的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。第 1、2 关作者还没定（标 example: true 的是占位，只为让第 3 关能打到，目标取自讨论稿的候选；对手也是占位），第 3 关按讨论稿。开局资金、预置地产、限时都是起点数字，等逐关跑模拟后标定。 每关至少两个对手。",
  "character": "david",
  "name": "整顿",
  "stages": [
@@ -8,7 +8,7 @@
    "name": "【待定】伦敦金融城",
    "example": true,
    "map": "london",
-   "intro": "【待定】这一关的剧情、对手、目标作者还没定。占位目标：控制所有报业企业。",
+   "intro": "【待定】这一关的剧情、目标作者还没定。占位：对手是堂弟（路人，另有一个 AI），目标让堂弟破产。",
    "outro_win": "【待定】",
    "outro_lose": "【待定】",
    "seats": [
@@ -19,17 +19,22 @@
      "deposit": 1000
     },
     {
+     "character": "cousin",
+     "ai": "standard_v2",
+     "cash": 1000,
+     "deposit": 1000
+    },
+    {
      "character": "marcel",
+     "ai": "new_v2",
      "cash": 1000,
      "deposit": 1000
     }
    ],
    "win": [
     {
-     "type": "control_industry",
-     "who": "player",
-     "industry": "newspaper",
-     "industry_name": "报业"
+     "type": "bankrupt",
+     "who": 1
     }
    ],
    "lose": [
@@ -44,7 +49,7 @@
    "name": "【待定】上海工部局",
    "example": true,
    "map": "shanghai_concession",
-   "intro": "【待定】这一关的剧情、对手、目标作者还没定。占位目标：控制全部运输企业。",
+   "intro": "【待定】这一关的剧情、目标作者还没定。占位：对手是小九和一个路人，目标控制全部运输企业。",
    "outro_win": "【待定】",
    "outro_lose": "【待定】",
    "seats": [
@@ -55,7 +60,14 @@
      "deposit": 2000
     },
     {
-     "character": "eric",
+     "character": "giorgio",
+     "ai": "new_v2",
+     "cash": 1000,
+     "deposit": 2000
+    },
+    {
+     "character": "passerby_a",
+     "ai": "standard_v2",
      "cash": 1000,
      "deposit": 2000
     }

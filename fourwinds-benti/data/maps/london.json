@@ -2,7 +2,7 @@
  "id": "london",
  "name": "伦敦金融城",
  "placeholder": true,
- "_comment": "由 tools/cit_to_map.py 从原版 Story23.cit 转换，地名、企业名按个人主线重新包装（行业类别是机制，名字随城市），之后可直接修改。pos 是原版的路面格。",
+ "_comment": "由 tools/cit_to_map.py 从原版 Story23.cit 转换，地名、企业名按个人主线重新包装（行业类别是机制，名字随城市），之后可直接修改。pos 是原版的路面格。 路口全部随机（下半圈是个绕圈的岔路，自选会被 AI 一直绕在里面）；银行站和“每日窥镜报”换了位置，让下半圈也有企业。",
  "start_tile": 0,
  "prices": {
   "_comment": "原版 溪口镇 的 CITY_PROPERTY，单位万圆。",
@@ -299,11 +299,11 @@
   {
    "id": 12,
    "type": "company",
-   "name": "每日窥镜报",
-   "industry": "newspaper",
+   "name": "银行站",
+   "industry": "transport",
    "price": 200,
    "rent": 50,
-   "source": "Story23.cit 建筑 新月书局",
+   "source": "Story23.cit 建筑 溪口码头",
    "lot": [
     -3,
     21
@@ -335,7 +335,7 @@
     -1,
     20
    ],
-   "crossroad": "choice",
+   "crossroad": "random",
    "next": [
     15
    ]
@@ -416,7 +416,7 @@
     -1,
     15
    ],
-   "crossroad": "choice",
+   "crossroad": "random",
    "next": [
     20,
     46
@@ -668,11 +668,11 @@
   {
    "id": 34,
    "type": "company",
-   "name": "银行站",
-   "industry": "transport",
+   "name": "每日窥镜报",
+   "industry": "newspaper",
    "price": 200,
    "rent": 50,
-   "source": "Story23.cit 建筑 溪口码头",
+   "source": "Story23.cit 建筑 新月书局",
    "lot": [
     8,
     16

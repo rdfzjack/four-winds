@@ -89,7 +89,7 @@ func _show_briefing(cid: String, index: int) -> void:
 	_clear()
 	var stage: Dictionary = Data.stages_of(cid)[index]
 	var sc := Scenario.new(stage)
-	var names := sc.seat_names(Data.characters)
+	var names := sc.seat_names(Data.all_characters())
 	_label("第 %d 关 · %s" % [index + 1, str(stage.get("name", ""))], 26, Color.WHITE)
 	var board = Data.maps.get(str(stage.get("map", "")))
 	_label("地图：%s" % (board.display_name if board != null else "（找不到）"), 14, Color("#b0bec5"))

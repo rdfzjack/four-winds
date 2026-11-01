@@ -122,10 +122,10 @@ CONDITION_TYPES = {"bankrupt", "build_house", "control_industry", "control_stree
                    "assets_at_least", "days_over"}
 
 
-def check_campaign(d: dict, maps: dict, char_ids: set, max_players: int) -> list[str]:
+def check_campaign(d: dict, maps: dict, char_ids: set, max_players: int, playable_ids: set) -> list[str]:
     """个人主线文件的检查（和 scripts/core/scenario.gd 的 validate 一致，不需要 Godot）。"""
     errors: list[str] = []
-    if d.get("character") not in char_ids:
+    if d.get("character") not in playable_ids:
         errors.append(f"角色 {d.get('character')!r} 不存在")
     seen = set()
     for st in d.get("stages", []):
@@ -225,11 +225,16 @@ def main() -> int:
     if rules.get("default_map") not in map_ids:
         errors.append(f"rules.json 的 default_map {rules.get('default_map')!r} 不存在")
 
+    extras = (load(proj / "data/extra_characters.json", errors) or {}).get("characters", [])
+    extra_ids = {str(c.get("id")) for c in extras}
+    if len(extra_ids) != len(extras) or extra_ids & {str(i) for i in char_ids}:
+        errors.append("extra_characters.json 的 id 重复，或和 characters.json 重复")
     for f in sorted((proj / "data/campaigns").glob("*.json")):
         d = load(f, errors)
         if d is None:
             continue
-        for e in check_campaign(d, map_data, {str(i) for i in char_ids}, int(rules.get("max_players", 4))):
+        for e in check_campaign(d, map_data, {str(i) for i in char_ids} | extra_ids, int(rules.get("max_players", 4)),
+                                {str(i) for i in char_ids}):
             errors.append(f"{f.name}：{e}")
         print(f"{f.name}: {len(d.get('stages', []))} 关")
 

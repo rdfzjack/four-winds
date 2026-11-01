@@ -145,7 +145,7 @@ func _new_scenario_game(stage_ref: Dictionary) -> bool:
 	board = Data.maps[str(sc.stage["map"])]
 	game = Game.new()
 	var cards_file := {"cards": Data.cards, "special_events": Data.special_events}
-	var errors := game.setup(board, Data.rules, cards_file, Data.characters, sc.specs())
+	var errors := game.setup(board, Data.rules, cards_file, Data.all_characters(), sc.specs())
 	if not errors.is_empty():
 		push_error("开局失败：" + str(errors))
 		return false
