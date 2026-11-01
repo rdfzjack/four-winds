@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""生成地图目录 docs/map_catalog.md：原版 24 张城市 / 战役地图（和已经转好的地图）的规模、企业、路口。
+"""生成地图目录，写进 docs/campaign_brief.md：原版 24 张城市 / 战役地图（和已经转好的地图）的规模、企业、路口。
 给主线剧情讨论用（选图、定目标时看企业够不够）。用法：python3 tools/map_catalog.py
 数字来自 tools/cit_to_map.py --print（转换后的格数、路口、街道数）和解包出来的 *_buildings.csv。"""
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CITIES = ROOT / "extracted/data/cities"
-OUT = ROOT / "docs/map_catalog.md"
+OUT = ROOT / "docs/campaign_brief.md"  # 表格写进简报里 <!-- map_catalog:start/end --> 之间
 CONVERTED = {  # 原版文件 -> 已经在 data/maps/ 里的地图 id
     "Cit_Shaihai": "shanghai", "Sub_Story34": "shanghai_west",
 }
@@ -50,16 +50,14 @@ def main() -> None:
         persons = [p["name"] for p in d.get("persons", [])]
         rows.append((f.stem, d.get("name", ""), int(m.group(1)) if m else 0, int(cross.group(1)) if cross else 0,
                      int(streets.group(1)) if streets else 0, comp, len(persons), CONVERTED.get(f.stem, ""), st))
-    lines = ["# 地图目录（自动生成，不要手改）", "",
-             "`python3 tools/map_catalog.py` 生成。原版共 24 张：4 张自由模式城市（`Cit_*`）、20 张战役关卡图（`Sub_Story*`）。",
-             "“格数”是转成我们的路网后棋子能走的格子数（一圈的长度），路口 = 能选方向的路口。"
-             "“已转换”列有 id 的已经在 `data/maps/` 里，其余用 `tools/cit_to_map.py` 一条命令转（失败的要手动处理）。"
-             "另有一张自制的 40 格一圈图 `shanghai_loop`（企业：运输 2 / 娱乐 2 / 商业 1）。", "",
-             "| 原版文件 | 地名 | 格数 | 路口 | 街道数 | 企业（按行业） | 已转换 |", "|---|---|---|---|---|---|---|"]
+    lines = ["| 原版文件 | 地名 | 格数 | 路口 | 街道数 | 企业（按行业） | 已转换 |", "|---|---|---|---|---|---|---|"]
     for stem, name, tiles, cross, streets, comp, _n, conv, st in rows:
         companies = "、".join(f"{k} {v}" for k, v in comp.items()) or "无"
         lines.append(f"| {stem} | {name} | {tiles or st} | {cross} | {streets} | {companies} | {conv or '—'} |")
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    text = OUT.read_text(encoding="utf-8")
+    start, end = "<!-- map_catalog:start -->", "<!-- map_catalog:end -->"
+    a, b = text.index(start) + len(start), text.index(end)
+    OUT.write_text(text[:a] + "\n" + "\n".join(lines) + "\n" + text[b:], encoding="utf-8")
     print(f"写入 {OUT}（{len(rows)} 张）")
 
 
