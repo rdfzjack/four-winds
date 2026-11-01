@@ -118,6 +118,48 @@ def check_map(d: dict, max_house_lots: int = 4) -> list[str]:
     return errors
 
 
+CONDITION_TYPES = {"bankrupt", "build_house", "control_industry", "control_street", "own_lots_pct",
+                   "assets_at_least", "days_over"}
+
+
+def check_campaign(d: dict, maps: dict, char_ids: set, max_players: int) -> list[str]:
+    """个人主线文件的检查（和 scripts/core/scenario.gd 的 validate 一致，不需要 Godot）。"""
+    errors: list[str] = []
+    if d.get("character") not in char_ids:
+        errors.append(f"角色 {d.get('character')!r} 不存在")
+    seen = set()
+    for st in d.get("stages", []):
+        sid = st.get("id", "?")
+        if sid in seen:
+            errors.append(f"关卡 id {sid!r} 重复")
+        seen.add(sid)
+        board = maps.get(st.get("map"))
+        if board is None:
+            errors.append(f"关卡 {sid}：地图 {st.get('map')!r} 不存在")
+            continue
+        tiles = board.get("tiles", [])
+        seats = st.get("seats", [])
+        if not 2 <= len(seats) <= max_players:
+            errors.append(f"关卡 {sid}：座位数应该是 2 到 {max_players}")
+        if sum(1 for s in seats if s.get("player")) != 1:
+            errors.append(f"关卡 {sid}：要有且只有一个 player 座位")
+        chars = [s.get("character") for s in seats]
+        if len(set(chars)) != len(chars) or not set(chars) <= char_ids:
+            errors.append(f"关卡 {sid}：角色不存在或重复")
+        for i, s in enumerate(seats):
+            for entry in s.get("props", []):
+                for t in entry.get("tiles", [entry.get("tile", -1)]):
+                    if not isinstance(t, (int, float)) or not 0 <= int(t) < len(tiles) or "site" in tiles[int(t)]:
+                        errors.append(f"关卡 {sid} 座位 {i}：预置地产格子 {t} 不存在或是分身格")
+        for key in ("win", "lose"):
+            if not st.get(key):
+                errors.append(f"关卡 {sid}：{key} 条件不能为空")
+            for c in st.get(key, []):
+                if c.get("type") not in CONDITION_TYPES:
+                    errors.append(f"关卡 {sid}：不认识的条件类型 {c.get('type')!r}")
+    return errors
+
+
 def main() -> int:
     root = Path(__file__).resolve().parent.parent
     ap = argparse.ArgumentParser()
@@ -166,11 +208,13 @@ def main() -> int:
     print(f"机会卡 {len(ids)} 张，台词 {len(lines.sets)} 个文件共 {total} 句，{len(lines.events)} 种事件")
 
     map_ids = []
+    map_data = {}
     for f in sorted((proj / "data/maps").glob("*.json")):
         d = load(f, errors)
         if d is None:
             continue
         map_ids.append(d.get("id"))
+        map_data[d.get("id")] = d
         lots = max((lv.get("lots", 1) for lv in rules.get("houses", {}).get("levels", [])), default=4)
         for e in check_map(d, lots):
             errors.append(f"{f.name}：{e}")
@@ -180,6 +224,14 @@ def main() -> int:
         errors.append("data/maps 里没有地图")
     if rules.get("default_map") not in map_ids:
         errors.append(f"rules.json 的 default_map {rules.get('default_map')!r} 不存在")
+
+    for f in sorted((proj / "data/campaigns").glob("*.json")):
+        d = load(f, errors)
+        if d is None:
+            continue
+        for e in check_campaign(d, map_data, {str(i) for i in char_ids}, int(rules.get("max_players", 4))):
+            errors.append(f"{f.name}：{e}")
+        print(f"{f.name}: {len(d.get('stages', []))} 关")
 
     for e in errors:
         print("问题：", e)

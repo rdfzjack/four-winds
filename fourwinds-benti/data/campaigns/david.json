@@ -1,0 +1,125 @@
+{
+ "_comment": "个人主线数据（格式见 docs/campaigns.md）。现在是框架自带的“示例”关（example: true），用来测试流程，不是正式内容；剧情、对手、目标等作者给了以后替换。座位里 player: true 是玩家自己；win / lose 是条件列表，满足任意一条就结束，同时满足时按失败算。",
+ "character": "david",
+ "name": "（示例）斐斐的主线",
+ "stages": [
+  {
+   "id": "david_1",
+   "name": "（示例）一圈小街",
+   "example": true,
+   "map": "shanghai_loop",
+   "intro": "【示例关，占位文字】这是用来测试关卡流程的示例关，不是正式内容。在 30 天内建成一栋别墅。",
+   "outro_win": "【示例，占位文字】通关了。",
+   "outro_lose": "【示例，占位文字】没成功，再来一次。",
+   "seats": [
+    {
+     "character": "david",
+     "player": true,
+     "cash": 1000,
+     "deposit": 500,
+     "props": [
+      {
+       "tile": 4
+      },
+      {
+       "tile": 5
+      }
+     ]
+    },
+    {
+     "character": "giorgio",
+     "ai": "new_v2",
+     "cash": 1000,
+     "deposit": 500,
+     "props": [
+      {
+       "tile": 1,
+       "house": "flat"
+      }
+     ]
+    },
+    {
+     "character": "marcel",
+     "ai": "new_v2",
+     "cash": 1000,
+     "deposit": 500
+    }
+   ],
+   "win": [
+    {
+     "type": "build_house",
+     "who": "player",
+     "kind": "villa"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "days_over",
+     "days": 30
+    }
+   ]
+  },
+  {
+   "id": "david_2",
+   "name": "（示例）西区",
+   "example": true,
+   "map": "shanghai_west",
+   "intro": "【示例关，占位文字】击败所有对手，或者控制西区所有的公用企业。限时 60 天。",
+   "outro_win": "【示例，占位文字】通关了。",
+   "outro_lose": "【示例，占位文字】没成功，再来一次。",
+   "seats": [
+    {
+     "character": "david",
+     "player": true,
+     "cash": 1500,
+     "deposit": 1000
+    },
+    {
+     "character": "giorgio",
+     "ai": "new_v2",
+     "cash": 1500,
+     "deposit": 1000
+    },
+    {
+     "character": "marcel",
+     "ai": "new_v2",
+     "cash": 1500,
+     "deposit": 1000
+    },
+    {
+     "character": "eric",
+     "ai": "standard_v2",
+     "cash": 1500,
+     "deposit": 1000
+    }
+   ],
+   "win": [
+    {
+     "type": "bankrupt",
+     "who": "others",
+     "mode": "all"
+    },
+    {
+     "type": "control_industry",
+     "who": "player",
+     "industry": "public",
+     "industry_name": "公用"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    },
+    {
+     "type": "days_over",
+     "days": 60
+    }
+   ]
+  }
+ ]
+}

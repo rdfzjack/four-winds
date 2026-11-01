@@ -23,6 +23,8 @@ const Art = preload("res://scripts/ui/art.gd")
 const SaveGame = preload("res://scripts/core/save_game.gd")
 const SavePanel = preload("res://scripts/ui/save_panel.gd")
 const DiceView = preload("res://scripts/ui/dice_view.gd")
+const Scenario = preload("res://scripts/core/scenario.gd")
+const Profile = preload("res://scripts/core/profile.gd")
 
 const STATUS_NAMES := {
 	"jail": "坐牢", "park": "游览公园", "charity": "慈善", "thief": "小偷", "arsonist": "纵火犯",
@@ -73,6 +75,8 @@ var _log_lines: Array = []      ## 日志的每一条（存档时一起存，读
 var _menu_open: bool = false    ## 菜单开着时 AI 暂停
 var _leaving: bool = false      ## 正在离开本画面（切场景），协程见到就停
 var _auto_day: int = 0          ## 自动存档存到第几天了
+var _campaign: Dictionary = {}  ## 个人主线的这一关 {character, stage}（stage 从 0 起）；空 = 自由模式。存档的 extra 里带着
+var _goal_label: Label
 
 
 func _ready() -> void:
@@ -86,6 +90,7 @@ func _ready() -> void:
 		game = resume["game"]
 		board = game.board
 		_auto_day = game.day
+		_campaign = resume["extra"].get("campaign", {})
 	_speech = Speech.new(Data.lines, game)
 	if not resume.is_empty() and not resume["speech"].is_empty():
 		_speech.import_state(resume["speech"])
@@ -98,12 +103,19 @@ func _ready() -> void:
 		for line in resume["extra"].get("log", []):
 			_log_add(str(line))
 		_log_add("[color=#81c784]—— 已读取存档（第 %d 天）——[/color]\n" % game.day)
+	elif game.scenario != null:
+		_log_add("[color=#ffd54f]—— %s ——[/color]\n%s\n" % [str(game.scenario.stage.get("name", "")),
+				str(game.scenario.stage.get("intro", ""))])
 	_refresh()
 	_advance()
 
 
 ## 按主界面选的座位开一局。失败返回 false
 func _new_game() -> bool:
+	var stage_ref: Dictionary = Data.start_stage
+	Data.start_stage = {}
+	if not stage_ref.is_empty():
+		return _new_scenario_game(stage_ref)
 	board = Data.selected_map()
 	_specs = Data.start_specs
 	if _specs.is_empty():
@@ -118,6 +130,33 @@ func _new_game() -> bool:
 		return false
 	game.record_history = true
 	game.crossroad_override = "random" if Data.crossroads_random else ""
+	game.start()
+	return true
+
+
+## 个人主线开一关：座位、地图、开局资金和预置地产都由关卡决定。失败返回 false
+func _new_scenario_game(stage_ref: Dictionary) -> bool:
+	var stages := Data.stages_of(str(stage_ref.get("character", "")))
+	var index := int(stage_ref.get("stage", -1))
+	if index < 0 or index >= stages.size():
+		push_error("找不到关卡：%s" % str(stage_ref))
+		return false
+	var sc := Scenario.new(stages[index])
+	board = Data.maps[str(sc.stage["map"])]
+	game = Game.new()
+	var cards_file := {"cards": Data.cards, "special_events": Data.special_events}
+	var errors := game.setup(board, Data.rules, cards_file, Data.characters, sc.specs())
+	if not errors.is_empty():
+		push_error("开局失败：" + str(errors))
+		return false
+	game.scenario = sc
+	errors = sc.apply(game)
+	if not errors.is_empty():
+		push_error("关卡设置失败：" + str(errors))
+		return false
+	game.record_history = true
+	game.crossroad_override = "random" if Data.crossroads_random else ""
+	_campaign = {"character": str(stage_ref["character"]), "stage": index}
 	game.start()
 	return true
 
@@ -166,6 +205,10 @@ func _build_ui() -> void:
 		_add_player_card(p)
 	_info_label = _make_label(_left, "点棋盘上的格子看详情", 13, Color("#b0bec5"))
 	_info_label.custom_minimum_size = Vector2(LEFT_WIDTH - 2.0 * MARGIN, 60)
+	if game.scenario != null:
+		_goal_label = _make_label(_left, game.scenario.goals_text(game.scenario.names_of(game)), 13,
+				Color("#ffd54f"))
+		_goal_label.custom_minimum_size = Vector2(LEFT_WIDTH - 2.0 * MARGIN, 40)
 
 	_right = VBoxContainer.new()
 	_right.add_theme_constant_override("separation", 6)
@@ -492,7 +535,13 @@ func _describe(ev: Dictionary) -> String:
 			return "%s 拆了房子，退回 %d 万" % [_pname(pi), int(ev["refund"])]
 		"bankrupt":
 			return "[color=#ef5350]%s 破产了！[/color]" % _pname(pi)
+		"scenario_won":
+			return "[color=#ffd54f]过关！%s[/color]" % str(ev["reason"])
+		"scenario_lost":
+			return "[color=#ef5350]失败：%s[/color]" % str(ev["reason"])
 		"game_over":
+			if game.scenario != null:
+				return ""
 			if int(ev["winner"]) >= 0:
 				return "[color=#ffd54f]游戏结束，%s 获胜！[/color]" % _pname(int(ev["winner"]))
 			return "[color=#ffd54f]游戏结束[/color]"
@@ -1089,6 +1138,9 @@ func _send_trade() -> void:
 func _show_game_over() -> void:
 	_overlay.visible = true
 	_clear_overlay_box()
+	if game.scenario != null:
+		_show_scenario_result()
+		return
 	var text := "游戏结束：所有人类玩家都破产了"
 	if game.winner >= 0:
 		text = "游戏结束：%s 获胜！" % game.players[game.winner].display_name
@@ -1105,6 +1157,52 @@ func _show_game_over() -> void:
 	view.text = "看看棋盘"
 	view.pressed.connect(func() -> void: _overlay.visible = false)
 	_overlay_box.add_child(view)
+
+
+## 个人主线结算页：胜 / 负文字、下一关 / 重试 / 回主界面。胜了就记进度（profile）
+func _show_scenario_result() -> void:
+	var sc: Scenario = game.scenario
+	var won: bool = sc.result == "won"
+	var stages := Data.stages_of(str(_campaign.get("character", "")))
+	var index := int(_campaign.get("stage", 0))
+	_make_label(_overlay_box, str(sc.stage.get("name", "")), 16, Color("#b0bec5"))
+	_make_label(_overlay_box, "过关！" if won else "失败", 28,
+			Color("#ffd54f") if won else Color("#ef5350"))
+	_make_label(_overlay_box, sc.reason, 16, Color.WHITE)
+	var outro := str(sc.stage.get("outro_win" if won else "outro_lose", ""))
+	if outro != "":
+		_make_label(_overlay_box, outro, 16, Color("#cfd8dc"))
+	if won and not _campaign.is_empty():
+		var profile := Profile.load_profile()
+		Profile.mark_cleared(profile, str(_campaign["character"]), index, stages.size())
+		var err := Profile.save_profile(profile)
+		if err != "":
+			_make_label(_overlay_box, err, 14, Color("#ef5350"))
+		elif index + 1 >= stages.size():
+			_make_label(_overlay_box, "主线通关！这个角色的里形态已解锁。", 16, Color("#ffd54f"))
+	if won and index + 1 < stages.size():
+		_add_stage_button("下一关：%s" % str(stages[index + 1].get("name", "")), index + 1)
+	if not won and not _campaign.is_empty():
+		_add_stage_button("重试本关", index)
+	var home := Button.new()
+	home.text = "回到主界面"
+	home.custom_minimum_size = Vector2(0, 44)
+	home.pressed.connect(func() -> void: get_tree().change_scene_to_file("res://scenes/main.tscn"))
+	_overlay_box.add_child(home)
+	var view := Button.new()
+	view.text = "看看棋盘"
+	view.pressed.connect(func() -> void: _overlay.visible = false)
+	_overlay_box.add_child(view)
+
+
+func _add_stage_button(text: String, stage_index: int) -> void:
+	var b := Button.new()
+	b.text = text
+	b.custom_minimum_size = Vector2(0, 44)
+	b.pressed.connect(func() -> void:
+			Data.start_stage = {"character": _campaign["character"], "stage": stage_index}
+			get_tree().change_scene_to_file("res://scenes/table.tscn"))
+	_overlay_box.add_child(b)
 
 
 # ───────────────────────── 点格子看详情 ─────────────────────────
@@ -1247,7 +1345,7 @@ func _autosave() -> void:
 
 
 func _save_to(slot: String) -> String:
-	return SaveGame.save(slot, game, _speech, {"log": _log_lines})
+	return SaveGame.save(slot, game, _speech, {"log": _log_lines, "campaign": _campaign})
 
 
 func _open_menu() -> void:
