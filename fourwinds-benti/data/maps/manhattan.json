@@ -1,0 +1,2654 @@
+{
+ "id": "manhattan",
+ "name": "纽约（曼哈顿）",
+ "placeholder": true,
+ "_comment": "由 tools/cit_to_map.py 从原版 Cit_Tianjin.cit（天津，自由模式城市） 转换，地名、企业名按个人主线重新包装；行业按需要调整过：食品 → 娱乐，公用 → 金融（共 运输 3 / 娱乐 3 / 商业 3 / 金融 4）。之后可直接修改。pos 是原版的路面格。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版 天津 的 CITY_PROPERTY，单位万圆。",
+  "blank_land_price": 80,
+  "build_cost": {
+   "flat": 40,
+   "hotel": 100,
+   "floor": 140,
+   "villa": 200,
+   "upgrade": 60,
+   "function": 80
+  },
+  "rent": {
+   "blank_land": 15,
+   "flat": 30,
+   "hotel": 60,
+   "super_hotel": 80,
+   "floor": 80,
+   "super_floor": 120,
+   "villa": 150
+  }
+ },
+ "groups": {
+  "百老汇": {
+   "name": "百老汇",
+   "color": "#8d6e63"
+  },
+  "第五大道": {
+   "name": "第五大道",
+   "color": "#4fc3f7"
+  },
+  "公园大道": {
+   "name": "公园大道",
+   "color": "#f48fb1"
+  },
+  "麦迪逊大道": {
+   "name": "麦迪逊大道",
+   "color": "#ba68c8"
+  },
+  "第七大道": {
+   "name": "第七大道",
+   "color": "#ff8a65"
+  },
+  "华尔街": {
+   "name": "华尔街",
+   "color": "#e57373"
+  },
+  "富尔顿街": {
+   "name": "富尔顿街",
+   "color": "#fff176"
+  },
+  "包厘街": {
+   "name": "包厘街",
+   "color": "#81c784"
+  },
+  "坚尼街": {
+   "name": "坚尼街",
+   "color": "#1565c0"
+  },
+  "德兰西街": {
+   "name": "德兰西街",
+   "color": "#4db6ac"
+  },
+  "休斯敦街": {
+   "name": "休斯敦街",
+   "color": "#8d6e63"
+  },
+  "布利克街": {
+   "name": "布利克街",
+   "color": "#4fc3f7"
+  },
+  "克里斯托弗街": {
+   "name": "克里斯托弗街",
+   "color": "#f48fb1"
+  },
+  "第三十四街": {
+   "name": "第三十四街",
+   "color": "#ba68c8"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "company",
+   "name": "奥尔洛夫珠宝行",
+   "industry": "shop",
+   "price": 450,
+   "rent": 110,
+   "source": "Tianjin.cit 建筑 和平百货",
+   "lot": [
+    -1,
+    21
+   ],
+   "pos": [
+    -2,
+    21
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "road",
+   "pos": [
+    -2,
+    20
+   ],
+   "crossroad": "choice",
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "land",
+   "name": "布利克街3号",
+   "group": "布利克街",
+   "price_pct": 160,
+   "build_cost_pct": 170,
+   "source": "Tianjin.cit 地块 (-3,19)",
+   "lot": [
+    -3,
+    19
+   ],
+   "pos": [
+    -2,
+    19
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "land",
+   "name": "布利克街2号",
+   "group": "布利克街",
+   "price_pct": 160,
+   "build_cost_pct": 170,
+   "source": "Tianjin.cit 地块 (-3,18)",
+   "lot": [
+    -3,
+    18
+   ],
+   "pos": [
+    -2,
+    18
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "land",
+   "name": "布利克街1号",
+   "group": "布利克街",
+   "price_pct": 160,
+   "build_cost_pct": 170,
+   "source": "Tianjin.cit 地块 (-3,17)",
+   "lot": [
+    -3,
+    17
+   ],
+   "pos": [
+    -2,
+    17
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "company",
+   "name": "中央车站",
+   "industry": "transport",
+   "price": 380,
+   "rent": 90,
+   "source": "Tianjin.cit 建筑 新兴电车公司",
+   "lot": [
+    -3,
+    16
+   ],
+   "pos": [
+    -2,
+    16
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "company",
+   "site": 5,
+   "pos": [
+    -2,
+    15
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "road",
+   "pos": [
+    -2,
+    14
+   ],
+   "next": [
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "bank",
+   "name": "银行",
+   "source": "Tianjin.cit 建筑 银行",
+   "lot": [
+    -2,
+    12
+   ],
+   "pos": [
+    -2,
+    13
+   ],
+   "crossroad": "choice",
+   "next": [
+    9,
+    104
+   ]
+  },
+  {
+   "id": 9,
+   "type": "bank",
+   "site": 8,
+   "pos": [
+    -3,
+    13
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "land",
+   "name": "富尔顿街6号",
+   "group": "富尔顿街",
+   "price_pct": 110,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-4,12)",
+   "lot": [
+    -4,
+    12
+   ],
+   "pos": [
+    -4,
+    13
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "land",
+   "name": "富尔顿街5号",
+   "group": "富尔顿街",
+   "price_pct": 110,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-5,12)",
+   "lot": [
+    -5,
+    12
+   ],
+   "pos": [
+    -5,
+    13
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "land",
+   "name": "富尔顿街4号",
+   "group": "富尔顿街",
+   "price_pct": 110,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-6,12)",
+   "lot": [
+    -6,
+    12
+   ],
+   "pos": [
+    -6,
+    13
+   ],
+   "next": [
+    13
+   ]
+  },
+  {
+   "id": 13,
+   "type": "land",
+   "name": "富尔顿街3号",
+   "group": "富尔顿街",
+   "price_pct": 110,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-7,12)",
+   "lot": [
+    -7,
+    12
+   ],
+   "pos": [
+    -7,
+    13
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "company",
+   "name": "月光俱乐部",
+   "industry": "entertainment",
+   "price": 380,
+   "rent": 80,
+   "source": "Tianjin.cit 建筑 耳朵眼儿炸糕铺",
+   "lot": [
+    -8,
+    12
+   ],
+   "pos": [
+    -8,
+    13
+   ],
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "company",
+   "site": 14,
+   "pos": [
+    -9,
+    13
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "park",
+   "name": "公园",
+   "source": "Tianjin.cit 建筑 公园",
+   "lot": [
+    -10,
+    14
+   ],
+   "pos": [
+    -10,
+    13
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "park",
+   "site": 16,
+   "pos": [
+    -11,
+    13
+   ],
+   "next": [
+    18
+   ]
+  },
+  {
+   "id": 18,
+   "type": "road",
+   "pos": [
+    -12,
+    13
+   ],
+   "next": [
+    19
+   ]
+  },
+  {
+   "id": 19,
+   "type": "park",
+   "site": 16,
+   "pos": [
+    -12,
+    14
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "park",
+   "site": 16,
+   "pos": [
+    -12,
+    15
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "land",
+   "name": "华尔街1号",
+   "group": "华尔街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-11,16)",
+   "lot": [
+    -11,
+    16
+   ],
+   "pos": [
+    -12,
+    16
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "land",
+   "name": "华尔街2号",
+   "group": "华尔街",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-11,17)",
+   "lot": [
+    -11,
+    17
+   ],
+   "pos": [
+    -12,
+    17
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "company",
+   "name": "银盾兄弟银行纽约分行",
+   "industry": "finance",
+   "price": 420,
+   "rent": 100,
+   "source": "Tianjin.cit 建筑 悟升电话公司",
+   "lot": [
+    -11,
+    18
+   ],
+   "pos": [
+    -12,
+    18
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "company",
+   "site": 23,
+   "pos": [
+    -12,
+    19
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "road",
+   "pos": [
+    -12,
+    20
+   ],
+   "crossroad": "choice",
+   "next": [
+    26,
+    95
+   ]
+  },
+  {
+   "id": 26,
+   "type": "land",
+   "site": 60,
+   "pos": [
+    -13,
+    20
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "company",
+   "name": "哈德逊信托公司",
+   "industry": "finance",
+   "price": 380,
+   "rent": 90,
+   "source": "Tianjin.cit 建筑 美靓电灯公司",
+   "lot": [
+    -14,
+    19
+   ],
+   "pos": [
+    -14,
+    20
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "company",
+   "site": 27,
+   "pos": [
+    -15,
+    20
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "land",
+   "site": 31,
+   "pos": [
+    -16,
+    20
+   ],
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "road",
+   "pos": [
+    -17,
+    20
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "land",
+   "name": "第五大道8号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,21)",
+   "lot": [
+    -16,
+    21
+   ],
+   "pos": [
+    -17,
+    21
+   ],
+   "next": [
+    32
+   ]
+  },
+  {
+   "id": 32,
+   "type": "land",
+   "name": "第五大道7号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,22)",
+   "lot": [
+    -16,
+    22
+   ],
+   "pos": [
+    -17,
+    22
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "land",
+   "name": "第五大道6号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,23)",
+   "lot": [
+    -16,
+    23
+   ],
+   "pos": [
+    -17,
+    23
+   ],
+   "next": [
+    34
+   ]
+  },
+  {
+   "id": 34,
+   "type": "land",
+   "name": "第五大道5号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,24)",
+   "lot": [
+    -16,
+    24
+   ],
+   "pos": [
+    -17,
+    24
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "land",
+   "name": "第五大道4号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,25)",
+   "lot": [
+    -16,
+    25
+   ],
+   "pos": [
+    -17,
+    25
+   ],
+   "next": [
+    36
+   ]
+  },
+  {
+   "id": 36,
+   "type": "land",
+   "name": "第五大道3号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,26)",
+   "lot": [
+    -16,
+    26
+   ],
+   "pos": [
+    -17,
+    26
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 37,
+   "type": "land",
+   "name": "第五大道2号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,27)",
+   "lot": [
+    -16,
+    27
+   ],
+   "pos": [
+    -17,
+    27
+   ],
+   "next": [
+    38
+   ]
+  },
+  {
+   "id": 38,
+   "type": "land",
+   "name": "第五大道1号",
+   "group": "第五大道",
+   "price_pct": 90,
+   "build_cost_pct": 90,
+   "source": "Tianjin.cit 地块 (-16,28)",
+   "lot": [
+    -16,
+    28
+   ],
+   "pos": [
+    -17,
+    28
+   ],
+   "next": [
+    39
+   ]
+  },
+  {
+   "id": 39,
+   "type": "company",
+   "name": "自由钟人寿保险",
+   "industry": "finance",
+   "price": 380,
+   "rent": 90,
+   "source": "Tianjin.cit 建筑 省力煤球公司",
+   "lot": [
+    -16,
+    29
+   ],
+   "pos": [
+    -17,
+    29
+   ],
+   "next": [
+    40
+   ]
+  },
+  {
+   "id": 40,
+   "type": "company",
+   "site": 39,
+   "pos": [
+    -17,
+    30
+   ],
+   "next": [
+    41
+   ]
+  },
+  {
+   "id": 41,
+   "type": "road",
+   "pos": [
+    -17,
+    31
+   ],
+   "next": [
+    42
+   ]
+  },
+  {
+   "id": 42,
+   "type": "company",
+   "site": 39,
+   "pos": [
+    -16,
+    31
+   ],
+   "next": [
+    43
+   ]
+  },
+  {
+   "id": 43,
+   "type": "road",
+   "pos": [
+    -16,
+    32
+   ],
+   "next": [
+    44
+   ]
+  },
+  {
+   "id": 44,
+   "type": "chance",
+   "name": "运气",
+   "source": "Tianjin.cit 建筑 运气",
+   "lot": [
+    -14,
+    32
+   ],
+   "pos": [
+    -15,
+    32
+   ],
+   "next": [
+    45
+   ]
+  },
+  {
+   "id": 45,
+   "type": "road",
+   "pos": [
+    -15,
+    33
+   ],
+   "next": [
+    46
+   ]
+  },
+  {
+   "id": 46,
+   "type": "chance",
+   "site": 44,
+   "pos": [
+    -14,
+    33
+   ],
+   "next": [
+    47
+   ]
+  },
+  {
+   "id": 47,
+   "type": "chance",
+   "site": 44,
+   "pos": [
+    -13,
+    33
+   ],
+   "next": [
+    48
+   ]
+  },
+  {
+   "id": 48,
+   "type": "road",
+   "pos": [
+    -12,
+    33
+   ],
+   "crossroad": "choice",
+   "next": [
+    49,
+    76
+   ]
+  },
+  {
+   "id": 49,
+   "type": "chance",
+   "site": 44,
+   "pos": [
+    -12,
+    32
+   ],
+   "next": [
+    50
+   ]
+  },
+  {
+   "id": 50,
+   "type": "chance",
+   "site": 44,
+   "pos": [
+    -12,
+    31
+   ],
+   "next": [
+    51
+   ]
+  },
+  {
+   "id": 51,
+   "type": "land",
+   "name": "公园大道4号",
+   "group": "公园大道",
+   "price_pct": 90,
+   "build_cost_pct": 80,
+   "source": "Tianjin.cit 地块 (-13,30)",
+   "lot": [
+    -13,
+    30
+   ],
+   "pos": [
+    -12,
+    30
+   ],
+   "next": [
+    52
+   ]
+  },
+  {
+   "id": 52,
+   "type": "land",
+   "name": "公园大道3号",
+   "group": "公园大道",
+   "price_pct": 90,
+   "build_cost_pct": 80,
+   "source": "Tianjin.cit 地块 (-13,29)",
+   "lot": [
+    -13,
+    29
+   ],
+   "pos": [
+    -12,
+    29
+   ],
+   "next": [
+    53
+   ]
+  },
+  {
+   "id": 53,
+   "type": "land",
+   "name": "公园大道2号",
+   "group": "公园大道",
+   "price_pct": 90,
+   "build_cost_pct": 80,
+   "source": "Tianjin.cit 地块 (-13,28)",
+   "lot": [
+    -13,
+    28
+   ],
+   "pos": [
+    -12,
+    28
+   ],
+   "next": [
+    54
+   ]
+  },
+  {
+   "id": 54,
+   "type": "land",
+   "name": "公园大道1号",
+   "group": "公园大道",
+   "price_pct": 90,
+   "build_cost_pct": 80,
+   "source": "Tianjin.cit 地块 (-13,27)",
+   "lot": [
+    -13,
+    27
+   ],
+   "pos": [
+    -12,
+    27
+   ],
+   "crossroad": "choice",
+   "next": [
+    55,
+    61
+   ]
+  },
+  {
+   "id": 55,
+   "type": "government",
+   "name": "市政厅",
+   "source": "Tianjin.cit 建筑 市政厅",
+   "lot": [
+    -11,
+    26
+   ],
+   "pos": [
+    -12,
+    26
+   ],
+   "next": [
+    56
+   ]
+  },
+  {
+   "id": 56,
+   "type": "government",
+   "site": 55,
+   "pos": [
+    -12,
+    25
+   ],
+   "next": [
+    57
+   ]
+  },
+  {
+   "id": 57,
+   "type": "company",
+   "name": "麦迪逊拍卖行",
+   "industry": "shop",
+   "price": 450,
+   "rent": 110,
+   "source": "Tianjin.cit 建筑 多来多百货",
+   "lot": [
+    -11,
+    24
+   ],
+   "pos": [
+    -12,
+    24
+   ],
+   "next": [
+    58
+   ]
+  },
+  {
+   "id": 58,
+   "type": "company",
+   "site": 57,
+   "pos": [
+    -12,
+    23
+   ],
+   "next": [
+    59
+   ]
+  },
+  {
+   "id": 59,
+   "type": "land",
+   "name": "第七大道4号",
+   "group": "第七大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-13,22)",
+   "lot": [
+    -13,
+    22
+   ],
+   "pos": [
+    -12,
+    22
+   ],
+   "next": [
+    60
+   ]
+  },
+  {
+   "id": 60,
+   "type": "land",
+   "name": "第七大道3号",
+   "group": "第七大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (-13,21)",
+   "lot": [
+    -13,
+    21
+   ],
+   "pos": [
+    -12,
+    21
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 61,
+   "type": "government",
+   "site": 55,
+   "pos": [
+    -11,
+    27
+   ],
+   "next": [
+    62
+   ]
+  },
+  {
+   "id": 62,
+   "type": "government",
+   "site": 55,
+   "pos": [
+    -10,
+    27
+   ],
+   "next": [
+    63
+   ]
+  },
+  {
+   "id": 63,
+   "type": "land",
+   "name": "休斯敦街1号",
+   "group": "休斯敦街",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (-9,26)",
+   "lot": [
+    -9,
+    26
+   ],
+   "pos": [
+    -9,
+    27
+   ],
+   "next": [
+    64
+   ]
+  },
+  {
+   "id": 64,
+   "type": "land",
+   "name": "休斯敦街2号",
+   "group": "休斯敦街",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (-8,26)",
+   "lot": [
+    -8,
+    26
+   ],
+   "pos": [
+    -8,
+    27
+   ],
+   "next": [
+    65
+   ]
+  },
+  {
+   "id": 65,
+   "type": "land",
+   "name": "休斯敦街3号",
+   "group": "休斯敦街",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (-7,26)",
+   "lot": [
+    -7,
+    26
+   ],
+   "pos": [
+    -7,
+    27
+   ],
+   "next": [
+    66
+   ]
+  },
+  {
+   "id": 66,
+   "type": "land",
+   "name": "休斯敦街4号",
+   "group": "休斯敦街",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (-6,26)",
+   "lot": [
+    -6,
+    26
+   ],
+   "pos": [
+    -6,
+    27
+   ],
+   "next": [
+    67
+   ]
+  },
+  {
+   "id": 67,
+   "type": "land",
+   "name": "休斯敦街5号",
+   "group": "休斯敦街",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (-5,26)",
+   "lot": [
+    -5,
+    26
+   ],
+   "pos": [
+    -5,
+    27
+   ],
+   "next": [
+    68
+   ]
+  },
+  {
+   "id": 68,
+   "type": "company",
+   "name": "金丝雀剧院",
+   "industry": "entertainment",
+   "price": 380,
+   "rent": 90,
+   "source": "Tianjin.cit 建筑 狗不理包子铺",
+   "lot": [
+    -4,
+    28
+   ],
+   "pos": [
+    -4,
+    27
+   ],
+   "next": [
+    69
+   ]
+  },
+  {
+   "id": 69,
+   "type": "company",
+   "site": 68,
+   "pos": [
+    -3,
+    27
+   ],
+   "next": [
+    70
+   ]
+  },
+  {
+   "id": 70,
+   "type": "land",
+   "name": "布利克街8号",
+   "group": "布利克街",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Tianjin.cit 地块 (-1,27)",
+   "lot": [
+    -1,
+    27
+   ],
+   "pos": [
+    -2,
+    27
+   ],
+   "crossroad": "choice",
+   "next": [
+    71
+   ]
+  },
+  {
+   "id": 71,
+   "type": "land",
+   "name": "布利克街7号",
+   "group": "布利克街",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Tianjin.cit 地块 (-1,26)",
+   "lot": [
+    -1,
+    26
+   ],
+   "pos": [
+    -2,
+    26
+   ],
+   "next": [
+    72
+   ]
+  },
+  {
+   "id": 72,
+   "type": "land",
+   "name": "布利克街6号",
+   "group": "布利克街",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Tianjin.cit 地块 (-1,25)",
+   "lot": [
+    -1,
+    25
+   ],
+   "pos": [
+    -2,
+    25
+   ],
+   "next": [
+    73
+   ]
+  },
+  {
+   "id": 73,
+   "type": "land",
+   "name": "布利克街5号",
+   "group": "布利克街",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Tianjin.cit 地块 (-1,24)",
+   "lot": [
+    -1,
+    24
+   ],
+   "pos": [
+    -2,
+    24
+   ],
+   "next": [
+    74
+   ]
+  },
+  {
+   "id": 74,
+   "type": "land",
+   "name": "布利克街4号",
+   "group": "布利克街",
+   "price_pct": 200,
+   "build_cost_pct": 220,
+   "source": "Tianjin.cit 地块 (-1,23)",
+   "lot": [
+    -1,
+    23
+   ],
+   "pos": [
+    -2,
+    23
+   ],
+   "next": [
+    75
+   ]
+  },
+  {
+   "id": 75,
+   "type": "company",
+   "site": 0,
+   "pos": [
+    -2,
+    22
+   ],
+   "next": [
+    0
+   ]
+  },
+  {
+   "id": 76,
+   "type": "race_course",
+   "name": "赛马场",
+   "source": "Tianjin.cit 建筑 赛马场",
+   "lot": [
+    -10,
+    33
+   ],
+   "pos": [
+    -11,
+    33
+   ],
+   "next": [
+    77
+   ]
+  },
+  {
+   "id": 77,
+   "type": "race_course",
+   "site": 76,
+   "pos": [
+    -11,
+    34
+   ],
+   "next": [
+    78
+   ]
+  },
+  {
+   "id": 78,
+   "type": "road",
+   "pos": [
+    -11,
+    35
+   ],
+   "next": [
+    79
+   ]
+  },
+  {
+   "id": 79,
+   "type": "race_course",
+   "site": 76,
+   "pos": [
+    -10,
+    35
+   ],
+   "next": [
+    80
+   ]
+  },
+  {
+   "id": 80,
+   "type": "race_course",
+   "site": 76,
+   "pos": [
+    -9,
+    35
+   ],
+   "next": [
+    81
+   ]
+  },
+  {
+   "id": 81,
+   "type": "land",
+   "name": "百老汇4号",
+   "group": "百老汇",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Tianjin.cit 地块 (-8,34)",
+   "lot": [
+    -8,
+    34
+   ],
+   "pos": [
+    -8,
+    35
+   ],
+   "next": [
+    82
+   ]
+  },
+  {
+   "id": 82,
+   "type": "land",
+   "name": "百老汇3号",
+   "group": "百老汇",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Tianjin.cit 地块 (-7,34)",
+   "lot": [
+    -7,
+    34
+   ],
+   "pos": [
+    -7,
+    35
+   ],
+   "next": [
+    83
+   ]
+  },
+  {
+   "id": 83,
+   "type": "land",
+   "name": "百老汇2号",
+   "group": "百老汇",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Tianjin.cit 地块 (-6,34)",
+   "lot": [
+    -6,
+    34
+   ],
+   "pos": [
+    -6,
+    35
+   ],
+   "next": [
+    84
+   ]
+  },
+  {
+   "id": 84,
+   "type": "land",
+   "name": "百老汇1号",
+   "group": "百老汇",
+   "price_pct": 80,
+   "build_cost_pct": 70,
+   "source": "Tianjin.cit 地块 (-5,34)",
+   "lot": [
+    -5,
+    34
+   ],
+   "pos": [
+    -5,
+    35
+   ],
+   "next": [
+    85
+   ]
+  },
+  {
+   "id": 85,
+   "type": "company",
+   "name": "华尔街四十号经纪行",
+   "industry": "finance",
+   "price": 410,
+   "rent": 100,
+   "source": "Tianjin.cit 建筑 甘荷水厂",
+   "lot": [
+    -4,
+    36
+   ],
+   "pos": [
+    -4,
+    35
+   ],
+   "next": [
+    86
+   ]
+  },
+  {
+   "id": 86,
+   "type": "company",
+   "site": 85,
+   "pos": [
+    -3,
+    35
+   ],
+   "next": [
+    87
+   ]
+  },
+  {
+   "id": 87,
+   "type": "land",
+   "name": "第三十四街4号",
+   "group": "第三十四街",
+   "price_pct": 180,
+   "build_cost_pct": 180,
+   "source": "Tianjin.cit 地块 (-1,35)",
+   "lot": [
+    -1,
+    35
+   ],
+   "pos": [
+    -2,
+    35
+   ],
+   "next": [
+    88
+   ]
+  },
+  {
+   "id": 88,
+   "type": "land",
+   "name": "第三十四街3号",
+   "group": "第三十四街",
+   "price_pct": 180,
+   "build_cost_pct": 180,
+   "source": "Tianjin.cit 地块 (-1,34)",
+   "lot": [
+    -1,
+    34
+   ],
+   "pos": [
+    -2,
+    34
+   ],
+   "next": [
+    89
+   ]
+  },
+  {
+   "id": 89,
+   "type": "land",
+   "name": "第三十四街2号",
+   "group": "第三十四街",
+   "price_pct": 180,
+   "build_cost_pct": 180,
+   "source": "Tianjin.cit 地块 (-1,33)",
+   "lot": [
+    -1,
+    33
+   ],
+   "pos": [
+    -2,
+    33
+   ],
+   "next": [
+    90
+   ]
+  },
+  {
+   "id": 90,
+   "type": "company",
+   "name": "梅森百货",
+   "industry": "shop",
+   "price": 480,
+   "rent": 120,
+   "source": "Tianjin.cit 建筑 劝业场",
+   "lot": [
+    -1,
+    32
+   ],
+   "pos": [
+    -2,
+    32
+   ],
+   "next": [
+    91
+   ]
+  },
+  {
+   "id": 91,
+   "type": "company",
+   "site": 90,
+   "pos": [
+    -2,
+    31
+   ],
+   "next": [
+    92
+   ]
+  },
+  {
+   "id": 92,
+   "type": "road",
+   "pos": [
+    -2,
+    30
+   ],
+   "crossroad": "choice",
+   "next": [
+    93
+   ]
+  },
+  {
+   "id": 93,
+   "type": "company",
+   "site": 68,
+   "pos": [
+    -2,
+    29
+   ],
+   "next": [
+    94
+   ]
+  },
+  {
+   "id": 94,
+   "type": "company",
+   "site": 68,
+   "pos": [
+    -2,
+    28
+   ],
+   "next": [
+    70
+   ]
+  },
+  {
+   "id": 95,
+   "type": "company",
+   "site": 23,
+   "pos": [
+    -11,
+    20
+   ],
+   "next": [
+    96
+   ]
+  },
+  {
+   "id": 96,
+   "type": "company",
+   "site": 23,
+   "pos": [
+    -10,
+    20
+   ],
+   "next": [
+    97
+   ]
+  },
+  {
+   "id": 97,
+   "type": "land",
+   "name": "克里斯托弗街1号",
+   "group": "克里斯托弗街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Tianjin.cit 地块 (-9,21)",
+   "lot": [
+    -9,
+    21
+   ],
+   "pos": [
+    -9,
+    20
+   ],
+   "next": [
+    98
+   ]
+  },
+  {
+   "id": 98,
+   "type": "land",
+   "name": "克里斯托弗街2号",
+   "group": "克里斯托弗街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Tianjin.cit 地块 (-8,21)",
+   "lot": [
+    -8,
+    21
+   ],
+   "pos": [
+    -8,
+    20
+   ],
+   "next": [
+    99
+   ]
+  },
+  {
+   "id": 99,
+   "type": "land",
+   "name": "克里斯托弗街3号",
+   "group": "克里斯托弗街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Tianjin.cit 地块 (-7,21)",
+   "lot": [
+    -7,
+    21
+   ],
+   "pos": [
+    -7,
+    20
+   ],
+   "next": [
+    100
+   ]
+  },
+  {
+   "id": 100,
+   "type": "land",
+   "name": "克里斯托弗街4号",
+   "group": "克里斯托弗街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Tianjin.cit 地块 (-6,21)",
+   "lot": [
+    -6,
+    21
+   ],
+   "pos": [
+    -6,
+    20
+   ],
+   "next": [
+    101
+   ]
+  },
+  {
+   "id": 101,
+   "type": "land",
+   "name": "克里斯托弗街5号",
+   "group": "克里斯托弗街",
+   "price_pct": 160,
+   "build_cost_pct": 150,
+   "source": "Tianjin.cit 地块 (-5,21)",
+   "lot": [
+    -5,
+    21
+   ],
+   "pos": [
+    -5,
+    20
+   ],
+   "next": [
+    102
+   ]
+  },
+  {
+   "id": 102,
+   "type": "road",
+   "pos": [
+    -4,
+    20
+   ],
+   "next": [
+    103
+   ]
+  },
+  {
+   "id": 103,
+   "type": "land",
+   "site": 2,
+   "pos": [
+    -3,
+    20
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 104,
+   "type": "land",
+   "name": "包厘街1号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Tianjin.cit 地块 (-1,12)",
+   "lot": [
+    -1,
+    12
+   ],
+   "pos": [
+    -1,
+    13
+   ],
+   "next": [
+    105
+   ]
+  },
+  {
+   "id": 105,
+   "type": "land",
+   "name": "包厘街2号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Tianjin.cit 地块 (0,12)",
+   "lot": [
+    0,
+    12
+   ],
+   "pos": [
+    0,
+    13
+   ],
+   "next": [
+    106
+   ]
+  },
+  {
+   "id": 106,
+   "type": "land",
+   "name": "包厘街3号",
+   "group": "包厘街",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Tianjin.cit 地块 (1,12)",
+   "lot": [
+    1,
+    12
+   ],
+   "pos": [
+    1,
+    13
+   ],
+   "next": [
+    107
+   ]
+  },
+  {
+   "id": 107,
+   "type": "company",
+   "name": "宾州车站",
+   "industry": "transport",
+   "price": 380,
+   "rent": 90,
+   "source": "Tianjin.cit 建筑 东北角码头",
+   "lot": [
+    2,
+    12
+   ],
+   "pos": [
+    2,
+    13
+   ],
+   "next": [
+    108
+   ]
+  },
+  {
+   "id": 108,
+   "type": "company",
+   "site": 107,
+   "pos": [
+    3,
+    13
+   ],
+   "crossroad": "choice",
+   "next": [
+    109,
+    140
+   ]
+  },
+  {
+   "id": 109,
+   "type": "road",
+   "pos": [
+    4,
+    13
+   ],
+   "next": [
+    110
+   ]
+  },
+  {
+   "id": 110,
+   "type": "road",
+   "pos": [
+    5,
+    13
+   ],
+   "next": [
+    111
+   ]
+  },
+  {
+   "id": 111,
+   "type": "church",
+   "name": "望海楼教堂",
+   "source": "Tianjin.cit 建筑 望海楼教堂",
+   "lot": [
+    7,
+    13
+   ],
+   "pos": [
+    6,
+    13
+   ],
+   "next": [
+    112
+   ]
+  },
+  {
+   "id": 112,
+   "type": "church",
+   "site": 111,
+   "pos": [
+    6,
+    14
+   ],
+   "next": [
+    113
+   ]
+  },
+  {
+   "id": 113,
+   "type": "land",
+   "name": "麦迪逊大道1号",
+   "group": "麦迪逊大道",
+   "price_pct": 90,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (7,15)",
+   "lot": [
+    7,
+    15
+   ],
+   "pos": [
+    6,
+    15
+   ],
+   "next": [
+    114
+   ]
+  },
+  {
+   "id": 114,
+   "type": "land",
+   "name": "麦迪逊大道2号",
+   "group": "麦迪逊大道",
+   "price_pct": 90,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (7,16)",
+   "lot": [
+    7,
+    16
+   ],
+   "pos": [
+    6,
+    16
+   ],
+   "next": [
+    115
+   ]
+  },
+  {
+   "id": 115,
+   "type": "land",
+   "name": "麦迪逊大道3号",
+   "group": "麦迪逊大道",
+   "price_pct": 90,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (7,17)",
+   "lot": [
+    7,
+    17
+   ],
+   "pos": [
+    6,
+    17
+   ],
+   "next": [
+    116
+   ]
+  },
+  {
+   "id": 116,
+   "type": "land",
+   "name": "麦迪逊大道4号",
+   "group": "麦迪逊大道",
+   "price_pct": 90,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (7,18)",
+   "lot": [
+    7,
+    18
+   ],
+   "pos": [
+    6,
+    18
+   ],
+   "next": [
+    117
+   ]
+  },
+  {
+   "id": 117,
+   "type": "road",
+   "pos": [
+    6,
+    19
+   ],
+   "next": [
+    118
+   ]
+  },
+  {
+   "id": 118,
+   "type": "land",
+   "site": 116,
+   "pos": [
+    7,
+    19
+   ],
+   "next": [
+    119
+   ]
+  },
+  {
+   "id": 119,
+   "type": "company",
+   "name": "史泰登岛渡轮",
+   "industry": "transport",
+   "price": 420,
+   "rent": 100,
+   "source": "Tianjin.cit 建筑 天津火车站",
+   "lot": [
+    9,
+    19
+   ],
+   "pos": [
+    8,
+    19
+   ],
+   "next": [
+    120
+   ]
+  },
+  {
+   "id": 120,
+   "type": "company",
+   "site": 119,
+   "pos": [
+    8,
+    20
+   ],
+   "next": [
+    121
+   ]
+  },
+  {
+   "id": 121,
+   "type": "land",
+   "name": "麦迪逊大道5号",
+   "group": "麦迪逊大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (9,21)",
+   "lot": [
+    9,
+    21
+   ],
+   "pos": [
+    8,
+    21
+   ],
+   "next": [
+    122
+   ]
+  },
+  {
+   "id": 122,
+   "type": "land",
+   "name": "麦迪逊大道6号",
+   "group": "麦迪逊大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (9,22)",
+   "lot": [
+    9,
+    22
+   ],
+   "pos": [
+    8,
+    22
+   ],
+   "next": [
+    123
+   ]
+  },
+  {
+   "id": 123,
+   "type": "land",
+   "name": "麦迪逊大道7号",
+   "group": "麦迪逊大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (9,23)",
+   "lot": [
+    9,
+    23
+   ],
+   "pos": [
+    8,
+    23
+   ],
+   "next": [
+    124
+   ]
+  },
+  {
+   "id": 124,
+   "type": "land",
+   "name": "麦迪逊大道8号",
+   "group": "麦迪逊大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (9,24)",
+   "lot": [
+    9,
+    24
+   ],
+   "pos": [
+    8,
+    24
+   ],
+   "next": [
+    125
+   ]
+  },
+  {
+   "id": 125,
+   "type": "land",
+   "name": "麦迪逊大道9号",
+   "group": "麦迪逊大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (9,25)",
+   "lot": [
+    9,
+    25
+   ],
+   "pos": [
+    8,
+    25
+   ],
+   "next": [
+    126
+   ]
+  },
+  {
+   "id": 126,
+   "type": "land",
+   "name": "麦迪逊大道10号",
+   "group": "麦迪逊大道",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Tianjin.cit 地块 (9,26)",
+   "lot": [
+    9,
+    26
+   ],
+   "pos": [
+    8,
+    26
+   ],
+   "next": [
+    127
+   ]
+  },
+  {
+   "id": 127,
+   "type": "jail",
+   "name": "巡捕房",
+   "source": "Tianjin.cit 建筑 巡捕房",
+   "lot": [
+    9,
+    27
+   ],
+   "pos": [
+    8,
+    27
+   ],
+   "next": [
+    128
+   ]
+  },
+  {
+   "id": 128,
+   "type": "jail",
+   "site": 127,
+   "pos": [
+    8,
+    28
+   ],
+   "next": [
+    129
+   ]
+  },
+  {
+   "id": 129,
+   "type": "road",
+   "pos": [
+    7,
+    28
+   ],
+   "next": [
+    130
+   ]
+  },
+  {
+   "id": 130,
+   "type": "road",
+   "pos": [
+    6,
+    28
+   ],
+   "next": [
+    131
+   ]
+  },
+  {
+   "id": 131,
+   "type": "road",
+   "pos": [
+    5,
+    28
+   ],
+   "crossroad": "choice",
+   "next": [
+    132
+   ]
+  },
+  {
+   "id": 132,
+   "type": "road",
+   "pos": [
+    5,
+    29
+   ],
+   "next": [
+    133
+   ]
+  },
+  {
+   "id": 133,
+   "type": "bank",
+   "name": "银行",
+   "source": "Tianjin.cit 建筑 银行",
+   "lot": [
+    5,
+    31
+   ],
+   "pos": [
+    5,
+    30
+   ],
+   "next": [
+    134
+   ]
+  },
+  {
+   "id": 134,
+   "type": "bank",
+   "site": 133,
+   "pos": [
+    4,
+    30
+   ],
+   "next": [
+    135
+   ]
+  },
+  {
+   "id": 135,
+   "type": "land",
+   "name": "坚尼街1号",
+   "group": "坚尼街",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Tianjin.cit 地块 (3,29)",
+   "lot": [
+    3,
+    29
+   ],
+   "pos": [
+    3,
+    30
+   ],
+   "next": [
+    136
+   ]
+  },
+  {
+   "id": 136,
+   "type": "land",
+   "name": "坚尼街2号",
+   "group": "坚尼街",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Tianjin.cit 地块 (2,29)",
+   "lot": [
+    2,
+    29
+   ],
+   "pos": [
+    2,
+    30
+   ],
+   "next": [
+    137
+   ]
+  },
+  {
+   "id": 137,
+   "type": "land",
+   "name": "坚尼街3号",
+   "group": "坚尼街",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Tianjin.cit 地块 (1,29)",
+   "lot": [
+    1,
+    29
+   ],
+   "pos": [
+    1,
+    30
+   ],
+   "next": [
+    138
+   ]
+  },
+  {
+   "id": 138,
+   "type": "company",
+   "site": 90,
+   "pos": [
+    0,
+    30
+   ],
+   "next": [
+    139
+   ]
+  },
+  {
+   "id": 139,
+   "type": "company",
+   "site": 90,
+   "pos": [
+    -1,
+    30
+   ],
+   "next": [
+    92
+   ]
+  },
+  {
+   "id": 140,
+   "type": "road",
+   "pos": [
+    3,
+    14
+   ],
+   "next": [
+    141
+   ]
+  },
+  {
+   "id": 141,
+   "type": "land",
+   "name": "德兰西街1号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (2,15)",
+   "lot": [
+    2,
+    15
+   ],
+   "pos": [
+    3,
+    15
+   ],
+   "next": [
+    142
+   ]
+  },
+  {
+   "id": 142,
+   "type": "land",
+   "name": "德兰西街2号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (2,16)",
+   "lot": [
+    2,
+    16
+   ],
+   "pos": [
+    3,
+    16
+   ],
+   "next": [
+    143
+   ]
+  },
+  {
+   "id": 143,
+   "type": "company",
+   "name": "麦迪逊广场花园",
+   "industry": "entertainment",
+   "price": 380,
+   "rent": 80,
+   "source": "Tianjin.cit 建筑 桂发祥麻花店",
+   "lot": [
+    2,
+    17
+   ],
+   "pos": [
+    3,
+    17
+   ],
+   "next": [
+    144
+   ]
+  },
+  {
+   "id": 144,
+   "type": "company",
+   "site": 143,
+   "pos": [
+    3,
+    18
+   ],
+   "next": [
+    145
+   ]
+  },
+  {
+   "id": 145,
+   "type": "land",
+   "name": "德兰西街3号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (2,19)",
+   "lot": [
+    2,
+    19
+   ],
+   "pos": [
+    3,
+    19
+   ],
+   "next": [
+    146
+   ]
+  },
+  {
+   "id": 146,
+   "type": "land",
+   "name": "德兰西街4号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (2,20)",
+   "lot": [
+    2,
+    20
+   ],
+   "pos": [
+    3,
+    20
+   ],
+   "next": [
+    147
+   ]
+  },
+  {
+   "id": 147,
+   "type": "land",
+   "name": "德兰西街5号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (2,21)",
+   "lot": [
+    2,
+    21
+   ],
+   "pos": [
+    3,
+    21
+   ],
+   "next": [
+    148
+   ]
+  },
+  {
+   "id": 148,
+   "type": "land",
+   "name": "德兰西街6号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (2,22)",
+   "lot": [
+    2,
+    22
+   ],
+   "pos": [
+    3,
+    22
+   ],
+   "next": [
+    149
+   ]
+  },
+  {
+   "id": 149,
+   "type": "chance",
+   "name": "运气",
+   "source": "Tianjin.cit 建筑 运气",
+   "lot": [
+    3,
+    24
+   ],
+   "pos": [
+    3,
+    23
+   ],
+   "next": [
+    150
+   ]
+  },
+  {
+   "id": 150,
+   "type": "chance",
+   "site": 149,
+   "pos": [
+    4,
+    23
+   ],
+   "next": [
+    151
+   ]
+  },
+  {
+   "id": 151,
+   "type": "road",
+   "pos": [
+    5,
+    23
+   ],
+   "next": [
+    152
+   ]
+  },
+  {
+   "id": 152,
+   "type": "chance",
+   "site": 149,
+   "pos": [
+    5,
+    24
+   ],
+   "next": [
+    153
+   ]
+  },
+  {
+   "id": 153,
+   "type": "chance",
+   "site": 149,
+   "pos": [
+    5,
+    25
+   ],
+   "next": [
+    154
+   ]
+  },
+  {
+   "id": 154,
+   "type": "land",
+   "name": "德兰西街7号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (4,26)",
+   "lot": [
+    4,
+    26
+   ],
+   "pos": [
+    5,
+    26
+   ],
+   "next": [
+    155
+   ]
+  },
+  {
+   "id": 155,
+   "type": "land",
+   "name": "德兰西街8号",
+   "group": "德兰西街",
+   "price_pct": 130,
+   "build_cost_pct": 140,
+   "source": "Tianjin.cit 地块 (4,27)",
+   "lot": [
+    4,
+    27
+   ],
+   "pos": [
+    5,
+    27
+   ],
+   "next": [
+    131
+   ]
+  }
+ ]
+}

@@ -91,7 +91,7 @@
   {
    "id": "marcel_3",
    "name": "纽约",
-   "map": "newyork",
+   "map": "manhattan",
    "intro": "三人都劝他住手，他越劝越来劲。",
    "outro_win": "【待定】",
    "outro_lose": "【待定】",
