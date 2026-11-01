@@ -71,6 +71,7 @@ var _overlay_box: VBoxContainer
 var _trade: Dictionary = {}
 var _log_lines: Array = []      ## 日志的每一条（存档时一起存，读档后接上）
 var _menu_open: bool = false    ## 菜单开着时 AI 暂停
+var _leaving: bool = false      ## 正在离开本画面（切场景），协程见到就停
 var _auto_day: int = 0          ## 自动存档存到第几天了
 
 
@@ -296,6 +297,8 @@ func _advance() -> void:
 	_clear_controls()
 	while true:
 		await _play(game.drain_events())
+		if _leaving or not is_inside_tree():
+			return
 		_sync_tokens()
 		_refresh()
 		_autosave()
@@ -304,6 +307,8 @@ func _advance() -> void:
 		if game.players[game.actor()].human:
 			break
 		await _wait(AI_DELAY)
+		if _leaving or not is_inside_tree():
+			return
 		if not AI.step(game):
 			break
 	_busy = false
@@ -314,8 +319,10 @@ func _advance() -> void:
 
 
 func _wait(seconds: float) -> void:
+	if _leaving or not is_inside_tree():
+		return
 	await get_tree().create_timer(seconds * (0.15 if _fast else 1.0)).timeout
-	while _menu_open:  # 菜单开着，游戏停在这里
+	while _menu_open and not _leaving and is_inside_tree():  # 菜单开着，游戏停在这里
 		await get_tree().process_frame
 
 
@@ -327,6 +334,8 @@ func _play(events: Array) -> void:
 		_map.queue_redraw()
 		if delay > 0.0:
 			await _wait(delay)
+			if _leaving or not is_inside_tree():
+				return
 
 
 ## 人类操作后立刻把事件记进日志（不播动画，建房对话框用）
@@ -1270,8 +1279,15 @@ func _confirm_home(button: Button) -> void:
 	if button.text == "回到主界面":
 		button.text = "没存档的进度会丢掉，再点一次回到主界面"
 		return
-	_menu_open = false
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	_leave_to("res://scenes/main.tscn")
+
+
+## 离开这个棋盘画面（回主界面 / 读档重开）。先让还在跑的 AI 协程停住（_leaving），再切场景：
+## 切场景是等这一帧结束才真正销毁本画面，不停住的话协程会在销毁后醒来去 get_tree()，报错
+func _leave_to(scene_path: String) -> void:
+	_leaving = true
+	_menu_open = true  # 菜单一直算开着，游戏停在原地，不会再往下走
+	get_tree().change_scene_to_file(scene_path)
 
 
 func _close_menu() -> void:
@@ -1318,5 +1334,4 @@ func _on_slot_picked(panel: SavePanel, mode: String, slot: String) -> void:
 	if err != "":
 		panel.show_message(err, false)
 		return
-	_menu_open = false
-	get_tree().change_scene_to_file("res://scenes/table.tscn")
+	_leave_to("res://scenes/table.tscn")
