@@ -64,6 +64,15 @@ def original_campaigns() -> list[str]:
     return out
 
 
+def original_characters() -> list[str]:
+    """原版 8 个角色的身份介绍（原版程序里的原文）。"""
+    chars = json.load(open(ROOT / "extracted/text/characters.json", encoding="utf-8"))["characters"]
+    out = ["", "| 角色 | 原版介绍（原文） |", "|---|---|"]
+    for c in chars:
+        out.append(f"| {c['name']} | {re.sub(r'[\u3000 ]+', ' ', c['bio']).strip()} |")
+    return out
+
+
 def main() -> None:
     rows = []
     for f in sorted(CITIES.glob("*.json")):
@@ -90,7 +99,8 @@ def main() -> None:
         companies = "、".join(f"{k} {v}" for k, v in comp.items()) or "无"
         lines.append(f"| {stem} | {name} | {tiles or st} | {cross} | {streets} | {companies} | {conv or '—'} |")
     text = OUT.read_text(encoding="utf-8")
-    for tag, body in (("map_catalog", lines), ("original_campaigns", original_campaigns())):
+    for tag, body in (("map_catalog", lines), ("original_campaigns", original_campaigns()),
+                      ("original_characters", original_characters())):
         start, end = f"<!-- {tag}:start -->", f"<!-- {tag}:end -->"
         a, b = text.index(start) + len(start), text.index(end)
         text = text[:a] + "\n" + "\n".join(body) + "\n" + text[b:]
