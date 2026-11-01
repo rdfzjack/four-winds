@@ -6,8 +6,8 @@ extends RefCounted
 ##   original = 原版 AI（brain.gd），评测基准
 ##   new      = 角色 AI（第 6a 步分模块实现，按角色 + 形态打；还没做的决定先交给原版 AI，见 new_ai.gd）
 ##   standard = “认真玩家”替身（旧框架）：和 new 同一套代码，但不管角色和形态，一律用 profiles.json 的
-##              standard 表形态参数（没有性格），评测用，见 docs/ai_design.md 的 E 节
-##   standard_v2 = 新框架的标准 AI（std_ai.gd + ledger.gd，第 6a 步返工，见 ai_design.md 的 H 节），
+##              standard 表形态参数（没有性格），评测用
+##   standard_v2 = 新框架的标准 AI（std_ai.gd + ledger.gd，见 docs/ai_design.md 的“标准 AI：三本账”），
 ##              也一律用 standard 表形态参数。旧框架（new / standard）留着对比
 ##   new_v2   = 新框架的角色 AI：和 standard_v2 同一套代码，参数 = standard 表形态 + 角色的 front_v2（H2 那张表）
 ## 还没实现的版本先用原版 AI 顶上并报错一次，评测工具会直接拒绝。

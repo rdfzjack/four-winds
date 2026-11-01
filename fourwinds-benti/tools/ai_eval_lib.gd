@@ -5,7 +5,7 @@ extends RefCounted
 ## 每个座位 = {character: 角色 id, form: front / back, ai: AI 版本}。
 ## 第 k 局把座位顺序轮转 k 位（谁先走轮着来），统计仍按座位记。
 ## 初始好感按座位编号配（座位 a 对座位 b），开局时换算成玩家编号。
-## 指标见 docs/ai_design.md 的 E 节。
+## 指标见 docs/ai_design.md 的“评测”。
 
 const JsonUtil = preload("res://scripts/core/json_util.gd")
 const Board = preload("res://scripts/core/board.gd")

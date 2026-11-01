@@ -18,7 +18,7 @@ extends SceneTree
 ##                 例 set=eric/front_v2:ask_up_pct:20。注意：改 standard/front 不会影响新框架角色 AI，要分别改）。
 ##                 例：set=value_horizon_days:60   set=eric/front:value_horizon_days:60
 ##   json=路径     另存一份原始计数（JSON），方便以后对比
-## 每局座位顺序轮转（谁先走轮着来），统计按座位记。指标说明见 docs/ai_design.md 的 E 节。
+## 每局座位顺序轮转（谁先走轮着来），统计按座位记。指标说明见 docs/ai_design.md 的“评测”。
 
 const Lib = preload("res://tools/ai_eval_lib.gd")
 
