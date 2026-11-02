@@ -14,18 +14,18 @@
     {
      "character": "giorgio",
      "player": true,
-     "cash": 1000,
-     "deposit": 0
+     "cash": 500,
+     "deposit": 200
     },
     {
      "character": "david",
-     "cash": 500,
-     "deposit": 2000
+     "cash": 300,
+     "deposit": 500
     },
     {
      "character": "passerby_a",
-     "cash": 500,
-     "deposit": 1000,
+     "cash": 300,
+     "deposit": 300,
      "ai": "standard_v2"
     }
    ],
@@ -33,7 +33,7 @@
     {
      "type": "assets_at_least",
      "who": "player",
-     "amount": 2000
+     "amount": 1200
     }
    ],
    "lose": [
@@ -43,7 +43,7 @@
     },
     {
      "type": "days_over",
-     "days": 45
+     "days": 40
     }
    ]
   },
