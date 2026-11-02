@@ -21,9 +21,9 @@
 | `manhattan` | Cit_Tianjin（天津） | 156 | 孔雀 3（食品 → 娱乐，公用 → 金融） |
 | `naples` | Story22 | 50 | 小九 1（原版元宝山一关） |
 | `little_italy` | Story13 | 81 | 小九 2 |
-| `shanghai_full` | Cit_Shaihai | 160 | 小九 3（和 `newyork` 是同一个布局） |
+| `shanghai_full` | Cit_Nanjing（南京） | 165 | 小九 3（按“上海全城”包装：公用 → 运输，纺织 → 娱乐，运输 → 商业） |
 
-原版战役图大多是上海的不同切片，布局相同的有：`paris`（119 格上海局部）和上海局部系列、`newyork` = `shanghai_full`（160）。要不同布局的大图只有北平、天津、南京（还没用）。
+原版战役图大多是上海的不同切片（`newyork` 是上海全城 160 格，`paris` 是它的 119 格局部）；布局不同的大图只有北平、天津、南京，现在分别给了斐斐 3、孔雀 3、小九 3，理理 3 用上海布局，四个“后段关”布局各不相同。
 
 **路人**（`data/extra_characters.json`）：`cousin` 堂弟、`passerby_a` 路人甲、`mistress` 情妇，不能在自由模式选，只在关卡里当座位。可以写 `ai_profile` 指向 `data/ai/profiles.json` 的一组参数（现有 `spendthrift` 挥金如土，情妇用它），座位的 `ai` 写 `new_v2` 才用这组；不写就是标准 AI 的参数。头像和走路图借用原版人物（`art.gd`）。路人不在任何机会卡的“允许角色”里，抽通用卡（允许全部 4 个角色的卡）。
 

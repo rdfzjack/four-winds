@@ -2,10 +2,10 @@
  "id": "shanghai_full",
  "name": "上海（主线）",
  "placeholder": true,
- "_comment": "由 tools/cit_to_map.py 从原版 Cit_Shaihai 转换，地名、企业名按个人主线重新包装（行业类别是机制，名字随城市），之后可直接修改。pos 是原版的路面格。",
+ "_comment": "由 tools/cit_to_map.py 从原版 Cit_Nanjing.cit（南京，自由模式城市，165 格）转换，地名、企业名按个人主线“上海全城”重新包装；行业按需要调整过：公用 → 运输，纺织 → 娱乐，运输 → 商业（共 运输 4 / 娱乐 3 / 商业 3）。之后可直接修改。pos 是原版的路面格。",
  "start_tile": 0,
  "prices": {
-  "_comment": "原版 上海 的 CITY_PROPERTY，单位万圆。",
+  "_comment": "原版 南京 的 CITY_PROPERTY，单位万圆。",
   "blank_land_price": 80,
   "build_cost": {
    "flat": 40,
@@ -20,7 +20,7 @@
    "flat": 30,
    "hotel": 60,
    "super_hotel": 80,
-   "floor": 80,
+   "floor": 100,
    "super_floor": 120,
    "villa": 150
   }
@@ -89,36 +89,21 @@
   "北四川路": {
    "name": "北四川路",
    "color": "#e57373"
-  },
-  "虹口": {
-   "name": "虹口",
-   "color": "#fff176"
-  },
-  "苏州河北岸": {
-   "name": "苏州河北岸",
-   "color": "#81c784"
-  },
-  "杨树浦路": {
-   "name": "杨树浦路",
-   "color": "#1565c0"
   }
  },
  "tiles": [
   {
    "id": 0,
-   "type": "land",
-   "name": "跑马厅路4号",
-   "group": "跑马厅路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (2,12)",
+   "type": "park",
+   "name": "玄武湖公园",
+   "source": "Nanjing.cit 建筑 玄武湖公园",
    "lot": [
-    2,
-    12
+    9,
+    16
    ],
    "pos": [
-    2,
-    13
+    10,
+    16
    ],
    "next": [
     1
@@ -126,16 +111,11 @@
   },
   {
    "id": 1,
-   "type": "jail",
-   "name": "巡捕房",
-   "source": "Shaihai.cit 建筑 巡捕房",
-   "lot": [
-    3,
-    14
-   ],
+   "type": "park",
+   "site": 0,
    "pos": [
-    2,
-    14
+    10,
+    17
    ],
    "next": [
     2
@@ -143,11 +123,19 @@
   },
   {
    "id": 2,
-   "type": "jail",
-   "site": 1,
+   "type": "company",
+   "name": "公和祥码头",
+   "industry": "transport",
+   "price": 360,
+   "rent": 80,
+   "source": "Nanjing.cit 建筑 多能煤球公司",
+   "lot": [
+    11,
+    18
+   ],
    "pos": [
-    2,
-    15
+    10,
+    18
    ],
    "next": [
     3
@@ -155,10 +143,11 @@
   },
   {
    "id": 3,
-   "type": "road",
+   "type": "company",
+   "site": 2,
    "pos": [
-    2,
-    16
+    10,
+    19
    ],
    "next": [
     4
@@ -168,40 +157,38 @@
    "id": 4,
    "type": "road",
    "pos": [
-    2,
-    17
+    10,
+    20
    ],
+   "crossroad": "choice",
    "next": [
     5
    ]
   },
   {
    "id": 5,
-   "type": "road",
-   "pos": [
-    2,
-    18
+   "type": "bank",
+   "name": "银行",
+   "source": "Nanjing.cit 建筑 银行",
+   "lot": [
+    9,
+    21
    ],
-   "crossroad": "choice",
+   "pos": [
+    10,
+    21
+   ],
    "next": [
     6
    ]
   },
   {
    "id": 6,
-   "type": "land",
-   "name": "九江路1号",
-   "group": "九江路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (3,19)",
-   "lot": [
-    3,
-    19
-   ],
+   "type": "bank",
+   "site": 5,
    "pos": [
-    3,
-    18
+    10,
+    22
    ],
    "next": [
     7
@@ -210,18 +197,18 @@
   {
    "id": 7,
    "type": "land",
-   "name": "九江路2号",
-   "group": "九江路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (4,19)",
+   "name": "跑马厅路2号",
+   "group": "跑马厅路",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Nanjing.cit 地块 (11,23)",
    "lot": [
-    4,
-    19
+    11,
+    23
    ],
    "pos": [
-    4,
-    18
+    10,
+    23
    ],
    "next": [
     8
@@ -230,18 +217,18 @@
   {
    "id": 8,
    "type": "land",
-   "name": "九江路3号",
-   "group": "九江路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (5,19)",
+   "name": "跑马厅路1号",
+   "group": "跑马厅路",
+   "price_pct": 120,
+   "build_cost_pct": 130,
+   "source": "Nanjing.cit 地块 (11,24)",
    "lot": [
-    5,
-    19
+    11,
+    24
    ],
    "pos": [
-    5,
-    18
+    10,
+    24
    ],
    "next": [
     9
@@ -249,16 +236,16 @@
   },
   {
    "id": 9,
-   "type": "park",
-   "name": "公园",
-   "source": "Shaihai.cit 建筑 公园",
+   "type": "chance",
+   "name": "运气",
+   "source": "Nanjing.cit 建筑 运气",
    "lot": [
-    6,
-    17
+    10,
+    26
    ],
    "pos": [
-    6,
-    18
+    10,
+    25
    ],
    "next": [
     10
@@ -266,11 +253,11 @@
   },
   {
    "id": 10,
-   "type": "park",
+   "type": "chance",
    "site": 9,
    "pos": [
-    7,
-    18
+    9,
+    25
    ],
    "next": [
     11
@@ -278,31 +265,32 @@
   },
   {
    "id": 11,
-   "type": "company",
-   "name": "百乐春舞厅",
-   "industry": "entertainment",
-   "price": 450,
-   "rent": 120,
-   "source": "Shaihai.cit 建筑 大世界夜总会",
+   "type": "land",
+   "name": "北四川路6号",
+   "group": "北四川路",
+   "price_pct": 200,
+   "build_cost_pct": 180,
+   "source": "Nanjing.cit 地块 (8,24)",
    "lot": [
-    9,
-    18
+    8,
+    24
    ],
    "pos": [
     8,
-    18
+    25
    ],
+   "crossroad": "choice",
    "next": [
     12
    ]
   },
   {
    "id": 12,
-   "type": "company",
-   "site": 11,
+   "type": "chance",
+   "site": 9,
    "pos": [
     8,
-    19
+    26
    ],
    "next": [
     13
@@ -310,19 +298,11 @@
   },
   {
    "id": 13,
-   "type": "company",
-   "name": "公和祥码头",
-   "industry": "transport",
-   "price": 520,
-   "rent": 120,
-   "source": "Shaihai.cit 建筑 公平路码头",
-   "lot": [
-    9,
-    20
-   ],
+   "type": "chance",
+   "site": 9,
    "pos": [
     8,
-    20
+    27
    ],
    "next": [
     14
@@ -330,11 +310,10 @@
   },
   {
    "id": 14,
-   "type": "company",
-   "site": 13,
+   "type": "road",
    "pos": [
     8,
-    21
+    28
    ],
    "next": [
     15
@@ -342,19 +321,10 @@
   },
   {
    "id": 15,
-   "type": "land",
-   "name": "虹口1号",
-   "group": "虹口",
-   "price_pct": 180,
-   "build_cost_pct": 200,
-   "source": "Shaihai.cit 地块 (9,22)",
-   "lot": [
-    9,
-    22
-   ],
+   "type": "road",
    "pos": [
-    8,
-    22
+    7,
+    28
    ],
    "next": [
     16
@@ -363,18 +333,18 @@
   {
    "id": 16,
    "type": "land",
-   "name": "虹口2号",
-   "group": "虹口",
-   "price_pct": 180,
-   "build_cost_pct": 200,
-   "source": "Shaihai.cit 地块 (9,23)",
+   "name": "北京路4号",
+   "group": "北京路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (6,27)",
    "lot": [
-    9,
-    23
+    6,
+    27
    ],
    "pos": [
-    8,
-    23
+    6,
+    28
    ],
    "next": [
     17
@@ -382,40 +352,31 @@
   },
   {
    "id": 17,
-   "type": "land",
-   "name": "虹口3号",
-   "group": "虹口",
-   "price_pct": 180,
-   "build_cost_pct": 200,
-   "source": "Shaihai.cit 地块 (9,24)",
+   "type": "company",
+   "name": "百乐春舞厅",
+   "industry": "entertainment",
+   "price": 440,
+   "rent": 120,
+   "source": "Nanjing.cit 建筑 东瀛纱厂",
    "lot": [
-    9,
-    24
+    4,
+    28
    ],
    "pos": [
-    8,
-    24
+    5,
+    28
    ],
-   "crossroad": "choice",
    "next": [
     18
    ]
   },
   {
    "id": 18,
-   "type": "land",
-   "name": "虹口4号",
-   "group": "虹口",
-   "price_pct": 180,
-   "build_cost_pct": 200,
-   "source": "Shaihai.cit 地块 (9,25)",
-   "lot": [
-    9,
-    25
-   ],
+   "type": "company",
+   "site": 17,
    "pos": [
-    8,
-    25
+    5,
+    29
    ],
    "next": [
     19
@@ -423,19 +384,10 @@
   },
   {
    "id": 19,
-   "type": "land",
-   "name": "虹口5号",
-   "group": "虹口",
-   "price_pct": 180,
-   "build_cost_pct": 200,
-   "source": "Shaihai.cit 地块 (9,26)",
-   "lot": [
-    9,
-    26
-   ],
+   "type": "road",
    "pos": [
-    8,
-    26
+    5,
+    30
    ],
    "next": [
     20
@@ -444,18 +396,10 @@
   {
    "id": 20,
    "type": "company",
-   "name": "永华百货公司",
-   "industry": "shop",
-   "price": 420,
-   "rent": 110,
-   "source": "Shaihai.cit 建筑 三井洋行",
-   "lot": [
-    9,
-    27
-   ],
+   "site": 17,
    "pos": [
-    8,
-    27
+    4,
+    30
    ],
    "next": [
     21
@@ -464,10 +408,10 @@
   {
    "id": 21,
    "type": "company",
-   "site": 20,
+   "site": 17,
    "pos": [
-    8,
-    28
+    3,
+    30
    ],
    "next": [
     22
@@ -475,19 +419,11 @@
   },
   {
    "id": 22,
-   "type": "company",
-   "name": "跑马厅",
-   "industry": "entertainment",
-   "price": 400,
-   "rent": 120,
-   "source": "Shaihai.cit 建筑 百老汇夜总会",
-   "lot": [
-    9,
-    29
-   ],
+   "type": "land",
+   "site": 24,
    "pos": [
-    8,
-    29
+    3,
+    31
    ],
    "next": [
     23
@@ -495,11 +431,10 @@
   },
   {
    "id": 23,
-   "type": "company",
-   "site": 22,
+   "type": "road",
    "pos": [
-    8,
-    30
+    3,
+    32
    ],
    "next": [
     24
@@ -507,19 +442,19 @@
   },
   {
    "id": 24,
-   "type": "company",
-   "name": "上海北站",
-   "industry": "transport",
-   "price": 480,
-   "rent": 100,
-   "source": "Shaihai.cit 建筑 电车公司",
+   "type": "land",
+   "name": "北京路2号",
+   "group": "北京路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (2,31)",
    "lot": [
-    7,
+    2,
     31
    ],
    "pos": [
-    7,
-    30
+    2,
+    32
    ],
    "next": [
     25
@@ -527,11 +462,19 @@
   },
   {
    "id": 25,
-   "type": "company",
-   "site": 24,
+   "type": "land",
+   "name": "北京路1号",
+   "group": "北京路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (1,31)",
+   "lot": [
+    1,
+    31
+   ],
    "pos": [
-    6,
-    30
+    1,
+    32
    ],
    "next": [
     26
@@ -539,19 +482,10 @@
   },
   {
    "id": 26,
-   "type": "land",
-   "name": "亚尔培路1号",
-   "group": "亚尔培路",
-   "price_pct": 130,
-   "build_cost_pct": 130,
-   "source": "Shaihai.cit 地块 (5,29)",
-   "lot": [
-    5,
-    29
-   ],
+   "type": "road",
    "pos": [
-    5,
-    30
+    1,
+    33
    ],
    "next": [
     27
@@ -559,19 +493,10 @@
   },
   {
    "id": 27,
-   "type": "land",
-   "name": "亚尔培路2号",
-   "group": "亚尔培路",
-   "price_pct": 130,
-   "build_cost_pct": 130,
-   "source": "Shaihai.cit 地块 (4,29)",
-   "lot": [
-    4,
-    29
-   ],
+   "type": "road",
    "pos": [
-    4,
-    30
+    1,
+    34
    ],
    "next": [
     28
@@ -579,11 +504,19 @@
   },
   {
    "id": 28,
-   "type": "land",
-   "site": 30,
+   "type": "company",
+   "name": "上海北站",
+   "industry": "transport",
+   "price": 420,
+   "rent": 90,
+   "source": "Nanjing.cit 建筑 黑且亮供水公司",
+   "lot": [
+    0,
+    35
+   ],
    "pos": [
-    3,
-    30
+    0,
+    34
    ],
    "next": [
     29
@@ -591,33 +524,24 @@
   },
   {
    "id": 29,
-   "type": "road",
+   "type": "company",
+   "site": 28,
    "pos": [
-    2,
-    30
+    -1,
+    34
    ],
-   "crossroad": "choice",
    "next": [
-    30,
-    155
+    30
    ]
   },
   {
    "id": 30,
-   "type": "land",
-   "name": "福州路1号",
-   "group": "福州路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (3,31)",
-   "lot": [
-    3,
-    31
-   ],
+   "type": "road",
    "pos": [
-    2,
-    31
+    -2,
+    34
    ],
+   "crossroad": "choice",
    "next": [
     31
    ]
@@ -625,18 +549,18 @@
   {
    "id": 31,
    "type": "land",
-   "name": "福州路2号",
-   "group": "福州路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (3,32)",
+   "name": "九江路4号",
+   "group": "九江路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-3,33)",
    "lot": [
-    3,
-    32
+    -3,
+    33
    ],
    "pos": [
-    2,
-    32
+    -3,
+    34
    ],
    "next": [
     32
@@ -645,18 +569,18 @@
   {
    "id": 32,
    "type": "land",
-   "name": "福州路3号",
-   "group": "福州路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (3,33)",
+   "name": "九江路3号",
+   "group": "九江路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-4,33)",
    "lot": [
-    3,
+    -4,
     33
    ],
    "pos": [
-    2,
-    33
+    -4,
+    34
    ],
    "next": [
     33
@@ -664,15 +588,18 @@
   },
   {
    "id": 33,
-   "type": "chance",
-   "name": "运气",
-   "source": "Shaihai.cit 建筑 运气",
+   "type": "land",
+   "name": "九江路2号",
+   "group": "九江路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-5,33)",
    "lot": [
-    1,
-    34
+    -5,
+    33
    ],
    "pos": [
-    2,
+    -5,
     34
    ],
    "next": [
@@ -681,11 +608,19 @@
   },
   {
    "id": 34,
-   "type": "chance",
-   "site": 33,
+   "type": "land",
+   "name": "九江路1号",
+   "group": "九江路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-6,33)",
+   "lot": [
+    -6,
+    33
+   ],
    "pos": [
-    2,
-    35
+    -6,
+    34
    ],
    "next": [
     35
@@ -693,10 +628,19 @@
   },
   {
    "id": 35,
-   "type": "road",
+   "type": "company",
+   "name": "永华百货公司",
+   "industry": "shop",
+   "price": 450,
+   "rent": 110,
+   "source": "Nanjing.cit 建筑 1100公交公司",
+   "lot": [
+    -7,
+    35
+   ],
    "pos": [
-    2,
-    36
+    -7,
+    34
    ],
    "next": [
     36
@@ -704,23 +648,24 @@
   },
   {
    "id": 36,
-   "type": "chance",
-   "site": 33,
+   "type": "company",
+   "site": 35,
    "pos": [
-    1,
-    36
+    -8,
+    34
    ],
+   "crossroad": "choice",
    "next": [
     37
    ]
   },
   {
    "id": 37,
-   "type": "chance",
-   "site": 33,
+   "type": "land",
+   "site": 88,
    "pos": [
-    0,
-    36
+    -9,
+    34
    ],
    "next": [
     38
@@ -728,19 +673,19 @@
   },
   {
    "id": 38,
-   "type": "company",
-   "name": "霞飞路电车",
-   "industry": "transport",
-   "price": 520,
-   "rent": 120,
-   "source": "Shaihai.cit 建筑 十六铺码头",
+   "type": "land",
+   "name": "汉口路2号",
+   "group": "汉口路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-10,35)",
    "lot": [
-    -1,
-    37
+    -10,
+    35
    ],
    "pos": [
-    -1,
-    36
+    -10,
+    34
    ],
    "next": [
     39
@@ -748,11 +693,19 @@
   },
   {
    "id": 39,
-   "type": "company",
-   "site": 38,
+   "type": "land",
+   "name": "汉口路1号",
+   "group": "汉口路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-11,35)",
+   "lot": [
+    -11,
+    35
+   ],
    "pos": [
-    -2,
-    36
+    -11,
+    34
    ],
    "next": [
     40
@@ -760,16 +713,10 @@
   },
   {
    "id": 40,
-   "type": "government",
-   "name": "市政厅",
-   "source": "Shaihai.cit 建筑 市政厅",
-   "lot": [
-    -3,
-    37
-   ],
+   "type": "road",
    "pos": [
-    -3,
-    36
+    -12,
+    34
    ],
    "next": [
     41
@@ -777,11 +724,16 @@
   },
   {
    "id": 41,
-   "type": "government",
-   "site": 40,
+   "type": "bank",
+   "name": "银行",
+   "source": "Nanjing.cit 建筑 银行",
+   "lot": [
+    -13,
+    35
+   ],
    "pos": [
-    -4,
-    36
+    -13,
+    34
    ],
    "next": [
     42
@@ -789,24 +741,31 @@
   },
   {
    "id": 42,
-   "type": "road",
+   "type": "bank",
+   "site": 41,
    "pos": [
-    -5,
-    36
+    -14,
+    34
    ],
-   "crossroad": "choice",
    "next": [
-    43,
-    150
+    43
    ]
   },
   {
    "id": 43,
-   "type": "government",
-   "site": 40,
+   "type": "company",
+   "name": "跑马厅",
+   "industry": "entertainment",
+   "price": 400,
+   "rent": 100,
+   "source": "Nanjing.cit 建筑 中原丝厂",
+   "lot": [
+    -15,
+    33
+   ],
    "pos": [
-    -5,
-    37
+    -14,
+    33
    ],
    "next": [
     44
@@ -814,11 +773,11 @@
   },
   {
    "id": 44,
-   "type": "government",
-   "site": 40,
+   "type": "company",
+   "site": 43,
    "pos": [
-    -5,
-    38
+    -14,
+    32
    ],
    "next": [
     45
@@ -826,10 +785,19 @@
   },
   {
    "id": 45,
-   "type": "road",
+   "type": "land",
+   "name": "西藏路5号",
+   "group": "西藏路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (-13,31)",
+   "lot": [
+    -13,
+    31
+   ],
    "pos": [
-    -5,
-    39
+    -14,
+    31
    ],
    "next": [
     46
@@ -837,19 +805,19 @@
   },
   {
    "id": 46,
-   "type": "company",
-   "name": "银盾银行上海分行",
-   "industry": "finance",
-   "price": 420,
-   "rent": 110,
-   "source": "Shaihai.cit 建筑 安乐毛绒纺织厂",
+   "type": "land",
+   "name": "西藏路4号",
+   "group": "西藏路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (-13,30)",
    "lot": [
-    -6,
-    40
+    -13,
+    30
    ],
    "pos": [
-    -6,
-    39
+    -14,
+    30
    ],
    "next": [
     47
@@ -857,11 +825,19 @@
   },
   {
    "id": 47,
-   "type": "company",
-   "site": 46,
+   "type": "land",
+   "name": "西藏路3号",
+   "group": "西藏路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (-13,29)",
+   "lot": [
+    -13,
+    29
+   ],
    "pos": [
-    -7,
-    39
+    -14,
+    29
    ],
    "next": [
     48
@@ -870,10 +846,18 @@
   {
    "id": 48,
    "type": "land",
-   "site": 50,
+   "name": "西藏路2号",
+   "group": "西藏路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (-13,28)",
+   "lot": [
+    -13,
+    28
+   ],
    "pos": [
-    -8,
-    39
+    -14,
+    28
    ],
    "next": [
     49
@@ -881,10 +865,19 @@
   },
   {
    "id": 49,
-   "type": "road",
+   "type": "land",
+   "name": "西藏路1号",
+   "group": "西藏路",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Nanjing.cit 地块 (-13,27)",
+   "lot": [
+    -13,
+    27
+   ],
    "pos": [
-    -9,
-    39
+    -14,
+    27
    ],
    "next": [
     50
@@ -892,19 +885,16 @@
   },
   {
    "id": 50,
-   "type": "land",
-   "name": "金神父路4号",
-   "group": "金神父路",
-   "price_pct": 150,
-   "build_cost_pct": 170,
-   "source": "Shaihai.cit 地块 (-8,38)",
+   "type": "jail",
+   "name": "巡捕房",
+   "source": "Nanjing.cit 建筑 巡捕房",
    "lot": [
-    -8,
-    38
+    -15,
+    26
    ],
    "pos": [
-    -9,
-    38
+    -14,
+    26
    ],
    "next": [
     51
@@ -912,39 +902,33 @@
   },
   {
    "id": 51,
-   "type": "land",
-   "name": "金神父路3号",
-   "group": "金神父路",
-   "price_pct": 150,
-   "build_cost_pct": 170,
-   "source": "Shaihai.cit 地块 (-8,37)",
-   "lot": [
-    -8,
-    37
-   ],
+   "type": "jail",
+   "site": 50,
    "pos": [
-    -9,
-    37
+    -14,
+    25
    ],
+   "crossroad": "choice",
    "next": [
-    52
+    52,
+    89
    ]
   },
   {
    "id": 52,
    "type": "land",
-   "name": "金神父路2号",
-   "group": "金神父路",
-   "price_pct": 150,
-   "build_cost_pct": 170,
-   "source": "Shaihai.cit 地块 (-8,36)",
+   "name": "吕班路1号",
+   "group": "吕班路",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Nanjing.cit 地块 (-13,24)",
    "lot": [
-    -8,
-    36
+    -13,
+    24
    ],
    "pos": [
-    -9,
-    36
+    -13,
+    25
    ],
    "next": [
     53
@@ -953,18 +937,18 @@
   {
    "id": 53,
    "type": "land",
-   "name": "金神父路1号",
-   "group": "金神父路",
-   "price_pct": 150,
-   "build_cost_pct": 170,
-   "source": "Shaihai.cit 地块 (-8,35)",
+   "name": "吕班路2号",
+   "group": "吕班路",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Nanjing.cit 地块 (-12,24)",
    "lot": [
-    -8,
-    35
+    -12,
+    24
    ],
    "pos": [
-    -9,
-    35
+    -12,
+    25
    ],
    "next": [
     54
@@ -973,18 +957,18 @@
   {
    "id": 54,
    "type": "land",
-   "name": "南京路2号",
-   "group": "南京路",
-   "price_pct": 80,
-   "build_cost_pct": 80,
-   "source": "Shaihai.cit 地块 (-10,34)",
+   "name": "吕班路3号",
+   "group": "吕班路",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Nanjing.cit 地块 (-11,24)",
    "lot": [
-    -10,
-    34
+    -11,
+    24
    ],
    "pos": [
-    -10,
-    35
+    -11,
+    25
    ],
    "next": [
     55
@@ -993,18 +977,18 @@
   {
    "id": 55,
    "type": "land",
-   "name": "南京路1号",
-   "group": "南京路",
-   "price_pct": 80,
-   "build_cost_pct": 80,
-   "source": "Shaihai.cit 地块 (-11,34)",
+   "name": "吕班路4号",
+   "group": "吕班路",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Nanjing.cit 地块 (-10,24)",
    "lot": [
-    -11,
-    34
+    -10,
+    24
    ],
    "pos": [
-    -11,
-    35
+    -10,
+    25
    ],
    "next": [
     56
@@ -1012,10 +996,19 @@
   },
   {
    "id": 56,
-   "type": "road",
+   "type": "land",
+   "name": "吕班路5号",
+   "group": "吕班路",
+   "price_pct": 140,
+   "build_cost_pct": 140,
+   "source": "Nanjing.cit 地块 (-9,24)",
+   "lot": [
+    -9,
+    24
+   ],
    "pos": [
-    -12,
-    35
+    -9,
+    25
    ],
    "next": [
     57
@@ -1023,31 +1016,32 @@
   },
   {
    "id": 57,
-   "type": "land",
-   "site": 55,
+   "type": "road",
    "pos": [
-    -12,
-    34
+    -8,
+    25
    ],
+   "crossroad": "choice",
    "next": [
-    58
+    58,
+    81
    ]
   },
   {
    "id": 58,
-   "type": "company",
-   "name": "远东水火保险公司",
-   "industry": "finance",
-   "price": 420,
-   "rent": 110,
-   "source": "Shaihai.cit 建筑 永康绵织厂",
+   "type": "land",
+   "name": "吕班路6号",
+   "group": "吕班路",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (-7,26)",
    "lot": [
-    -11,
-    33
+    -7,
+    26
    ],
    "pos": [
-    -12,
-    33
+    -7,
+    25
    ],
    "next": [
     59
@@ -1055,11 +1049,19 @@
   },
   {
    "id": 59,
-   "type": "company",
-   "site": 58,
+   "type": "land",
+   "name": "吕班路7号",
+   "group": "吕班路",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (-6,26)",
+   "lot": [
+    -6,
+    26
+   ],
    "pos": [
-    -12,
-    32
+    -6,
+    25
    ],
    "next": [
     60
@@ -1068,10 +1070,18 @@
   {
    "id": 60,
    "type": "land",
-   "site": 131,
+   "name": "吕班路8号",
+   "group": "吕班路",
+   "price_pct": 160,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (-5,26)",
+   "lot": [
+    -5,
+    26
+   ],
    "pos": [
-    -12,
-    31
+    -5,
+    25
    ],
    "next": [
     61
@@ -1079,29 +1089,28 @@
   },
   {
    "id": 61,
-   "type": "road",
-   "pos": [
-    -12,
-    30
+   "type": "government",
+   "name": "市政厅",
+   "source": "Nanjing.cit 建筑 市政厅",
+   "lot": [
+    -4,
+    26
    ],
-   "crossroad": "choice",
+   "pos": [
+    -4,
+    25
+   ],
    "next": [
-    62,
-    132
+    62
    ]
   },
   {
    "id": 62,
-   "type": "race_course",
-   "name": "赛马场",
-   "source": "Shaihai.cit 建筑 赛马场",
-   "lot": [
-    -11,
-    29
-   ],
+   "type": "government",
+   "site": 61,
    "pos": [
-    -12,
-    29
+    -3,
+    25
    ],
    "next": [
     63
@@ -1109,31 +1118,29 @@
   },
   {
    "id": 63,
-   "type": "race_course",
-   "site": 62,
+   "type": "road",
    "pos": [
-    -12,
-    28
+    -2,
+    25
    ],
+   "crossroad": "choice",
    "next": [
-    64
+    64,
+    73
    ]
   },
   {
    "id": 64,
-   "type": "company",
-   "name": "回力球场",
-   "industry": "entertainment",
-   "price": 360,
-   "rent": 100,
-   "source": "Shaihai.cit 建筑 天外天夜总会",
+   "type": "race_course",
+   "name": "准赢赛马场",
+   "source": "Nanjing.cit 建筑 准赢赛马场",
    "lot": [
-    -11,
-    27
+    -1,
+    24
    ],
    "pos": [
-    -12,
-    27
+    -1,
+    25
    ],
    "next": [
     65
@@ -1141,11 +1148,11 @@
   },
   {
    "id": 65,
-   "type": "company",
+   "type": "race_course",
    "site": 64,
    "pos": [
-    -12,
-    26
+    0,
+    25
    ],
    "next": [
     66
@@ -1153,18 +1160,18 @@
   },
   {
    "id": 66,
-   "type": "company",
-   "name": "德昌洋行",
-   "industry": "shop",
-   "price": 450,
-   "rent": 100,
-   "source": "Shaihai.cit 建筑 大新百货公司",
+   "type": "land",
+   "name": "北四川路1号",
+   "group": "北四川路",
+   "price_pct": 200,
+   "build_cost_pct": 180,
+   "source": "Nanjing.cit 地块 (1,24)",
    "lot": [
-    -13,
-    25
+    1,
+    24
    ],
    "pos": [
-    -12,
+    1,
     25
    ],
    "next": [
@@ -1173,30 +1180,39 @@
   },
   {
    "id": 67,
-   "type": "company",
-   "site": 66,
-   "pos": [
-    -12,
+   "type": "land",
+   "name": "北四川路2号",
+   "group": "北四川路",
+   "price_pct": 200,
+   "build_cost_pct": 180,
+   "source": "Nanjing.cit 地块 (2,24)",
+   "lot": [
+    2,
     24
    ],
-   "crossroad": "choice",
+   "pos": [
+    2,
+    25
+   ],
    "next": [
-    68,
-    109
+    68
    ]
   },
   {
    "id": 68,
-   "type": "church",
-   "name": "教堂",
-   "source": "Shaihai.cit 建筑 教堂",
+   "type": "land",
+   "name": "北四川路3号",
+   "group": "北四川路",
+   "price_pct": 200,
+   "build_cost_pct": 180,
+   "source": "Nanjing.cit 地块 (3,24)",
    "lot": [
-    -11,
-    23
+    3,
+    24
    ],
    "pos": [
-    -11,
-    24
+    3,
+    25
    ],
    "next": [
     69
@@ -1204,11 +1220,19 @@
   },
   {
    "id": 69,
-   "type": "church",
-   "site": 68,
-   "pos": [
-    -10,
+   "type": "land",
+   "name": "北四川路4号",
+   "group": "北四川路",
+   "price_pct": 200,
+   "build_cost_pct": 180,
+   "source": "Nanjing.cit 地块 (4,24)",
+   "lot": [
+    4,
     24
+   ],
+   "pos": [
+    4,
+    25
    ],
    "next": [
     70
@@ -1216,19 +1240,16 @@
   },
   {
    "id": 70,
-   "type": "land",
-   "name": "十六铺1号",
-   "group": "十六铺",
-   "price_pct": 160,
-   "build_cost_pct": 160,
-   "source": "Shaihai.cit 地块 (-9,23)",
+   "type": "church",
+   "name": "教堂",
+   "source": "Nanjing.cit 建筑 教堂",
    "lot": [
-    -9,
-    23
+    5,
+    24
    ],
    "pos": [
-    -9,
-    24
+    5,
+    25
    ],
    "next": [
     71
@@ -1236,19 +1257,11 @@
   },
   {
    "id": 71,
-   "type": "land",
-   "name": "十六铺2号",
-   "group": "十六铺",
-   "price_pct": 160,
-   "build_cost_pct": 160,
-   "source": "Shaihai.cit 地块 (-8,23)",
-   "lot": [
-    -8,
-    23
-   ],
+   "type": "church",
+   "site": 70,
    "pos": [
-    -8,
-    24
+    6,
+    25
    ],
    "next": [
     72
@@ -1257,38 +1270,30 @@
   {
    "id": 72,
    "type": "land",
-   "name": "十六铺3号",
-   "group": "十六铺",
-   "price_pct": 160,
-   "build_cost_pct": 160,
-   "source": "Shaihai.cit 地块 (-7,23)",
+   "name": "北四川路5号",
+   "group": "北四川路",
+   "price_pct": 200,
+   "build_cost_pct": 180,
+   "source": "Nanjing.cit 地块 (7,24)",
    "lot": [
-    -7,
-    23
-   ],
-   "pos": [
-    -7,
+    7,
     24
    ],
+   "pos": [
+    7,
+    25
+   ],
    "next": [
-    73
+    11
    ]
   },
   {
    "id": 73,
-   "type": "land",
-   "name": "十六铺4号",
-   "group": "十六铺",
-   "price_pct": 160,
-   "build_cost_pct": 160,
-   "source": "Shaihai.cit 地块 (-6,23)",
-   "lot": [
-    -6,
-    23
-   ],
+   "type": "government",
+   "site": 61,
    "pos": [
-    -6,
-    24
+    -2,
+    26
    ],
    "next": [
     74
@@ -1296,24 +1301,31 @@
   },
   {
    "id": 74,
-   "type": "road",
+   "type": "government",
+   "site": 61,
    "pos": [
-    -5,
-    24
+    -2,
+    27
    ],
-   "crossroad": "choice",
    "next": [
-    75,
-    92
+    75
    ]
   },
   {
    "id": 75,
    "type": "land",
-   "site": 143,
+   "name": "爱多亚路1号",
+   "group": "爱多亚路",
+   "price_pct": 130,
+   "build_cost_pct": 120,
+   "source": "Nanjing.cit 地块 (-1,28)",
+   "lot": [
+    -1,
+    28
+   ],
    "pos": [
-    -4,
-    24
+    -2,
+    28
    ],
    "next": [
     76
@@ -1321,19 +1333,19 @@
   },
   {
    "id": 76,
-   "type": "company",
-   "name": "大世界",
-   "industry": "entertainment",
-   "price": 360,
-   "rent": 90,
-   "source": "Shaihai.cit 建筑 百乐门夜总会",
+   "type": "land",
+   "name": "爱多亚路2号",
+   "group": "爱多亚路",
+   "price_pct": 130,
+   "build_cost_pct": 120,
+   "source": "Nanjing.cit 地块 (-1,29)",
    "lot": [
-    -3,
-    23
+    -1,
+    29
    ],
    "pos": [
-    -3,
-    24
+    -2,
+    29
    ],
    "next": [
     77
@@ -1341,11 +1353,19 @@
   },
   {
    "id": 77,
-   "type": "company",
-   "site": 76,
+   "type": "land",
+   "name": "爱多亚路3号",
+   "group": "爱多亚路",
+   "price_pct": 130,
+   "build_cost_pct": 120,
+   "source": "Nanjing.cit 地块 (-1,30)",
+   "lot": [
+    -1,
+    30
+   ],
    "pos": [
     -2,
-    24
+    30
    ],
    "next": [
     78
@@ -1354,18 +1374,18 @@
   {
    "id": 78,
    "type": "land",
-   "name": "杨树浦路1号",
-   "group": "杨树浦路",
-   "price_pct": 240,
-   "build_cost_pct": 220,
-   "source": "Shaihai.cit 地块 (-1,23)",
+   "name": "爱多亚路4号",
+   "group": "爱多亚路",
+   "price_pct": 130,
+   "build_cost_pct": 120,
+   "source": "Nanjing.cit 地块 (-1,31)",
    "lot": [
     -1,
-    23
+    31
    ],
    "pos": [
-    -1,
-    24
+    -2,
+    31
    ],
    "next": [
     79
@@ -1374,18 +1394,18 @@
   {
    "id": 79,
    "type": "land",
-   "name": "杨树浦路2号",
-   "group": "杨树浦路",
-   "price_pct": 240,
-   "build_cost_pct": 220,
-   "source": "Shaihai.cit 地块 (0,23)",
+   "name": "爱多亚路5号",
+   "group": "爱多亚路",
+   "price_pct": 130,
+   "build_cost_pct": 120,
+   "source": "Nanjing.cit 地块 (-1,32)",
    "lot": [
-    0,
-    23
+    -1,
+    32
    ],
    "pos": [
-    0,
-    24
+    -2,
+    32
    ],
    "next": [
     80
@@ -1394,43 +1414,42 @@
   {
    "id": 80,
    "type": "land",
-   "name": "杨树浦路3号",
-   "group": "杨树浦路",
-   "price_pct": 240,
-   "build_cost_pct": 220,
-   "source": "Shaihai.cit 地块 (1,23)",
-   "lot": [
-    1,
-    23
-   ],
+   "site": 31,
    "pos": [
-    1,
-    24
+    -2,
+    33
    ],
    "next": [
-    81
+    30
    ]
   },
   {
    "id": 81,
-   "type": "road",
+   "type": "land",
+   "site": 58,
    "pos": [
-    2,
-    24
+    -8,
+    26
    ],
-   "crossroad": "choice",
    "next": [
-    82,
-    87
+    82
    ]
   },
   {
    "id": 82,
    "type": "land",
-   "site": 80,
+   "name": "静安寺路1号",
+   "group": "静安寺路",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Nanjing.cit 地块 (-9,27)",
+   "lot": [
+    -9,
+    27
+   ],
    "pos": [
-    2,
-    23
+    -8,
+    27
    ],
    "next": [
     83
@@ -1439,18 +1458,18 @@
   {
    "id": 83,
    "type": "land",
-   "name": "汉口路2号",
-   "group": "汉口路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (3,22)",
+   "name": "静安寺路2号",
+   "group": "静安寺路",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Nanjing.cit 地块 (-9,28)",
    "lot": [
-    3,
-    22
+    -9,
+    28
    ],
    "pos": [
-    2,
-    22
+    -8,
+    28
    ],
    "next": [
     84
@@ -1459,18 +1478,18 @@
   {
    "id": 84,
    "type": "land",
-   "name": "汉口路1号",
-   "group": "汉口路",
-   "price_pct": 100,
-   "build_cost_pct": 100,
-   "source": "Shaihai.cit 地块 (3,21)",
+   "name": "静安寺路3号",
+   "group": "静安寺路",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Nanjing.cit 地块 (-9,29)",
    "lot": [
-    3,
-    21
+    -9,
+    29
    ],
    "pos": [
-    2,
-    21
+    -8,
+    29
    ],
    "next": [
     85
@@ -1478,10 +1497,19 @@
   },
   {
    "id": 85,
-   "type": "road",
+   "type": "land",
+   "name": "静安寺路4号",
+   "group": "静安寺路",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Nanjing.cit 地块 (-9,30)",
+   "lot": [
+    -9,
+    30
+   ],
    "pos": [
-    2,
-    20
+    -8,
+    30
    ],
    "next": [
     86
@@ -1490,22 +1518,38 @@
   {
    "id": 86,
    "type": "land",
-   "site": 6,
+   "name": "静安寺路5号",
+   "group": "静安寺路",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Nanjing.cit 地块 (-9,31)",
+   "lot": [
+    -9,
+    31
+   ],
    "pos": [
-    2,
-    19
+    -8,
+    31
    ],
    "next": [
-    5
+    87
    ]
   },
   {
    "id": 87,
    "type": "land",
-   "site": 159,
+   "name": "静安寺路6号",
+   "group": "静安寺路",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Nanjing.cit 地块 (-9,32)",
+   "lot": [
+    -9,
+    32
+   ],
    "pos": [
-    3,
-    24
+    -8,
+    32
    ],
    "next": [
     88
@@ -1513,30 +1557,30 @@
   },
   {
    "id": 88,
-   "type": "company",
-   "name": "博古斋古玩号",
-   "industry": "shop",
-   "price": 480,
-   "rent": 120,
-   "source": "Shaihai.cit 建筑 先施百货公司",
+   "type": "land",
+   "name": "静安寺路7号",
+   "group": "静安寺路",
+   "price_pct": 120,
+   "build_cost_pct": 110,
+   "source": "Nanjing.cit 地块 (-9,33)",
    "lot": [
-    4,
-    23
+    -9,
+    33
    ],
    "pos": [
-    4,
-    24
+    -8,
+    33
    ],
    "next": [
-    89
+    36
    ]
   },
   {
    "id": 89,
-   "type": "company",
-   "site": 88,
+   "type": "land",
+   "site": 52,
    "pos": [
-    5,
+    -14,
     24
    ],
    "next": [
@@ -1545,10 +1589,19 @@
   },
   {
    "id": 90,
-   "type": "road",
+   "type": "land",
+   "name": "福州路3号",
+   "group": "福州路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-15,23)",
+   "lot": [
+    -15,
+    23
+   ],
    "pos": [
-    6,
-    24
+    -14,
+    23
    ],
    "next": [
     91
@@ -1556,22 +1609,39 @@
   },
   {
    "id": 91,
-   "type": "road",
+   "type": "land",
+   "name": "福州路2号",
+   "group": "福州路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-15,22)",
+   "lot": [
+    -15,
+    22
+   ],
    "pos": [
-    7,
-    24
+    -14,
+    22
    ],
    "next": [
-    17
+    92
    ]
   },
   {
    "id": 92,
    "type": "land",
-   "site": 73,
+   "name": "福州路1号",
+   "group": "福州路",
+   "price_pct": 80,
+   "build_cost_pct": 90,
+   "source": "Nanjing.cit 地块 (-15,21)",
+   "lot": [
+    -15,
+    21
+   ],
    "pos": [
-    -5,
-    23
+    -14,
+    21
    ],
    "next": [
     93
@@ -1579,10 +1649,16 @@
   },
   {
    "id": 93,
-   "type": "road",
+   "type": "chance",
+   "name": "运气",
+   "source": "Nanjing.cit 建筑 运气",
+   "lot": [
+    -14,
+    19
+   ],
    "pos": [
-    -5,
-    22
+    -14,
+    20
    ],
    "next": [
     94
@@ -1591,15 +1667,10 @@
   {
    "id": 94,
    "type": "chance",
-   "name": "运气",
-   "source": "Shaihai.cit 建筑 运气",
-   "lot": [
-    -6,
-    21
-   ],
+   "site": 93,
    "pos": [
-    -5,
-    21
+    -13,
+    20
    ],
    "next": [
     95
@@ -1607,21 +1678,40 @@
   },
   {
    "id": 95,
-   "type": "chance",
-   "site": 94,
+   "type": "land",
+   "name": "金神父路1号",
+   "group": "金神父路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (-12,21)",
+   "lot": [
+    -12,
+    21
+   ],
    "pos": [
-    -5,
+    -12,
     20
    ],
+   "crossroad": "choice",
    "next": [
-    96
+    96,
+    125
    ]
   },
   {
    "id": 96,
-   "type": "road",
+   "type": "land",
+   "name": "金神父路2号",
+   "group": "金神父路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (-11,21)",
+   "lot": [
+    -11,
+    21
+   ],
    "pos": [
-    -4,
+    -11,
     20
    ],
    "next": [
@@ -1630,9 +1720,18 @@
   },
   {
    "id": 97,
-   "type": "road",
+   "type": "land",
+   "name": "金神父路3号",
+   "group": "金神父路",
+   "price_pct": 150,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (-10,21)",
+   "lot": [
+    -10,
+    21
+   ],
    "pos": [
-    -3,
+    -10,
     20
    ],
    "next": [
@@ -1641,10 +1740,19 @@
   },
   {
    "id": 98,
-   "type": "road",
-   "pos": [
-    -3,
+   "type": "company",
+   "name": "霞飞路电车",
+   "industry": "transport",
+   "price": 430,
+   "rent": 100,
+   "source": "Nanjing.cit 建筑 看得见电灯公司",
+   "lot": [
+    -9,
     19
+   ],
+   "pos": [
+    -9,
+    20
    ],
    "next": [
     99
@@ -1652,30 +1760,25 @@
   },
   {
    "id": 99,
-   "type": "road",
+   "type": "company",
+   "site": 98,
    "pos": [
-    -3,
-    18
+    -8,
+    20
    ],
+   "crossroad": "choice",
    "next": [
-    100
+    100,
+    121
    ]
   },
   {
    "id": 100,
    "type": "land",
-   "name": "外滩4号",
-   "group": "外滩",
-   "price_pct": 80,
-   "build_cost_pct": 60,
-   "source": "Shaihai.cit 地块 (-4,17)",
-   "lot": [
-    -4,
-    17
-   ],
+   "site": 121,
    "pos": [
-    -3,
-    17
+    -7,
+    20
    ],
    "next": [
     101
@@ -1683,19 +1786,19 @@
   },
   {
    "id": 101,
-   "type": "land",
-   "name": "外滩3号",
-   "group": "外滩",
-   "price_pct": 80,
-   "build_cost_pct": 60,
-   "source": "Shaihai.cit 地块 (-4,16)",
+   "type": "company",
+   "name": "回力球场",
+   "industry": "entertainment",
+   "price": 420,
+   "rent": 100,
+   "source": "Nanjing.cit 建筑 西洋色布厂",
    "lot": [
-    -4,
-    16
+    -6,
+    19
    ],
    "pos": [
-    -3,
-    16
+    -6,
+    20
    ],
    "next": [
     102
@@ -1703,19 +1806,11 @@
   },
   {
    "id": 102,
-   "type": "land",
-   "name": "外滩2号",
-   "group": "外滩",
-   "price_pct": 80,
-   "build_cost_pct": 60,
-   "source": "Shaihai.cit 地块 (-4,15)",
-   "lot": [
-    -4,
-    15
-   ],
+   "type": "company",
+   "site": 101,
    "pos": [
-    -3,
-    15
+    -5,
+    20
    ],
    "next": [
     103
@@ -1723,19 +1818,16 @@
   },
   {
    "id": 103,
-   "type": "land",
-   "name": "外滩1号",
-   "group": "外滩",
-   "price_pct": 80,
-   "build_cost_pct": 60,
-   "source": "Shaihai.cit 地块 (-4,14)",
+   "type": "chance",
+   "name": "运气",
+   "source": "Nanjing.cit 建筑 运气",
    "lot": [
     -4,
-    14
+    21
    ],
    "pos": [
-    -3,
-    14
+    -4,
+    20
    ],
    "next": [
     104
@@ -1743,19 +1835,11 @@
   },
   {
    "id": 104,
-   "type": "company",
-   "name": "协兴驳船行",
-   "industry": "transport",
-   "price": 560,
-   "rent": 130,
-   "source": "Shaihai.cit 建筑 上海站",
-   "lot": [
-    -3,
-    12
-   ],
+   "type": "chance",
+   "site": 103,
    "pos": [
     -3,
-    13
+    20
    ],
    "next": [
     105
@@ -1763,31 +1847,32 @@
   },
   {
    "id": 105,
-   "type": "company",
-   "site": 104,
+   "type": "road",
    "pos": [
     -2,
-    13
+    20
    ],
+   "crossroad": "choice",
    "next": [
-    106
+    106,
+    117
    ]
   },
   {
    "id": 106,
-   "type": "land",
-   "name": "跑马厅路1号",
-   "group": "跑马厅路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-1,12)",
+   "type": "company",
+   "name": "协兴驳船行",
+   "industry": "transport",
+   "price": 380,
+   "rent": 80,
+   "source": "Nanjing.cit 建筑 悦耳电话公司",
    "lot": [
     -1,
-    12
+    19
    ],
    "pos": [
     -1,
-    13
+    20
    ],
    "next": [
     107
@@ -1795,19 +1880,11 @@
   },
   {
    "id": 107,
-   "type": "land",
-   "name": "跑马厅路2号",
-   "group": "跑马厅路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (0,12)",
-   "lot": [
-    0,
-    12
-   ],
+   "type": "company",
+   "site": 106,
    "pos": [
     0,
-    13
+    20
    ],
    "next": [
     108
@@ -1816,30 +1893,38 @@
   {
    "id": 108,
    "type": "land",
-   "name": "跑马厅路3号",
-   "group": "跑马厅路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (1,12)",
+   "name": "十六铺1号",
+   "group": "十六铺",
+   "price_pct": 170,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (1,21)",
    "lot": [
     1,
-    12
+    21
    ],
    "pos": [
     1,
-    13
+    20
    ],
    "next": [
-    0
+    109
    ]
   },
   {
    "id": 109,
-   "type": "church",
-   "site": 68,
+   "type": "land",
+   "name": "十六铺2号",
+   "group": "十六铺",
+   "price_pct": 170,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (2,21)",
+   "lot": [
+    2,
+    21
+   ],
    "pos": [
-    -12,
-    23
+    2,
+    20
    ],
    "next": [
     110
@@ -1847,11 +1932,19 @@
   },
   {
    "id": 110,
-   "type": "church",
-   "site": 68,
+   "type": "land",
+   "name": "十六铺3号",
+   "group": "十六铺",
+   "price_pct": 170,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (3,21)",
+   "lot": [
+    3,
+    21
+   ],
    "pos": [
-    -12,
-    22
+    3,
+    20
    ],
    "next": [
     111
@@ -1859,19 +1952,19 @@
   },
   {
    "id": 111,
-   "type": "company",
-   "name": "福源钱庄",
-   "industry": "finance",
-   "price": 380,
-   "rent": 90,
-   "source": "Shaihai.cit 建筑 新丰纺织印染厂",
+   "type": "land",
+   "name": "十六铺4号",
+   "group": "十六铺",
+   "price_pct": 170,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (4,21)",
    "lot": [
-    -12,
-    20
+    4,
+    21
    ],
    "pos": [
-    -12,
-    21
+    4,
+    20
    ],
    "next": [
     112
@@ -1879,11 +1972,19 @@
   },
   {
    "id": 112,
-   "type": "company",
-   "site": 111,
-   "pos": [
-    -13,
+   "type": "land",
+   "name": "十六铺5号",
+   "group": "十六铺",
+   "price_pct": 170,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (5,21)",
+   "lot": [
+    5,
     21
+   ],
+   "pos": [
+    5,
+    20
    ],
    "next": [
     113
@@ -1892,18 +1993,18 @@
   {
    "id": 113,
    "type": "land",
-   "name": "霞飞路4号",
-   "group": "霞飞路",
-   "price_pct": 130,
-   "build_cost_pct": 140,
-   "source": "Shaihai.cit 地块 (-14,22)",
+   "name": "十六铺6号",
+   "group": "十六铺",
+   "price_pct": 170,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (6,21)",
    "lot": [
-    -14,
-    22
+    6,
+    21
    ],
    "pos": [
-    -14,
-    21
+    6,
+    20
    ],
    "next": [
     114
@@ -1912,18 +2013,18 @@
   {
    "id": 114,
    "type": "land",
-   "name": "霞飞路3号",
-   "group": "霞飞路",
-   "price_pct": 130,
-   "build_cost_pct": 140,
-   "source": "Shaihai.cit 地块 (-15,22)",
+   "name": "十六铺7号",
+   "group": "十六铺",
+   "price_pct": 170,
+   "build_cost_pct": 160,
+   "source": "Nanjing.cit 地块 (7,21)",
    "lot": [
-    -15,
-    22
+    7,
+    21
    ],
    "pos": [
-    -15,
-    21
+    7,
+    20
    ],
    "next": [
     115
@@ -1931,19 +2032,11 @@
   },
   {
    "id": 115,
-   "type": "land",
-   "name": "霞飞路2号",
-   "group": "霞飞路",
-   "price_pct": 130,
-   "build_cost_pct": 140,
-   "source": "Shaihai.cit 地块 (-16,22)",
-   "lot": [
-    -16,
-    22
-   ],
+   "type": "bank",
+   "site": 5,
    "pos": [
-    -16,
-    21
+    8,
+    20
    ],
    "next": [
     116
@@ -1951,29 +2044,22 @@
   },
   {
    "id": 116,
-   "type": "land",
-   "name": "霞飞路1号",
-   "group": "霞飞路",
-   "price_pct": 130,
-   "build_cost_pct": 140,
-   "source": "Shaihai.cit 地块 (-17,22)",
-   "lot": [
-    -17,
-    22
-   ],
+   "type": "bank",
+   "site": 5,
    "pos": [
-    -17,
-    21
+    9,
+    20
    ],
    "next": [
-    117
+    4
    ]
   },
   {
    "id": 117,
-   "type": "road",
+   "type": "chance",
+   "site": 103,
    "pos": [
-    -18,
+    -2,
     21
    ],
    "next": [
@@ -1982,10 +2068,10 @@
   },
   {
    "id": 118,
-   "type": "land",
-   "site": 116,
+   "type": "chance",
+   "site": 103,
    "pos": [
-    -18,
+    -2,
     22
    ],
    "next": [
@@ -1994,18 +2080,10 @@
   },
   {
    "id": 119,
-   "type": "company",
-   "name": "华洋证券物品交易所",
-   "industry": "finance",
-   "price": 410,
-   "rent": 100,
-   "source": "Shaihai.cit 建筑 五合织造厂",
-   "lot": [
-    -19,
-    23
-   ],
+   "type": "race_course",
+   "site": 64,
    "pos": [
-    -18,
+    -2,
     23
    ],
    "next": [
@@ -2014,31 +2092,31 @@
   },
   {
    "id": 120,
-   "type": "company",
-   "site": 119,
+   "type": "race_course",
+   "site": 64,
    "pos": [
-    -18,
+    -2,
     24
    ],
    "next": [
-    121
+    63
    ]
   },
   {
    "id": 121,
    "type": "land",
-   "name": "西藏路1号",
-   "group": "西藏路",
-   "price_pct": 110,
-   "build_cost_pct": 90,
-   "source": "Shaihai.cit 地块 (-17,25)",
+   "name": "霞飞路1号",
+   "group": "霞飞路",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Nanjing.cit 地块 (-7,21)",
    "lot": [
-    -17,
-    25
+    -7,
+    21
    ],
    "pos": [
-    -18,
-    25
+    -8,
+    21
    ],
    "next": [
     122
@@ -2047,18 +2125,18 @@
   {
    "id": 122,
    "type": "land",
-   "name": "西藏路2号",
-   "group": "西藏路",
-   "price_pct": 110,
-   "build_cost_pct": 90,
-   "source": "Shaihai.cit 地块 (-17,26)",
+   "name": "霞飞路2号",
+   "group": "霞飞路",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Nanjing.cit 地块 (-7,22)",
    "lot": [
-    -17,
-    26
+    -7,
+    22
    ],
    "pos": [
-    -18,
-    26
+    -8,
+    22
    ],
    "next": [
     123
@@ -2066,16 +2144,19 @@
   },
   {
    "id": 123,
-   "type": "bank",
-   "name": "银行",
-   "source": "Shaihai.cit 建筑 银行",
+   "type": "land",
+   "name": "霞飞路3号",
+   "group": "霞飞路",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Nanjing.cit 地块 (-7,23)",
    "lot": [
-    -19,
-    27
+    -7,
+    23
    ],
    "pos": [
-    -18,
-    27
+    -8,
+    23
    ],
    "next": [
     124
@@ -2083,28 +2164,23 @@
   },
   {
    "id": 124,
-   "type": "bank",
-   "site": 123,
+   "type": "land",
+   "site": 56,
    "pos": [
-    -18,
-    28
+    -8,
+    24
    ],
    "next": [
-    125
+    57
    ]
   },
   {
    "id": 125,
    "type": "chance",
-   "name": "运气",
-   "source": "Shaihai.cit 建筑 运气",
-   "lot": [
-    -19,
-    29
-   ],
+   "site": 93,
    "pos": [
-    -18,
-    29
+    -12,
+    19
    ],
    "next": [
     126
@@ -2113,10 +2189,10 @@
   {
    "id": 126,
    "type": "chance",
-   "site": 125,
+   "site": 93,
    "pos": [
-    -18,
-    30
+    -12,
+    18
    ],
    "next": [
     127
@@ -2124,19 +2200,10 @@
   },
   {
    "id": 127,
-   "type": "land",
-   "name": "北京路1号",
-   "group": "北京路",
-   "price_pct": 100,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-17,31)",
-   "lot": [
-    -17,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -17,
-    30
+    -11,
+    18
    ],
    "next": [
     128
@@ -2144,19 +2211,10 @@
   },
   {
    "id": 128,
-   "type": "land",
-   "name": "北京路2号",
-   "group": "北京路",
-   "price_pct": 100,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-16,31)",
-   "lot": [
-    -16,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -16,
-    30
+    -11,
+    17
    ],
    "next": [
     129
@@ -2164,19 +2222,10 @@
   },
   {
    "id": 129,
-   "type": "land",
-   "name": "北京路3号",
-   "group": "北京路",
-   "price_pct": 100,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-15,31)",
-   "lot": [
-    -15,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -15,
-    30
+    -10,
+    17
    ],
    "next": [
     130
@@ -2184,19 +2233,10 @@
   },
   {
    "id": 130,
-   "type": "land",
-   "name": "北京路4号",
-   "group": "北京路",
-   "price_pct": 100,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-14,31)",
-   "lot": [
-    -14,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -14,
-    30
+    -10,
+    16
    ],
    "next": [
     131
@@ -2204,31 +2244,21 @@
   },
   {
    "id": 131,
-   "type": "land",
-   "name": "北京路5号",
-   "group": "北京路",
-   "price_pct": 100,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-13,31)",
-   "lot": [
-    -13,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -13,
-    30
+    -9,
+    16
    ],
    "next": [
-    61
+    132
    ]
   },
   {
    "id": 132,
-   "type": "race_course",
-   "site": 62,
+   "type": "road",
    "pos": [
-    -11,
-    30
+    -9,
+    15
    ],
    "next": [
     133
@@ -2236,11 +2266,10 @@
   },
   {
    "id": 133,
-   "type": "race_course",
-   "site": 62,
+   "type": "road",
    "pos": [
-    -10,
-    30
+    -8,
+    15
    ],
    "next": [
     134
@@ -2248,19 +2277,10 @@
   },
   {
    "id": 134,
-   "type": "land",
-   "name": "爱多亚路4号",
-   "group": "爱多亚路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-9,31)",
-   "lot": [
-    -9,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -9,
-    30
+    -8,
+    14
    ],
    "next": [
     135
@@ -2268,19 +2288,10 @@
   },
   {
    "id": 135,
-   "type": "land",
-   "name": "爱多亚路3号",
-   "group": "爱多亚路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-8,31)",
-   "lot": [
-    -8,
-    31
-   ],
+   "type": "road",
    "pos": [
-    -8,
-    30
+    -7,
+    14
    ],
    "next": [
     136
@@ -2288,19 +2299,10 @@
   },
   {
    "id": 136,
-   "type": "land",
-   "name": "爱多亚路3号",
-   "group": "爱多亚路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-7,31)",
-   "lot": [
-    -7,
-    31
-   ],
+   "type": "road",
    "pos": [
     -7,
-    30
+    13
    ],
    "next": [
     137
@@ -2308,19 +2310,10 @@
   },
   {
    "id": 137,
-   "type": "land",
-   "name": "爱多亚路4号",
-   "group": "爱多亚路",
-   "price_pct": 120,
-   "build_cost_pct": 120,
-   "source": "Shaihai.cit 地块 (-6,31)",
-   "lot": [
-    -6,
-    31
-   ],
+   "type": "road",
    "pos": [
     -6,
-    30
+    13
    ],
    "next": [
     138
@@ -2328,29 +2321,31 @@
   },
   {
    "id": 138,
-   "type": "road",
-   "pos": [
-    -5,
-    30
+   "type": "company",
+   "name": "德昌洋行",
+   "industry": "shop",
+   "price": 500,
+   "rent": 120,
+   "source": "Nanjing.cit 建筑 中山码头",
+   "lot": [
+    -6,
+    11
    ],
-   "crossroad": "choice",
+   "pos": [
+    -6,
+    12
+   ],
    "next": [
-    139,
-    144
+    139
    ]
   },
   {
    "id": 139,
-   "type": "bank",
-   "name": "银行",
-   "source": "Shaihai.cit 建筑 银行",
-   "lot": [
-    -4,
-    29
-   ],
+   "type": "company",
+   "site": 138,
    "pos": [
     -5,
-    29
+    12
    ],
    "next": [
     140
@@ -2358,11 +2353,19 @@
   },
   {
    "id": 140,
-   "type": "bank",
-   "site": 139,
+   "type": "land",
+   "name": "南京路3号",
+   "group": "南京路",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Nanjing.cit 地块 (-4,11)",
+   "lot": [
+    -4,
+    11
+   ],
    "pos": [
-    -5,
-    28
+    -4,
+    12
    ],
    "next": [
     141
@@ -2371,18 +2374,18 @@
   {
    "id": 141,
    "type": "land",
-   "name": "苏州河北岸3号",
-   "group": "苏州河北岸",
-   "price_pct": 180,
-   "build_cost_pct": 160,
-   "source": "Shaihai.cit 地块 (-4,27)",
+   "name": "南京路2号",
+   "group": "南京路",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Nanjing.cit 地块 (-3,11)",
    "lot": [
-    -4,
-    27
+    -3,
+    11
    ],
    "pos": [
-    -5,
-    27
+    -3,
+    12
    ],
    "next": [
     142
@@ -2391,50 +2394,60 @@
   {
    "id": 142,
    "type": "land",
-   "name": "苏州河北岸2号",
-   "group": "苏州河北岸",
-   "price_pct": 180,
-   "build_cost_pct": 160,
-   "source": "Shaihai.cit 地块 (-4,26)",
+   "name": "南京路1号",
+   "group": "南京路",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Nanjing.cit 地块 (-2,11)",
    "lot": [
-    -4,
-    26
+    -2,
+    11
    ],
    "pos": [
-    -5,
-    26
+    -2,
+    12
    ],
+   "crossroad": "choice",
    "next": [
-    143
+    143,
+    158
    ]
   },
   {
    "id": 143,
    "type": "land",
-   "name": "苏州河北岸1号",
-   "group": "苏州河北岸",
-   "price_pct": 180,
-   "build_cost_pct": 160,
-   "source": "Shaihai.cit 地块 (-4,25)",
+   "name": "外滩7号",
+   "group": "外滩",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Nanjing.cit 地块 (-1,13)",
    "lot": [
-    -4,
-    25
+    -1,
+    13
    ],
    "pos": [
-    -5,
-    25
+    -1,
+    12
    ],
    "next": [
-    74
+    144
    ]
   },
   {
    "id": 144,
-   "type": "bank",
-   "site": 139,
+   "type": "land",
+   "name": "外滩6号",
+   "group": "外滩",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Nanjing.cit 地块 (0,13)",
+   "lot": [
+    0,
+    13
+   ],
    "pos": [
-    -4,
-    30
+    0,
+    12
    ],
    "next": [
     145
@@ -2442,11 +2455,19 @@
   },
   {
    "id": 145,
-   "type": "bank",
-   "site": 139,
+   "type": "land",
+   "name": "外滩5号",
+   "group": "外滩",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Nanjing.cit 地块 (1,13)",
+   "lot": [
+    1,
+    13
+   ],
    "pos": [
-    -3,
-    30
+    1,
+    12
    ],
    "next": [
     146
@@ -2455,18 +2476,18 @@
   {
    "id": 146,
    "type": "land",
-   "name": "北四川路1号",
-   "group": "北四川路",
-   "price_pct": 160,
-   "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (-2,29)",
+   "name": "外滩4号",
+   "group": "外滩",
+   "price_pct": 60,
+   "build_cost_pct": 70,
+   "source": "Nanjing.cit 地块 (2,11)",
    "lot": [
-    -2,
-    29
+    2,
+    11
    ],
    "pos": [
-    -2,
-    30
+    2,
+    12
    ],
    "next": [
     147
@@ -2475,18 +2496,18 @@
   {
    "id": 147,
    "type": "land",
-   "name": "北四川路2号",
-   "group": "北四川路",
-   "price_pct": 160,
-   "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (-1,29)",
+   "name": "外滩3号",
+   "group": "外滩",
+   "price_pct": 60,
+   "build_cost_pct": 70,
+   "source": "Nanjing.cit 地块 (3,11)",
    "lot": [
-    -1,
-    29
+    3,
+    11
    ],
    "pos": [
-    -1,
-    30
+    3,
+    12
    ],
    "next": [
     148
@@ -2495,18 +2516,18 @@
   {
    "id": 148,
    "type": "land",
-   "name": "北四川路3号",
-   "group": "北四川路",
-   "price_pct": 160,
-   "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (0,29)",
+   "name": "外滩2号",
+   "group": "外滩",
+   "price_pct": 60,
+   "build_cost_pct": 70,
+   "source": "Nanjing.cit 地块 (4,11)",
    "lot": [
-    0,
-    29
+    4,
+    11
    ],
    "pos": [
-    0,
-    30
+    4,
+    12
    ],
    "next": [
     149
@@ -2515,38 +2536,38 @@
   {
    "id": 149,
    "type": "land",
-   "name": "北四川路4号",
-   "group": "北四川路",
-   "price_pct": 160,
-   "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (1,29)",
+   "name": "外滩1号",
+   "group": "外滩",
+   "price_pct": 60,
+   "build_cost_pct": 70,
+   "source": "Nanjing.cit 地块 (5,11)",
    "lot": [
-    1,
-    29
+    5,
+    11
    ],
    "pos": [
-    1,
-    30
+    5,
+    12
    ],
    "next": [
-    29
+    150
    ]
   },
   {
    "id": 150,
-   "type": "land",
-   "name": "静安寺路2号",
-   "group": "静安寺路",
-   "price_pct": 120,
-   "build_cost_pct": 130,
-   "source": "Shaihai.cit 地块 (-6,35)",
+   "type": "company",
+   "name": "博古斋古玩号",
+   "industry": "shop",
+   "price": 450,
+   "rent": 100,
+   "source": "Nanjing.cit 建筑 南京火车站",
    "lot": [
-    -6,
-    35
+    6,
+    11
    ],
    "pos": [
-    -5,
-    35
+    6,
+    12
    ],
    "next": [
     151
@@ -2554,19 +2575,11 @@
   },
   {
    "id": 151,
-   "type": "land",
-   "name": "静安寺路1号",
-   "group": "静安寺路",
-   "price_pct": 120,
-   "build_cost_pct": 130,
-   "source": "Shaihai.cit 地块 (-6,34)",
-   "lot": [
-    -6,
-    34
-   ],
+   "type": "company",
+   "site": 150,
    "pos": [
-    -5,
-    34
+    7,
+    12
    ],
    "next": [
     152
@@ -2574,19 +2587,10 @@
   },
   {
    "id": 152,
-   "type": "company",
-   "name": "大丰当",
-   "industry": "shop",
-   "price": 400,
-   "rent": 100,
-   "source": "Shaihai.cit 建筑 协昌祥百货公司",
-   "lot": [
-    -4,
-    33
-   ],
+   "type": "road",
    "pos": [
-    -5,
-    33
+    7,
+    13
    ],
    "next": [
     153
@@ -2594,11 +2598,10 @@
   },
   {
    "id": 153,
-   "type": "company",
-   "site": 152,
+   "type": "road",
    "pos": [
-    -5,
-    32
+    8,
+    13
    ],
    "next": [
     154
@@ -2606,23 +2609,21 @@
   },
   {
    "id": 154,
-   "type": "land",
-   "site": 137,
+   "type": "road",
    "pos": [
-    -5,
-    31
+    8,
+    14
    ],
    "next": [
-    138
+    155
    ]
   },
   {
    "id": 155,
-   "type": "land",
-   "site": 149,
+   "type": "road",
    "pos": [
-    2,
-    29
+    9,
+    14
    ],
    "next": [
     156
@@ -2630,19 +2631,11 @@
   },
   {
    "id": 156,
-   "type": "land",
-   "name": "吕班路4号",
-   "group": "吕班路",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (3,28)",
-   "lot": [
-    3,
-    28
-   ],
+   "type": "park",
+   "site": 0,
    "pos": [
-    2,
-    28
+    9,
+    15
    ],
    "next": [
     157
@@ -2650,39 +2643,22 @@
   },
   {
    "id": 157,
-   "type": "land",
-   "name": "吕班路3号",
-   "group": "吕班路",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (3,27)",
-   "lot": [
-    3,
-    27
-   ],
+   "type": "road",
    "pos": [
-    2,
-    27
+    10,
+    15
    ],
    "next": [
-    158
+    0
    ]
   },
   {
    "id": 158,
    "type": "land",
-   "name": "吕班路2号",
-   "group": "吕班路",
-   "price_pct": 140,
-   "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (3,26)",
-   "lot": [
-    3,
-    26
-   ],
+   "site": 143,
    "pos": [
-    2,
-    26
+    -2,
+    13
    ],
    "next": [
     159
@@ -2691,21 +2667,105 @@
   {
    "id": 159,
    "type": "land",
-   "name": "吕班路1号",
-   "group": "吕班路",
+   "name": "亚尔培路1号",
+   "group": "亚尔培路",
    "price_pct": 140,
    "build_cost_pct": 150,
-   "source": "Shaihai.cit 地块 (3,25)",
+   "source": "Nanjing.cit 地块 (-3,14)",
    "lot": [
-    3,
-    25
+    -3,
+    14
    ],
    "pos": [
-    2,
-    25
+    -2,
+    14
    ],
    "next": [
-    81
+    160
+   ]
+  },
+  {
+   "id": 160,
+   "type": "land",
+   "name": "亚尔培路2号",
+   "group": "亚尔培路",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Nanjing.cit 地块 (-3,15)",
+   "lot": [
+    -3,
+    15
+   ],
+   "pos": [
+    -2,
+    15
+   ],
+   "next": [
+    161
+   ]
+  },
+  {
+   "id": 161,
+   "type": "land",
+   "name": "亚尔培路3号",
+   "group": "亚尔培路",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Nanjing.cit 地块 (-3,16)",
+   "lot": [
+    -3,
+    16
+   ],
+   "pos": [
+    -2,
+    16
+   ],
+   "next": [
+    162
+   ]
+  },
+  {
+   "id": 162,
+   "type": "land",
+   "name": "亚尔培路4号",
+   "group": "亚尔培路",
+   "price_pct": 140,
+   "build_cost_pct": 150,
+   "source": "Nanjing.cit 地块 (-3,17)",
+   "lot": [
+    -3,
+    17
+   ],
+   "pos": [
+    -2,
+    17
+   ],
+   "next": [
+    163
+   ]
+  },
+  {
+   "id": 163,
+   "type": "company",
+   "site": 106,
+   "pos": [
+    -2,
+    18
+   ],
+   "next": [
+    164
+   ]
+  },
+  {
+   "id": 164,
+   "type": "company",
+   "site": 106,
+   "pos": [
+    -2,
+    19
+   ],
+   "next": [
+    105
    ]
   }
  ]

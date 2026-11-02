@@ -140,31 +140,31 @@
      "deposit": 200,
      "props": [
       {
-       "tile": 15
+       "tile": 11
       },
       {
-       "tile": 16
+       "tile": 66
       },
       {
-       "tile": 17
+       "tile": 67
       },
       {
-       "tile": 18
+       "tile": 68
       },
       {
-       "tile": 19
+       "tile": 69
       },
       {
-       "tile": 127
+       "tile": 72
       },
       {
-       "tile": 128
+       "tile": 108
       },
       {
-       "tile": 129
+       "tile": 109
       },
       {
-       "tile": 130
+       "tile": 110
       }
      ]
     }
