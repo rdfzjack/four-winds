@@ -20,8 +20,13 @@
     {
      "character": "mistress",
      "cash": 500,
-     "deposit": 1000,
-     "ai": "standard_v2"
+     "deposit": 2000,
+     "ai": "new_v2",
+     "props": [
+      {
+       "tile": 40
+      }
+     ]
     },
     {
      "character": "giorgio",
@@ -64,7 +69,30 @@
     {
      "character": "david",
      "cash": 1500,
-     "deposit": 2000
+     "deposit": 3000
+    },
+    {
+     "character": "passerby_a",
+     "cash": 1500,
+     "deposit": 2000,
+     "ai": "standard_v2",
+     "props": [
+      {
+       "tile": 0
+      },
+      {
+       "tile": 80
+      },
+      {
+       "tile": 81
+      },
+      {
+       "tile": 82
+      },
+      {
+       "tile": 83
+      }
+     ]
     }
    ],
    "win": [

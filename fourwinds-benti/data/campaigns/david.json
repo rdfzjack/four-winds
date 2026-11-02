@@ -99,7 +99,7 @@
      "character": "david",
      "player": true,
      "cash": 1500,
-     "deposit": 2000
+     "deposit": 4000
     },
     {
      "character": "giorgio",
@@ -114,9 +114,6 @@
       },
       {
        "tile": 116
-      },
-      {
-       "tile": 145
       }
      ]
     },
@@ -133,9 +130,6 @@
       },
       {
        "tile": 86
-      },
-      {
-       "tile": 100
       }
      ]
     },
@@ -152,9 +146,6 @@
       },
       {
        "tile": 64
-      },
-      {
-       "tile": 137
       }
      ]
     }
@@ -163,20 +154,16 @@
     {
      "type": "control_industry",
      "who": "player",
-     "industry": "transport",
-     "industry_name": "运输"
-    },
-    {
-     "type": "control_industry",
-     "who": "player",
-     "industry": "entertainment",
-     "industry_name": "娱乐"
-    },
-    {
-     "type": "control_industry",
-     "who": "player",
-     "industry": "shop",
-     "industry_name": "商业"
+     "industries": [
+      "transport",
+      "entertainment",
+      "shop"
+     ],
+     "industry_names": [
+      "运输",
+      "娱乐",
+      "商业"
+     ]
     }
    ],
    "lose": [

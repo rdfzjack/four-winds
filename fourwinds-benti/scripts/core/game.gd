@@ -1438,9 +1438,15 @@ func _pick_card(p: Player) -> Dictionary:
 		for c in cards:
 			if int(c["id"]) == wanted:
 				return c
+	var listed := false  # 这个角色出现在某张卡的 allowed_for 里吗（路人不在，按“通用卡”抽）
+	for k in cards:
+		listed = listed or k.get("allowed_for", []).has(p.character)
 	for _try in range(2000):
 		var c: Dictionary = cards[rng.randi() % cards.size()]
-		if not c.get("allowed_for", []).has(p.character):
+		var allowed: Array = c.get("allowed_for", [])
+		if listed and not allowed.has(p.character):
+			continue
+		if not listed and allowed.size() < 4:
 			continue
 		if rng.randi_range(1, 100) > int(c.get("weight", 100)):
 			continue
@@ -1461,9 +1467,22 @@ func _apply_effect(p: Player, e: Dictionary) -> void:
 				if q != p and not p.bankrupt:
 					pay(q.index, int(e["amount"]), p.index)
 		"money_to_each":
+			var payees: Array = []
 			for q in alive_players():
-				if q != p and not p.bankrupt:
-					pay(p.index, int(e["amount"]), q.index)
+				if q != p:
+					payees.append(q)
+			var each := int(e["amount"])
+			if p.cash + p.deposit >= each * payees.size():
+				for q in payees:
+					pay(p.index, each, q.index)
+			elif not payees.is_empty():
+				# 付不起这一次的总数：剩下的钱平分给收款人，财产不归任何一个收款人（无主）
+				var share: int = (p.cash + p.deposit) / payees.size()
+				for q in payees:
+					q.cash += share
+				p.cash = 0
+				p.deposit = 0
+				_bankrupt(p, -1)
 		"jail":
 			_send_to_jail(p, int(e["days"]))
 		"goto":

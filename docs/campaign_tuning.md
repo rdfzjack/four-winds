@@ -19,7 +19,7 @@
 | 要改什么 | 改哪里 |
 |---|---|
 | 对手是谁 | `seats` 里的 `character`。可用：`david` 斐斐、`giorgio` 小九、`marcel` 孔雀、`eric` 理理，路人 `cousin` 堂弟、`passerby_a` 路人甲、`mistress` 情妇（`data/extra_characters.json`）。一关里同一个人只能出现一次 |
-| 对手强弱 | `ai`：`new_v2` = 带性格的角色 AI，`standard_v2` = 没有性格的标准 AI（路人默认用后者）。**AI 本身的强弱我会按你的反馈再调**，这里只能换种类 |
+| 对手强弱 | 路人可以有自己的 AI 参数：`data/extra_characters.json` 里写 `ai_profile`（指向 `data/ai/profiles.json` 的一组，现有 `spendthrift` 挥金如土：不看现金流、不留备用钱，情妇用它），座位的 `ai` 写 `new_v2` 才会用这组参数。`ai`：`new_v2` = 带性格的角色 AI，`standard_v2` = 没有性格的标准 AI（路人默认用后者）。**AI 本身的强弱我会按你的反馈再调**，这里只能换种类 |
 | 自己和对手的初始资金 | 每个座位的 `cash`（现金）、`deposit`（存款），单位万圆。不写就用 `rules.json` 的默认（2000 / 2000）。想让谁强就多给谁钱，原版末关常给 Boss 多 1000 存款 |
 | 开局已有的地 / 房子 / 企业 | 座位的 `props`：`{"tile": 编号}` 送一块地或一家企业；`{"tiles": [4,5,6,7], "house": "villa"}` 在连续的 4 块地上盖好别墅（`house`：`flat` 平房 1 块、`hotel` 旅社 2、`super_hotel` 旅馆 2、`floor` 小洋楼 3、`super_floor` 花园洋房 3、`villa` 别墅 4；块数要对，必须是同一条街沿路相连的）。**编号要用正格**（见下） |
 | 地图 | `map`：地图 id（`python3 tools/map_info.py` 列出所有） |

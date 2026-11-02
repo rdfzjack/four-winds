@@ -20,13 +20,21 @@
     {
      "character": "david",
      "cash": 200,
-     "deposit": 300
+     "deposit": 1000
     },
     {
      "character": "passerby_a",
-     "ai": "standard_v2",
      "cash": 200,
-     "deposit": 300
+     "deposit": 300,
+     "ai": "standard_v2",
+     "props": [
+      {
+       "tile": 19
+      },
+      {
+       "tile": 20
+      }
+     ]
     }
    ],
    "win": [
@@ -110,7 +118,7 @@
    "id": "eric_3",
    "name": "纽约",
    "map": "newyork",
-   "intro": "孔雀也加入，和他们不清不楚。理理已经放弃他们了，不劝了，只要把股份抢回来。",
+   "intro": "孔雀也加入，和他们不清不楚。理理已经放弃他们了，不劝了，只要把股份抢回来。\n限时 120 天：到期时总资产是第一名也算赢。",
    "outro_win": "股份抢回来了。第二天报纸头版：他和这三个人纠缠不清，疑似同性恋。",
    "outro_lose": "【待定】",
    "seats": [
@@ -174,12 +182,22 @@
      "type": "bankrupt",
      "who": "others",
      "mode": "all"
+    },
+    {
+     "type": "richest_after",
+     "who": "player",
+     "days": 120
     }
    ],
    "lose": [
     {
      "type": "bankrupt",
      "who": "player"
+    },
+    {
+     "type": "not_richest_after",
+     "who": "player",
+     "days": 120
     }
    ]
   }

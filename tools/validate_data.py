@@ -119,7 +119,7 @@ def check_map(d: dict, max_house_lots: int = 4) -> list[str]:
 
 
 CONDITION_TYPES = {"bankrupt", "build_house", "control_industry", "control_street", "own_lots_pct",
-                   "assets_at_least", "days_over"}
+                   "assets_at_least", "days_over", "richest_after", "not_richest_after"}
 
 
 def check_campaign(d: dict, maps: dict, char_ids: set, max_players: int, playable_ids: set) -> list[str]:

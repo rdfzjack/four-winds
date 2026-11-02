@@ -57,6 +57,9 @@
 | `own_lots_pct` | `who`，`pct` | 拥有全图 pct% 以上的地 |
 | `assets_at_least` | `who`，`amount`（万圆） | 总资产达到这个数（破产的人不算） |
 | `days_over` | `days` | 天数超过 days：第 `days` 天走完、进入第 `days+1` 天的那一刻 |
+| `richest_after` / `not_richest_after` | `who`，`days` | 天数超过 days 并且 who 的总资产是（不是）所有没破产的人里最高的（并列算最高）。“限时内金额第一名”= 胜里写 `richest_after`、负里写 `not_richest_after` |
+
+`control_industry` 可以写 `"industries": ["transport", "entertainment"]`（可选 `industry_names` 显示用）= 这几个行业**都要**全部拥有。
 
 “击败某人”= `bankrupt` 那个人。“一个月内”要写 `days_over` 的天数；一个月暂定 30 天（作者定，示例关用）。
 

@@ -1,5 +1,5 @@
 {
- "_comment": "小九的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。开局资金、预置地产、总资产 N、限时都是起点数字，等逐关跑模拟后标定；标“待定”的是作者还没定的（第 3 关朋友的那条街、结局）。每关至少两个对手：第 1、2 关斐斐之外的第二个对手“路人甲”是占位。第 4 关“保护孔雀”用失败条件“孔雀破产”表示。",
+ "_comment": "小九的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。开局资金、预置地产、总资产 N、限时都是起点数字，等逐关跑模拟后标定；标“待定”的是作者还没定的（第 3 关朋友的那条街、结局）。每关至少两个对手：第 1、2 关斐斐之外的第二个对手“路人甲”是占位。第 4 关“保护孔雀”用失败条件“孔雀破产”表示。 作者试玩后：原第 2 关（拿骚，控制运输）去掉，原第 3 关改用银城布局（小意大利）；共 3 关（格数 50 → 81 → 160）。",
  "character": "giorgio",
  "name": "船王",
  "stages": [
@@ -14,13 +14,13 @@
     {
      "character": "giorgio",
      "player": true,
-     "cash": 500,
-     "deposit": 1000
+     "cash": 1000,
+     "deposit": 0
     },
     {
      "character": "david",
      "cash": 500,
-     "deposit": 1000
+     "deposit": 2000
     },
     {
      "character": "passerby_a",
@@ -33,7 +33,7 @@
     {
      "type": "assets_at_least",
      "who": "player",
-     "amount": 3000
+     "amount": 2000
     }
    ],
    "lose": [
@@ -49,47 +49,6 @@
   },
   {
    "id": "giorgio_2",
-   "name": "拿骚，小港口",
-   "map": "nassau",
-   "intro": "私酒中转港。斐斐觉得码头都归他，小九的船就靠不了岸。",
-   "outro_win": "斐斐发现自己名下的码头每天停满走私船，租金一分不少。",
-   "outro_lose": "【待定】",
-   "seats": [
-    {
-     "character": "giorgio",
-     "player": true,
-     "cash": 1000,
-     "deposit": 1000
-    },
-    {
-     "character": "david",
-     "cash": 1000,
-     "deposit": 1000
-    },
-    {
-     "character": "passerby_a",
-     "cash": 1000,
-     "deposit": 1000,
-     "ai": "standard_v2"
-    }
-   ],
-   "win": [
-    {
-     "type": "control_industry",
-     "who": "player",
-     "industry": "transport",
-     "industry_name": "运输"
-    }
-   ],
-   "lose": [
-    {
-     "type": "bankrupt",
-     "who": "player"
-    }
-   ]
-  },
-  {
-   "id": "giorgio_3",
    "name": "纽约，为朋友挺身而出",
    "map": "little_italy",
    "intro": "小九拍胸脯说“包在我身上”，转头就忘，想起来时期限快到了。斐斐觉得替朋友出头迟早要和黑帮扯上关系，先把那条街买下来。【待定】朋友是谁、哪条街作者还没定（占位：包厘街，对手路人甲是欺负朋友的人）。",
@@ -141,7 +100,7 @@
    ]
   },
   {
-   "id": "giorgio_4",
+   "id": "giorgio_3",
    "name": "上海，船王",
    "map": "shanghai_full",
    "intro": "孔雀在上海又玩大了，斐斐和理理要清算他，小九要保护孔雀。\n关前：斐斐和理理拿着孔雀的账本来找小九签字清算。小九没看（看不懂），说：“不行，他是我朋友。”",

@@ -25,8 +25,13 @@
    "villa": 150
   }
  },
- "favorites": {"_note": "角色喜欢的街（角色 id → 街道组 id），新框架 AI 的凑街执念只算这些街", "marcel": ["淮海中路"]},
-  "groups": {
+ "favorites": {
+  "_note": "角色喜欢的街（角色 id → 街道组 id），新框架 AI 的凑街执念只算这些街",
+  "marcel": [
+   "淮海中路"
+  ]
+ },
+ "groups": {
   "华山路": {
    "name": "华山路",
    "color": "#8d6e63"
@@ -93,8 +98,8 @@
   {
    "id": 1,
    "type": "land",
-   "name": "南京西路1号",
-   "group": "南京西路",
+   "name": "万航渡路1号",
+   "group": "万航渡路",
    "price_pct": 180,
    "build_cost_pct": 180,
    "source": "Story34.cit 地块 (-9,17)",

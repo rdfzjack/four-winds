@@ -20,7 +20,8 @@
    "name": "父亲的情妇",
    "nickname": "情妇",
    "color": "#b05080",
-   "placeholder": "原版赛珍珠"
+   "placeholder": "原版赛珍珠；AI 参数组 spendthrift（挥金如土）",
+   "ai_profile": "spendthrift"
   }
  ]
 }

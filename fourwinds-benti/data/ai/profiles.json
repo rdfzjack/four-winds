@@ -278,6 +278,16 @@
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
    }
+  },
+  "spendthrift": {
+   "_comment": "路人“挥金如土”：不看现金流、不留备用钱，有钱就花（用在个人主线的情妇）。角色 AI（new_v2）= 标准 AI + 这里的 front_v2。",
+   "front": {},
+   "front_v2": {
+    "_note": "safety_rolls=0 不看接下来几把会不会付不起，reserve_pct=0 不留下一把可能付的租的备用钱",
+    "safety_rolls": 0,
+    "reserve_pct": 0,
+    "value_noise_pct": 20
+   }
   }
  },
  "scoring": {

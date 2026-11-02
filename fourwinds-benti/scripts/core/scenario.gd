@@ -20,11 +20,13 @@ extends RefCounted
 const TYPES := {
 	"bankrupt": "who 破产（mode: any 任意一个 / all 全部，默认 any）",
 	"build_house": "who 名下有 kind 这种房子（kind 是房屋 id 或列表），数量 count（默认 1）",
-	"control_industry": "who 拥有地图上 industry 这个行业的全部企业",
+	"control_industry": "who 拥有地图上 industry 这个行业的全部企业（写 industries 列表 = 这几个行业都要全部拥有）",
 	"control_street": "who 拥有 group 这条街的全部地（group 不写 = 任意一条街）",
 	"own_lots_pct": "who 拥有全图 pct% 以上的地",
 	"assets_at_least": "who 的总资产达到 amount",
 	"days_over": "天数超过 days（第 days 天走完，进入第 days+1 天）",
+	"richest_after": "天数超过 days 并且 who 的总资产是所有没破产的人里最高的（并列算最高）",
+	"not_richest_after": "天数超过 days 并且 who 的总资产不是最高的（和 richest_after 配成“限时内金额第一名”）",
 }
 
 ## who 可以写：座位号、"player"（玩家自己）、"others"（除玩家以外的所有人）、座位号列表
@@ -127,6 +129,10 @@ func cond_met(game, c: Dictionary) -> bool:
 	var type := str(c.get("type", ""))
 	if type == "days_over":
 		return game.day > int(c.get("days", 0))
+	if type == "richest_after" or type == "not_richest_after":
+		return game.day > int(c.get("days", 0)) \
+				and _is_richest(game, seats_of(c.get("who", "player"), game.players.size())) \
+				== (type == "richest_after")
 	var list := seats_of(c.get("who", "player"), game.players.size())
 	if not TYPES.has(type) or list.is_empty():
 		return false
@@ -149,7 +155,9 @@ func _seat_ok(game, pi: int, type: String, c: Dictionary) -> bool:
 		"build_house":
 			ok = _houses_of(game, pi, c) >= int(c.get("count", 1))
 		"control_industry":
-			ok = _controls_industry(game, pi, str(c.get("industry", "")))
+			ok = true
+			for k in _industries_of(c):
+				ok = ok and _controls_industry(game, pi, k)
 		"control_street":
 			ok = _controls_street(game, pi, str(c.get("group", "")))
 		"own_lots_pct":
@@ -204,6 +212,28 @@ func _houses_of(game, pi: int, c: Dictionary) -> int:
 		if int(h["owner"]) == pi and kinds.has(str(h["kind"])):
 			n += 1
 	return n
+
+
+## who 里的人（取第一个）总资产是不是所有没破产的人里最高（并列算最高）
+func _is_richest(game, list: Array) -> bool:
+	if list.is_empty() or game.players[int(list[0])].bankrupt:
+		return false
+	var mine: int = game.total_assets(int(list[0]))
+	for p in game.alive_players():
+		if game.total_assets(p.index) > mine:
+			return false
+	return true
+
+
+## control_industry 要控制的行业：industries 列表（都要），或单个 industry
+func _industries_of(c: Dictionary) -> Array:
+	var out: Array = []
+	if c.has("industries"):
+		for k in c["industries"]:
+			out.append(str(k))
+	else:
+		out.append(str(c.get("industry", "")))
+	return out
 
 
 func _controls_industry(game, pi: int, industry: String) -> bool:
@@ -275,7 +305,8 @@ func describe(c: Dictionary, names: Array) -> String:
 	var text := "（未知条件）"
 	match str(c.get("type", "")):
 		"bankrupt":
-			var everyone: bool = str(c.get("mode", "any")) == "all" and c.get("who", "") == "others"
+			var everyone: bool = str(c.get("mode", "any")) == "all" \
+					and typeof(c.get("who", "")) == TYPE_STRING and c["who"] == "others"
 			text = "击败所有对手" if everyone else "%s破产" % who
 		"build_house":
 			var kinds: Array = c["kind"] if typeof(c.get("kind", "")) == TYPE_ARRAY \
@@ -286,7 +317,12 @@ func describe(c: Dictionary, names: Array) -> String:
 			var count := int(c.get("count", 1))
 			text = "%s建成%s%s" % [who, ("%d 栋" % count) if count > 1 else "一栋", "/".join(kind_names)]
 		"control_industry":
-			text = "%s控制所有“%s”企业" % [who, str(c.get("industry_name", c.get("industry", "")))]
+			var shown := str(c.get("industry_name", c.get("industry", "")))
+			if c.has("industries"):
+				shown = "、".join(c.get("industry_names", c["industries"]))
+				text = "%s同时控制所有“%s”企业" % [who, shown]
+			else:
+				text = "%s控制所有“%s”企业" % [who, shown]
 		"control_street":
 			var g := str(c.get("group", ""))
 			var street := "一整条街"
@@ -299,6 +335,10 @@ func describe(c: Dictionary, names: Array) -> String:
 			text = "%s总资产达到 %d 万" % [who, int(c.get("amount", 0))]
 		"days_over":
 			text = "超过 %d 天" % int(c.get("days", 0))
+		"richest_after":
+			text = "%d 天后%s的总资产是第一名" % [int(c.get("days", 0)), who]
+		"not_richest_after":
+			text = "%d 天后%s的总资产不是第一名" % [int(c.get("days", 0)), who]
 	return text
 
 

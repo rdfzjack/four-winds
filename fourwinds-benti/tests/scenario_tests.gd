@@ -24,6 +24,7 @@ func run(p_runner: Object) -> void:
 	test_win_lose_flow()
 	test_crossroad_modes()
 	test_stage_edit()
+	test_round1_fixes()
 	test_free_mode_untouched()
 	test_ai_games_end_in_time()
 	test_save_and_resume()
@@ -89,7 +90,7 @@ func test_campaign_data() -> void:
 	for e in data().errors:
 		check(not str(e).contains(".json：关卡") and not str(e).contains("campaigns"),
 				"主线数据没有校验问题：%s" % str(e))
-	var counts := {"david": 3, "eric": 3, "marcel": 3, "giorgio": 4}
+	var counts := {"david": 3, "eric": 3, "marcel": 3, "giorgio": 3}
 	for cid in counts:
 		check(data().campaigns.has(cid) and data().stages_of(cid).size() == counts[cid],
 				"%s 的主线有 %d 关" % [cid, counts[cid]])
@@ -105,6 +106,8 @@ func test_real_stages_play() -> void:
 		for i in range(data().stages_of(cid).size()):
 			var stage: Dictionary = data().stages_of(cid)[i].duplicate(true)
 			var g := scn_game(stage, 100 + i)
+			check(g.scenario.goals_text(g.scenario.names_of(g)).contains("胜利条件"),
+					"%s 的胜负说明能生成（不闪退）" % str(stage["id"]))
 			g.players[g.scenario.player_seat].human = false
 			g.players[g.scenario.player_seat].ai = "new_v2"
 			steps(g, 2500)
@@ -367,6 +370,50 @@ func test_stage_edit() -> void:
 	var v := sample_stage(0)    # 座位 1 有 tile 1 的平房
 	StageEdit.revoke(v, 1, 1)
 	check(not v["seats"][1].has("props"), "拿走预置房子的地，这个预置没了")
+
+
+## 第一轮试玩后的修复：限时第一名、多行业都要控制、路人抽卡、运气卡付每人付不起
+func test_round1_fixes() -> void:
+	var g := scn_game(sample_stage(0), 5, quiet_rules())
+	var sc: Scenario = g.scenario
+	var rich := {"type": "richest_after", "who": "player", "days": 5}
+	var poor := {"type": "not_richest_after", "who": "player", "days": 5}
+	g.day = 5
+	check(not sc.cond_met(g, rich) and not sc.cond_met(g, poor), "没到天数：两个都不满足")
+	g.day = 6
+	g.players[0].cash = 50000
+	check(sc.cond_met(g, rich) and not sc.cond_met(g, poor), "到期时金额第一：richest_after 满足")
+	g.players[0].cash = 0
+	g.players[0].deposit = 0
+	check(not sc.cond_met(g, rich) and sc.cond_met(g, poor), "到期时不是第一：not_richest_after 满足")
+	var both := {"type": "control_industry", "who": "player",
+			"industries": ["transport", "entertainment"]}
+	g.grant_lots(0, [8, 25])
+	check(not sc.cond_met(g, both), "只控制了运输：多行业条件不满足")
+	g.grant_lots(0, [13, 32])
+	check(sc.cond_met(g, both), "运输和娱乐都控制了：满足")
+	check(sc.describe(both, sc.names_of(g)).contains("同时控制"), "多行业条件的说明")
+	# 路人（不在任何卡的 allowed_for 里）也能抽到卡
+	var st := sample_stage(0)
+	st["seats"][2]["character"] = "passerby_a"
+	var g2 := scn_game(st, 5, quiet_rules())
+	var got := 0
+	for _i in range(20):
+		if not g2._pick_card(g2.players[2]).is_empty():
+			got += 1
+	check(got == 20, "路人每次都能抽到卡（%d / 20）" % got)
+	# 运气卡“付每人”：付不起时平分现金、财产无主（不归第一个收款人）
+	var g3 := scn_game(sample_stage(0), 5, quiet_rules())
+	g3.grant_lots(1, [9, 10])
+	g3.players[1].cash = 100
+	g3.players[1].deposit = 20
+	var c0: int = g3.players[0].cash
+	var c2: int = g3.players[2].cash
+	g3._apply_effect(g3.players[1], {"op": "money_to_each", "amount": 100})
+	check(g3.players[1].bankrupt, "付不起：破产")
+	check(g3.owner_of(9) == -1 and g3.owner_of(10) == -1, "财产无主，不归某个收款人")
+	check(g3.players[0].cash == c0 + 60 and g3.players[2].cash == c2 + 60,
+			"现金平分给收款人")
 
 
 func sample_stage_with(stage: Dictionary, patch: Dictionary) -> Dictionary:
