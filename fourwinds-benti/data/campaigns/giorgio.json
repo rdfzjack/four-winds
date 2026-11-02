@@ -33,7 +33,7 @@
     {
      "type": "assets_at_least",
      "who": "player",
-     "amount": 1200
+     "amount": 1000
     }
    ],
    "lose": [
