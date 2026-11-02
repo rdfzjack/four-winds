@@ -14,6 +14,7 @@ const INDUSTRY_NAMES := {"transport": "运输", "entertainment": "娱乐", "shop
 
 var _profile: Dictionary = {}
 var _notice: String = ""   ## 简介页上提示一句（比如“座位已满”）
+var _goals_head: Label = null  ## 简介页顶上的胜负说明，改目标时跟着刷新
 
 
 func _init() -> void:
@@ -99,11 +100,10 @@ func _show_briefing(cid: String, index: int) -> void:
 	_label("第 %d 关 · %s" % [index + 1, str(stage.get("name", ""))], 26, Color.WHITE)
 	var board = Data.maps.get(str(stage.get("map", "")))
 	_label("地图：%s" % (board.display_name if board != null else "（找不到）"), 14, Color("#b0bec5"))
-	var intro := str(stage.get("intro", ""))
-	if intro != "":
-		_label(intro, 16, Color("#cfd8dc"))
-	_label(sc.goals_text(names), 16, Color("#ffd54f"))
+	_goals_head = _label(sc.goals_text(names), 16, Color("#ffd54f"))
 	_label("调试：下面改的只对这次运行有效，不写进文件；改完点“开始”", 13, Color("#b0bec5"))
+	_goal_editor(cid, index, names, board)
+	_text_editors(cid, index)
 	for i in range(names.size()):
 		_seat_block(cid, index, i, names[i], i == sc.player_seat, board)
 	_add_opponent_row(cid, index, stage)
@@ -355,3 +355,148 @@ func _add_opponent_row(cid: String, index: int, stage: Dictionary) -> void:
 	if not _notice.is_empty():
 		_label(_notice, 13, Color("#ef9a9a"))
 		_notice = ""
+
+
+# ───────────────────────── 目标编辑器 ─────────────────────────
+
+## 刷新简介页顶上的胜负说明（改数字时不重画整页，免得输入框丢焦点）
+func _refresh_goals_head(cid: String, index: int) -> void:
+	if _goals_head == null:
+		return
+	var sc := Scenario.new(Data.stage_for(cid, index))
+	_goals_head.text = sc.goals_text(sc.seat_names(Data.all_characters()))
+
+
+## 胜利 / 失败条件：每条一行（说明 + 参数 + 删除），最下面加条件
+func _goal_editor(cid: String, index: int, names: Array, board) -> void:
+	for key in ["win", "lose"]:
+		var title := "胜利条件（满足任意一条就过关）" if key == "win" else "失败条件（满足任意一条就失败）"
+		_label(title, 14, Color("#ffd54f") if key == "win" else Color("#ef9a9a"))
+		var list: Array = Data.stage_for(cid, index).get(key, [])
+		for i in range(list.size()):
+			_condition_row(cid, index, key, i, names, board)
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 6)
+		add_child(row)
+		var pick := OptionButton.new()
+		for t in StageEdit.COND_TYPES:
+			pick.add_item(str(StageEdit.COND_LABELS[t]))
+		row.add_child(pick)
+		var add := Button.new()
+		add.text = "添加这个条件"
+		add.pressed.connect(func() -> void:
+				StageEdit.add_condition(_editable(cid, index), key,
+						StageEdit.default_condition(str(StageEdit.COND_TYPES[pick.selected]), board))
+				_show_briefing(cid, index))
+		row.add_child(add)
+
+
+func _condition_row(cid: String, index: int, key: String, i: int, names: Array, board) -> void:
+	var stage := _editable(cid, index)
+	var c: Dictionary = stage[key][i]
+	var type := str(c.get("type", ""))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	add_child(row)
+	var name_label := Label.new()
+	name_label.text = "　%s" % str(StageEdit.COND_LABELS.get(type, type))
+	name_label.custom_minimum_size = Vector2(190, 0)
+	row.add_child(name_label)
+	if c.has("who") and type != "days_over":
+		var choices := StageEdit.who_choices(stage, names)
+		var who_box := OptionButton.new()
+		for ch in choices:
+			who_box.add_item(str(ch["label"]))
+		who_box.select(StageEdit.who_index(c, choices))
+		who_box.item_selected.connect(func(k: int) -> void:
+				StageEdit.apply_who(_editable(cid, index)[key][i], choices[k])
+				_refresh_goals_head(cid, index))
+		row.add_child(who_box)
+	match type:
+		"assets_at_least":
+			_cond_number(row, cid, index, key, i, "amount", 1000, 99999, 100, "万")
+		"days_over", "richest_after", "not_richest_after":
+			_cond_number(row, cid, index, key, i, "days", 1, 999, 1, "天")
+		"own_lots_pct":
+			_cond_number(row, cid, index, key, i, "pct", 1, 100, 5, "%")
+		"build_house":
+			_cond_choice(row, cid, index, key, i, "kind", StageEdit.HOUSE_KINDS)
+			_cond_number(row, cid, index, key, i, "count", 1, 20, 1, "栋")
+		"control_street":
+			var streets := {}
+			if board != null:
+				for g in board.groups:
+					streets[str(g)] = str(board.groups[g].get("name", g))
+			_cond_choice(row, cid, index, key, i, "group", streets)
+		"control_industry":
+			if c.has("industries"):
+				var tip := Label.new()
+				tip.text = "（多个行业都要，在 json 里改）"
+				row.add_child(tip)
+			else:
+				var inds := {}
+				if board != null:
+					for t in board.tiles:
+						if str(t["type"]) == "company" and not t.has("site"):
+							inds[str(t.get("industry", ""))] = str(INDUSTRY_NAMES.get(str(t.get("industry", "")),
+									str(t.get("industry", ""))))
+				_cond_choice(row, cid, index, key, i, "industry", inds)
+	var remove := Button.new()
+	remove.text = "删除"
+	remove.pressed.connect(func() -> void:
+			var why := StageEdit.remove_condition(_editable(cid, index), key, i)
+			if why != "":
+				_notice = why
+			_show_briefing(cid, index))
+	row.add_child(remove)
+
+
+func _cond_number(row: Node, cid: String, index: int, key: String, i: int, field: String,
+		lo: int, hi: int, step: int, unit: String) -> void:
+	var c: Dictionary = Data.stage_for(cid, index)[key][i]
+	var box := SpinBox.new()
+	box.min_value = 0
+	box.max_value = hi
+	box.step = step
+	box.value = float(c.get(field, lo))
+	box.value_changed.connect(func(v: float) -> void:
+			_editable(cid, index)[key][i][field] = int(v)
+			_refresh_goals_head(cid, index))
+	row.add_child(box)
+	var u := Label.new()
+	u.text = unit
+	row.add_child(u)
+
+
+## 下拉选一项：options 是 {值: 显示名}；改了写进 field（同时去掉旧的显示名字段）
+func _cond_choice(row: Node, cid: String, index: int, key: String, i: int, field: String,
+		options: Dictionary) -> void:
+	var c: Dictionary = Data.stage_for(cid, index)[key][i]
+	var box := OptionButton.new()
+	var values: Array = options.keys()
+	for v in values:
+		box.add_item(str(options[v]))
+	var cur := values.find(str(c.get(field, "")))
+	box.select(maxi(cur, 0))
+	box.item_selected.connect(func(k: int) -> void:
+			var cond: Dictionary = _editable(cid, index)[key][i]
+			cond[field] = values[k]
+			cond.erase("industry_name")
+			cond.erase("group_name")
+			_refresh_goals_head(cid, index))
+	row.add_child(box)
+
+
+## 关前简介、胜利后、失败后三段文字
+func _text_editors(cid: String, index: int) -> void:
+	var stage: Dictionary = Data.stage_for(cid, index)
+	for pair in [["intro", "关前简介"], ["outro_win", "胜利后"], ["outro_lose", "失败后"]]:
+		var field: String = pair[0]
+		_label(str(pair[1]), 13, Color("#b0bec5"))
+		var box := TextEdit.new()
+		box.custom_minimum_size = Vector2(0, 70)
+		box.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+		box.text = str(stage.get(field, ""))
+		box.text_changed.connect(func() -> void:
+				_editable(cid, index)[field] = box.text)
+		add_child(box)

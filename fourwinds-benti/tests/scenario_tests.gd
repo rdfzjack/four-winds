@@ -1,3 +1,4 @@
+# gdlint: ignore=max-public-methods
 extends "res://tests/save_tests.gd"
 ## 第 8a 步：个人主线框架的测试：条件类型、开局设置、胜 / 负 / 超时、没有关卡时不变、
 ## 存档读档后接着判定、进度文件（profile）读写和损坏。
@@ -25,6 +26,7 @@ func run(p_runner: Object) -> void:
 	test_crossroad_modes()
 	test_stage_edit()
 	test_round1_fixes()
+	test_goal_editing()
 	test_free_mode_untouched()
 	test_ai_games_end_in_time()
 	test_save_and_resume()
@@ -414,6 +416,42 @@ func test_round1_fixes() -> void:
 	check(g3.owner_of(9) == -1 and g3.owner_of(10) == -1, "财产无主，不归某个收款人")
 	check(g3.players[0].cash == c0 + 60 and g3.players[2].cash == c2 + 60,
 			"现金平分给收款人")
+
+
+## 简介页的目标编辑：每种条件都能加、改出来的关卡仍然合法、胜负能判
+func test_goal_editing() -> void:
+	var maps := real_maps()
+	var s := sample_stage(1)    # shanghai_west，4 个座位
+	var board = maps["shanghai_west"]
+	var all := data().all_characters()
+	for type in StageEdit.COND_TYPES:
+		var t := sample_stage(1)
+		var c := StageEdit.default_condition(type, board)
+		check(str(c.get("type", "")) == type, "%s 有默认条件" % type)
+		StageEdit.add_condition(t, "win", c)
+		check(Scenario.validate(t, maps, all, rules).is_empty(),
+				"加了 %s 以后关卡仍然合法 %s" % [type, str(Scenario.validate(t, maps, all, rules))])
+		var g := scn_game(t, 3, quiet_rules())
+		check(g.scenario.goals_text(g.scenario.names_of(g)).contains("胜利条件"), "%s 的说明能生成" % type)
+		g.scenario.check(g)   # 判一次不崩
+	# 删条件：至少留一个
+	var u := sample_stage(1)
+	check(StageEdit.remove_condition(u, "lose", 0) == "" or u["lose"].size() >= 1, "删条件")
+	while u["win"].size() > 1:
+		StageEdit.remove_condition(u, "win", 0)
+	check(StageEdit.remove_condition(u, "win", 0) != "" and u["win"].size() == 1, "最后一个条件删不掉")
+	# “谁”的选项
+	var names: Array = Scenario.new(s).seat_names(all)
+	var choices := StageEdit.who_choices(s, names)
+	check(choices.size() == 3 + s["seats"].size() - 1, "who 选项：你 + 两组 + 每个对手 %d" % choices.size())
+	var c1 := {"type": "bankrupt", "who": "others", "mode": "all"}
+	check(StageEdit.who_index(c1, choices) == 2, "击败所有对手对应第 3 项")
+	StageEdit.apply_who(c1, choices[1])
+	check(c1["who"] == "others" and c1["mode"] == "any", "改成任意一个对手")
+	StageEdit.apply_who(c1, choices[3])
+	check(c1["who"] == choices[3]["who"] and not c1.has("mode"), "改成具体某个对手：不带 mode")
+	check(StageEdit.who_index(c1, choices) == 3, "再读回来还是第 4 项")
+	check(StageEdit.who_index({"type": "bankrupt", "who": "player"}, choices) == 0, "你 = 第 1 项")
 
 
 func sample_stage_with(stage: Dictionary, patch: Dictionary) -> Dictionary:

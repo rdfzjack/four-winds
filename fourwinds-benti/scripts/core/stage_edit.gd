@@ -4,6 +4,18 @@ extends RefCounted
 
 const PLAYER_KEY := "player"
 
+## 能加的条件类型（顺序就是界面下拉的顺序）和界面上的名字
+const COND_TYPES := ["bankrupt", "assets_at_least", "days_over", "build_house", "control_street",
+		"control_industry", "own_lots_pct", "richest_after", "not_richest_after"]
+const COND_LABELS := {
+	"bankrupt": "某人破产（击败）", "assets_at_least": "总资产达到", "days_over": "超过多少天（限时）",
+	"build_house": "建成某种房子", "control_street": "凑齐一条街",
+	"control_industry": "控制一个行业的全部企业", "own_lots_pct": "拥有全图一定比例的地",
+	"richest_after": "限时到期时总资产第一", "not_richest_after": "限时到期时总资产不是第一",
+}
+const HOUSE_KINDS := {"flat": "平房", "hotel": "旅社", "super_hotel": "旅馆", "floor": "小洋楼",
+		"super_floor": "花园洋房", "villa": "别墅"}
+
 
 ## 加一个对手（放在最后）。成功返回 ""，否则返回原因。max_players 是 rules.json 的上限。
 static func add_seat(stage: Dictionary, character: String, ai: String, cash: int, deposit: int,
@@ -108,3 +120,92 @@ static func revoke(stage: Dictionary, index: int, tile: int) -> void:
 	seat["props"] = kept
 	if kept.is_empty():
 		seat.erase("props")
+
+
+# ───────────────────────── 目标（胜 / 负条件）的编辑 ─────────────────────────
+
+## 一个类型的默认条件（加条件时用）。board 用来挑默认的街 / 行业
+static func default_condition(type: String, board) -> Dictionary:
+	match type:
+		"bankrupt":
+			return {"type": "bankrupt", "who": "others", "mode": "all"}
+		"assets_at_least":
+			return {"type": "assets_at_least", "who": "player", "amount": 2000}
+		"days_over":
+			return {"type": "days_over", "days": 30}
+		"build_house":
+			return {"type": "build_house", "who": "player", "kind": "villa", "count": 1}
+		"control_street":
+			var groups: Array = board.groups.keys() if board != null else []
+			var g: String = str(groups[0]) if not groups.is_empty() else ""
+			return {"type": "control_street", "who": "player", "group": g}
+		"control_industry":
+			var industry := ""
+			if board != null:
+				for t in board.tiles:
+					if str(t["type"]) == "company" and not t.has("site"):
+						industry = str(t.get("industry", ""))
+						break
+			return {"type": "control_industry", "who": "player", "industry": industry}
+		"own_lots_pct":
+			return {"type": "own_lots_pct", "who": "player", "pct": 40}
+		"richest_after":
+			return {"type": "richest_after", "who": "player", "days": 100}
+		"not_richest_after":
+			return {"type": "not_richest_after", "who": "player", "days": 100}
+	return {}
+
+
+## 加一个条件到 stage[key]（"win" / "lose"）
+static func add_condition(stage: Dictionary, key: String, cond: Dictionary) -> void:
+	if not stage.has(key):
+		stage[key] = []
+	stage[key].append(cond)
+
+
+## 删 stage[key] 的第 index 个条件；胜 / 负条件至少留一个。成功返回 ""，否则原因
+static func remove_condition(stage: Dictionary, key: String, index: int) -> String:
+	var list: Array = stage.get(key, [])
+	if index < 0 or index >= list.size():
+		return "没有这个条件"
+	if list.size() <= 1:
+		return "至少要留一个条件"
+	list.remove_at(index)
+	return ""
+
+
+## “谁”的下拉选项：你、任意一个对手、所有对手、每个对手。names 是每个座位的名字。
+## 返回 [{label, who, mode}]（mode 只有对手组才有意义）
+static func who_choices(stage: Dictionary, names: Array) -> Array:
+	var out: Array = [{"label": "你", "who": "player", "mode": ""},
+			{"label": "任意一个对手", "who": "others", "mode": "any"},
+			{"label": "所有对手（都要）", "who": "others", "mode": "all"}]
+	for i in range(stage["seats"].size()):
+		if not bool(stage["seats"][i].get(PLAYER_KEY, false)):
+			out.append({"label": str(names[i]), "who": i, "mode": ""})
+	return out
+
+
+## 条件 c 现在对应 choices 里的第几项（找不到返回 0）
+static func who_index(c: Dictionary, choices: Array) -> int:
+	var who = c.get("who", "player")
+	var mode := str(c.get("mode", "any"))
+	for i in range(choices.size()):
+		var ch: Dictionary = choices[i]
+		if typeof(who) == TYPE_STRING and typeof(ch["who"]) == TYPE_STRING and ch["who"] == who:
+			if who == "others" and str(ch["mode"]) != mode:
+				continue
+			return i
+		if typeof(who) != TYPE_STRING and typeof(who) != TYPE_ARRAY and typeof(ch["who"]) != TYPE_STRING \
+				and int(ch["who"]) == int(who):
+			return i
+	return 0
+
+
+## 把 choices[index] 写进条件 c 的 who / mode
+static func apply_who(c: Dictionary, choice: Dictionary) -> void:
+	c["who"] = choice["who"]
+	if str(choice["mode"]) != "":
+		c["mode"] = choice["mode"]
+	else:
+		c.erase("mode")
