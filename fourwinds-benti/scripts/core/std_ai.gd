@@ -563,10 +563,33 @@ static func _price(game, pi: int, q: int, give: Array, tiles: Array, times: int,
 	var x := fair / (1.0 + param(game, pi, "bid_down_pct", 0) / 100.0) \
 			* (1.0 + times * param(game, pi, "trade_raise_pct", 10) / 100.0)
 	var pay := mini(most, Trader._round_up(int(clampf(x, 0.0, float(most)))))
+	# 底线：开价不低于“要的地 − 给的地”市价的 trade_floor_pct%（对方缺钱卖不出时除外）。
+	# 低于底线又出不起（most 不够）就不发起：不拿明显不合理的价去试探（试玩记录：现金只剩 286 的 AI
+	# 向有 1265 的人开价 17 万要三块总价 480 万的地）
+	var floor_pct := param(game, pi, "trade_floor_pct", 0)
+	if floor_pct > 0.0 and not _seller_in_need(game, q, tiles):
+		var worth := 0
+		for t in tiles:
+			worth += game.property_price(int(t))
+		for t in give:
+			worth -= game.property_price(int(t))
+		var floor := int(float(worth) * floor_pct / 100.0)
+		if pay < floor:
+			if floor > most:
+				return {}
+			pay = floor
 	if pay > cash:
 		return {}
 	offer["give_cash"] = pay
 	return {"offer": offer, "gain": mine.call(pay), "most": most, "least": least}
+
+
+## 卖家 q 缺钱吗：他手上的钱（现金 + 存款）还不够买回他要交出的这些地——缺钱的人可能低价就卖
+static func _seller_in_need(game, q: int, tiles: Array) -> bool:
+	var price := 0
+	for t in tiles:
+		price += game.property_price(int(t))
+	return game.players[q].cash + game.players[q].deposit < price
 
 
 ## pi 猜 q 怎么看这笔交易：用 pi 的估价，按标准的得分算（不知道 q 的性格），换算成钱

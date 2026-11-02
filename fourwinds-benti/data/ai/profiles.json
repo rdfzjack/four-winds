@@ -118,7 +118,8 @@
     "ask_up_pct": 0,
     "bid_down_pct": 0,
     "distress_use_pct": 100,
-    "_personality": "以上新 AI 参数是“标准 AI”（ai 版本 standard，没有性格）用的值，也是各角色没写时的默认值。各角色的性格写在自己参数组的 front 里"
+    "_personality": "以上新 AI 参数是“标准 AI”（ai 版本 standard，没有性格）用的值，也是各角色没写时的默认值。各角色的性格写在自己参数组的 front 里",
+    "trade_floor_pct": 50
    }
   },
   "david": {
