@@ -201,7 +201,8 @@ func export_record() -> Dictionary:
 		seats.append({"player": p.index, "name": p.display_name, "character": p.character,
 				"human": p.human, "ai": p.ai, "form": p.form})
 	return {
-		"format": 1, "map": board.id, "seed": seed_used, "crossroad": crossroad_override,
+		"map": board.id, "stage": str(scenario.stage.get("id", "")) if scenario != null else "",
+		"format": 1, "seed": seed_used, "crossroad": crossroad_override,
 		"day": day, "phase": phase,
 		"winner": winner, "seats": seats, "final": snapshot(), "history": history,
 	}

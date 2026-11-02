@@ -1282,7 +1282,7 @@ func _export_record() -> void:
 	if f == null:
 		_log_add("[color=#ef5350]记录存不了：%s[/color]\n" % path)
 		return
-	f.store_string(JSON.stringify(game.export_record(), " "))
+	f.store_string(JSON.stringify(game.export_record(), " ", false))  # 不排序：开头就是地图、关卡、种子
 	f.close()
 	_log_add("[color=#81c784]对局记录已存：%s[/color]\n" % ProjectSettings.globalize_path(path))
 
