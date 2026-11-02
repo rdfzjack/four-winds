@@ -7,7 +7,7 @@
    "id": "giorgio_1",
    "name": "那不勒斯，进货",
    "map": "naples",
-   "intro": "禁酒令，回欧洲进酒。斐斐觉得把酒买走他就运不成了。",
+   "intro": "禁酒令，回欧洲进酒。斐斐觉得把酒买走他就运不成了。\n（数据照原版元宝山一关：三人都是 500/1000，玩家多一条 3 块的街；一个月内击败所有对手。）",
    "outro_win": "小九的酒运走了。斐斐仓库里堆得更多，说是“作为投资的葡萄酒收藏”。",
    "outro_lose": "【待定】",
    "seats": [
@@ -15,25 +15,36 @@
      "character": "giorgio",
      "player": true,
      "cash": 500,
-     "deposit": 200
+     "deposit": 1000,
+     "props": [
+      {
+       "tile": 0
+      },
+      {
+       "tile": 34
+      },
+      {
+       "tile": 35
+      }
+     ]
     },
     {
      "character": "david",
-     "cash": 300,
-     "deposit": 500
+     "cash": 500,
+     "deposit": 1000
     },
     {
      "character": "passerby_a",
-     "cash": 300,
-     "deposit": 300,
-     "ai": "standard_v2"
+     "ai": "standard_v2",
+     "cash": 500,
+     "deposit": 1000
     }
    ],
    "win": [
     {
-     "type": "assets_at_least",
-     "who": "player",
-     "amount": 1000
+     "type": "bankrupt",
+     "who": "others",
+     "mode": "all"
     }
    ],
    "lose": [
@@ -43,7 +54,7 @@
     },
     {
      "type": "days_over",
-     "days": 40
+     "days": 30
     }
    ]
   },
