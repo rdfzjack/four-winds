@@ -189,7 +189,7 @@ func snapshot() -> Array:
 		out.append({
 			"player": p.index, "name": p.display_name, "cash": p.cash, "deposit": p.deposit,
 			"total_assets": total_assets(p.index), "bankrupt": p.bankrupt, "pos": p.pos,
-			"properties": properties_of(p.index), "status": p.status,
+			"properties": properties_of(p.index), "status": p.status.duplicate(true),
 			"houses": _houses_of_player(p.index), "mortgaged": _mortgaged_of(p.index),
 		})
 	return out
@@ -200,7 +200,7 @@ func _houses_of_player(pi: int) -> Array:
 	var out: Array = []
 	for hid in houses:
 		if int(houses[hid]["owner"]) == pi:
-			out.append({"kind": houses[hid]["kind"], "tiles": houses[hid]["tiles"]})
+			out.append({"kind": houses[hid]["kind"], "tiles": houses[hid]["tiles"].duplicate()})
 	return out
 
 
