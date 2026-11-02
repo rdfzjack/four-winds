@@ -24,8 +24,9 @@
 | `fourwinds-benti/data/` | 所有规则数值、角色、地图、机会卡、AI 参数（JSON），作者会自己改 |
 | `fourwinds-benti/data/lines/` | 台词：每个角色一个纯文本文件（`斐斐.txt`…）+ 事件表 `events.json`。写法见 `docs/lines.md` |
 | `fourwinds-benti/data/campaigns/` | 个人主线关卡，每个角色一个文件（`eric.json`、`david.json`…），格式见 `docs/campaigns.md`；测试用的示例关在 `tests/fixtures/` |
+| `fourwinds-benti/data/extra_characters.json` | 路人（堂弟、路人甲、情妇），只在个人主线关卡里当座位，可写 `ai_profile` |
 | `fourwinds-benti/data/reference/` | 原版城市价格参考，游戏不读 |
-| `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试。`game.gd` 是一局游戏的全部规则（用法见文件开头的注释），`board.gd` 是地图，`player.gd` 是玩家数据，`streets.gd` 是街道进度（凑大房子还差什么），`ai.gd` 是 AI 入口（`AI.step(game)`，按玩家的 AI 版本分派），`ai_profiles.gd` 按“角色 + 形态”取 AI 参数，`brain.gd` 是原版 AI，`lines_db.gd` 读台词文件并按条件筛句子，`speech.gd` 决定“谁在什么时候对谁说哪句”（`plan(events)`，画面只负责显示），`scenario.gd` 关卡（开局设置 + 胜负条件，`Game.scenario`，没有关卡时规则完全不变），`profile.gd` 玩家进度（`user://profile.json`，和对局存档分开），`save_game.gd` 存档 / 读档（用法见文件开头；`Game.export_state` / `import_state` 是整局状态，改了 `Game`、`Player`、`Speech` 里要跨回合保留的变量，要同步改这几个函数，`tests/save_tests.gd` 会报不一致） |
+| `fourwinds-benti/scripts/core/` | 规则逻辑。只处理数据，**不依赖画面节点**，能在无头模式下测试。`game.gd` 是一局游戏的全部规则（用法见文件开头的注释），`board.gd` 是地图，`player.gd` 是玩家数据，`streets.gd` 是街道进度（凑大房子还差什么），`ai.gd` 是 AI 入口（`AI.step(game)`，按玩家的 AI 版本分派），`ai_profiles.gd` 按“角色 + 形态”取 AI 参数，`brain.gd` 是原版 AI，`lines_db.gd` 读台词文件并按条件筛句子，`speech.gd` 决定“谁在什么时候对谁说哪句”（`plan(events)`，画面只负责显示），`scenario.gd` 关卡（开局设置 + 胜负条件，`Game.scenario`，没有关卡时规则完全不变），`profile.gd` 玩家进度（`user://profile.json`，和对局存档分开），`stage_edit.gd` 关卡数据的编辑（简介页的增减对手 / 地产 / 目标），`save_game.gd` 存档 / 读档（用法见文件开头；`Game.export_state` / `import_state` 是整局状态，改了 `Game`、`Player`、`Speech` 里要跨回合保留的变量，要同步改这几个函数，`tests/save_tests.gd` 会报不一致） |
 | `fourwinds-benti/scripts/ui/` | 画面和操作：`main.gd` 选座位，`table.gd` 棋盘和热座（驱动游戏、界面层），`map_view.gd` 地图层，`map_camera.gd` 镜头，`iso.gd` 等距换算（**格子 ↔ 位置只走这里**），`art.gd` 素材路径表（**图片只从这里拿**），`save_panel.gd` 存档位列表（存档、读档共用），`campaign_panel.gd` 个人主线入口（选角色 → 关卡 → 简介） |
 | `fourwinds-benti/assets/placeholder/` | 原版素材占位，由 `tools/copy_placeholder.py` 生成，来源见目录里的 `README.md`。换成作者的素材后整个删掉 |
 | `fourwinds-benti/scripts/autoload/` | 全局单例（`Data` 读取 data/ 下的所有数据） |
@@ -89,6 +90,6 @@ xvfb-run -s "-screen 0 1280x720x24" godot --rendering-driver opengl3 --script re
 台词文件有没有写错：`python3 tools/validate_data.py`（同时检查地图和数据）。
 `fourwinds-benti/tools/ai_eval.gd` 是“AI 对 AI”评测工具（用法见文件开头）。
 `fourwinds-benti/tools/ai_scenarios.gd`（标准 AI 的固定局面场景，几秒）和 `ai_characters.gd`（表形态角色的场景 + 成交价区间表，一两分钟）检查 AI 的打法方向。工具脚本加载失败时 Godot 不会退出，运行前先 `godot --headless --check-only --script 路径` 查语法。
-`fourwinds-benti/tools/ui_check.gd` 会让画面自动玩一阵再截图（`ai` 全 AI，`human` 替人类点按钮，用法见文件开头）。`tools/campaign_check.gd` 截个人主线的角色列表、关卡列表、简介、开局、结算页（用法见文件开头）。
+`fourwinds-benti/tools/ui_check.gd` 会让画面自动玩一阵再截图（`ai` 全 AI，`human` 替人类点按钮，用法见文件开头）。`tools/campaign_check.gd` 截个人主线的角色列表、关卡列表、简介、开局、结算页（用法见文件开头）。`tools/campaign_audit.gd` 让 AI 替玩家把每一关打 N 局，看结果分布、天数、冷门地块（只是参考，AI 不会特意去达成目标）。
 云端截图能查排版，手感仍需作者在 Windows 上按 F5 确认。
 Godot 生成的 `*.uid` 文件要提交进仓库。

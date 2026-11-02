@@ -423,7 +423,7 @@ func test_goal_editing() -> void:
 	var maps := real_maps()
 	var s := sample_stage(1)    # shanghai_west，4 个座位
 	var board = maps["shanghai_west"]
-	var all := data().all_characters()
+	var all: Array = data().all_characters()
 	for type in StageEdit.COND_TYPES:
 		var t := sample_stage(1)
 		var c := StageEdit.default_condition(type, board)
