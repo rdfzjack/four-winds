@@ -1,0 +1,2624 @@
+{
+ "id": "riviera",
+ "name": "蔚蓝海岸",
+ "placeholder": true,
+ "_comment": "由 tools/cit_to_map.py 从原版 Cit_Beiping.cit（北平，自由模式城市）转换，地名、企业名按个人主线重新包装；行业按斐斐第 3 关需要调整过：食品 → 娱乐，一家报业 → 商业（共 运输 4 / 娱乐 4 / 商业 4 / 报业 2）。之后可直接修改。pos 是原版的路面格。",
+ "start_tile": 0,
+ "prices": {
+  "_comment": "原版 北平 的 CITY_PROPERTY，单位万圆。",
+  "blank_land_price": 80,
+  "build_cost": {
+   "flat": 40,
+   "hotel": 100,
+   "floor": 140,
+   "villa": 200,
+   "upgrade": 60,
+   "function": 80
+  },
+  "rent": {
+   "blank_land": 15,
+   "flat": 30,
+   "hotel": 60,
+   "super_hotel": 80,
+   "floor": 80,
+   "super_floor": 120,
+   "villa": 150
+  }
+ },
+ "groups": {
+  "英国人散步大道": {
+   "name": "英国人散步大道",
+   "color": "#8d6e63"
+  },
+  "尼斯老城": {
+   "name": "尼斯老城",
+   "color": "#4fc3f7"
+  },
+  "滨海自由城": {
+   "name": "滨海自由城",
+   "color": "#f48fb1"
+  },
+  "费拉角": {
+   "name": "费拉角",
+   "color": "#ba68c8"
+  },
+  "博利厄": {
+   "name": "博利厄",
+   "color": "#ff8a65"
+  },
+  "埃兹": {
+   "name": "埃兹",
+   "color": "#e57373"
+  },
+  "蒙特卡洛": {
+   "name": "蒙特卡洛",
+   "color": "#fff176"
+  },
+  "芒通": {
+   "name": "芒通",
+   "color": "#81c784"
+  },
+  "马丁角": {
+   "name": "马丁角",
+   "color": "#1565c0"
+  },
+  "戛纳十字大道": {
+   "name": "戛纳十字大道",
+   "color": "#4db6ac"
+  },
+  "戛纳老港": {
+   "name": "戛纳老港",
+   "color": "#8d6e63"
+  },
+  "昂蒂布角": {
+   "name": "昂蒂布角",
+   "color": "#4fc3f7"
+  },
+  "瑞昂莱潘": {
+   "name": "瑞昂莱潘",
+   "color": "#f48fb1"
+  },
+  "格拉斯山路": {
+   "name": "格拉斯山路",
+   "color": "#ba68c8"
+  },
+  "卡涅滨海": {
+   "name": "卡涅滨海",
+   "color": "#ff8a65"
+  },
+  "圣让卡普费拉": {
+   "name": "圣让卡普费拉",
+   "color": "#e57373"
+  }
+ },
+ "tiles": [
+  {
+   "id": 0,
+   "type": "land",
+   "name": "英国人散步大道1号",
+   "group": "英国人散步大道",
+   "price_pct": 65,
+   "build_cost_pct": 88,
+   "source": "Beiping.cit 地块 (-1,13)",
+   "lot": [
+    -1,
+    13
+   ],
+   "pos": [
+    -1,
+    14
+   ],
+   "next": [
+    1
+   ]
+  },
+  {
+   "id": 1,
+   "type": "park",
+   "name": "地坛公园",
+   "source": "Beiping.cit 建筑 地坛公园",
+   "lot": [
+    -2,
+    13
+   ],
+   "pos": [
+    -2,
+    14
+   ],
+   "next": [
+    2
+   ]
+  },
+  {
+   "id": 2,
+   "type": "park",
+   "site": 1,
+   "pos": [
+    -3,
+    14
+   ],
+   "next": [
+    3
+   ]
+  },
+  {
+   "id": 3,
+   "type": "land",
+   "name": "尼斯老城5号",
+   "group": "尼斯老城",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (-4,13)",
+   "lot": [
+    -4,
+    13
+   ],
+   "pos": [
+    -4,
+    14
+   ],
+   "next": [
+    4
+   ]
+  },
+  {
+   "id": 4,
+   "type": "land",
+   "name": "尼斯老城4号",
+   "group": "尼斯老城",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (-5,13)",
+   "lot": [
+    -5,
+    13
+   ],
+   "pos": [
+    -5,
+    14
+   ],
+   "next": [
+    5
+   ]
+  },
+  {
+   "id": 5,
+   "type": "land",
+   "name": "尼斯老城3号",
+   "group": "尼斯老城",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (-6,13)",
+   "lot": [
+    -6,
+    13
+   ],
+   "pos": [
+    -6,
+    14
+   ],
+   "next": [
+    6
+   ]
+  },
+  {
+   "id": 6,
+   "type": "land",
+   "name": "尼斯老城2号",
+   "group": "尼斯老城",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (-7,13)",
+   "lot": [
+    -7,
+    13
+   ],
+   "pos": [
+    -7,
+    14
+   ],
+   "next": [
+    7
+   ]
+  },
+  {
+   "id": 7,
+   "type": "land",
+   "name": "尼斯老城1号",
+   "group": "尼斯老城",
+   "price_pct": 70,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (-8,13)",
+   "lot": [
+    -8,
+    13
+   ],
+   "pos": [
+    -8,
+    14
+   ],
+   "next": [
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "race_course",
+   "name": "赛马场",
+   "source": "Beiping.cit 建筑 赛马场",
+   "lot": [
+    -9,
+    15
+   ],
+   "pos": [
+    -9,
+    14
+   ],
+   "next": [
+    9
+   ]
+  },
+  {
+   "id": 9,
+   "type": "race_course",
+   "site": 8,
+   "pos": [
+    -10,
+    14
+   ],
+   "next": [
+    10
+   ]
+  },
+  {
+   "id": 10,
+   "type": "road",
+   "pos": [
+    -11,
+    14
+   ],
+   "next": [
+    11
+   ]
+  },
+  {
+   "id": 11,
+   "type": "race_course",
+   "site": 8,
+   "pos": [
+    -11,
+    15
+   ],
+   "next": [
+    12
+   ]
+  },
+  {
+   "id": 12,
+   "type": "race_course",
+   "site": 8,
+   "pos": [
+    -11,
+    16
+   ],
+   "next": [
+    13
+   ]
+  },
+  {
+   "id": 13,
+   "type": "land",
+   "name": "戛纳十字大道2号",
+   "group": "戛纳十字大道",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Beiping.cit 地块 (-10,17)",
+   "lot": [
+    -10,
+    17
+   ],
+   "pos": [
+    -11,
+    17
+   ],
+   "next": [
+    14
+   ]
+  },
+  {
+   "id": 14,
+   "type": "land",
+   "name": "戛纳十字大道1号",
+   "group": "戛纳十字大道",
+   "price_pct": 120,
+   "build_cost_pct": 120,
+   "source": "Beiping.cit 地块 (-10,18)",
+   "lot": [
+    -10,
+    18
+   ],
+   "pos": [
+    -11,
+    18
+   ],
+   "next": [
+    15
+   ]
+  },
+  {
+   "id": 15,
+   "type": "chance",
+   "name": "运气",
+   "source": "Beiping.cit 建筑 运气",
+   "lot": [
+    -12,
+    19
+   ],
+   "pos": [
+    -11,
+    19
+   ],
+   "next": [
+    16
+   ]
+  },
+  {
+   "id": 16,
+   "type": "chance",
+   "site": 15,
+   "pos": [
+    -11,
+    20
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 17,
+   "type": "road",
+   "pos": [
+    -11,
+    21
+   ],
+   "crossroad": "choice",
+   "next": [
+    18,
+    143
+   ]
+  },
+  {
+   "id": 18,
+   "type": "chance",
+   "site": 15,
+   "pos": [
+    -12,
+    21
+   ],
+   "next": [
+    19
+   ]
+  },
+  {
+   "id": 19,
+   "type": "chance",
+   "site": 15,
+   "pos": [
+    -13,
+    21
+   ],
+   "next": [
+    20
+   ]
+  },
+  {
+   "id": 20,
+   "type": "company",
+   "name": "白鹭精品店",
+   "industry": "shop",
+   "price": 400,
+   "rent": 80,
+   "source": "Beiping.cit 建筑 愚人书局",
+   "lot": [
+    -14,
+    20
+   ],
+   "pos": [
+    -14,
+    21
+   ],
+   "next": [
+    21
+   ]
+  },
+  {
+   "id": 21,
+   "type": "company",
+   "site": 20,
+   "pos": [
+    -15,
+    21
+   ],
+   "next": [
+    22
+   ]
+  },
+  {
+   "id": 22,
+   "type": "land",
+   "site": 24,
+   "pos": [
+    -16,
+    21
+   ],
+   "next": [
+    23
+   ]
+  },
+  {
+   "id": 23,
+   "type": "road",
+   "pos": [
+    -17,
+    21
+   ],
+   "next": [
+    24
+   ]
+  },
+  {
+   "id": 24,
+   "type": "land",
+   "name": "蒙特卡洛6号",
+   "group": "蒙特卡洛",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,22)",
+   "lot": [
+    -16,
+    22
+   ],
+   "pos": [
+    -17,
+    22
+   ],
+   "next": [
+    25
+   ]
+  },
+  {
+   "id": 25,
+   "type": "land",
+   "name": "蒙特卡洛5号",
+   "group": "蒙特卡洛",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,23)",
+   "lot": [
+    -16,
+    23
+   ],
+   "pos": [
+    -17,
+    23
+   ],
+   "next": [
+    26
+   ]
+  },
+  {
+   "id": 26,
+   "type": "land",
+   "name": "蒙特卡洛4号",
+   "group": "蒙特卡洛",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,24)",
+   "lot": [
+    -16,
+    24
+   ],
+   "pos": [
+    -17,
+    24
+   ],
+   "next": [
+    27
+   ]
+  },
+  {
+   "id": 27,
+   "type": "land",
+   "name": "蒙特卡洛3号",
+   "group": "蒙特卡洛",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,25)",
+   "lot": [
+    -16,
+    25
+   ],
+   "pos": [
+    -17,
+    25
+   ],
+   "next": [
+    28
+   ]
+  },
+  {
+   "id": 28,
+   "type": "company",
+   "name": "蒙特卡洛赌场",
+   "industry": "entertainment",
+   "price": 380,
+   "rent": 70,
+   "source": "Beiping.cit 建筑 全聚德烤鸭店",
+   "lot": [
+    -16,
+    26
+   ],
+   "pos": [
+    -17,
+    26
+   ],
+   "next": [
+    29
+   ]
+  },
+  {
+   "id": 29,
+   "type": "company",
+   "site": 28,
+   "pos": [
+    -17,
+    27
+   ],
+   "next": [
+    30
+   ]
+  },
+  {
+   "id": 30,
+   "type": "jail",
+   "name": "巡捕房",
+   "source": "Beiping.cit 建筑 巡捕房",
+   "lot": [
+    -18,
+    28
+   ],
+   "pos": [
+    -17,
+    28
+   ],
+   "next": [
+    31
+   ]
+  },
+  {
+   "id": 31,
+   "type": "jail",
+   "site": 30,
+   "pos": [
+    -17,
+    29
+   ],
+   "next": [
+    32
+   ]
+  },
+  {
+   "id": 32,
+   "type": "land",
+   "name": "芒通5号",
+   "group": "芒通",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,30)",
+   "lot": [
+    -16,
+    30
+   ],
+   "pos": [
+    -17,
+    30
+   ],
+   "next": [
+    33
+   ]
+  },
+  {
+   "id": 33,
+   "type": "land",
+   "name": "芒通4号",
+   "group": "芒通",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,31)",
+   "lot": [
+    -16,
+    31
+   ],
+   "pos": [
+    -17,
+    31
+   ],
+   "next": [
+    34
+   ]
+  },
+  {
+   "id": 34,
+   "type": "land",
+   "name": "芒通3号",
+   "group": "芒通",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,32)",
+   "lot": [
+    -16,
+    32
+   ],
+   "pos": [
+    -17,
+    32
+   ],
+   "next": [
+    35
+   ]
+  },
+  {
+   "id": 35,
+   "type": "land",
+   "name": "芒通2号",
+   "group": "芒通",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,33)",
+   "lot": [
+    -16,
+    33
+   ],
+   "pos": [
+    -17,
+    33
+   ],
+   "next": [
+    36
+   ]
+  },
+  {
+   "id": 36,
+   "type": "land",
+   "name": "芒通1号",
+   "group": "芒通",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (-16,34)",
+   "lot": [
+    -16,
+    34
+   ],
+   "pos": [
+    -17,
+    34
+   ],
+   "next": [
+    37
+   ]
+  },
+  {
+   "id": 37,
+   "type": "road",
+   "pos": [
+    -17,
+    35
+   ],
+   "next": [
+    38
+   ]
+  },
+  {
+   "id": 38,
+   "type": "land",
+   "site": 36,
+   "pos": [
+    -16,
+    35
+   ],
+   "next": [
+    39
+   ]
+  },
+  {
+   "id": 39,
+   "type": "bank",
+   "name": "银行",
+   "source": "Beiping.cit 建筑 银行",
+   "lot": [
+    -15,
+    36
+   ],
+   "pos": [
+    -15,
+    35
+   ],
+   "next": [
+    40
+   ]
+  },
+  {
+   "id": 40,
+   "type": "bank",
+   "site": 39,
+   "pos": [
+    -14,
+    35
+   ],
+   "next": [
+    41
+   ]
+  },
+  {
+   "id": 41,
+   "type": "company",
+   "name": "老港古董店",
+   "industry": "shop",
+   "price": 500,
+   "rent": 120,
+   "source": "Beiping.cit 建筑 联合百货公司",
+   "lot": [
+    -13,
+    34
+   ],
+   "pos": [
+    -13,
+    35
+   ],
+   "next": [
+    42
+   ]
+  },
+  {
+   "id": 42,
+   "type": "company",
+   "site": 41,
+   "pos": [
+    -12,
+    35
+   ],
+   "next": [
+    43
+   ]
+  },
+  {
+   "id": 43,
+   "type": "land",
+   "name": "格拉斯山路6号",
+   "group": "格拉斯山路",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (-11,36)",
+   "lot": [
+    -11,
+    36
+   ],
+   "pos": [
+    -11,
+    35
+   ],
+   "crossroad": "choice",
+   "next": [
+    44,
+    57
+   ]
+  },
+  {
+   "id": 44,
+   "type": "company",
+   "site": 41,
+   "pos": [
+    -11,
+    34
+   ],
+   "next": [
+    45
+   ]
+  },
+  {
+   "id": 45,
+   "type": "company",
+   "site": 41,
+   "pos": [
+    -11,
+    33
+   ],
+   "next": [
+    46
+   ]
+  },
+  {
+   "id": 46,
+   "type": "company",
+   "name": "蓝鹦鹉酒吧",
+   "industry": "entertainment",
+   "price": 400,
+   "rent": 100,
+   "source": "Beiping.cit 建筑 香满楼饭庄",
+   "lot": [
+    -12,
+    32
+   ],
+   "pos": [
+    -11,
+    32
+   ],
+   "next": [
+    47
+   ]
+  },
+  {
+   "id": 47,
+   "type": "company",
+   "site": 46,
+   "pos": [
+    -11,
+    31
+   ],
+   "next": [
+    48
+   ]
+  },
+  {
+   "id": 48,
+   "type": "land",
+   "name": "卡涅滨海1号",
+   "group": "卡涅滨海",
+   "price_pct": 170,
+   "build_cost_pct": 170,
+   "source": "Beiping.cit 地块 (-12,30)",
+   "lot": [
+    -12,
+    30
+   ],
+   "pos": [
+    -11,
+    30
+   ],
+   "next": [
+    49
+   ]
+  },
+  {
+   "id": 49,
+   "type": "land",
+   "name": "卡涅滨海2号",
+   "group": "卡涅滨海",
+   "price_pct": 170,
+   "build_cost_pct": 170,
+   "source": "Beiping.cit 地块 (-12,29)",
+   "lot": [
+    -12,
+    29
+   ],
+   "pos": [
+    -11,
+    29
+   ],
+   "next": [
+    50
+   ]
+  },
+  {
+   "id": 50,
+   "type": "land",
+   "name": "卡涅滨海3号",
+   "group": "卡涅滨海",
+   "price_pct": 170,
+   "build_cost_pct": 170,
+   "source": "Beiping.cit 地块 (-12,28)",
+   "lot": [
+    -12,
+    28
+   ],
+   "pos": [
+    -11,
+    28
+   ],
+   "next": [
+    51
+   ]
+  },
+  {
+   "id": 51,
+   "type": "land",
+   "name": "卡涅滨海4号",
+   "group": "卡涅滨海",
+   "price_pct": 170,
+   "build_cost_pct": 170,
+   "source": "Beiping.cit 地块 (-12,27)",
+   "lot": [
+    -12,
+    27
+   ],
+   "pos": [
+    -11,
+    27
+   ],
+   "next": [
+    52
+   ]
+  },
+  {
+   "id": 52,
+   "type": "land",
+   "name": "卡涅滨海5号",
+   "group": "卡涅滨海",
+   "price_pct": 170,
+   "build_cost_pct": 170,
+   "source": "Beiping.cit 地块 (-12,26)",
+   "lot": [
+    -12,
+    26
+   ],
+   "pos": [
+    -11,
+    26
+   ],
+   "next": [
+    53
+   ]
+  },
+  {
+   "id": 53,
+   "type": "church",
+   "name": "教堂",
+   "source": "Beiping.cit 建筑 教堂",
+   "lot": [
+    -10,
+    25
+   ],
+   "pos": [
+    -11,
+    25
+   ],
+   "next": [
+    54
+   ]
+  },
+  {
+   "id": 54,
+   "type": "church",
+   "site": 53,
+   "pos": [
+    -11,
+    24
+   ],
+   "next": [
+    55
+   ]
+  },
+  {
+   "id": 55,
+   "type": "government",
+   "name": "市政厅",
+   "source": "Beiping.cit 建筑 市政厅",
+   "lot": [
+    -10,
+    23
+   ],
+   "pos": [
+    -11,
+    23
+   ],
+   "next": [
+    56
+   ]
+  },
+  {
+   "id": 56,
+   "type": "government",
+   "site": 55,
+   "pos": [
+    -11,
+    22
+   ],
+   "next": [
+    17
+   ]
+  },
+  {
+   "id": 57,
+   "type": "land",
+   "name": "格拉斯山路5号",
+   "group": "格拉斯山路",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (-10,36)",
+   "lot": [
+    -10,
+    36
+   ],
+   "pos": [
+    -10,
+    35
+   ],
+   "next": [
+    58
+   ]
+  },
+  {
+   "id": 58,
+   "type": "land",
+   "name": "格拉斯山路4号",
+   "group": "格拉斯山路",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (-9,36)",
+   "lot": [
+    -9,
+    36
+   ],
+   "pos": [
+    -9,
+    35
+   ],
+   "next": [
+    59
+   ]
+  },
+  {
+   "id": 59,
+   "type": "land",
+   "name": "格拉斯山路3号",
+   "group": "格拉斯山路",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (-8,36)",
+   "lot": [
+    -8,
+    36
+   ],
+   "pos": [
+    -8,
+    35
+   ],
+   "next": [
+    60
+   ]
+  },
+  {
+   "id": 60,
+   "type": "park",
+   "name": "公园",
+   "source": "Beiping.cit 建筑 公园",
+   "lot": [
+    -7,
+    34
+   ],
+   "pos": [
+    -7,
+    35
+   ],
+   "next": [
+    61
+   ]
+  },
+  {
+   "id": 61,
+   "type": "park",
+   "site": 60,
+   "pos": [
+    -6,
+    35
+   ],
+   "next": [
+    62
+   ]
+  },
+  {
+   "id": 62,
+   "type": "land",
+   "name": "格拉斯山路2号",
+   "group": "格拉斯山路",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Beiping.cit 地块 (-5,36)",
+   "lot": [
+    -5,
+    36
+   ],
+   "pos": [
+    -5,
+    35
+   ],
+   "next": [
+    63
+   ]
+  },
+  {
+   "id": 63,
+   "type": "land",
+   "name": "格拉斯山路1号",
+   "group": "格拉斯山路",
+   "price_pct": 180,
+   "build_cost_pct": 200,
+   "source": "Beiping.cit 地块 (-4,36)",
+   "lot": [
+    -4,
+    36
+   ],
+   "pos": [
+    -4,
+    35
+   ],
+   "crossroad": "choice",
+   "next": [
+    64,
+    132
+   ]
+  },
+  {
+   "id": 64,
+   "type": "company",
+   "name": "地中海珠宝行",
+   "industry": "shop",
+   "price": 500,
+   "rent": 120,
+   "source": "Beiping.cit 建筑 华夏商场",
+   "lot": [
+    -3,
+    34
+   ],
+   "pos": [
+    -3,
+    35
+   ],
+   "next": [
+    65
+   ]
+  },
+  {
+   "id": 65,
+   "type": "company",
+   "site": 64,
+   "pos": [
+    -2,
+    35
+   ],
+   "next": [
+    66
+   ]
+  },
+  {
+   "id": 66,
+   "type": "land",
+   "site": 123,
+   "pos": [
+    -1,
+    35
+   ],
+   "next": [
+    67
+   ]
+  },
+  {
+   "id": 67,
+   "type": "road",
+   "pos": [
+    0,
+    35
+   ],
+   "crossroad": "choice",
+   "next": [
+    68,
+    128
+   ]
+  },
+  {
+   "id": 68,
+   "type": "land",
+   "name": "瑞昂莱潘6号",
+   "group": "瑞昂莱潘",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (1,34)",
+   "lot": [
+    1,
+    34
+   ],
+   "pos": [
+    0,
+    34
+   ],
+   "next": [
+    69
+   ]
+  },
+  {
+   "id": 69,
+   "type": "land",
+   "name": "瑞昂莱潘5号",
+   "group": "瑞昂莱潘",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (1,33)",
+   "lot": [
+    1,
+    33
+   ],
+   "pos": [
+    0,
+    33
+   ],
+   "next": [
+    70
+   ]
+  },
+  {
+   "id": 70,
+   "type": "land",
+   "name": "瑞昂莱潘4号",
+   "group": "瑞昂莱潘",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (1,32)",
+   "lot": [
+    1,
+    32
+   ],
+   "pos": [
+    0,
+    32
+   ],
+   "next": [
+    71
+   ]
+  },
+  {
+   "id": 71,
+   "type": "land",
+   "name": "瑞昂莱潘3号",
+   "group": "瑞昂莱潘",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (1,31)",
+   "lot": [
+    1,
+    31
+   ],
+   "pos": [
+    0,
+    31
+   ],
+   "next": [
+    72
+   ]
+  },
+  {
+   "id": 72,
+   "type": "land",
+   "name": "瑞昂莱潘2号",
+   "group": "瑞昂莱潘",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (1,30)",
+   "lot": [
+    1,
+    30
+   ],
+   "pos": [
+    0,
+    30
+   ],
+   "next": [
+    73
+   ]
+  },
+  {
+   "id": 73,
+   "type": "land",
+   "name": "瑞昂莱潘1号",
+   "group": "瑞昂莱潘",
+   "price_pct": 160,
+   "build_cost_pct": 180,
+   "source": "Beiping.cit 地块 (1,29)",
+   "lot": [
+    1,
+    29
+   ],
+   "pos": [
+    0,
+    29
+   ],
+   "next": [
+    74
+   ]
+  },
+  {
+   "id": 74,
+   "type": "road",
+   "pos": [
+    0,
+    28
+   ],
+   "next": [
+    75
+   ]
+  },
+  {
+   "id": 75,
+   "type": "road",
+   "pos": [
+    0,
+    27
+   ],
+   "crossroad": "choice",
+   "next": [
+    76,
+    124
+   ]
+  },
+  {
+   "id": 76,
+   "type": "bank",
+   "name": "银行",
+   "source": "Beiping.cit 建筑 银行",
+   "lot": [
+    1,
+    26
+   ],
+   "pos": [
+    0,
+    26
+   ],
+   "next": [
+    77
+   ]
+  },
+  {
+   "id": 77,
+   "type": "bank",
+   "site": 76,
+   "pos": [
+    0,
+    25
+   ],
+   "next": [
+    78
+   ]
+  },
+  {
+   "id": 78,
+   "type": "land",
+   "name": "马丁角3号",
+   "group": "马丁角",
+   "price_pct": 120,
+   "build_cost_pct": 140,
+   "source": "Beiping.cit 地块 (1,24)",
+   "lot": [
+    1,
+    24
+   ],
+   "pos": [
+    0,
+    24
+   ],
+   "next": [
+    79
+   ]
+  },
+  {
+   "id": 79,
+   "type": "land",
+   "name": "马丁角2号",
+   "group": "马丁角",
+   "price_pct": 120,
+   "build_cost_pct": 140,
+   "source": "Beiping.cit 地块 (1,23)",
+   "lot": [
+    1,
+    23
+   ],
+   "pos": [
+    0,
+    23
+   ],
+   "next": [
+    80
+   ]
+  },
+  {
+   "id": 80,
+   "type": "land",
+   "name": "马丁角1号",
+   "group": "马丁角",
+   "price_pct": 120,
+   "build_cost_pct": 140,
+   "source": "Beiping.cit 地块 (1,22)",
+   "lot": [
+    1,
+    22
+   ],
+   "pos": [
+    0,
+    22
+   ],
+   "next": [
+    81
+   ]
+  },
+  {
+   "id": 81,
+   "type": "road",
+   "pos": [
+    0,
+    21
+   ],
+   "crossroad": "choice",
+   "next": [
+    82,
+    89
+   ]
+  },
+  {
+   "id": 82,
+   "type": "company",
+   "name": "尼斯晨报",
+   "industry": "newspaper",
+   "price": 300,
+   "rent": 70,
+   "source": "Beiping.cit 建筑 锐智报馆",
+   "lot": [
+    -1,
+    20
+   ],
+   "pos": [
+    0,
+    20
+   ],
+   "next": [
+    83
+   ]
+  },
+  {
+   "id": 83,
+   "type": "company",
+   "site": 82,
+   "pos": [
+    0,
+    19
+   ],
+   "next": [
+    84
+   ]
+  },
+  {
+   "id": 84,
+   "type": "company",
+   "name": "尼斯港",
+   "industry": "transport",
+   "price": 370,
+   "rent": 80,
+   "source": "Beiping.cit 建筑 迅捷电车公司",
+   "lot": [
+    1,
+    18
+   ],
+   "pos": [
+    0,
+    18
+   ],
+   "next": [
+    85
+   ]
+  },
+  {
+   "id": 85,
+   "type": "company",
+   "site": 84,
+   "pos": [
+    0,
+    17
+   ],
+   "next": [
+    86
+   ]
+  },
+  {
+   "id": 86,
+   "type": "company",
+   "name": "海滨夏宫俱乐部",
+   "industry": "entertainment",
+   "price": 350,
+   "rent": 80,
+   "source": "Beiping.cit 建筑 独一处酒楼",
+   "lot": [
+    1,
+    16
+   ],
+   "pos": [
+    0,
+    16
+   ],
+   "next": [
+    87
+   ]
+  },
+  {
+   "id": 87,
+   "type": "company",
+   "site": 86,
+   "pos": [
+    0,
+    15
+   ],
+   "next": [
+    88
+   ]
+  },
+  {
+   "id": 88,
+   "type": "land",
+   "name": "英国人散步大道2号",
+   "group": "英国人散步大道",
+   "price_pct": 65,
+   "build_cost_pct": 88,
+   "source": "Beiping.cit 地块 (0,13)",
+   "lot": [
+    0,
+    13
+   ],
+   "pos": [
+    0,
+    14
+   ],
+   "next": [
+    0
+   ]
+  },
+  {
+   "id": 89,
+   "type": "land",
+   "site": 80,
+   "pos": [
+    1,
+    21
+   ],
+   "next": [
+    90
+   ]
+  },
+  {
+   "id": 90,
+   "type": "land",
+   "name": "费拉角1号",
+   "group": "费拉角",
+   "price_pct": 100,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (2,20)",
+   "lot": [
+    2,
+    20
+   ],
+   "pos": [
+    2,
+    21
+   ],
+   "next": [
+    91
+   ]
+  },
+  {
+   "id": 91,
+   "type": "land",
+   "name": "费拉角2号",
+   "group": "费拉角",
+   "price_pct": 100,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (3,20)",
+   "lot": [
+    3,
+    20
+   ],
+   "pos": [
+    3,
+    21
+   ],
+   "next": [
+    92
+   ]
+  },
+  {
+   "id": 92,
+   "type": "land",
+   "name": "费拉角3号",
+   "group": "费拉角",
+   "price_pct": 100,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (4,20)",
+   "lot": [
+    4,
+    20
+   ],
+   "pos": [
+    4,
+    21
+   ],
+   "next": [
+    93
+   ]
+  },
+  {
+   "id": 93,
+   "type": "land",
+   "name": "费拉角4号",
+   "group": "费拉角",
+   "price_pct": 100,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (5,20)",
+   "lot": [
+    5,
+    20
+   ],
+   "pos": [
+    5,
+    21
+   ],
+   "next": [
+    94
+   ]
+  },
+  {
+   "id": 94,
+   "type": "land",
+   "name": "戛纳老港1号",
+   "group": "戛纳老港",
+   "price_pct": 120,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,22)",
+   "lot": [
+    6,
+    22
+   ],
+   "pos": [
+    5,
+    22
+   ],
+   "next": [
+    95
+   ]
+  },
+  {
+   "id": 95,
+   "type": "land",
+   "name": "戛纳老港2号",
+   "group": "戛纳老港",
+   "price_pct": 120,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,23)",
+   "lot": [
+    6,
+    23
+   ],
+   "pos": [
+    5,
+    23
+   ],
+   "next": [
+    96
+   ]
+  },
+  {
+   "id": 96,
+   "type": "land",
+   "name": "戛纳老港3号",
+   "group": "戛纳老港",
+   "price_pct": 120,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,24)",
+   "lot": [
+    6,
+    24
+   ],
+   "pos": [
+    5,
+    24
+   ],
+   "next": [
+    97
+   ]
+  },
+  {
+   "id": 97,
+   "type": "land",
+   "name": "戛纳老港4号",
+   "group": "戛纳老港",
+   "price_pct": 120,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,25)",
+   "lot": [
+    6,
+    25
+   ],
+   "pos": [
+    5,
+    25
+   ],
+   "next": [
+    98
+   ]
+  },
+  {
+   "id": 98,
+   "type": "company",
+   "name": "海岸画报",
+   "industry": "newspaper",
+   "price": 300,
+   "rent": 70,
+   "source": "Beiping.cit 建筑 思想者出版社",
+   "lot": [
+    6,
+    26
+   ],
+   "pos": [
+    5,
+    26
+   ],
+   "next": [
+    99
+   ]
+  },
+  {
+   "id": 99,
+   "type": "company",
+   "site": 98,
+   "pos": [
+    5,
+    27
+   ],
+   "crossroad": "choice",
+   "next": [
+    100
+   ]
+  },
+  {
+   "id": 100,
+   "type": "company",
+   "name": "尼斯狂欢节花车行",
+   "industry": "entertainment",
+   "price": 350,
+   "rent": 80,
+   "source": "Beiping.cit 建筑 东来顺饭店",
+   "lot": [
+    4,
+    28
+   ],
+   "pos": [
+    5,
+    28
+   ],
+   "next": [
+    101
+   ]
+  },
+  {
+   "id": 101,
+   "type": "company",
+   "site": 100,
+   "pos": [
+    5,
+    29
+   ],
+   "next": [
+    102
+   ]
+  },
+  {
+   "id": 102,
+   "type": "land",
+   "name": "滨海自由城1号",
+   "group": "滨海自由城",
+   "price_pct": 75,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (6,30)",
+   "lot": [
+    6,
+    30
+   ],
+   "pos": [
+    5,
+    30
+   ],
+   "next": [
+    103
+   ]
+  },
+  {
+   "id": 103,
+   "type": "land",
+   "name": "滨海自由城2号",
+   "group": "滨海自由城",
+   "price_pct": 75,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (6,31)",
+   "lot": [
+    6,
+    31
+   ],
+   "pos": [
+    5,
+    31
+   ],
+   "next": [
+    104
+   ]
+  },
+  {
+   "id": 104,
+   "type": "land",
+   "name": "滨海自由城3号",
+   "group": "滨海自由城",
+   "price_pct": 75,
+   "build_cost_pct": 80,
+   "source": "Beiping.cit 地块 (6,32)",
+   "lot": [
+    6,
+    32
+   ],
+   "pos": [
+    5,
+    32
+   ],
+   "next": [
+    105
+   ]
+  },
+  {
+   "id": 105,
+   "type": "chance",
+   "name": "运气",
+   "source": "Beiping.cit 建筑 运气",
+   "lot": [
+    4,
+    33
+   ],
+   "pos": [
+    5,
+    33
+   ],
+   "next": [
+    106
+   ]
+  },
+  {
+   "id": 106,
+   "type": "chance",
+   "site": 105,
+   "pos": [
+    5,
+    34
+   ],
+   "next": [
+    107
+   ]
+  },
+  {
+   "id": 107,
+   "type": "land",
+   "name": "埃兹1号",
+   "group": "埃兹",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,35)",
+   "lot": [
+    6,
+    35
+   ],
+   "pos": [
+    5,
+    35
+   ],
+   "crossroad": "choice",
+   "next": [
+    108
+   ]
+  },
+  {
+   "id": 108,
+   "type": "land",
+   "name": "埃兹2号",
+   "group": "埃兹",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,36)",
+   "lot": [
+    6,
+    36
+   ],
+   "pos": [
+    5,
+    36
+   ],
+   "next": [
+    109
+   ]
+  },
+  {
+   "id": 109,
+   "type": "land",
+   "name": "埃兹3号",
+   "group": "埃兹",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,37)",
+   "lot": [
+    6,
+    37
+   ],
+   "pos": [
+    5,
+    37
+   ],
+   "next": [
+    110
+   ]
+  },
+  {
+   "id": 110,
+   "type": "land",
+   "name": "埃兹4号",
+   "group": "埃兹",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,38)",
+   "lot": [
+    6,
+    38
+   ],
+   "pos": [
+    5,
+    38
+   ],
+   "next": [
+    111
+   ]
+  },
+  {
+   "id": 111,
+   "type": "land",
+   "name": "埃兹5号",
+   "group": "埃兹",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,39)",
+   "lot": [
+    6,
+    39
+   ],
+   "pos": [
+    5,
+    39
+   ],
+   "next": [
+    112
+   ]
+  },
+  {
+   "id": 112,
+   "type": "land",
+   "name": "埃兹6号",
+   "group": "埃兹",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,40)",
+   "lot": [
+    6,
+    40
+   ],
+   "pos": [
+    5,
+    40
+   ],
+   "next": [
+    113
+   ]
+  },
+  {
+   "id": 113,
+   "type": "land",
+   "name": "埃兹7号",
+   "group": "埃兹",
+   "price_pct": 100,
+   "build_cost_pct": 100,
+   "source": "Beiping.cit 地块 (6,41)",
+   "lot": [
+    6,
+    41
+   ],
+   "pos": [
+    5,
+    41
+   ],
+   "next": [
+    114
+   ]
+  },
+  {
+   "id": 114,
+   "type": "company",
+   "name": "昂蒂布游艇码头",
+   "industry": "transport",
+   "price": 500,
+   "rent": 100,
+   "source": "Beiping.cit 建筑 北平火车站",
+   "lot": [
+    4,
+    42
+   ],
+   "pos": [
+    4,
+    41
+   ],
+   "next": [
+    115
+   ]
+  },
+  {
+   "id": 115,
+   "type": "company",
+   "site": 114,
+   "pos": [
+    3,
+    41
+   ],
+   "next": [
+    116
+   ]
+  },
+  {
+   "id": 116,
+   "type": "company",
+   "name": "蓝色列车终点站",
+   "industry": "transport",
+   "price": 400,
+   "rent": 80,
+   "source": "Beiping.cit 建筑 便利电车公司",
+   "lot": [
+    2,
+    40
+   ],
+   "pos": [
+    2,
+    41
+   ],
+   "next": [
+    117
+   ]
+  },
+  {
+   "id": 117,
+   "type": "company",
+   "site": 116,
+   "pos": [
+    1,
+    41
+   ],
+   "next": [
+    118
+   ]
+  },
+  {
+   "id": 118,
+   "type": "road",
+   "pos": [
+    0,
+    41
+   ],
+   "next": [
+    119
+   ]
+  },
+  {
+   "id": 119,
+   "type": "company",
+   "site": 116,
+   "pos": [
+    0,
+    40
+   ],
+   "next": [
+    120
+   ]
+  },
+  {
+   "id": 120,
+   "type": "company",
+   "site": 116,
+   "pos": [
+    0,
+    39
+   ],
+   "next": [
+    121
+   ]
+  },
+  {
+   "id": 121,
+   "type": "land",
+   "name": "昂蒂布角1号",
+   "group": "昂蒂布角",
+   "price_pct": 130,
+   "build_cost_pct": 110,
+   "source": "Beiping.cit 地块 (-1,38)",
+   "lot": [
+    -1,
+    38
+   ],
+   "pos": [
+    0,
+    38
+   ],
+   "next": [
+    122
+   ]
+  },
+  {
+   "id": 122,
+   "type": "land",
+   "name": "昂蒂布角2号",
+   "group": "昂蒂布角",
+   "price_pct": 130,
+   "build_cost_pct": 110,
+   "source": "Beiping.cit 地块 (-1,37)",
+   "lot": [
+    -1,
+    37
+   ],
+   "pos": [
+    0,
+    37
+   ],
+   "next": [
+    123
+   ]
+  },
+  {
+   "id": 123,
+   "type": "land",
+   "name": "昂蒂布角3号",
+   "group": "昂蒂布角",
+   "price_pct": 130,
+   "build_cost_pct": 110,
+   "source": "Beiping.cit 地块 (-1,36)",
+   "lot": [
+    -1,
+    36
+   ],
+   "pos": [
+    0,
+    36
+   ],
+   "next": [
+    67
+   ]
+  },
+  {
+   "id": 124,
+   "type": "bank",
+   "site": 76,
+   "pos": [
+    1,
+    27
+   ],
+   "next": [
+    125
+   ]
+  },
+  {
+   "id": 125,
+   "type": "bank",
+   "site": 76,
+   "pos": [
+    2,
+    27
+   ],
+   "next": [
+    126
+   ]
+  },
+  {
+   "id": 126,
+   "type": "company",
+   "site": 100,
+   "pos": [
+    3,
+    27
+   ],
+   "next": [
+    127
+   ]
+  },
+  {
+   "id": 127,
+   "type": "company",
+   "site": 100,
+   "pos": [
+    4,
+    27
+   ],
+   "next": [
+    99
+   ]
+  },
+  {
+   "id": 128,
+   "type": "land",
+   "site": 68,
+   "pos": [
+    1,
+    35
+   ],
+   "next": [
+    129
+   ]
+  },
+  {
+   "id": 129,
+   "type": "road",
+   "pos": [
+    2,
+    35
+   ],
+   "next": [
+    130
+   ]
+  },
+  {
+   "id": 130,
+   "type": "chance",
+   "site": 105,
+   "pos": [
+    3,
+    35
+   ],
+   "next": [
+    131
+   ]
+  },
+  {
+   "id": 131,
+   "type": "chance",
+   "site": 105,
+   "pos": [
+    4,
+    35
+   ],
+   "next": [
+    107
+   ]
+  },
+  {
+   "id": 132,
+   "type": "company",
+   "site": 64,
+   "pos": [
+    -4,
+    34
+   ],
+   "next": [
+    133
+   ]
+  },
+  {
+   "id": 133,
+   "type": "company",
+   "site": 64,
+   "pos": [
+    -4,
+    33
+   ],
+   "next": [
+    134
+   ]
+  },
+  {
+   "id": 134,
+   "type": "land",
+   "name": "圣让卡普费拉1号",
+   "group": "圣让卡普费拉",
+   "price_pct": 260,
+   "build_cost_pct": 240,
+   "source": "Beiping.cit 地块 (-3,32)",
+   "lot": [
+    -3,
+    32
+   ],
+   "pos": [
+    -4,
+    32
+   ],
+   "next": [
+    135
+   ]
+  },
+  {
+   "id": 135,
+   "type": "land",
+   "name": "圣让卡普费拉2号",
+   "group": "圣让卡普费拉",
+   "price_pct": 260,
+   "build_cost_pct": 240,
+   "source": "Beiping.cit 地块 (-3,31)",
+   "lot": [
+    -3,
+    31
+   ],
+   "pos": [
+    -4,
+    31
+   ],
+   "next": [
+    136
+   ]
+  },
+  {
+   "id": 136,
+   "type": "land",
+   "name": "圣让卡普费拉3号",
+   "group": "圣让卡普费拉",
+   "price_pct": 260,
+   "build_cost_pct": 240,
+   "source": "Beiping.cit 地块 (-3,30)",
+   "lot": [
+    -3,
+    30
+   ],
+   "pos": [
+    -4,
+    30
+   ],
+   "next": [
+    137
+   ]
+  },
+  {
+   "id": 137,
+   "type": "company",
+   "name": "格拉斯花园香水坊",
+   "industry": "shop",
+   "price": 500,
+   "rent": 120,
+   "source": "Beiping.cit 建筑 大洋百货",
+   "lot": [
+    -3,
+    29
+   ],
+   "pos": [
+    -4,
+    29
+   ],
+   "next": [
+    138
+   ]
+  },
+  {
+   "id": 138,
+   "type": "company",
+   "site": 137,
+   "pos": [
+    -4,
+    28
+   ],
+   "next": [
+    139
+   ]
+  },
+  {
+   "id": 139,
+   "type": "road",
+   "pos": [
+    -4,
+    27
+   ],
+   "next": [
+    140
+   ]
+  },
+  {
+   "id": 140,
+   "type": "company",
+   "site": 137,
+   "pos": [
+    -3,
+    27
+   ],
+   "next": [
+    141
+   ]
+  },
+  {
+   "id": 141,
+   "type": "company",
+   "site": 137,
+   "pos": [
+    -2,
+    27
+   ],
+   "next": [
+    142
+   ]
+  },
+  {
+   "id": 142,
+   "type": "road",
+   "pos": [
+    -1,
+    27
+   ],
+   "next": [
+    75
+   ]
+  },
+  {
+   "id": 143,
+   "type": "government",
+   "site": 55,
+   "pos": [
+    -10,
+    21
+   ],
+   "next": [
+    144
+   ]
+  },
+  {
+   "id": 144,
+   "type": "government",
+   "site": 55,
+   "pos": [
+    -9,
+    21
+   ],
+   "next": [
+    145
+   ]
+  },
+  {
+   "id": 145,
+   "type": "company",
+   "name": "海角公路汽车行",
+   "industry": "transport",
+   "price": 300,
+   "rent": 60,
+   "source": "Beiping.cit 建筑 价特低电车公司",
+   "lot": [
+    -8,
+    20
+   ],
+   "pos": [
+    -8,
+    21
+   ],
+   "next": [
+    146
+   ]
+  },
+  {
+   "id": 146,
+   "type": "company",
+   "site": 145,
+   "pos": [
+    -7,
+    21
+   ],
+   "next": [
+    147
+   ]
+  },
+  {
+   "id": 147,
+   "type": "land",
+   "name": "博利厄3号",
+   "group": "博利厄",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Beiping.cit 地块 (-6,20)",
+   "lot": [
+    -6,
+    20
+   ],
+   "pos": [
+    -6,
+    21
+   ],
+   "next": [
+    148
+   ]
+  },
+  {
+   "id": 148,
+   "type": "land",
+   "name": "博利厄4号",
+   "group": "博利厄",
+   "price_pct": 100,
+   "build_cost_pct": 125,
+   "source": "Beiping.cit 地块 (-5,20)",
+   "lot": [
+    -5,
+    20
+   ],
+   "pos": [
+    -5,
+    21
+   ],
+   "next": [
+    149
+   ]
+  },
+  {
+   "id": 149,
+   "type": "land",
+   "name": "博利厄5号",
+   "group": "博利厄",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Beiping.cit 地块 (-4,20)",
+   "lot": [
+    -4,
+    20
+   ],
+   "pos": [
+    -4,
+    21
+   ],
+   "next": [
+    150
+   ]
+  },
+  {
+   "id": 150,
+   "type": "land",
+   "name": "博利厄6号",
+   "group": "博利厄",
+   "price_pct": 100,
+   "build_cost_pct": 120,
+   "source": "Beiping.cit 地块 (-3,20)",
+   "lot": [
+    -3,
+    20
+   ],
+   "pos": [
+    -3,
+    21
+   ],
+   "next": [
+    151
+   ]
+  },
+  {
+   "id": 151,
+   "type": "company",
+   "site": 82,
+   "pos": [
+    -2,
+    21
+   ],
+   "next": [
+    152
+   ]
+  },
+  {
+   "id": 152,
+   "type": "company",
+   "site": 82,
+   "pos": [
+    -1,
+    21
+   ],
+   "next": [
+    81
+   ]
+  }
+ ]
+}

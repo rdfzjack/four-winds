@@ -1,0 +1,117 @@
+# 个人主线：关卡数据格式
+
+每个角色一条主线，一个文件：`fourwinds-benti/data/campaigns/<角色 id>.json`（作者以后自己改）。读取和检查在 `Data._load_campaigns`，写错了会显示在主界面的“数据有 N 个问题”里。规则逻辑在 `scripts/core/scenario.gd`，进度保存在 `scripts/core/profile.gd`。
+
+**现有数据**：四个角色各一个文件，都按作者与其他 AI 讨论的稿子 + 作者试玩后的数填的。理理 3 关、孔雀 3 关、小九 3 关、斐斐 3 关；斐斐第 1、2 关作者还没定，是带 `example` 标记的占位（目标取自讨论稿候选）。开局资金、预置地产、百分比、限时都是起点数字，作者在简介页里调好后发回来再写进文件。测试用的示例关在 `tests/fixtures/example_campaign.json`（游戏不读）。关卡内容（剧情、对手、目标）以作者为准，不要替作者编，`intro` / `outro_*` 里只放作者的原话。
+
+**路口方式**：关卡可写 `"crossroad": "random" / "choice"`（这一关所有路口的默认）和 `"crossroads": {"路口格子编号": "random" / "choice"}`（单独指定）；优先级：主界面“路口全部随机” > 单独指定 > 关卡默认 > 地图。存档里一起存。
+
+**主线用的地图**（原版地图数据换皮，地名、企业名重新包装，行业类别只是机制，可以按需要改名 / 改类，不要被原版的行业数量限制）：
+
+| 地图 id | 原版 | 格数 | 用在 |
+|---|---|---|---|
+| `berlin` | Story11 | 34 | 理理 1（最长的街只有 3 块，写了 `short_streets_ok`，盖不了别墅） |
+| `shanghai_west` | Story34 | 85 | 理理 2（原有的地图，只把第 1 格改回“万航渡路1号”：原版数据把它起错了名） |
+| `newyork` | Story17 | 160 | 理理 3（纺织换成 `finance`） |
+| `london` | Story23 | 56 | 斐斐 1（占位；银行站和一份报纸换了位置，路口写了 `random`） |
+| `shanghai_concession` | Story15 | 80 | 斐斐 2（占位） |
+| `riviera` | Cit_Beiping（北平） | 153 | 斐斐 3（食品 → 娱乐，一家报业 → 商业） |
+| `upper_east` | Story12 | 55 | 孔雀 1（最长的街只有 3 块，`short_streets_ok`） |
+| `paris` | Story26 | 119 | 孔雀 2 |
+| `manhattan` | Cit_Tianjin（天津） | 156 | 孔雀 3（食品 → 娱乐，公用 → 金融） |
+| `naples` | Story22 | 50 | 小九 1（原版元宝山一关） |
+| `little_italy` | Story13 | 81 | 小九 2 |
+| `shanghai_full` | Cit_Nanjing（南京） | 165 | 小九 3（按“上海全城”包装：公用 → 运输，纺织 → 娱乐，运输 → 商业） |
+
+原版战役图大多是上海的不同切片（`newyork` 是上海全城 160 格，`paris` 是它的 119 格局部）；布局不同的大图只有北平、天津、南京，现在分别给了斐斐 3、孔雀 3、小九 3，理理 3 用上海布局，四个“后段关”布局各不相同。
+
+**路人**（`data/extra_characters.json`）：`cousin` 堂弟、`passerby_a` 路人甲、`mistress` 情妇，不能在自由模式选，只在关卡里当座位。可以写 `ai_profile` 指向 `data/ai/profiles.json` 的一组参数（现有 `spendthrift` 挥金如土，情妇用它），座位的 `ai` 写 `new_v2` 才用这组；不写就是标准 AI 的参数。头像和走路图借用原版人物（`art.gd`）。路人不在任何机会卡的“允许角色”里，抽通用卡（允许全部 4 个角色的卡）。
+
+## 文件
+
+```json
+{
+ "character": "david",
+ "name": "主线名",
+ "stages": [ 关卡, 关卡, ... ]
+}
+```
+
+## 一关
+
+| 字段 | 说明 |
+|---|---|
+| `id` | 关卡 id，同一个文件里不能重复 |
+| `name` | 关卡名 |
+| `example` | 可选，`true` = 示例占位数据 |
+| `map` | 地图 id（`data/maps/` 里的文件名，不含 `.json`） |
+| `intro` | 关前简介（叙述文字，不是台词） |
+| `outro_win` / `outro_lose` | 关后文字（胜 / 负） |
+| `seats` | 座位列表（见下），2 到 `rules.json` 的 `max_players`（现在是 6）个 |
+| `win` / `lose` | 条件列表（见下） |
+
+### 座位
+
+| 字段 | 说明 |
+|---|---|
+| `character` | 角色 id。同一关里一个角色只能坐一个位置 |
+| `player` | `true` = 玩家自己（人类）。要有且只有一个 |
+| `form` | 可选，`front`（表，默认）/ `back`（里，8c 之前还没有里形态的 AI） |
+| `ai` | 对手的 AI 版本，可选，默认 `new_v2`（角色 AI）；`standard_v2` 是没有性格的标准 AI |
+| `cash` / `deposit` | 开局现金 / 存款，不写就用 `rules.json` 的 `starting_cash` / `starting_deposit` |
+| `props` | 开局已有的地产，列表。`{"tile": 格子编号}` 一块地或企业；`{"tiles": [a, b], "house": "hotel"}` 几块连成一排的地上盖好房子（`house` 是房屋 id：`flat` / `hotel` / `super_hotel` / `floor` / `super_floor` / `villa`，块数要对得上） |
+
+**格子编号要写正格**，不能写分身格（见 `board.gd` 开头的说明；校验会报错）。不收钱，也不检查够不够钱。
+
+### 条件
+
+`win` / `lose` 都是条件列表，**满足其中任意一条就结束**。同时满足胜和负时按**负**算。条件 = `{"type": 类型, ...参数}`。`who` 写座位号（从 0 数）、`"player"`（玩家自己）、`"others"`（除玩家以外的所有人）或座位号列表，不写默认 `"player"`。
+
+| 类型 | 参数 | 意思 |
+|---|---|---|
+| `bankrupt` | `who`，`mode`（`any` 任意一个 / `all` 全部，默认 `any`） | 破产。击败所有对手 = `{"type":"bankrupt","who":"others","mode":"all"}` |
+| `build_house` | `who`，`kind`（房屋 id 或列表），`count`（默认 1） | 名下有这种房子。“首先建成别墅”= 胜里写玩家建别墅、负里写 `who: "others"` 建别墅 |
+| `control_industry` | `who`，`industry`（地图企业的 `industry`），可选 `industry_name`（显示用） | 拥有这个行业的全部企业（地图里至少有一家） |
+| `control_street` | `who`，`group`（街道组 id，不写 = 任意一条街），可选 `group_name` | 拥有这条街的全部地 |
+| `own_lots_pct` | `who`，`pct` | 拥有全图 pct% 以上的地 |
+| `assets_at_least` | `who`，`amount`（万圆） | 总资产达到这个数（破产的人不算） |
+| `days_over` | `days` | 天数超过 days：第 `days` 天走完、进入第 `days+1` 天的那一刻 |
+| `richest_after` / `not_richest_after` | `who`，`days` | 天数超过 days 并且 who 的总资产是（不是）所有没破产的人里最高的（并列算最高）。“限时内金额第一名”= 胜里写 `richest_after`、负里写 `not_richest_after` |
+
+`control_industry` 可以写 `"industries": ["transport", "entertainment"]`（可选 `industry_names` 显示用）= 这几个行业**都要**全部拥有。
+
+“击败某人”= `bankrupt` 那个人。“一个月内”要写 `days_over` 的天数；一个月暂定 30 天（作者定，示例关用）。
+
+新增条件类型：在 `scenario.gd` 的 `TYPES` 里登记一行，写一个判断（`cond_met` 里加一个分支）和一句 `describe` 的说明，在 `tests/scenario_tests.gd` 里加通过 / 不通过的例子。
+
+**还没有的类型**：保护同伴不破产（依赖同伴 AI 的行为，放到后面）；保护以外的“同伴”概念也没有。
+
+## 判定什么时候发生
+
+`Game` 在这些时刻问关卡“有结果吗”：建房 / 升级 / 买地 / 拍卖成交 / 交易成交之后、有人破产之后、每个人回合开始时、新的一天开始时。**机会卡直接送的房子或地不会立刻判**，下一个回合开始时才判。
+
+结果出来时：`Game` 发 `scenario_won` / `scenario_lost`（带 `reason`），再发 `game_over`，`phase` 变成 `over`；胜了 `winner` 是玩家座位，负了是 -1。
+
+如果没有条件命中，但对局本身结束了（只剩一个人、人类全部破产）：只剩玩家一个人算胜，其他算负。
+
+没有关卡时（`game.scenario == null`，自由模式）以上全部不起作用：用 18 局（3 张地图 × 3 个种子 × 2 种 AI）对比过，改之前改之后的整局状态逐字一样。
+
+## 存档
+
+整个关卡数据和结果存在 `Game.export_state` 的 `scenario` 里（存档自带关卡，之后改 `data/` 不影响已经存的那一局）；棋盘画面的存档 `extra.campaign` 记着“哪个角色第几关”，读档后通关还能记进度。没有 `scenario` 的旧存档读成自由模式。
+
+## 进度（profile）
+
+`user://profile.json`（Windows：`%APPDATA%\Godot\app_userdata\<项目名>\profile.json`）：
+
+```json
+{"version": 1, "characters": {"david": {"next": 1, "cleared": false}}, "back_unlocked": []}
+```
+
+`next` = 下一关的下标（0 起）。已通关的关可以重玩，不会让进度倒退；通关最后一关时 `cleared` 变 `true`，角色 id 加进 `back_unlocked`。文件不存在、损坏、版本不对都当全新。里形态的 AI 现在没有（8c），主界面选座位暂时不放里形态选项，只记解锁标记。
+
+## 界面入口
+
+主界面“个人主线”→ 选角色 → 关卡列表（所有关都能选，不用通关，测试阶段）→ 简介页 → 开始。棋盘左侧显示胜负条件；结算页有胜 / 负文字，胜了有“下一关”，败了有“重试本关”。
+
+**简介页是调试面板**（只对这次运行有效，不写文件，“复制这一关的数据”导出 JSON，“恢复默认”）：每个座位的现金 / 存款、增减对手（`scripts/core/stage_edit.gd`）、每个座位开局的地产和企业（选街 / 行业再选哪块，或整组）、路口默认和逐个路口的自选 / 随机、胜负条件的增删改、关前 / 胜利后 / 失败后文字。改动存在 `Data.stage_override`（键“角色 id:第几关”），重试本关沿用。怎么用见 `docs/campaign_tuning.md`。关前 / 关后对话界面**还没做**（现在只有一段文字）。样子都是临时的，放到“界面与手感”统一做。

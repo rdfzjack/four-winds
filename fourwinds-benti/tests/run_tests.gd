@@ -17,6 +17,7 @@ const ValuerTests = preload("res://tests/valuer_tests.gd")
 const TraderTests = preload("res://tests/trader_tests.gd")
 const SpeechTests = preload("res://tests/speech_tests.gd")
 const SaveTests = preload("res://tests/save_tests.gd")
+const ScenarioTests = preload("res://tests/scenario_tests.gd")
 const SaveGame = preload("res://scripts/core/save_game.gd")
 const Iso = preload("res://scripts/ui/iso.gd")
 const Art = preload("res://scripts/ui/art.gd")
@@ -74,6 +75,7 @@ func run_logic_tests() -> void:
 	TraderTests.new().run(self)
 	SpeechTests.new().run(self)
 	SaveTests.new().run(self)
+	ScenarioTests.new().run(self)
 	test_ai_scenarios_run()
 
 

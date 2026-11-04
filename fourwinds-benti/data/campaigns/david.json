@@ -1,0 +1,177 @@
+{
+ "_comment": "斐斐的个人主线（作者与其他 AI 讨论的结果，格式见 docs/campaigns.md）。第 1、2 关作者还没定（标 example: true 的是占位，只为让第 3 关能打到，目标取自讨论稿的候选；对手也是占位），第 3 关按讨论稿。开局资金、预置地产、限时都是起点数字，等逐关跑模拟后标定。 每关至少两个对手。",
+ "character": "david",
+ "name": "整顿",
+ "stages": [
+  {
+   "id": "david_1",
+   "name": "【待定】伦敦金融城",
+   "example": true,
+   "map": "london",
+   "intro": "【待定】这一关的剧情、目标作者还没定。占位：对手是堂弟（路人，另有一个 AI），目标让堂弟破产。",
+   "outro_win": "【待定】",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "david",
+     "player": true,
+     "cash": 1000,
+     "deposit": 1000
+    },
+    {
+     "character": "cousin",
+     "ai": "standard_v2",
+     "cash": 1000,
+     "deposit": 1000
+    },
+    {
+     "character": "marcel",
+     "ai": "new_v2",
+     "cash": 1000,
+     "deposit": 1000
+    }
+   ],
+   "win": [
+    {
+     "type": "bankrupt",
+     "who": 1
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    }
+   ]
+  },
+  {
+   "id": "david_2",
+   "name": "【待定】上海工部局",
+   "example": true,
+   "map": "shanghai_concession",
+   "intro": "【待定】这一关的剧情、目标作者还没定。占位：对手是小九和一个路人，目标控制全部运输企业。",
+   "outro_win": "【待定】",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "david",
+     "player": true,
+     "cash": 1000,
+     "deposit": 2000
+    },
+    {
+     "character": "giorgio",
+     "ai": "new_v2",
+     "cash": 1000,
+     "deposit": 2000
+    },
+    {
+     "character": "passerby_a",
+     "ai": "standard_v2",
+     "cash": 1000,
+     "deposit": 2000
+    }
+   ],
+   "win": [
+    {
+     "type": "control_industry",
+     "who": "player",
+     "industry": "transport",
+     "industry_name": "运输"
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    }
+   ]
+  },
+  {
+   "id": "david_3",
+   "name": "蔚蓝海岸",
+   "map": "riviera",
+   "intro": "斐斐在伦敦收到一摞账单，抬头全是他的名字：赌场的、游艇的、古董店的。\n担保：三人的生意全用斐斐的名字做担保，他的名誉押在外面，不计成本收回来。",
+   "outro_win": "【待定】",
+   "outro_lose": "【待定】",
+   "seats": [
+    {
+     "character": "david",
+     "player": true,
+     "cash": 1500,
+     "deposit": 4000
+    },
+    {
+     "character": "giorgio",
+     "cash": 1500,
+     "deposit": 2000,
+     "props": [
+      {
+       "tile": 84
+      },
+      {
+       "tile": 114
+      },
+      {
+       "tile": 116
+      }
+     ]
+    },
+    {
+     "character": "eric",
+     "cash": 1500,
+     "deposit": 2000,
+     "props": [
+      {
+       "tile": 28
+      },
+      {
+       "tile": 46
+      },
+      {
+       "tile": 86
+      }
+     ]
+    },
+    {
+     "character": "marcel",
+     "cash": 1500,
+     "deposit": 2000,
+     "props": [
+      {
+       "tile": 20
+      },
+      {
+       "tile": 41
+      },
+      {
+       "tile": 64
+      }
+     ]
+    }
+   ],
+   "win": [
+    {
+     "type": "control_industry",
+     "who": "player",
+     "industries": [
+      "transport",
+      "entertainment",
+      "shop"
+     ],
+     "industry_names": [
+      "运输",
+      "娱乐",
+      "商业"
+     ]
+    }
+   ],
+   "lose": [
+    {
+     "type": "bankrupt",
+     "who": "player"
+    }
+   ]
+  }
+ ]
+}

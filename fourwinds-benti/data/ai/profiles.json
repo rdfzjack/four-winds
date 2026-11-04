@@ -118,7 +118,8 @@
     "ask_up_pct": 0,
     "bid_down_pct": 0,
     "distress_use_pct": 100,
-    "_personality": "以上新 AI 参数是“标准 AI”（ai 版本 standard，没有性格）用的值，也是各角色没写时的默认值。各角色的性格写在自己参数组的 front 里"
+    "_personality": "以上新 AI 参数是“标准 AI”（ai 版本 standard，没有性格）用的值，也是各角色没写时的默认值。各角色的性格写在自己参数组的 front 里",
+    "trade_floor_pct": 50
    }
   },
   "david": {
@@ -277,6 +278,16 @@
    },
    "back": {
     "_todo": "里形态参数，待定（第 8 步或特殊能力启用时再填）。没写的数沿用 front"
+   }
+  },
+  "spendthrift": {
+   "_comment": "路人“挥金如土”：不看现金流、不留备用钱，有钱就花（用在个人主线的情妇）。角色 AI（new_v2）= 标准 AI + 这里的 front_v2。",
+   "front": {},
+   "front_v2": {
+    "_note": "safety_rolls=0 不看接下来几把会不会付不起，reserve_pct=0 不留下一把可能付的租的备用钱",
+    "safety_rolls": 0,
+    "reserve_pct": 0,
+    "value_noise_pct": 20
    }
   }
  },

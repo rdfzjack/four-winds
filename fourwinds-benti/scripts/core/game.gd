@@ -24,6 +24,7 @@ extends RefCounted
 
 const Board = preload("res://scripts/core/board.gd")
 const Player = preload("res://scripts/core/player.gd")
+const Scenario = preload("res://scripts/core/scenario.gd")
 
 ## 会让玩家跳过回合的状态
 const SKIP_STATES := ["jail", "park"]
@@ -41,6 +42,8 @@ var day: int = 1
 var phase: String = "idle"      ## idle / pre_roll / pending / over
 var pending: Dictionary = {}    ## 等待玩家做的选择，见上面
 var winner: int = -1            ## 获胜者编号；-1 = 没有（还没结束，或人类全部破产）
+## 关卡（个人主线，见 scenario.gd）。null = 自由模式，规则和没有关卡时完全一样
+var scenario = null
 ## 地块编号 -> {owner: 玩家编号或 -1, mortgaged: bool, house: 房屋编号或 0, pct: 当前地价系数}
 ## 只有 land 和 company 的正格有（分身格用 board.site() 换成正格）。
 var props: Dictionary = {}
@@ -54,6 +57,11 @@ var history: Array = []
 var seed_used: int = -1         ## 这局的随机种子（导出记录里写上）
 ## 路口方式：空 = 按地图（每个路口的 crossroad），"random" = 所有路口都随机（像原版），"choice" = 都能选
 var crossroad_override: String = ""
+## 关卡指定的路口方式（scenario.gd 的 apply 设置）：每个路口单独指定（格子编号 → choice / random），
+## 没单独指定的用 crossroad_default（空 = 按地图）。
+## 优先级：crossroad_override > crossroad_modes > crossroad_default > 地图
+var crossroad_modes: Dictionary = {}
+var crossroad_default: String = ""
 ## 测试和作弊用（原版的 STEP / C 作弊码）：下一次掷骰用的点数 [a, b]；下一张机会卡的编号
 var forced_dice: Array = []
 var forced_cards: Array = []
@@ -128,6 +136,9 @@ func setup(p_board: Board, p_rules: Dictionary, cards_file: Dictionary, characte
 	pending = {}
 	_move = {}
 	winner = -1
+	scenario = null
+	crossroad_modes = {}
+	crossroad_default = ""
 	day = 1
 	phase = "idle"
 	return errors
@@ -178,8 +189,26 @@ func snapshot() -> Array:
 		out.append({
 			"player": p.index, "name": p.display_name, "cash": p.cash, "deposit": p.deposit,
 			"total_assets": total_assets(p.index), "bankrupt": p.bankrupt, "pos": p.pos,
-			"properties": properties_of(p.index),
+			"properties": properties_of(p.index), "status": p.status.duplicate(true),
+			"houses": _houses_of_player(p.index), "mortgaged": _mortgaged_of(p.index),
 		})
+	return out
+
+
+## 记录用：玩家的房子 [{kind, tiles}]、抵押中的地
+func _houses_of_player(pi: int) -> Array:
+	var out: Array = []
+	for hid in houses:
+		if int(houses[hid]["owner"]) == pi:
+			out.append({"kind": houses[hid]["kind"], "tiles": houses[hid]["tiles"].duplicate()})
+	return out
+
+
+func _mortgaged_of(pi: int) -> Array:
+	var out: Array = []
+	for t in properties_of(pi):
+		if props[t]["mortgaged"]:
+			out.append(t)
 	return out
 
 
@@ -190,7 +219,8 @@ func export_record() -> Dictionary:
 		seats.append({"player": p.index, "name": p.display_name, "character": p.character,
 				"human": p.human, "ai": p.ai, "form": p.form})
 	return {
-		"format": 1, "map": board.id, "seed": seed_used, "crossroad": crossroad_override,
+		"map": board.id, "stage": str(scenario.stage.get("id", "")) if scenario != null else "",
+		"format": 1, "seed": seed_used, "crossroad": crossroad_override,
 		"day": day, "phase": phase,
 		"winner": winner, "seats": seats, "final": snapshot(), "history": history,
 	}
@@ -214,9 +244,11 @@ func export_state() -> Dictionary:
 		"current": current, "day": day, "phase": phase, "pending": pending, "winner": winner,
 		"props": props, "houses": houses, "events": events, "next_house_id": _next_house_id,
 		"move": _move, "trade_refused": _trade_refused,
-		"crossroad_override": crossroad_override, "forced_dice": forced_dice,
+		"crossroad_override": crossroad_override, "crossroad_modes": crossroad_modes,
+		"crossroad_default": crossroad_default, "forced_dice": forced_dice,
 		"forced_cards": forced_cards, "record_history": record_history, "history": history,
 		"seed_used": str(seed_used), "rng_seed": str(rng.seed), "rng_state": str(rng.state),
+		"scenario": scenario.export_state() if scenario != null else {},
 	}
 
 
@@ -254,6 +286,8 @@ func import_state(state: Dictionary) -> String:
 	_move = state["move"]
 	_trade_refused = state["trade_refused"]
 	crossroad_override = str(state["crossroad_override"])
+	crossroad_modes = state.get("crossroad_modes", {})
+	crossroad_default = str(state.get("crossroad_default", ""))
 	forced_dice = state["forced_dice"]
 	forced_cards = state["forced_cards"]
 	record_history = bool(state["record_history"])
@@ -261,6 +295,8 @@ func import_state(state: Dictionary) -> String:
 	seed_used = int(str(state["seed_used"]))
 	rng.seed = int(str(state["rng_seed"]))
 	rng.state = int(str(state["rng_state"]))
+	var scn: Dictionary = state.get("scenario", {})
+	scenario = Scenario.from_state(scn) if not scn.is_empty() else null
 	return ""
 
 
@@ -534,6 +570,7 @@ func build(pi: int, kind: String, tiles: Array) -> String:
 	_emit("built", {"player": pi, "house": hid, "kind": kind, "tiles": tile_list, "cost": cost,
 			"rebuild": not old.is_empty()})
 	if not old.is_empty():
+		_scenario_check()
 		return ""
 	# 新建房子后的随机事件：挖到古董；没挖到时房子可能倒塌
 	var antique_odds := int(rules["houses"]["antique_chance_by_lots"][str(tile_list.size())])
@@ -544,7 +581,61 @@ func build(pi: int, kind: String, tiles: Array) -> String:
 	elif rng.randi() % int(rules["houses"]["collapse_chance"]) == 0:
 		_demolish(hid)
 		_emit("collapse", {"player": pi, "house": hid, "tiles": tile_list})
+	_scenario_check()
 	return ""
+
+
+## 开局设置用（关卡的预置地产）：把 tiles 这几块无主的地 / 企业送给 pi；kind 不空就在上面盖这种房子。
+## 成功返回 ""。不收钱、不发事件。
+func grant_lots(pi: int, tiles: Array, kind: String = "") -> String:
+	for t in tiles:
+		if not props.has(int(t)):
+			return "格子 %d 不是地或企业的正格" % int(t)
+		if owner_of(int(t)) >= 0:
+			return "格子 %d 已经有主人" % int(t)
+	for t in tiles:
+		props[int(t)]["owner"] = pi
+	if kind == "":
+		return ""
+	var why := ""
+	if not _house_defs.has(kind) or tiles.size() != int(_house_defs[kind]["lots"]):
+		why = "这种房子占的地块数不对"
+	else:
+		why = _why_lots_invalid(pi, tiles)
+	if why != "":
+		for t in tiles:
+			props[int(t)]["owner"] = -1
+		return why
+	_place_house(pi, kind, tiles)
+	return ""
+
+
+## 关卡的胜负判定（没有关卡什么都不做）。每个可能改变结果的操作做完后调用。
+## 出结果时：发 scenario_won / scenario_lost，再发 game_over，phase 变成 over。
+func _scenario_check() -> void:
+	if scenario == null or phase == "over" or scenario.result != "":
+		return
+	var r: String = scenario.check(self)
+	if r != "":
+		_scenario_end()
+
+
+## 对局本身结束了（只剩一个人 / 人类全破产），关卡还没有结果时：按谁赢了给出结果
+func _end_by_standing() -> void:
+	if scenario == null or scenario.result != "":
+		return
+	scenario.finish_by_standing(self)
+	_emit("scenario_won" if scenario.result == "won" else "scenario_lost", {"reason": scenario.reason})
+
+
+func _scenario_end() -> void:
+	pending = {}
+	_move = {}
+	phase = "over"
+	winner = scenario.player_seat if scenario.result == "won" else -1
+	_emit("scenario_won" if scenario.result == "won" else "scenario_lost",
+			{"reason": scenario.reason})
+	_emit("game_over", {"winner": winner})
 
 
 func _place_house(pi: int, kind: String, tiles: Array) -> int:
@@ -585,6 +676,7 @@ func upgrade(pi: int, hid: int) -> String:
 	players[pi].cash -= fee
 	h["kind"] = _house_defs[h["kind"]]["upgrade_to"]
 	_emit("upgraded", {"player": pi, "house": hid, "kind": h["kind"], "cost": fee})
+	_scenario_check()
 	return ""
 
 
@@ -814,6 +906,7 @@ func _auction_end() -> void:
 		players[seller].cash += start
 		_release_property(tile)
 		_emit("auction_government", {"player": seller, "tile": tile, "price": start})
+	_scenario_check()
 	_clear_pending()
 
 
@@ -947,6 +1040,7 @@ func _do_trade(o: Dictionary) -> void:
 	_emit("trade_done", {"player": a, "offer": o})
 	_emit_street_done(a, o["get"])
 	_emit_street_done(b, o["give"])
+	_scenario_check()
 
 
 # ───────────────────────── 掷骰和移动 ─────────────────────────
@@ -1044,9 +1138,13 @@ func _may_choose_direction(_p: Player, tile: int) -> bool:
 	return crossroad_mode(tile) == "choice"
 
 
-## 这个路口现在是 choice 还是 random（考虑 crossroad_override）
+## 这个路口现在是 choice 还是 random（优先级见 crossroad_modes 的说明）
 func crossroad_mode(tile: int) -> String:
-	return crossroad_override if crossroad_override != "" else board.crossroad_mode(tile)
+	if crossroad_override != "":
+		return crossroad_override
+	if crossroad_modes.has(tile):
+		return str(crossroad_modes[tile])
+	return crossroad_default if crossroad_default != "" else board.crossroad_mode(tile)
 
 
 ## 台词用：这次移动停下的地方，前后一两格有别人的高租地（租金够得上“大笔”）却没踩到，记一个 dodged。
@@ -1292,6 +1390,7 @@ func buy() -> bool:
 	props[tile]["mortgaged"] = false
 	_emit("bought", {"player": p.index, "tile": tile, "price": price})
 	_emit_street_done(p.index, [tile])
+	_scenario_check()
 	_clear_pending()
 	_finish_turn()
 	return true
@@ -1358,9 +1457,15 @@ func _pick_card(p: Player) -> Dictionary:
 		for c in cards:
 			if int(c["id"]) == wanted:
 				return c
+	var listed := false  # 这个角色出现在某张卡的 allowed_for 里吗（路人不在，按“通用卡”抽）
+	for k in cards:
+		listed = listed or k.get("allowed_for", []).has(p.character)
 	for _try in range(2000):
 		var c: Dictionary = cards[rng.randi() % cards.size()]
-		if not c.get("allowed_for", []).has(p.character):
+		var allowed: Array = c.get("allowed_for", [])
+		if listed and not allowed.has(p.character):
+			continue
+		if not listed and allowed.size() < 4:
 			continue
 		if rng.randi_range(1, 100) > int(c.get("weight", 100)):
 			continue
@@ -1381,9 +1486,22 @@ func _apply_effect(p: Player, e: Dictionary) -> void:
 				if q != p and not p.bankrupt:
 					pay(q.index, int(e["amount"]), p.index)
 		"money_to_each":
+			var payees: Array = []
 			for q in alive_players():
-				if q != p and not p.bankrupt:
-					pay(p.index, int(e["amount"]), q.index)
+				if q != p:
+					payees.append(q)
+			var each := int(e["amount"])
+			if p.cash + p.deposit >= each * payees.size():
+				for q in payees:
+					pay(p.index, each, q.index)
+			elif not payees.is_empty():
+				# 付不起这一次的总数：剩下的钱平分给收款人，财产不归任何一个收款人（无主）
+				var share: int = (p.cash + p.deposit) / payees.size()
+				for q in payees:
+					q.cash += share
+				p.cash = 0
+				p.deposit = 0
+				_bankrupt(p, -1)
 		"jail":
 			_send_to_jail(p, int(e["days"]))
 		"goto":
@@ -1489,6 +1607,10 @@ func _bankrupt(p: Player, creditor: int) -> void:
 
 
 func _check_game_over() -> void:
+	if scenario != null:
+		_scenario_check()
+		if phase == "over":
+			return
 	var alive := alive_players()
 	var humans_alive := 0
 	var any_human := false
@@ -1500,10 +1622,12 @@ func _check_game_over() -> void:
 	if alive.size() <= 1:
 		phase = "over"
 		winner = alive[0].index if alive.size() == 1 else -1
+		_end_by_standing()
 		_emit("game_over", {"winner": winner})
 	elif any_human and humans_alive == 0:
 		phase = "over"
 		winner = -1
+		_end_by_standing()
 		_emit("game_over", {"winner": -1})
 
 
@@ -1537,6 +1661,7 @@ func _begin_turn() -> bool:
 	phase = "pre_roll"
 	_trade_refused = {}
 	_emit("turn_start", {"player": p.index, "day": day})
+	_scenario_check()
 	return true
 
 
@@ -1553,6 +1678,9 @@ func _next_turn() -> void:
 		current = (current + 1) % players.size()
 		if current == 0:
 			_new_day()
+			_scenario_check()
+			if phase == "over":
+				return
 		if players[current].bankrupt:
 			continue
 		if _begin_turn():

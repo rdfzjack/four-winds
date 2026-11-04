@@ -14,6 +14,7 @@ const DEFAULT_KINDS := [0, 1, 1, 1]
 const BACKGROUND := Color("#1e2a24")
 const SaveGame = preload("res://scripts/core/save_game.gd")
 const SavePanel = preload("res://scripts/ui/save_panel.gd")
+const CampaignPanel = preload("res://scripts/ui/campaign_panel.gd")
 
 var _kind_boxes: Array = []
 var _char_boxes: Array = []
@@ -66,6 +67,11 @@ func _ready() -> void:
 	start.pressed.connect(_on_start)
 	box.add_child(start)
 	_add_load_buttons(box)
+	var campaign := Button.new()
+	campaign.text = "个人主线"
+	campaign.custom_minimum_size = Vector2(0, 44)
+	campaign.pressed.connect(_open_campaign)
+	box.add_child(campaign)
 
 	box.add_child(HSeparator.new())
 	if Data.errors.is_empty():
@@ -227,6 +233,30 @@ func _open_load_list() -> void:
 			_overlay.queue_free()
 			_overlay = null)
 	box.add_child(close)
+
+
+## 个人主线：弹层里选角色、关卡，看简介，开局
+func _open_campaign() -> void:
+	if _overlay != null:
+		_overlay.queue_free()
+	_overlay = ColorRect.new()
+	(_overlay as ColorRect).color = Color(0, 0, 0, 0.7)
+	_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	add_child(_overlay)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_overlay.add_child(center)
+	var frame := PanelContainer.new()
+	center.add_child(frame)
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(840, 600)
+	frame.add_child(scroll)
+	var panel := CampaignPanel.new()
+	scroll.add_child(panel)
+	panel.closed.connect(func() -> void:
+			_overlay.queue_free()
+			_overlay = null)
+	panel.setup()
 
 
 func _load(slot: String, panel: SavePanel = null) -> void:

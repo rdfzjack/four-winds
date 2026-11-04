@@ -2,7 +2,7 @@
  "_comment": "全局规则参数，单位万圆。除特别说明外，数值都是从原版程序反汇编确认的（详见 docs/original_rules.md）。城市各自的造价、租金、地价在地图文件的 prices 里。",
  "currency": "万圆",
  "default_map": "shanghai_loop",
- "max_players": 4,
+ "max_players": 6,
  "starting_cash": 2000,
  "starting_deposit": 2000,
  "_starting_money_note": "原版自由模式（上海）每人现金 2000、存款 2000；战役各关不同，以后放进关卡数据",

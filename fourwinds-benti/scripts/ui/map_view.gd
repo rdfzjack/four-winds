@@ -255,6 +255,9 @@ func _draw() -> void:
 			_draw_token(int(it[2]), int(it[3]))
 	for t in board.tiles:
 		_draw_label(t)
+	for t in board.tiles:
+		if board.is_crossroad(int(t["id"])):
+			_draw_crossroad_hint(int(t["id"]))
 
 
 func _draw_ground() -> void:
@@ -326,6 +329,22 @@ func _draw_route(r: Dictionary, color: Color) -> void:
 	var last: Vector2 = _road_cell[int(tiles[-1])]
 	draw_polyline(_closed(Iso.diamond(last, 1.0)), color, 4.0 if r["ends"] else 2.0)
 	_text("落点" if r["ends"] else "路口", Iso.to_world(last) + Vector2(0, 26), 13, color)
+
+
+## 路口一直显示：自选 / 随机，以及每个出口往哪个方向（箭头）。不用走到路口才知道
+func _draw_crossroad_hint(id: int) -> void:
+	var choice: bool = game.crossroad_mode(id) == "choice"
+	var color := Color("#80cbc4") if choice else Color("#ffab40")
+	var here := Iso.to_world(_road_cell[id])
+	for n in board.next_tiles(id):
+		var to := Iso.to_world(_road_cell[int(n)])
+		var dir := (to - here).normalized()
+		var tip := here + dir * 38.0
+		draw_line(here + dir * 8.0, tip, color, 3.0)
+		var side := Vector2(-dir.y, dir.x)
+		var head := PackedVector2Array([tip + dir * 7.0, tip + side * 5.0, tip - side * 5.0])
+		draw_colored_polygon(head, color)
+	_text("自选" if choice else "随机", here + Vector2(0, -18), 14, color)
 
 
 func _draw_select(cell: Vector2) -> void:

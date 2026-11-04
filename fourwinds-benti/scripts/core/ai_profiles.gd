@@ -10,6 +10,7 @@ const JsonUtil = preload("res://scripts/core/json_util.gd")
 
 const PROFILES_PATH := "res://data/ai/profiles.json"
 const CHARACTERS_PATH := "res://data/characters.json"
+const EXTRAS_PATH := "res://data/extra_characters.json"
 ## 形态：表 / 里
 const FORMS := ["front", "back"]
 
@@ -48,6 +49,7 @@ static func ensure_loaded() -> void:
 	var errors: Array = []
 	var file := JsonUtil.load_dict(PROFILES_PATH, errors)
 	var chars := JsonUtil.load_dict(CHARACTERS_PATH, errors)
+	var extras := JsonUtil.load_dict(EXTRAS_PATH, errors)
 	if not errors.is_empty():
 		push_error("读不到 AI 参数：%s" % str(errors))
 	var groups: Dictionary = file.get("profiles", {})
@@ -55,7 +57,7 @@ static func ensure_loaded() -> void:
 	scoring = file.get("scoring", {})
 	var base: Dictionary = merged(standard, "front")
 	table[""] = base
-	for c in chars.get("characters", []):
+	for c in chars.get("characters", []) + extras.get("characters", []):
 		var group: Dictionary = groups.get(str(c.get("ai_profile", "standard")), standard)
 		for form in FORMS:
 			table[key(str(c["id"]), form)] = merged(group, form, base)
